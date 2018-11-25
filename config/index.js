@@ -12,8 +12,11 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api':{
-          target:'http://devwww.jiehun.com.cn/',
-          changeOrigin:true
+        target:'http://dev.countinsight.com/api/admin',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/'   //重写接口
+        }
       },
       '/ms':{
           target: 'https://www.easy-mock.com/mock/592501a391470c0ac1fab128',

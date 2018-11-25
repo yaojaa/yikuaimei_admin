@@ -123,6 +123,12 @@
             border: Boolean,
             axiosType: String,
             pageSize: Number,
+            query: {
+                type: Object,
+                default: function(){
+                    return {}
+                }
+            }
         },
         created() {
             let page = JSON.parse(sessionStorage.getItem('page'));
@@ -167,11 +173,12 @@
                 params.page_size = params.page_size || this.page.pageSize || this.pageSize || 10;
 
                 this.loading = true;
-
+                console.log(this.query, '-----')
                 this.Axios({
                     url: _this.url,
                     type: type || _this.axiosType,
-                    params: params,
+                    params: {...params,...this.query},
+                    // params: {},
                     successfn(d){
 
                         _this.loading = false;
