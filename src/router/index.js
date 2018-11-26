@@ -24,6 +24,11 @@ export default new Router({
                     path: '/goodList',
                     component: resolve => require(['../view/goods/goodList.vue'], resolve),
                     meta: { title: '商品列表' }
+                },
+                {
+                    path: '/createGood',
+                    component: resolve => require(['../view/goods/createGood.vue'], resolve),
+                    meta: { title: '添加商品' }
                 }
             ]
         },

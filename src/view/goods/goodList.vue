@@ -7,6 +7,12 @@
         </div>
         <div class="page-content">
             <nomal-table :table-json="tableJson" :url="url"  :query="{good_type: 2}">
+                <div class="sub-heading">
+                    <h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
+                    <div class="sub-actions">
+                        <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood' })">添加商品</el-button>
+                    </div>
+                </div>
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
         </div>
