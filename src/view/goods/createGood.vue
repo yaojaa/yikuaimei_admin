@@ -170,7 +170,7 @@ export default {
           children: [
             {
               fatherName: 'none',
-              name: "days",
+              name: "price_purchase",
               type: "input",
               label: "售价",
               key1: '元',
@@ -185,7 +185,7 @@ export default {
             },
             {
               fatherName: 'none',
-              name: "days",
+              name: "price",
               type: "input",
               label: "原价",
               key1: '元',
@@ -197,7 +197,7 @@ export default {
             },
             {
               fatherName: 'none',
-              name: "days",
+              name: "price_plate",
               type: "input",
               label: "成本",
               key1: '元',
@@ -213,55 +213,7 @@ export default {
             
           ],
           value: "none"
-        },
-        {
-          name: "days",
-          type: "input",
-          label: "参与频次",
-          key1: '天',
-          rules: [
-            {
-              required: true,
-              message: "请填写参与周期",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "times",
-          type: "input",
-          label: "",
-          key1: '次',
-          rules: [
-            {
-              required: true,
-              message: "请填写参与次数",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "coupon",
-          type: "selector",
-          label: "选择券",
-          placeholder: '优惠券的名称',
-          rules: [
-            {
-              required: true,
-              message: "请选择优惠券",
-              trigger: "blur"
-            }
-          ],
-          options: [
-            {
-              label: '满2000减1000',
-              value: '001'
-            }
-          ],
-          value: ""
-        },
+        }
       ]
     };
   },

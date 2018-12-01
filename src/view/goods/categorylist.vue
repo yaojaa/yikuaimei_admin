@@ -10,12 +10,9 @@
                 <div class="sub-heading">
                     <h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
                     <div class="sub-actions">
-                        <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood' })">添加商品</el-button>
-                        <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/categorylist' })">管理分类</el-button>
-                        <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/labellist' })">管理标签</el-button>
+                        <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createCategory' })">添加分类</el-button>
                     </div>
                 </div>
-                <table-search :searchs="searchs"></table-search>
             </nomal-table>
         </div>
     </div>
@@ -30,7 +27,7 @@ export default {
   name: "tabletest",
   data() {
     return {
-      url: "/api/admin/shopgood/index",
+      url: "/api/admin/category/index",
       breadcrumb: [
         //面包屑
         {
@@ -39,77 +36,33 @@ export default {
         {
           name: "平台商品",
           url: "/goodList"
+        },
+        {
+          name: "分类管理"
         }
       ],
-      searchs: {
-        list: [
-          {
-            type: "input-select", //选择器
-            label: "选择状态",
-            name: "is_use",
-            value: "",
-            options: [
-              {
-                name: '全部',
-                value: ''
-              },
-              {
-                name: '已上架',
-                value: '2'
-              },
-              {
-                name: '未上架',
-                value: '1'
-              }
-
-            ]
-          }
-        ]
-      },
       tableJson: {
         column: [
           //行
           {
             type: "text",
-            label: "商品",
-            prop: "good_name",
-            width: "80px",
+            label: "分类名称",
+            prop: "category_name",
             align: "center"
           },
           {
             type: "text",
-            label: "标签",
-            prop: "shop_name",
+            label: "创建时间",
+            prop: "category_ctime",
             minWidth: "200px",
             align: "center"
           },
           {
             type: "text",
-            label: "分类",
-            prop: "company_name",
+            label: "修改时间",
+            prop: "category_utime",
             width: "",
             align: "center"
-          },
-          {
-            type: "text",
-            label: "状态",
-            prop: "shop_phone",
-            width: "",
-            align: "center"
-          },
-          {
-            type: "switch",
-            label: "总销量",
-            align: "center",
-            width: "",
-            prop: "switch"
-          },
-          {
-            type: "text",
-            label: "库存",
-            prop: "shop_category_name",
-            align: "center",
-            width: ""
           },
           {
             type: "handle",
@@ -118,12 +71,14 @@ export default {
             width: "",
             list: [
               {
-                label: "下架",
-                type: "edit",
+                label: "删除",
+                type: "delete",
                 url: "", //优先执行url
-                onClick(tablePage, self) {
-                  console.log(self.vue);
-                  console.log(tablePage.isShow);
+                params: {name: 'id', data: 'category_id'},
+                axiosUrl: '/api/admin/category/remove',
+                axiosType: 'post',
+                callback(tablePage, self, row) {
+                  console.log(self, row);
                   self.nomal = !self.nomal;
                   tablePage.isShow = !tablePage.isShow;
                 }
@@ -133,7 +88,7 @@ export default {
                 type: "edit",
                 url: "", //优先执行url
                 onClick(tablePage, self, row) {
-                  self.$router.push("/createGood" + row.shop_id);
+                  self.$router.push({name: "createCategory", query: {id: row.category_id}});
                 }
               }
             ]

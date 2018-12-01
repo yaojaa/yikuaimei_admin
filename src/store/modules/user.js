@@ -2,16 +2,16 @@ import Vue from 'vue'
 
 function setHeaders(state) {
   console.log('设置请求header信息')
-  Vue.prototype.$axios.defaults.headers = Object.assign(Vue.prototype.$axios.defaults.headers, JSON.parse(localStorage.getItem('user')||'{}'))
+  Vue.prototype.$axios.defaults.headers = Object.assign(Vue.prototype.$axios.defaults.headers, state);
 }
 export default {
   state: {
     sid: JSON.parse(localStorage.getItem('user') || '{}')['sid'] || '',
-    history: location.pathname
+    history: location.pathname,
+    data: JSON.parse(localStorage.getItem('user') || '{}')['data'] || ''
   },
   getters: {
     userStatus: (state) => {
-      console.log(state.sid)
       if (state.sid) {
         setHeaders(state)
       }
@@ -19,25 +19,28 @@ export default {
     },
     isLogin: (state) => {
       return state.sid !== ''
+    },
+    user: state => {
+      return state.data;
     }
   },
   mutations: {
     ['USER_REG'](state, data) {
       Object.assign(state, data)
-      localStorage.setItem('user', JSON.stringify(data))
+      localStorage.setItem('user', JSON.stringify(state))
     },
     ['USER_SIGNIN'](state, data) {
       // console.log('mutations USER_SIGNIN',data)
       // console.log('data.id_token',data.id_token)
       Object.assign(state, data)
-
-
       localStorage.setItem('user', JSON.stringify(state))
-      setHeaders(state)
+      let { sid } = state;
+      setHeaders({sid})
     },
     ['USER_SIGNOUT'](state) {
       localStorage.removeItem('user')
-      Object.keys(state).forEach(k => Vue.delete(state, k))
+      Object.keys(state).forEach(k => Vue.delete(state, k));
+      window.location.reload();
     }
   },
   actions: {

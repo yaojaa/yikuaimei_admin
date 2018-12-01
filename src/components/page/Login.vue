@@ -24,8 +24,8 @@
         data: function(){
             return {
                 ruleForm: {
-                    user_name: 'whp',
-                    user_pwd: '123'
+                    user_name: '13521089284',
+                    user_pwd: '123456'
                 },
                 rules: {
                     user_name: [
@@ -43,18 +43,16 @@
 
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$router.push('/');
-
-                        console.log(this[formName])
-                        // user.login.call(this, {
-                        //     url: '/api/admin/login/passwordLogin',
-                        //     method: 'post',
-                        //     data: this[formName]
-                        // })
-                        // .then(res => {
-                        //     console.log(res.headers)
-                        // })
-                        // localStorage.setItem('ms_username',this.ruleForm.username);
+                        user.login.call(this, {
+                            url: '/api/admin/login/index',
+                            method: 'post',
+                            data: this[formName]
+                        })
+                        .then(res => {
+                            console.log(res, '0000')
+                            localStorage.setItem('ms_username',this.ruleForm.username);
+                        })
+                        
                     } else {
                         console.log('error submit!!');
                         return false;

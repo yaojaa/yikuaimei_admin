@@ -9,7 +9,7 @@
 <!-- <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"> -->
   <!-- <el-menu-item index="1">首页</el-menu-item> -->
 
-</el-menu>
+<!-- </el-menu> -->
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 全屏显示 -->
@@ -28,9 +28,9 @@
                     <span class="btn-bell-badge" v-if="message"></span>
                 </div>
                 <!-- 用户头像 -->
-                <div class="user-avator"><img src="/static/img/img.jpg"></div>
+                <div class="user-avator"><img :src="user.user_img || '/static/img/img.jpg'"></div>
                 <div class="user-name">
-                    {{username}} | <span @click="handleCommand">退出</span>
+                    {{user.user_realname || ''}} | <span @click="handleCommand">退出</span>
                 </div>
                 <!-- 用户名下拉菜单 -->
 <!--                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
@@ -54,6 +54,7 @@
 <script>
     import bus from '../common/bus';
     import {user} from '@/api'
+    import {mapGetters,mapState} from 'vuex';
     export default {
         data() {
             return {
@@ -64,19 +65,18 @@
             }
         },
         computed:{
-            username(){
-                let username = localStorage.getItem('ms_username');
-                return username ? username : this.name;
-            }
+            ...mapGetters([
+                'user'
+            ])
         },
         methods:{
             // 用户名下拉菜单选择事件
             handleCommand(command) {
-                
-                user.logout.call(this, {
-                    method: 'get',
-                    url: '/api/admin/login/logout'
-                })
+                this.$store.commit('USER_SIGNOUT');
+                // user.logout.call(this, {
+                //     method: 'get',
+                //     url: '/api/admin/login/logout'
+                // })
             },
             // 侧边栏折叠
             collapseChage(){
@@ -112,6 +112,8 @@
             }
         },
         mounted(){
+            let state = this;
+            console.log(state.$store, '数据')
             if(document.body.clientWidth < 1500){
                 this.collapseChage();
             }

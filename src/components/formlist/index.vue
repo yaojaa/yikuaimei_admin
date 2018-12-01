@@ -1,6 +1,6 @@
 <template>  
   <el-form ref="form" :model="form" :rules="rules" class="demo-ruleForm"  label-position="right" :label-width="labelWidth">
-      <form-item :formdata="formdata" :labelWidth="labelWidth"></form-item>
+      <form-item :formdata="formdata" :labelWidth="labelWidth" ref="formitem"></form-item>
       <el-form-item>
           <el-button type="primary" @click="onSubmit('form')">表单提交</el-button>
           <el-button>取消</el-button>
@@ -96,15 +96,13 @@ export default {
       return form;
     },
     onSubmit(formName) {
-      // this.$message.success("提交成功！");
-      console.log(this.form);
+      this.form = this.$refs.formitem.getform();
       this.$refs[formName].validate(valid => {
         this.setForm(Object.assign({}, this.form));
 
         if (valid) {
           let form = this.setForm(Object.assign({}, this.form));
-          console.log(form, '909090909090')
-          this.$emit('submit', form)
+          this.$emit('submit', this.form)
         } else {
           console.log("error submit!!");
           return false;

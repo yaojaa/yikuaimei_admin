@@ -86,13 +86,13 @@
 
             </el-table>
 
-            <div class="pagination" v-if="page.total > page.pageSize">
+            <div class="pagination" v-if="page.total > page.page_size">
                 <!-- <el-pagination @current-change="handleCurrentChange" layout="prev, pager, next" :total="page.total" :current-page="page.currentPage">
                 </el-pagination> -->
                 <el-pagination
                   @current-change="handleCurrentChange"
-                  :current-page.sync="page.currentPage"
-                  :page-size="page.pageSize"
+                  :current-page.sync="page.page"
+                  :page-size="page.page_size"
                   :total="page.total"
                   layout="prev, pager, next, jumper">
                 </el-pagination>
@@ -112,8 +112,8 @@
                 tableData: [],//表格数据
                 tableUrl:"",
                 page:{
-                    currentPage:1,//当前页
-                    pageSize:10,
+                    page:1,//当前页
+                    page_size:10,
                 },
             }
         },
@@ -123,6 +123,10 @@
             border: Boolean,
             axiosType: String,
             pageSize: Number,
+            isPage: {
+                type: Boolean,
+                default: true
+            },
             query: {
                 type: Object,
                 default: function(){
@@ -146,13 +150,13 @@
             this.page.pageSize = this.pageSize || this.page.pageSize;
 
             this.getPageData({
-                currentPage: this.page.currentPage,
-                pageSize: this.page.pageSize || this.pageSize
+                currentPage: this.page.page,
+                pageSize: this.page.page_size
             })
 
             this.getData({
-                page: this.page.currentPage,
-                page_size: this.page.pageSize
+                is_page: 1,
+                page: this.page.page
             });
         },
         mounted(){
@@ -169,15 +173,15 @@
                 let _this = this;
 
 
-                params.page = params.page || this.page.currentPage || 1;
-                params.page_size = params.page_size || this.page.pageSize || this.pageSize || 10;
+                params.page = params.page || this.page.page || 1;
+                params.page_size = params.page_size || this.page.page_size || this.page_size || 10;
 
                 this.loading = true;
                 console.log(this.query, '-----')
                 this.Axios({
                     url: _this.url,
                     type: type || _this.axiosType,
-                    params: {...params,...this.query},
+                    params: {...params,...this.query, is_page: this.isPage ? 1 : 0},
                     // params: {},
                     successfn(d){
 
@@ -263,8 +267,8 @@
                         //     total:158
                         // }
 
-                        _this.page.currentPage = parseInt(page.current_page);
-                        _this.page.pageSize = parseInt(page.page_size);
+                        _this.page.page = parseInt(page.current_page);
+                        _this.page.page_size = parseInt(page.page_size);
                         _this.page.total = parseInt(page.total);
 
                         _this.getPageData({
@@ -371,11 +375,14 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {  //删除
-
                     _this.loading = true;
                     let params = {};
-                    let id = handle.idName || _this.tableJson.idName || 'id';
-                    params[id] = row[id]
+                    console.log(handle.params, '0-0-0-')
+                    // let id = handle.idName || _this.tableJson.idName || 'id';
+                    let {name, data} = handle.params;
+                    console.log(name, data);
+                    params[name] = row[data];
+                    console.log(params, 'params');
 
                     _this.Axios({
                         url: handle.axiosUrl,
@@ -383,14 +390,14 @@
                         params: params,
                         successfn(res){
                             _this.loading = false;
-
                             if(res.code != 0){
                                 _this.$alert(res.msg, '温馨提示');
                                 return;
                             }
 
                             _this.tableData = _this.tableData.filter(e => {
-                                return e[id] != row[id];
+
+                                return e[data] != row[data];
                             })
                             
                             _this.$message({
@@ -411,26 +418,26 @@
             // 分页导航
             handleCurrentChange(val) {
 
-                this.page.currentPage = val;
+                this.page.page = val;
 
-                console.log(this.page.currentPage)
+                console.log(this.page.page)
 
                 this.getPageData({
-                    currentPage: this.page.currentPage
+                    page: this.page.page
                 })
 
                 this.getData({
-                    page: this.page.currentPage,
-                    page_size: this.page.pageSize
+                    page: this.page.page,
+                    page_size: this.page.page_size
                 });
 
             },
             handleSizeChange(val) {
 
-                this.page.pageSize = val;
+                this.page.page_size = val;
                 this.getData({
-                    page: this.page.currentPage,
-                    page_size:this.page.pageSize
+                    page: this.page.page,
+                    page_size:this.page.page_size
                 });
             },
 
@@ -445,10 +452,10 @@
                 }
             },
 
-            getPageData({currentPage, pageSize, path}){ //存储页，条数
-                let page = {
-                    currentPage: currentPage || 1,
-                    pageSize: pageSize || this.pageSize || 10
+            getPageData({page, page_size, path}){ //存储页，条数
+                page = {
+                    page: page || 1,
+                    page_size: page_size || this.page_size || 10
                 };
                 let session = {};
                 path = path || this.$route.path;

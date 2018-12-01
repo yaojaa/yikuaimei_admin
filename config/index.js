@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api':{
-        target:'http://dev.countinsight.com/api/admin',
+        target:'http://dev.countinsight.com/api',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'   //重写接口

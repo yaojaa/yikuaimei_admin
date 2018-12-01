@@ -19,7 +19,6 @@
             </el-date-picker>
           </template>
           <template v-if="item.type === 'single'">
-            {{form[item.name]}}
             <el-radio v-for="(option,index) in item.options" :key="'single' + idx + index" v-model="form[item.name]" :label="option.name">
               {{option.label}}
             </el-radio>
@@ -160,6 +159,9 @@ export default {
     }
   },
   methods: {
+    getform(){
+      return this.form;
+    },
     checklabel(label, index) {
       let arr = this.formdata[index].value;
       let ischeck = arr.indexOf(label) > -1;

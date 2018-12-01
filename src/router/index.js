@@ -29,6 +29,17 @@ export default new Router({
                     path: '/createGood',
                     component: resolve => require(['../view/goods/createGood.vue'], resolve),
                     meta: { title: '添加商品' }
+                },
+                {
+                    path: '/categorylist',
+                    component: resolve => require(['../view/goods/categorylist.vue'], resolve),
+                    meta: { title: '分类管理' }
+                },
+                {
+                    name: 'createCategory',
+                    path: '/createCategory',
+                    component: resolve => require(['../view/goods/createCategory.vue'], resolve),
+                    meta: { title: '编辑分类' }
                 }
             ]
         },
