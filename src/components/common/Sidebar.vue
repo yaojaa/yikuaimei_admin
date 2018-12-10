@@ -1,7 +1,6 @@
 <template>
     <div class="sidebar">
-        <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse"
-           unique-opened router >
+        <el-menu class="sidebar-el-menu" :default-active="onRoutes" unique-opened router >
             <template v-for="item in items">
                 <template v-if="item.subs">
                     <el-submenu :index="item.index" :key="item.index">
@@ -28,7 +27,7 @@
     export default {
         data() {
             return {
-                collapse: false,
+                collapse: true,
                 breadcrumb:[],
                 items: [
                     {
@@ -82,14 +81,8 @@
                     },
                     {
                         icon: 'iconfont icon-kefu',
-                        index: '/servermanage',
-                        title: '营销管理',
-                        subs:[
-                            {
-                                index:'/servermanage',
-                                title:'营销应用'
-                            }
-                        ]
+                        index: '/case',
+                        title: '案例'
                     },
                     {
                         icon: 'iconfont icon-guanggaoguanli',

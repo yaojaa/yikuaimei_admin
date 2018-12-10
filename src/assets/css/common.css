@@ -182,3 +182,8 @@
 .packageInfo .el-table .cell, .el-table th div{
     padding-right: 0;
 }
+
+.page-container{
+    padding-top: 10px;
+    width: 50%
+}
