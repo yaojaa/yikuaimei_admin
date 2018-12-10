@@ -18,12 +18,12 @@ export default new Router({
                 {
                     path: '/index',
                     component: resolve => require(['../view/index.vue'], resolve),
-                    meta: { title: '核心数据' }
+                    meta: { title: '首页' }
                 },
                 {
-                    path: '/template',
-                    component: resolve => require(['../components/page/template.vue'], resolve),
-                    meta: { title: '共用模板' }
+                    path: '/goodList',
+                    component: resolve => require(['../view/goods/goodList.vue'], resolve),
+                    meta: { title: '平台商品' }
                 },
                 {
                     // 权限页面
