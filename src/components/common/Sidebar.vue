@@ -1,7 +1,6 @@
 <template>
     <div class="sidebar">
-        <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse"
-           unique-opened router >
+        <el-menu class="sidebar-el-menu" :default-active="onRoutes" unique-opened router >
             <template v-for="item in items">
                 <template v-if="item.subs">
                     <el-submenu :index="item.index" :key="item.index">
@@ -28,7 +27,7 @@
     export default {
         data() {
             return {
-                collapse: false,
+                collapse: true,
                 breadcrumb:[],
                 items: [
                     {
@@ -82,18 +81,12 @@
                     },
                     {
                         icon: 'iconfont icon-kefu',
-                        index: '/servermanage',
-                        title: '营销管理',
-                        subs:[
-                            {
-                                index:'/servermanage',
-                                title:'营销应用'
-                            }
-                        ]
+                        index: '/case',
+                        title: '案例'
                     },
                     {
                         icon: 'iconfont icon-guanggaoguanli',
-                        index: 'index6',
+                        index: 'index61',
                         title: '加盟商管理',
                         subs: [
                             {
@@ -162,6 +155,209 @@
                         index: 'index10',
                         title: '美丽档案'
                     },
+
+                   /**以下为示例页面可参考使用：***/
+                        {
+                        icon: 'iconfont icon-shouye',
+                        index: 'index1',
+                        title: '以下为示例页面可参考使用：'
+                    },
+
+                    {
+                        icon: 'iconfont icon-guanli',
+                        index: 'index3',
+                        title: '用户管理',
+                        subs: [
+                            {
+                                index: '/userlist',
+                                title: '用户管理'
+                            },{
+                                index: '/userincome',
+                                title: '用户收入'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'iconfont icon-shangjiacopy',
+                        index: '/business2',
+                        title: '商家',
+                        subs: [
+                            {
+                                index: '/business2',
+                                title: '商家管理'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'iconfont icon-kefu',
+                        index: '/servermanage',
+                        title: '客服',
+                        subs:[
+                            {
+                                index:'/servermanage',
+                                title:'客服统计'
+                            },
+                            {
+                                index:'/servermanage/addserver',
+                                title:'添加客服'
+                            },
+                            {
+                                index:'/servermanage/check',
+                                title:'查看记录'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'iconfont icon-guanggaoguanli',
+                        index: 'index6',
+                        title: '广告',
+                        subs: [
+                            {
+                                index: '/ad/admin',
+                                title: '广告管理'
+                            },
+                            {
+                                index: '/ad/all',
+                                title: '一站搞定'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'iconfont icon-yingxiaocopy',
+                        index: 'index99',
+                        title: '营销',
+                        subs: [
+                            {
+                                index: '/marketcoupon',
+                                title: '优惠券'
+                            },
+                            {
+                                index: '/physicalcoupon',
+                                title: '实物券'
+                            },
+                            {
+                                index: '/event',
+                                title: '总部活动'
+                            },
+                            {
+                                index: '/marketgame',
+                                title: '游戏'
+                            },
+                            {
+                                index: '/content',
+                                title: '内容'
+                            },
+                            {
+                                index: '/style',
+                                title: '风格'
+                            },
+                            {
+                                index: '/care/app',
+                                title: '关怀'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'iconfont icon-xiaoxicopy',
+                        index: '/message/sms',
+                        title: '消息'
+                    },
+                    {
+                        icon: 'iconfont icon-zhanhuiguanli',
+                        index: '/exhibitionmanage',
+                        title: '展会',
+                        subs: [
+                            {
+                                index: '/exhibitionmanage',
+                                title: '展会管理'
+                            },
+                            {
+                                index: '/exhibitionchart',
+                                title: '展会数据'
+                            }
+                        ]
+
+                    },
+                    {
+                        icon: 'iconfont icon-yuangongguanli',
+                        index: '/checkmanage',
+                        title: '审核管理',
+                        subs: [
+                            {
+                                index: '/checkmanage',
+                                title: '审核管理'
+                            },
+                            {
+                                index: '/checkmanage/bussinessinfo',
+                                title: '商家详情'
+                            },
+                            {
+                                index: '/checkmanage/mealinfo',
+                                title: '套餐详情'
+                            },
+                            {
+                                index: '/checkmanage/caseinfo',
+                                title: '案例详情'
+                            },
+                            {
+                                index: '/checkmanage/exhibitioninfo',
+                                title: '展会详情'
+                            }
+                        ]
+
+                    },
+                    {
+                        icon: 'iconfont icon-fenzigongsi',
+                        index: '/branchManagement',
+                        title: '分公司管理'
+                    },
+                    {
+                        icon: 'iconfont icon-jiankong',
+                        index: 'index18',
+                        title: '监控中心',
+                        subs: [
+                            {
+                                index: '/monitor/exemption',
+                                title: '抽免单'
+                            },
+                            {
+                                index: '/monitor/order',
+                                title: '订单管理'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'iconfont icon-shujubaobiao',
+                        index: '/datachart',
+                        title: '数据报表'
+                    },
+                    {
+                        icon: 'iconfont icon-shezhicopy',
+                        index: '',
+                        title: '设置',
+                        subs: [
+                            {
+                                index: '/set/member',
+                                title: '成员管理'
+                            },
+                            {
+                                index: '/set/role',
+                                title: '角色管理'
+                            },
+                            {
+                                index: '/set/log',
+                                title: '日志管理'
+                            },
+                            {
+                                index: '/set/account',
+                                title: '账号管理'
+                            },
+                            {
+                                index: '/set/alert',
+                                title: '弹窗设置'
+                            }
+                        ]
+                    }     
                 ]
             }
         },

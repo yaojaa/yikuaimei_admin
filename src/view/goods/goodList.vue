@@ -30,7 +30,7 @@ export default {
   name: "tabletest",
   data() {
     return {
-      url: "/api/admin/shopgood/index",
+      url: "/api/admin/shopgoods/index",
       breadcrumb: [
         //面包屑
         {
@@ -63,7 +63,91 @@ export default {
               }
 
             ]
-          }
+          },
+          {
+            type: "input-text", //名称筛选
+            label: "商品名称",
+            name: "good_name",
+            value: "",
+            placeholder: "请输入名称"
+          },
+          {
+            type: "search-tag", //名称筛选
+            label: "选择状态",
+            name: "is_use",
+            value: "",
+            options: [
+              {
+                name: '全部',
+                value: ''
+              },
+              {
+                name: '已上架',
+                value: '2'
+              },
+              {
+                name: '未上架',
+                value: '1'
+              }
+
+            ]
+          },
+          {
+            type: "search-tag", //分类筛选
+            label: "选择分类",
+            name: "good-fenlei",
+            value: "",
+            options: [
+              {
+                name: '全部',
+                value: ''
+              },
+              {
+                name: '美甲',
+                value: '1'
+              },
+              {
+                name: '清洁',
+                value: '2'
+              },
+              {
+                name: '收缩毛孔',
+                value: '3'
+              },
+              {
+                name: '美白',
+                value: '3'
+              }
+            ]
+          },
+          {
+            type: "search-tag", //分类筛选
+            label: "选择标签",
+            name: "good-tag",
+            value: "",
+            options: [
+              {
+                name: '全部',
+                value: ''
+              },
+              {
+                name: '美甲1',
+                value: '1'
+              },
+              {
+                name: '清洁2',
+                value: '2'
+              },
+              {
+                name: '收缩毛孔3',
+                value: '3'
+              },
+              {
+                name: '美白4',
+                value: '3'
+              }
+            ]
+          },
         ]
       },
       tableJson: {
@@ -149,7 +233,9 @@ export default {
   },
   created() {},
   computed: {},
-  methods: {}
+  methods: {
+    
+  }
 };
 </script>
 

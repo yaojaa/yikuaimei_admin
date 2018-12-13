@@ -2,7 +2,7 @@
     <div class="wrapper">
         <v-head></v-head>
         <v-sidebar></v-sidebar>
-        <div class="content-box" :class="{'content-collapse':collapse}">
+        <div class="content-box" >
            <!--  <v-tags></v-tags> -->
             <div class="page-container">
                 <transition name="el-fade-in">
@@ -23,9 +23,8 @@
     export default {
         data(){
             return {
-                tagsList: [],
-                collapse: false
-            }
+                tagsList: []
+                 }
         },
         components:{
             vHead, vSidebar, vTags
