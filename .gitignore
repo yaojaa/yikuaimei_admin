@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-node_modules/
-
-=======
 *.log
 *.temp
 /node_modules
->>>>>>> a36d060a03773c98c29342db21018e160496462a
