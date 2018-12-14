@@ -110,16 +110,19 @@ export default {
       });
     },
   },
-  mounted() {},
-  created() {
-    let { form, rules, formdata } = this;
+  mounted() {
+     let { form, rules, formdata } = this;
     formdata.forEach((o, i) => {
       let name = o["name"];
       rules[name] = o["rules"];
       form[name] = o["value"];
     });
-    this.form = Object.assign({}, form);
+    this.form = this.$refs.formitem.getform();
+    console.log('this.form',this.form)
     this.rules = Object.assign({}, rules);
+  },
+  created() {
+   
   }
 };
 </script>

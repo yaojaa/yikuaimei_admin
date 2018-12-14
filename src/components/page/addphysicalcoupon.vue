@@ -8,7 +8,7 @@
         <div class="page-content">
             <div class="panel">
                 <div class="form-panel p-xl">
-                    <formlist :formdata="options"></formlist>
+                    <formlist :formdata="options" @onsubmit="submit()"></formlist>
                 </div>
             </div>
         </div>
@@ -111,7 +111,20 @@ export default {
         {
           name: "pictrue",
           type: "upload",
-          label: "图片",
+          label: "身份证正面",
+          rules: [
+            {
+              required: true,
+              message: "请添加图片",
+              trigger: "blur"
+            }
+          ],
+          value: ""
+        },
+        {
+          name: "pictrue",
+          type: "upload",
+          label: "身份证反面",
           rules: [
             {
               required: true,
@@ -144,7 +157,13 @@ export default {
   },
   created() {},
   computed: {},
-  methods: {}
+  methods: {
+    submit(e){
+
+      //....
+
+    }
+  }
 };
 </script>
 

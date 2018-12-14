@@ -101,7 +101,9 @@
             search(search) { //搜索
 
                 search.list.forEach((e,i) => {
-                    this.searchVal[e.name] = e.value;
+                    if(e.value!==''){
+                      this.searchVal[e.name] = e.value;
+                    }
                 })
 
                 this.$parent.getData && this.$parent.getData(this.searchVal);

@@ -160,6 +160,7 @@ export default {
   },
   methods: {
     getform(){
+      console.log('getform',this.form)
       return this.form;
     },
     checklabel(label, index) {
