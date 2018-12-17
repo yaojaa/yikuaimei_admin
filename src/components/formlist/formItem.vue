@@ -1,11 +1,16 @@
 <template>
-  <div :style="'margin-left:' +  (marginleft || 0) + 'px'">
+  <div :style="'margin-left:' +  (marginleft || 0) + 'px'" id="formItem">
       <el-form-item :label="item.label" :prop="item.name" v-for="(item, idx) in dataList" :key="'item' + idx">
           <template v-if="item.type === 'input'">
-            <el-input v-model="form[item.name]" :style="item.key0 || item.key1 ? 'width: ' + (item.width||'50%') : ''" :placeholder="item.placeholder">
+            <el-input v-model="form[item.name]" 
+             :style="item.key0 || item.key1 ? 'width: ' + (item.width||'50%') : ''"
+             :placeholder="item.placeholder" 
+             :suffix-icon="item.suffix_icon">
               <template slot="prepend" v-if="item.key0">{{item.key0}}</template>
               <template slot="append" v-if="item.key1">{{item.key1}}</template>
             </el-input>
+            <span class="outText">{{item.outText}}</span>
+            <p v-if="item.remarks">可设置多个标签</p>
           </template>
           <template v-if="item.type === 'timeSlot'">
             <el-date-picker
@@ -96,6 +101,7 @@
 </template>
 <script>
 import data from "./data";
+
 const pickerOptions = {
   shortcuts: [
     {
@@ -236,6 +242,7 @@ label.el-radio {
   margin: 0 20px 20px 0;
 }
 
+
 .labelBox {
   display: flex;
   flex-flow: row wrap;
@@ -259,5 +266,18 @@ label.el-radio {
 }
 .addressBox {
   display: flex;
+}
+.outText {
+  position: absolute;
+  right: -20px;
+  top: 0;
+}
+
+</style>
+
+<style>
+#formItem .el-input__suffix{
+  right: 0;
+  border-radius: 4px;
 }
 </style>
