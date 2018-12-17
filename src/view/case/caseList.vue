@@ -7,17 +7,18 @@
             </el-breadcrumb> 
         </div> 
 
-     <div class="tags" v-for="(item,key,index) in tagsListGroup">
+       <div class="status_filter" v-for="(item,key,index) in tagsListGroup">
         <ul>
-            <li class="tags-li">
-                  {{key}} <span v-for="(tag,i) in item"> 
-                 <a :href="'?tag='+tag.key"> {{tag.title}} </a>
-              </span>
+            <li class="tags-li" >
+                  {{key}} 
+<router-link :class="tag.key+tag.value == status_filter?'active':'rrrr'" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/case', query: {
+[tag.key]: tag.value }}">{{tag.title}}</router-link>
+ 
             </li>
         </ul>
       </div>
 
-        <nomal-table :table-json="tableJson" :url="url"></nomal-table>
+        <nomal-table ref="table" :table-json="tableJson" :url="url"></nomal-table>
 </div>
 </template>
 
@@ -27,6 +28,7 @@
     export default {
         data() {
             return {
+                status_filter:'',
                 tagsListGroup:{
                 	'选择状态:':[
 			                {title:'全部',key:'all'},
@@ -131,6 +133,17 @@
         },
         created() {
             
+        },
+        beforeRouteUpdate (to, from, next) {
+
+            console.log(to.query)
+
+            this.status_filter = Object.keys(to.query)[0]+Object.values(to.query)[0]
+
+            console.log(this.status_filter)
+
+            this.$refs.table.getData(to.query)
+            next()
         },
         computed: {
            

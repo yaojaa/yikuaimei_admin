@@ -286,10 +286,13 @@
             handleSelectionChange(selection){ //勾选选择框
                 console.log(selection)
             },
-
+            //操作按钮
             handleButtons(handle, scope){
+                console.log(handle.url+'/'+scope.row[handle.query])
                 if(handle.url){
-                    this.$router && this.$router.push({ path: handle.url });
+
+                 this.$router.push({ path: handle.url+'/'+scope.row[handle.query] })
+
                 }else if(handle.onClick){
                     handle.onClick(this, this.$parent, scope.row);
                 }else{

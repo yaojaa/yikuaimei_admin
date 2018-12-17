@@ -34,7 +34,12 @@ export default new Router({
                     meta: { title: '商品订单', permission: true }
                 },
 
-                
+                   {
+                    // 订单管理--订单详情
+                    path: '/order/order_detail/:order_code',
+                    component: resolve => require(['../view/order/detail.vue'], resolve),
+                    meta: { title: '订单详情', permission: true }
+                },
                  {
                     // 案例页面
                     path: '/case',

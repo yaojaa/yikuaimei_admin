@@ -54,11 +54,11 @@
                     },
                     {
                         icon: 'iconfont icon-shangjiacopy',
-                        index: '/business',
-                        title: '订单管理',
+                        title: '订单管理a',
+                        index:'/order',
                         subs: [
                             {
-                                index: '/business',
+                                index: '/order/list_goods',
                                 title: '平台商品'
                             },
                             {
