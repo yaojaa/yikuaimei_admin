@@ -30,7 +30,7 @@ export default {
   name: "tabletest",
   data() {
     return {
-      url: "/api/admin/shopgood/index",
+      url: "/api/admin/shopgoods/index",
       breadcrumb: [
         //面包屑
         {
@@ -63,6 +63,13 @@ export default {
               }
 
             ]
+          },
+          {
+            type: "input-text", //名称筛选
+            label: "商品名称",
+            name: "good_name",
+            value: "",
+            placeholder: "请输入名称"
           }
         ]
       },
@@ -149,7 +156,9 @@ export default {
   },
   created() {},
   computed: {},
-  methods: {}
+  methods: {
+    
+  }
 };
 </script>
 
