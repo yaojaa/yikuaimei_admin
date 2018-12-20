@@ -35,24 +35,41 @@
 
         			<div class="order_item">
         				<div class="order_tit">
-        					订单编号:2345720005765350 下单时间：2018-10-25 10:00:00
+        					订单编号:{{d.order_code}} 下单时间：{{d.order_pay_time}}
         				</div>
 
         				<div class="flex_box cell">
         					
         					<div class="cell_item">
-        						<div>
-                                            <img src="https://fakeimg.pl/50x50/" alt="美白护手霜">
-                                            <p>美白护手霜</p>
-                                            <p>×1</p>
+        					<div :key="index" v-for="(item,index) in d.goods_list">
+                                            <img :src="item.goods_img" />
+                                            <p>{{item.goods_name}}</p>
+                                            <p>¥{{item.goods_price}}</p>
+                                            <p>×{{item.goods_num}}</p>
+
                                         </div>
         					</div>
-        					<div class="cell_item">¥290.00</div>
+
         					<div class="cell_item">韩雪儿 13783838333</div>
-        					<div class="cell_item">待发货</div>
-        					<div class="cell_item">满1000减200</div>
+                            <div class="cell_item">
+
+        						{{ '未知 待处理 已付款/待发货 已发货 已发货/待评价 已评价 已取消'.split(' ')[d.status]}}
+
+        					</div>
+
+        					<div class="cell_item">等接口（满1000减200）</div>
 
         				</div>
+							<div class="total">
+								订单商品金额：{{d.order_price}}元
+
+							订单总配送费：+{{d.order_dis_price}}元
+
+							订单优惠金额：{{d.order_reduce_price}}元
+
+							实收款： {{d.order_pay_price}}元
+							</div>
+        				
         				
         			</div>
 				

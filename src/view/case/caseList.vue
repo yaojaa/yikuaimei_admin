@@ -11,14 +11,15 @@
         <ul>
             <li class="tags-li" >
                   {{key}} 
-<router-link :class="tag.key+tag.value == status_filter?'active':'rrrr'" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/case', query: {
-[tag.key]: tag.value }}">{{tag.title}}</router-link>
+<router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/case', query: {
+[tag.key]: tag.value }}">
+{{tag.title}}</router-link>
  
             </li>
         </ul>
       </div>
 
-        <nomal-table ref="table" :table-json="tableJson" :url="url"></nomal-table>
+        <nomal-table ref="table" :table-json="tableJson" :url="'/api/admin/cases/index'"></nomal-table>
 </div>
 </template>
 
@@ -29,21 +30,16 @@
         data() {
             return {
                 status_filter:'',
+                category:[],
                 tagsListGroup:{
-                	'选择状态:':[
-			                {title:'全部',key:'all'},
-			                {title:'已审核',key:'all'},
-			                {title:'全部',key:'未审核'}
-                             ],
-
-                    '选择分类:':[
-			                {title:'全部',key:'all'},
-			                {title:'已审核',key:'all'},
-			                {title:'全部',key:'未审核'}
+                	'审核状态:':[
+			                {title:'全部',key:'review_status',value:'all'},
+			                {title:'已审核',key:'review_status',value:'1'},
+			                {title:'全部',key:'review_status',value:'2'}
                              ],
                     '选择标签:':[
-			                {title:'全部',key:'all'},
-			                {title:'已审核',key:'all'},
+			                {title:'全部',key:'2'},
+			                {title:'已审核',key:'1'},
 			                {title:'全部',key:'未审核'}
                              ]
                 },
@@ -53,15 +49,15 @@
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "ID",
-                            "prop": "name",
+                            "label": "案例编号",
+                            "prop": "_id",
                             "width": ""
                         },
                         {
                             "type": "text",
                             "align": "center",
                             "label": "创建时间",
-                            "prop": "name",
+                            "prop": "create_time",
                             "width": "",
                             
                         },
@@ -69,7 +65,7 @@
                             "type": "text",
                             "align": "center",
                             "label": "内容",
-                            "prop": "address",
+                            "prop": "user_info.user_name",
                             "width": "",
                             
                         },
@@ -85,7 +81,7 @@
                             "type": "text",
                             "align": "center",
                             "label": "城市",
-                            "prop": "date",
+                            "prop": "create_user['city_name']",
                             "width": "",
                             
                         },
@@ -93,7 +89,7 @@
                             "type": "text",
                             "align": "center",
                             "label": "状态",
-                            "prop": "date",
+                            "prop": "review_status",
                             "width": "",
                             
                         },
@@ -104,13 +100,13 @@
                             "width": "200",
                             "list": [
                                 {
-                                    "label":"查看",
+                                    "label":"查看详情",
                                     "type":"detail",
                                     "url":"/care/templateWeChat", //优先执行url
 
                                 },
                                 {
-                                    "label":"编辑",
+                                    "label":"查看评论",
                                     "type":"edit",
                                     "url":"/care/templateWeChat", //优先执行url
 
@@ -136,20 +132,35 @@
         },
         beforeRouteUpdate (to, from, next) {
 
-            console.log(to.query)
-
             this.status_filter = Object.keys(to.query)[0]+Object.values(to.query)[0]
-
             console.log(this.status_filter)
-
             this.$refs.table.getData(to.query)
             next()
         },
         computed: {
+
            
         },
+        mounted(){
+            this.getcategoryList()
+        },
         methods: {
+            //获取行业分类列表
+            getcategoryList(){
+                this.$axios.get('/api/admin/select/categoryList')
+                .then((res)=>{
+                    const categoryData = res.data.data.map((item)=>{
+                        return   {
+                            title:item.category_name,
+                            key:'category_id',
+                            value:item.category_id
+                        }
+                    })
 
+                    this.tagsListGroup['行业分类'] = categoryData
+                    this.$forceUpdate()
+                })
+            }
 
         }
     }
