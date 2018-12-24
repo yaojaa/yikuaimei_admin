@@ -6,63 +6,7 @@
             </div>
         </div>
         <div class="page-content">
-          <div class="sub-heading">
-            <h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
-              <div class="sub-actions">
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood' })">添加商品</el-button>
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/categorylist' })">管理分类</el-button>
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/labellist' })">管理标签</el-button>
-            </div>
-          </div>
-          <table-search :searchs="searchs"></table-search>
-          <el-table
-            :data="tableData"
-            border
-            :row-class-name="tableRow" 
-            :span-method="tableJson.spanMethod" 
-            :cell-style="tableJson.cellstyle"
-            header-row-class-name="head-row" 
-            v-loading="loading"
-            style="width: 100%" 
-            ref="multipleTable"
-            @sort-change="sortable" 
-            @selection-change="handleSelectionChange"
-          >
-            <el-table-column
-              label="商品"
-              width="80">
-              <template scope="scope">
-                <el-icon name="time"></el-icon>
-                <span style="margin-left: 10px">{{ scope.row.date }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="姓名"
-              width="180">
-              <template scope="scope">
-                <el-popover trigger="hover" placement="top">
-                  <p>姓名: {{ scope.row.name }}</p>
-                  <p>住址: {{ scope.row.address }}</p>
-                  <div slot="reference" class="name-wrapper">
-                    <el-tag>{{ scope.row.name }}</el-tag>
-                  </div>
-                </el-popover>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作">
-              <template scope="scope">
-                <el-button
-                  size="small"
-                  @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                <el-button
-                  size="small"
-                  type="danger"
-                  @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-
-            <!-- <nomal-table :table-json="tableJson" :url="url"  :query="{good_type: 2}">
+          <nomal-table :table-json="tableJson" :url="url"  :query="{good_type: 2}">
                 <div class="sub-heading">
                     <h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
                     <div class="sub-actions">
@@ -72,7 +16,7 @@
                     </div>
                 </div>
                 <table-search :searchs="searchs"></table-search>
-            </nomal-table> -->
+            </nomal-table>
         </div>
     </div>
 </template>
