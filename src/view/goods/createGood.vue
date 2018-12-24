@@ -6,11 +6,20 @@
             </div>
         </div>
         <div class="page-content">
-            <div class="panel">
-                <div class="form-panel p-xl">
-                    <formlist :formdata="options" :labelWidth="'200px'"></formlist>
+          <template>
+            <el-tabs v-model="editName" @tab-click="handleClick">
+              <el-tab-pane label="编辑基本信息" name="BasicInfo">
+                <div class="panel">
+                    <div class="form-panel p-xl">
+                        <formlist :formdata="options" :labelWidth="'200px'"></formlist>
+                    </div>
+                    
                 </div>
-            </div>
+              </el-tab-pane>
+              <el-tab-pane label="编辑商品详情" name="ProductDetails">配置管理</el-tab-pane>
+            </el-tabs>
+          </template>
+            
         </div>
     </div>
 </template>
@@ -23,6 +32,7 @@ export default {
   name: "tabletest",
   data() {
     return {
+      editName: 'BasicInfo', // tab标签默认定位
       url: "",
       breadcrumb: [
         //面包屑
@@ -39,10 +49,10 @@ export default {
       ],
       options: [
         {
-          name: "eventName",
+          name: "name",
           type: "input",
-          label: "名称",
-          placeholder: '名称为2-13字',
+          label: "名称：",
+          placeholder: '名称为2-30个字',
           rules: [
             {
               required: true,
@@ -51,38 +61,19 @@ export default {
             },
             {
               min: 2,
-              max: 13,
-              message: "长度在 2 到 13 个字符",
+              max: 50,
+              message: "长度在2-30个字符",
               trigger: "blur"
             }
           ],
           value: ""
         },
         {
-          name: "describe",
+          name: "sellingPoint",
           type: "textarea",
-          label: "商品编码",
-          placeholder: "支持14位内的数字+英文组合",
-          rules: [
-            {
-              required: true,
-              message: "请填写商品编码",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "gameTemplate",
-          type: "textarea",
-          label: "商品卖点",
-          rules: [
-            {
-              required: true,
-              message: "请输入商品卖点",
-              trigger: "blur"
-            }
-          ],
+          label: "商品卖点：",
+          placeholder: "长度为2-50个字",
+          remarks: '在商品详情页标题下面展示卖点信息，建议50字以内',
           rules: [
             {
               required: true,
@@ -92,24 +83,57 @@ export default {
             {
               min: 2,
               max: 50,
-              message: "长度在 2 到 50 个字符",
+              message: "长度在2-50个字符",
               trigger: "blur"
             }
           ],
           value: ""
         },
         {
-          name: "coupon",
-          type: "selector",
-          label: "商品类目",
-          placeholder: '选择所属行业类目',
+          name: "businesSort",
+          type: "input",
+          label: "行业分类：",
+          suffix_icon:"el-icon-arrow-right",
+          placeholder: "请选择所属行业分类",
           rules: [
+            // @TODO type 是个弹窗吧？ 
             {
               required: true,
-              message: "请选择商品类目",
+              message: "请选择所属行业分类",
               trigger: "blur"
             }
           ],
+          value: ""
+        },
+        {
+          name: "lable",
+          type: "input",
+          label: "标签：",
+          inline:true,
+          placeholder: '选择所属行业类目',
+          suffix_icon:"el-icon-arrow-right",
+          remarks: '可设置多个标签',
+          value: ""
+        },
+        // @TODO 可以新写一个
+        {
+          name: "format",
+          type: "singleButton",
+          label: "规格",
+          rules: [],
+          options: [
+            {label: '无规格', name: 'none'},
+            {label: '添加规格', name: 'add'},
+          ],
+          value: "none"
+        },
+        // @TODO 默认多少
+        {
+          name: "exist",
+          type: "selector",
+          label: "库存：",
+          placeholder: '10000',
+          // @TODO 可设置多个标签
           options: [
             {
               label: '满2000减1000',
@@ -119,100 +143,98 @@ export default {
           value: ""
         },
         {
-          name: "pictrue",
-          type: "upload",
-          label: "商品视频",
-          rules: [
-            {
-              required: true,
-              message: "请添加商品视频",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "pictrue",
-          type: "upload",
-          label: "商品图片",
-          rules: [
-            {
-              required: true,
-              message: "请添加商品图片",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "pictrue",
-          type: "upload",
-          label: "商品展示图",
-          rules: [
-            {
-              required: true,
-              message: "请添加商品展示图",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "eventTime",
-          type: "single",
-          label: "规格",
-          rules: [
-          ],
+          name: "coupon",
+          type: "selector",
+          label: "单位：",
+          placeholder: '箱',
+          // @TODO 可设置多个标签
           options: [
-            {label: '无规格', name: 'none'},
-            {label: '有规格', name: 'have'},
+            {
+              label: '满2000减1000',
+              value: '001'
+            }
           ],
-          children: [
+          value: ""
+        },
+        {
+          name: "productCode",
+          type: "input",
+          label: "商品编码：",
+          placeholder: "支持14位以内的数字+英文组合",
+          rules: [
+            // @TODO type 是个弹窗吧？ 
             {
-              fatherName: 'none',
-              name: "price_purchase",
-              type: "input",
-              label: "售价",
-              key1: '元',
-              rules: [
-                {
-                  required: true,
-                  message: "请填写售价",
-                  trigger: "blur"
-                }
-              ],
-              value: ""
-            },
-            {
-              fatherName: 'none',
-              name: "price",
-              type: "input",
-              label: "原价",
-              key1: '元',
-              rules: [
-                {
-                }
-              ],
-              value: ""
-            },
-            {
-              fatherName: 'none',
-              name: "price_plate",
-              type: "input",
-              label: "成本",
-              key1: '元',
-              rules: [
-                {
-                  required: true,
-                  message: "请填写成本",
-                  trigger: "blur"
-                }
-              ],
-              value: ""
-            },
-            
+              required: true,
+              message: "请选择所属行业分类",
+              trigger: "blur"
+            }
           ],
-          value: "none"
+          value: ""
+        },
+        {
+          name: "sellPrice",
+          type: "input",
+          label: "售价",
+          outText: '元',
+          rules: [
+            {
+              required: true,
+              message: "请填写售价",
+              trigger: "blur"
+            }
+          ],
+          value: ""
+        },
+        {
+          name: "price",
+          type: "input",
+          label: "原价",
+          outText: '元',
+          rules: [
+            {
+              required: true,
+              message: "请填写原价",
+              trigger: "blur"
+            }
+          ],
+          value: ""
+        },
+        {
+          name: "productPng",
+          type: "upload",
+          label: "商品图片：",
+          title: "您可以上传3-6张图片及1个视频作为商品展示图，<br />展示在商品页顶部的图片，支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1242*1242，支持JPG、PNG等大部分格式图片，单张图片大小不超过5M ",
+          placeholder: "<p>添加图片</p><span>还可以添加6张</span>",
+          value: ""
+        },
+        // @TODO 文字有高亮 && 添加图片，还可以添加6张 & 添加视频 & 添加视频首图
+        {
+          name: "uploadArray",
+          type: "uploadArray",
+          title:'展示在商品页顶部的视频，<a>最多可上传 1 个视频</a>，支持MP4视频格式，<a>视频大小不能超过20M</a>',
+          content:[{
+            name: "productView",
+            label: "",
+            placeholder: "<p>添加视频</p>",
+          },
+          {
+            name: "productViewFirstPng",
+            label: "",
+            placeholder: "<p>添加视频首图</p>",
+          }]
+        },
+        {
+          name: "showPng",
+          type: "upload",
+          label: "商品展示图：",
+          title:'<p>展示在商品页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>',          
+          placeholder: "<p>添加图片</p><span>只能上传一张</span>",
+          value: ""
+        },
+        {
+          name: "next",
+          type: "button",
+          value: "下一步"
         }
       ]
     };
@@ -223,7 +245,14 @@ export default {
   },
   created() {},
   computed: {},
-  methods: {}
+  methods: {
+    /** *
+     * tab标签切换事件
+     */
+    handleClick(tab, event) {
+      console.log(tab, event);
+    }
+  }
 };
 </script>
 

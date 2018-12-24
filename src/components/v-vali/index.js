@@ -136,6 +136,7 @@ class Verify {
     }
   }
   check() {
+    console.log('check')
     var result = true
     var vm = this._vm
     return new Promise((reslove, reject) => {

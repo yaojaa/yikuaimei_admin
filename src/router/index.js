@@ -26,16 +26,43 @@ export default new Router({
                     meta: { title: '平台商品' }
                 },
                 {
+                    path: '/createGood',
+                    component: resolve => require(['../view/goods/createGood.vue'], resolve),
+                    meta: { title: '平台商品' }
+                },
+
+
+                  {
+                    // 订单管理
+                    path: '/order/list_goods',
+                    component: resolve => require(['../view/order/list_goods.vue'], resolve),
+                    meta: { title: '商品订单', permission: true }
+                },
+
+                
+                 {
+                    // 案例页面
+                    path: '/case',
+                    component: resolve => require(['../view/case/caseList.vue'], resolve),
+                    meta: { title: '案例列表', permission: true }
+                },
+                {
                     // 权限页面
                     path: '/permission',
                     component: resolve => require(['../components/page/Permission.vue'], resolve),
                     meta: { title: '权限测试', permission: true }
                 },
                 {
-                    // 测试表格
-                    path: '/table/:id',
-                    component: resolve => require(['../components/page/slot.vue'], resolve),
-                    meta: { title: '表格测试' }
+                    // 加盟商
+                    path: '/alliance',
+                    component: resolve => require(['../view/alliance.vue'], resolve),
+                    meta: { title: '加盟商' }
+                },
+                 {
+                    // 加盟商
+                    path: '/alliance_add',
+                    component: resolve => require(['../view/alliance_add.vue'], resolve),
+                    meta: { title: '添加加盟商' }
                 },
                 {
                     // 测试表格

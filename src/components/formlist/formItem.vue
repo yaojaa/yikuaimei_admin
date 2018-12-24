@@ -1,11 +1,16 @@
 <template>
-  <div :style="'margin-left:' +  (marginleft || 0) + 'px'">
-      <el-form-item :label="item.label" :prop="item.name" v-for="(item, idx) in dataList" :key="'item' + idx">
+  <div :style="'margin-left:' +  (marginleft || 0) + 'px'" id="formItem" >
+      <el-form-item :label="item.label" :prop="item.name" v-for="(item, idx) in dataList" :key="'item' + idx" :inline="item.inline">
           <template v-if="item.type === 'input'">
-            <el-input v-model="form[item.name]" :style="item.key0 || item.key1 ? 'width: ' + (item.width||'50%') : ''" :placeholder="item.placeholder">
+            <el-input v-model="form[item.name]" 
+             :style="item.key0 || item.key1 ? 'width: ' + (item.width||'50%') : ''"
+             :placeholder="item.placeholder" 
+             :suffix-icon="item.suffix_icon">
               <template slot="prepend" v-if="item.key0">{{item.key0}}</template>
               <template slot="append" v-if="item.key1">{{item.key1}}</template>
             </el-input>
+            <span class="outText">{{item.outText}}</span>
+            <p v-if="item.remarks">{{item.remarks}}</p>
           </template>
           <template v-if="item.type === 'timeSlot'">
             <el-date-picker
@@ -19,22 +24,50 @@
             </el-date-picker>
           </template>
           <template v-if="item.type === 'single'">
-            <el-radio v-for="(option,index) in item.options" :key="'single' + idx + index" v-model="form[item.name]" :label="option.name">
+            <el-radio v-for="(option,index) in item.options" :key="'single' + idx + index" v-model="form[item.name]" :label="option.name"  class="radio">
               {{option.label}}
             </el-radio>
-
           </template>
+
+          <template v-if="item.type === 'singleButton'">
+            <el-radio v-for="(option,index) in item.options" :key="'single' + idx + index" v-model="form[item.name]" :label="option.name">
+              <el-button>{{option.label}}</el-button>
+            </el-radio>
+          </template>
+
+          <template v-if="item.type === 'button'">
+            <el-button>{{item.value}}</el-button>
+          </template>
+          
           <template v-if="item.type === 'upload'">
+            <div class="upload-title" v-if="item.title" v-html="item.title"></div>
             <el-upload
               action="https://jsonplaceholder.typicode.com/posts/"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview(arguments[0],idx)"
               :on-remove="handleRemove">
-              <i class="el-icon-plus"></i>
+              <i class="el-icon-plus upload-placeholder" v-html="item.placeholder"></i>
             </el-upload>
           </template>
+
+          <template v-if="item.type === 'uploadArray'">
+            <div class="upload-title" v-if="item.title" v-html="item.title"></div>
+            <div class="uploadArray_content">
+              <el-upload
+                action="https://jsonplaceholder.typicode.com/posts/"
+                list-type="picture-card"
+                :on-preview="handlePictureCardPreview(arguments[0],idx)"
+                :on-remove="handleRemove" 
+                v-for="(content,idx) in item.content" :key="idx"
+                >
+                <i class="el-icon-plus upload-placeholder" v-html="content.placeholder"></i>
+              </el-upload>
+            </div>
+          </template>
+
           <template v-if="item.type === 'textarea'">
             <el-input v-model="form[item.name]" type="textarea" size="medium" :placeholder="item.placeholder"></el-input>
+            <p v-if="item.remarks">{{item.remarks}}</p>
           </template>
           <template v-if="item.type === 'selector'">
             <el-select v-model="form[item.name]" :placeholder="item.placeholder">
@@ -96,6 +129,7 @@
 </template>
 <script>
 import data from "./data";
+
 const pickerOptions = {
   shortcuts: [
     {
@@ -151,6 +185,9 @@ export default {
     },
     'checked': {
       default: ''
+    },
+    'inline':{
+      default: false
     }
   },
   computed: {
@@ -160,6 +197,7 @@ export default {
   },
   methods: {
     getform(){
+      console.log('getform',this.form)
       return this.form;
     },
     checklabel(label, index) {
@@ -230,7 +268,7 @@ export default {
   width: 100%;
   height: 300px;
 }
-label.el-radio {
+.radio.el-radio {
   display: block;
   margin: 0 20px 20px 0;
 }
@@ -258,5 +296,63 @@ label.el-radio {
 }
 .addressBox {
   display: flex;
+}
+.outText {
+  position: absolute;
+  right: -20px;
+  top: 0;
+}
+
+.upload-title{
+  width: 292px;
+  color: rgba(51, 51, 51, 1);
+  font-size: 14px;
+  text-align: left;
+  font-family: bold
+}
+
+
+</style>
+
+<style>
+#formItem .el-input__suffix{
+  right: 0;
+  border-radius: 4px;
+}
+
+.el-upload--picture-card{
+  position: relative;
+}
+
+.upload-placeholder {
+  position: absolute;
+  display: flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height:100%
+}
+
+.upload-placeholder p{
+  color: rgba(102, 102, 102, 1);
+  font-size: 15px;
+  text-align: left;
+  margin-bottom: 10px
+}
+
+.upload-placeholder span{ 
+  color: rgba(153, 153, 153, 1);
+  font-size: 15px;
+  left: 804px;
+}
+
+.uploadArray_content{
+  display: flex;
+  flex-direction: row
+}
+
+.uploadArray_content div{
+  margin-right:20px
 }
 </style>

@@ -90,7 +90,7 @@
                         title: '加盟商管理',
                         subs: [
                             {
-                                index: '/ad/admin',
+                                index: '/alliance',
                                 title: '加盟商'
                             },
                             {
