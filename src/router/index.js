@@ -39,12 +39,30 @@ export default new Router({
                     meta: { title: '商品订单', permission: true }
                 },
 
-                
+                   {
+                    // 订单管理--订单详情
+                    path: '/order/order_detail/:order_code',
+                    component: resolve => require(['../view/order/detail.vue'], resolve),
+                    meta: { title: '订单详情', permission: true }
+                },
+                 {
+                    // 订单管理--订单详情
+                    path: '/order/send_goods/:order_code',
+                    component: resolve => require(['../view/order/send_goods.vue'], resolve),
+                    meta: { title: '发货', permission: true }
+                },
                  {
                     // 案例页面
                     path: '/case',
                     component: resolve => require(['../view/case/caseList.vue'], resolve),
                     meta: { title: '案例列表', permission: true }
+                },
+
+                 {
+                    // 案例页面
+                    path: '/case/add',
+                    component: resolve => require(['../view/case/case_add.vue'], resolve),
+                    meta: { title: '添加案例', permission: true }
                 },
                 {
                     // 权限页面
