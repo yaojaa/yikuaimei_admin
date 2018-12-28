@@ -30,6 +30,12 @@ export default new Router({
                     component: resolve => require(['../view/goods/createGood.vue'], resolve),
                     meta: { title: '平台商品' }
                 },
+                // {
+                //     // 分类管理
+                //     path: '/categorylist',
+                //     component: resolve => require(['../view/category/categoryList.vue'], resolve),
+                //     meta: { title: '分类管理' }
+                // },
 
 
                   {
