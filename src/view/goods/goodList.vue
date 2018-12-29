@@ -122,13 +122,13 @@
             {
               type: "text",
               label: "标签",
-              prop: "shop_name",
+              prop: "label_name",
               align: "center"
             },
             {
               type: "text",
               label: "分类",
-              prop: "company_name",
+              prop: "category_name",
               width: "",
               align: "center"
             },
