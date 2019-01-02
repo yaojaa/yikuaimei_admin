@@ -26,7 +26,7 @@
                         range-separator="至"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
-                        :picker-options="pickerOptions">
+                        :picker-options="pickerOptions"> 
                     </el-date-picker>
 
                     <!-- 单选框 -->
@@ -58,7 +58,6 @@
     </div>
 
 </template>
-
 <script>
     export default {
         data() {
@@ -105,7 +104,6 @@
                       this.searchVal[e.name] = e.value;
                     }
                 })
-
                 this.$parent.getData && this.$parent.getData(this.searchVal);
             },
             resetForm(search){ //重置

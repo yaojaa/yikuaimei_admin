@@ -9,11 +9,11 @@
 
 
 
-     <div class="status_filter" v-for="(item,key,index) in tagsListGroup">
+     <div class="status_filter" v-for="(item,key,index) in tagsListGroup" :key="index">
         <ul>
             <li class="tags-li" >
                   {{key}} 
-<router-link :class="tag.key+tag.value == status_filter?'active':'rrrr'" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/order/list_goods', query: {
+<router-link :class="tag.key+tag.value == status_filter?'active':'rrrr'" v-for="(tag) in item" :key="tag.value" :to="{ path: '/order/list_goods', query: {
 [tag.key]: tag.value }}">{{tag.title}}</router-link>
  
             </li>
