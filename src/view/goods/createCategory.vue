@@ -47,18 +47,33 @@ export default {
         {
           name: "category_name",
           type: "input",
-          label: "行业分类名字",
+          label: "行业分类名称",
           placeholder: '名称为2-13字',
           rules: [
             {
               required: true,
-              message: "行业分类名字",
+              message: "请填写行业分类名称",
               trigger: "blur"
             },
             {
               min: 2,
               max: 6,
               message: "长度在 2 到 6 个字符",
+              trigger: "blur"
+            }
+          ],
+          value: ''
+        },
+        {
+          name: "category_name",
+          type: "textarea",
+          label: "备注",
+          placeholder: '备注为0-30字',
+          rules: [
+            {
+              min: 0,
+              max: 30,
+              message: "长度在 0 到 30 个字符",
               trigger: "blur"
             }
           ],

@@ -2,7 +2,7 @@
   <el-form ref="form" :model="form" :rules="rules" class="demo-ruleForm"  label-position="right" :label-width="labelWidth">
       <form-item :formdata="formdata" :labelWidth="labelWidth" ref="formitem"></form-item>
       <el-form-item>
-          <el-button type="primary" @click="onSubmit('form')">表单提交</el-button>
+          <el-button type="primary" @click="onSubmit('form')">提交</el-button>
           <el-button>取消</el-button>
       </el-form-item>
   </el-form>

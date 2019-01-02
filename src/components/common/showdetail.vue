@@ -158,19 +158,19 @@ margin-left: 15px
     display: block;
     margin: 20px auto;
 }
-// .showdetail .imgcontainer .title{
-//     display: block;
-//     margin-left: 15px;
-//     font-size: 18px
-// }
-// .showdetail .imgcontainer .imgbox{
-//     display: inline-block;
-//     margin-left: 30px
-// }
-// .showdetail .imgcontainer .imglabel{
-//     display: block;
-//     text-align: center;
-// }
+ .showdetail .imgcontainer .title{
+     display: block;
+     margin-left: 15px;
+     font-size: 18px
+ }
+ .showdetail .imgcontainer .imgbox{
+     display: inline-block;
+     margin-left: 30px
+ }
+ .showdetail .imgcontainer .imglabel{
+     display: block;
+     text-align: center;
+ }
 .showdetail .el-table__row.tablerow{
     height: 40px;
 }
