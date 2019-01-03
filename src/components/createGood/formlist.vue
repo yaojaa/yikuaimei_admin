@@ -30,36 +30,57 @@
 
     <el-form-item label="">
         <el-row :gutter="20">
-        <el-col :span="4">名称</el-col>
-        <el-col :span="12">选项</el-col>
+            <el-col :span="4">名称:
+                <el-input v-model="item.name" readOnly v-for="item in formatInfo" :key="item.name" /> 
+            </el-col>
+            <el-col :span="12">选项：
+                <div  v-for="item in formatInfo" :key="item.name">
+                    <el-tag v-for="tag in item.list"  :key="tag" :disable-transitions="false">
+                        {{tag}}
+                    </el-tag>
+                </div>
+            </el-col>
+            <el-col :span="2">
+                <el-button>编辑</el-button>
+            </el-col>
         </el-row>
-
-        <el-row :gutter="20">
-        <el-col :span="4">   
-            <el-input v-model="BasicInfo.input" placeholder="请输入名称"/>                        
-        </el-col>
-        <el-col :span="12"> 
-            <el-input v-model="BasicInfo.input" placeholder="请输入选项" suffix-icon=""/>
-            <i class="el-icon-plus"></i>                        
-        </el-col>
-        </el-row>
-
-        <el-row :gutter="20">
-        <el-col :span="4">名称</el-col>
-        <el-col :span="12">选项</el-col>
-        </el-row>
-
-        <el-row :gutter="20">
-        <el-col :span="4">                           
-            <el-input v-model="BasicInfo.input" placeholder="请输入名称"  disabled/>                           
-        </el-col>
-        <el-col :span="12">                           
-            <el-tag :closable="true" type="gray">标签一</el-tag>
-            <el-input v-model="BasicInfo.input" suffix-icon="" disabled />                     
-            <el-input v-model="BasicInfo.input" suffix-icon="el-icon-close" disabled :on-icon-click="$_deleted" />                     
-            <el-input v-model="BasicInfo.input" suffix-icon="el-icon-close" disabled :on-icon-click="$_deleted" />                     
-        </el-col>
-        </el-row>
+    </el-form-item>
+    <el-form-item>
+        <el-table :data="tableData" style="width: 100%">
+            <el-table-column  label="功效">
+                <template slot-scope="scope"> 美白保湿</template>
+            </el-table-column>
+            <el-table-column label="容量">
+                <template slot-scope="scope">
+                    <el-input  v-model="BasicInfo.exist" placeholder="10000" /> 
+                </template>
+            </el-table-column>
+            <el-table-column label="售价(元)">
+                <template slot-scope="scope">
+                    <el-input  v-model="BasicInfo.exist" placeholder="10000"/>
+                </template>
+            </el-table-column>
+            <el-table-column label="原价(元)">
+                <template slot-scope="scope">
+                    <el-input  v-model="BasicInfo.exist" placeholder="10000"/>
+                </template>
+            </el-table-column>
+            <el-table-column label="成本(元)">
+                <template slot-scope="scope">
+                    <el-input  v-model="BasicInfo.exist" placeholder="10000"/>
+                </template>
+            </el-table-column>
+            <el-table-column label="编码">
+                <template slot-scope="scope">
+                    <el-input  v-model="BasicInfo.exist" placeholder="10000"/>
+                </template>
+            </el-table-column>
+            <el-table-column label="图片">
+                <template slot-scope="scope">
+                    <el-input  v-model="BasicInfo.exist" placeholder="10000"/>
+                </template>
+            </el-table-column>
+        </el-table>
     </el-form-item>
     <el-form-item label="库存：" prop="exist">
         <el-input  v-model="BasicInfo.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
@@ -172,6 +193,28 @@ export default {
           label: "青医美"
         }
       ],
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        }
+      ],
       rules: {
         name: [
           { required: true, message: "请输入活动名称", trigger: "blur" },
@@ -200,6 +243,11 @@ export default {
     showFormatInfo: {
       type: Boolean,
       default: false
+    },
+    // 规格展示数据
+    formatInfo: {
+      type: Object,
+      default: () => {}
     }
   },
   components: {},

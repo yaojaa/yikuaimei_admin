@@ -17,11 +17,12 @@
                   <Formlist 
                     @changeLableStatus="$_changeLableStatus"
                     @changeFormatStatus="$_changeFormatStatus"
+                    :formatInfo = "formatInfo"
                   />
                   <Lable :tags="tags" :shopgoods="Goods.shopgoods"
                   @deleteTag="$_deleteTag"
                   ref="lable" />
-                  <Formate  ref="formate" />
+                  <Formate  ref="formate"  @addFormat="$_addFormat"/>
                 </div>
               </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails">
@@ -57,6 +58,7 @@ export default {
     return {
       editName: "BasicInfo", // tab标签默认定位
       BasicInfo: {},
+      formatInfo: {}, // 规格展示
 
       // 标签
       // showLable: false, // 展示标签
@@ -184,7 +186,6 @@ export default {
       this.$refs.lable.showLable = true;
     },
     $_changeFormatStatus() {
-      console.log(222);
       this.$refs.formate.showFormat = true;
     },
 
@@ -199,6 +200,12 @@ export default {
      */
     changeTab(tab, event) {
       console.log("tab, event");
+    },
+    /** *
+     * 添加规格
+     */
+    $_addFormat(formatInfo) {
+      this.formatInfo = formatInfo;
     }
   }
 };
