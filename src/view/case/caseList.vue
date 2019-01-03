@@ -65,15 +65,23 @@
                             "type": "text",
                             "align": "center",
                             "label": "内容",
-                            "prop": "user_info.user_name",
+                            "prop": "expert_analysis_content",
                             "width": "",
                             
                         },
+                          {
+                            "type": "text",
+                            "align": "center",
+                            "label": "顾客姓名",
+                            "prop": "create_user_shop_account_name",
+                            "width": ""
+                        },
+                        //
                         {
                             "type": "text",
                             "align": "center",
                             "label": "门店/技师",
-                            "prop": "address",
+                            "prop": "create_user_shop_account_name",
                             "width": "",
                             
                         },
@@ -81,7 +89,7 @@
                             "type": "text",
                             "align": "center",
                             "label": "城市",
-                            "prop": "create_user['city_name']",
+                            "prop": "create_user_city_name",
                             "width": "",
                             
                         },
@@ -91,6 +99,10 @@
                             "label": "状态",
                             "prop": "review_status",
                             "width": "",
+                              formatter(row) { //格式数据
+                                var str ="<div style='border:10px solid #ccc;'><div style='color:#f00; font-weight:700'>" + ['','待审核', '审核通过','审核不通过'] [row.review_status] + "</div>";
+                                return str;
+                            }
                             
                         },
                         {
@@ -100,19 +112,29 @@
                             "width": "200",
                             "list": [
                                 {
-                                    "label":"查看详情",
+                                    "label":"详情",
                                     "type":"detail",
-                                    "url":"/care/templateWeChat", //优先执行url
+                                    onClick(tablePage, self, row){
+                                        self.$router.push("/case/"+row.cases_id)
+                                    }
 
                                 },
                                 {
-                                    "label":"查看评论",
+                                    "label":"修改",
                                     "type":"edit",
-                                    "url":"/care/templateWeChat", //优先执行url
+                                     onClick(tablePage, self, row){
+                                        self.$router.push("/case/add/"+row.cases_id)
+                                    }
+                                    
 
                                 },
                                 {
                                     "label":"删除",
+                                    "axiosUrl":"/api/admin/cases/remove",
+                                    "params":{
+                                        name:"id",
+                                        data:"cases_id"
+                                    },
                                     "type":"delete"
                                 },
                             ]
