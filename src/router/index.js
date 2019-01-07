@@ -37,6 +37,13 @@ export default new Router({
                     }
                 },
                 {
+                    path: '/serviceList',
+                    component: resolve => require(['../view/goods/serviceList.vue'], resolve),
+                    meta: {
+                        title: '门店服务'
+                    }
+                },
+                {
                     // 分类管理
                     path: '/categorylist',
                     component: resolve => require(['../view/goods/categorylist.vue'], resolve),
