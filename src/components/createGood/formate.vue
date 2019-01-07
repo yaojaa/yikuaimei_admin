@@ -13,13 +13,18 @@
                     <el-input v-model="item.name" placeholder="请输入名称"/>                        
                 </el-col>
                 <el-col :span="12"> 
-                    <el-tag v-for="(tag,idx) in item.list"  :key="tag"
-                        :closable="idx!==0" :disable-transitions="false"
+                    <el-tag v-for="(tag,index) in item.list"  :key="tag"
+                        :closable="index!==0" :disable-transitions="false"
                         @close="$_deletedTag(item.list,tag)">
                         {{tag}}
                     </el-tag>
-                    <el-input class="input-new-tag" v-model="inputValue" ref="saveTagInput" size="small" placeholder="请输入选项" />
-                    <i class="el-icon-plus" @click="$_createFormat(item.list)" />
+                    <el-input class="input-new-tag" v-model="item.inputValue" ref="saveTagInput" size="small" placeholder="请输入选项" 
+                    v-if="inputVisible" :style="{width:'100px'}"
+                    @keyup.enter.native="handleInputConfirm(idx,item.list)"
+                    @blur="handleInputConfirm(idx,item.list)"
+                    >
+                    </el-input>
+                    <i class="el-icon-plus" @click="$_createFormat(idx)" v-else />
                 </el-col>
             </el-row>
         </div>
@@ -39,15 +44,17 @@ export default {
       formatInfo: [
         {
           name: "功效",
-          list: ["美白保湿"]
+          list: ["美白保湿", "美白保湿2"],
+          inputValue: ""
         },
         {
           name: "容量",
-          list: ["25ml", "50ml", "100ml"]
+          list: ["25ml", "50ml", "100ml"],
+          inputValue: ""
         }
       ],
       showFormat: false,
-      inputValue: ""
+      inputVisible: false
     };
   },
   props: {},
@@ -65,12 +72,20 @@ export default {
     /** *
      * 添加规格
      */
-    $_createFormat(list) {
-      let inputValue = this.inputValue;
+    $_createFormat(idx) {
+      this.inputVisible = true;
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput[idx].$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm(idx, list) {
+      let inputValue = this.formatInfo[idx].inputValue;
       if (inputValue) {
         list.push(inputValue);
       }
-      this.inputValue = "";
+      this.formatInfo[idx].inputValue = "";
+      this.inputVisible = false;
     },
 
     /** *
