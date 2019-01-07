@@ -44,7 +44,7 @@
                                 index: '/goodList',
                                 title: '平台商品'
                             },{
-                                index: '/userincome',
+                                index: '/serviceList',
                                 title: '门户服务'
                             },{
                                 index: '/userincome',

@@ -37,6 +37,13 @@ export default new Router({
                     }
                 },
                 {
+                    path: '/serviceList',
+                    component: resolve => require(['../view/goods/serviceList.vue'], resolve),
+                    meta: {
+                        title: '门店服务'
+                    }
+                },
+                {
                     // 分类管理
                     path: '/categorylist',
                     component: resolve => require(['../view/goods/categorylist.vue'], resolve),
@@ -99,6 +106,18 @@ export default new Router({
                         title: '添加案例',
                         permission: true
                     }
+                },
+                  {
+                    // 案例页面
+                    path: '/case/add/:id',
+                    component: resolve => require(['../view/case/case_add.vue'], resolve),
+                    meta: { title: '编辑案例', permission: true }
+                },
+                  {
+                    // 案例页面
+                    path: '/case/:id',
+                    component: resolve => require(['../view/case/case_detail.vue'], resolve),
+                    meta: { title: '案例详情', permission: true }
                 },
                 {
                     // 权限页面

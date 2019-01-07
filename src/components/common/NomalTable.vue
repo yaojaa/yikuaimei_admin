@@ -288,7 +288,6 @@
             },
             //操作按钮
             handleButtons(handle, scope){
-                console.log(handle.url+'/'+scope.row[handle.query])
                 if(handle.url){
 
                  this.$router.push({ path: handle.url+'/'+scope.row[handle.query] })
@@ -305,6 +304,8 @@
             },
 
             handleDelete(handle, row) { //删除
+
+
                 let _this = this;
 
                 this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -347,7 +348,7 @@
                 }).catch(() => { //取消删除
                     this.$message({
                         type: 'info',
-                        message: '已取消删除'
+                        message: '删除失败'
                     });          
                 });
             },
