@@ -16,7 +16,7 @@
         </el-upload>
     </el-form-item>
     <el-form-item label="补充说明：">
-        <el-input type="textarea" v-model="BasicInfo.good_explain" placeholder="请填写购买须知" suffix-icon="el-icon-arrow-right" />    
+        <el-input type="textarea" v-model="BasicInfo.good_notes" placeholder="请填写购买须知" suffix-icon="el-icon-arrow-right" />    
         <p class="input__tabs">请填写购买须知</p>  
     </el-form-item>
     <el-form-item>
@@ -88,6 +88,7 @@ export default {
       console.log(this.info.create);
       alert("创建成功");
     },
+
     /** *
      * 切换tab
      */

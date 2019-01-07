@@ -20,7 +20,7 @@
                     @changeTab="$_changeTab"
                     :formatInfo = "formatInfo"
                   />
-                  <Lable :tags="tags" :shopgoods="Goods.shopgoods"
+                  <Lable :tags="tags" :shopgoods="shopgoods"
                   @deleteTag="$_deleteTag"
                   ref="lable" />
                   <Formate  ref="formate"  @addFormat="$_addFormat"/>
@@ -60,18 +60,16 @@ export default {
   data() {
     return {
       editName: "BasicInfo", // tab标签默认定位
+
       BasicInfo: {},
-      formatInfo: {}, // 规格展示
+      formatInfo: {}, // form 列表数据
 
-      // 标签
-      // showLable: false, // 展示标签
-      tags: ["标签一", "标签一", "标签一", "标签一"],
       showFormatInfo: false, // 展示规格
-
-      showFormat: false, // 展示规格
-
+      shopgoods: {}, // 可选规格列表
+      tags: [], // 已选标签
       createFormat: info.shopgoods,
       Goods: Goods,
+
       breadcrumb: [
         //面包屑
         {
@@ -84,29 +82,20 @@ export default {
         {
           name: "添加商品" //名字
         }
-      ],
-      dialogTableVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      tags: [
-        { name: "标签一", type: "" },
-        { name: "标签二", type: "gray" },
-        { name: "标签三", type: "primary" },
-        { name: "标签四", type: "success" }
       ]
     };
   },
 
   created() {
-    // this.$store.dispatch
+    // @TODO 获取可选规格 this.shopgoods = "axios 请求回来的数据";
+    this.shopgoods = Goods.shopgoods;
+    // @TODO 获取已选标签
+    this.tags = [
+      { name: "标签一", type: "" },
+      { name: "标签二", type: "gray" },
+      { name: "标签三", type: "primary" },
+      { name: "标签四", type: "success" }
+    ];
   },
 
   computed: {},
