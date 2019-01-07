@@ -144,7 +144,7 @@
     </el-form-item>
     <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">表单提交</el-button>
-        <el-button>下一步</el-button>
+        <el-button @click="$_changeTab">下一步</el-button>
         <el-button>取消</el-button>
     </el-form-item>
     </el-form>
@@ -310,6 +310,12 @@ export default {
           };
         }
       }
+    },
+    /** *
+     * 切换tab
+     */
+    $_changeTab() {
+      this.$emit("changeTab");
     }
   },
   created() {}

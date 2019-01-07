@@ -11,12 +11,13 @@
         <!-- tab 内容 -->
         <div class="page-content">
           <template>
-            <el-tabs v-model="editName" @tab-click="changeTab">
+            <el-tabs v-model="editName">
               <el-tab-pane label="编辑基本信息" name="BasicInfo">
                 <div class="panel">
                   <Formlist 
                     @changeLableStatus="$_changeLableStatus"
                     @changeFormatStatus="$_changeFormatStatus"
+                    @changeTab="$_changeTab"
                     :formatInfo = "formatInfo"
                   />
                   <Lable :tags="tags" :shopgoods="Goods.shopgoods"
@@ -27,7 +28,7 @@
               </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails">
                 <!-- 表单list -->
-                哈哈
+                <FormlistProduct @changeTab="$_changeTab" />
                 <!-- 表单list End -->
               </el-tab-pane>
             </el-tabs>
@@ -42,6 +43,7 @@ import info from "../../moke";
 import BreadCrumb from "@/components/common/BreadCrumb";
 import Formate from "@/components/createGood/formate";
 import Formlist from "@/components/createGood/formlist";
+import FormlistProduct from "@/components/createGood/formlist_product";
 import Lable from "@/components/createGood/lable";
 import Goods from "../../moke/goods";
 
@@ -51,7 +53,8 @@ export default {
     BreadCrumb,
     Formate,
     Formlist,
-    Lable
+    Lable,
+    FormlistProduct
   },
 
   data() {
@@ -82,78 +85,6 @@ export default {
           name: "添加商品" //名字
         }
       ],
-      options2: [
-        {
-          name: "name",
-          type: "textarea",
-          label: "补充说明：",
-          placeholder: "请填写购买须知",
-          rules: [
-            {
-              required: true,
-              message: "请填写购买须知",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "showPng",
-          type: "upload",
-          label: "商品展示图：",
-          title:
-            "<p>展示在商品的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。</p>",
-          placeholder: "<p>添加图片</p><span>还可以添加6张</span>",
-          value: ""
-        }
-      ],
-      options2: [
-        {
-          name: "name",
-          type: "textarea",
-          label: "补充说明：",
-          placeholder: "请填写购买须知",
-          rules: [
-            {
-              required: true,
-              message: "请填写购买须知",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "showPng",
-          type: "upload",
-          label: "商品展示图：",
-          title:
-            "<p>展示在商品的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。</p>",
-          placeholder: "<p>添加图片</p><span>还可以添加6张</span>",
-          value: ""
-        }
-      ],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
       dialogTableVisible: false,
       form: {
         name: "",
@@ -165,7 +96,6 @@ export default {
         resource: "",
         desc: ""
       },
-      formLabelWidth: "120px",
       tags: [
         { name: "标签一", type: "" },
         { name: "标签二", type: "gray" },
@@ -198,8 +128,10 @@ export default {
     /** *
      * tab标签切换事件
      */
-    changeTab(tab, event) {
-      console.log("tab, event");
+    $_changeTab(tab, event) {
+      debugger;
+      this.editName =
+        this.editName === "ProductDetails" ? "BasicInfo" : "ProductDetails";
     },
     /** *
      * 添加规格
