@@ -11,15 +11,16 @@
         <!-- tab 内容 -->
         <div class="page-content">
           <template>
-            <el-tabs v-model="editName" @tab-click="changeTab">
+            <el-tabs v-model="editName">
               <el-tab-pane label="编辑基本信息" name="BasicInfo">
                 <div class="panel">
                   <Formlist 
                     @changeLableStatus="$_changeLableStatus"
                     @changeFormatStatus="$_changeFormatStatus"
+                    @changeTab="$_changeTab"
                     :formatInfo = "formatInfo"
                   />
-                  <Lable :tags="tags" :shopgoods="Goods.shopgoods"
+                  <Lable :tags="tags" :shopgoods="shopgoods"
                   @deleteTag="$_deleteTag"
                   ref="lable" />
                   <Formate  ref="formate"  @addFormat="$_addFormat"/>
@@ -27,7 +28,7 @@
               </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails">
                 <!-- 表单list -->
-                哈哈
+                <FormlistProduct @changeTab="$_changeTab" />
                 <!-- 表单list End -->
               </el-tab-pane>
             </el-tabs>
@@ -42,6 +43,7 @@ import info from "../../moke";
 import BreadCrumb from "@/components/common/BreadCrumb";
 import Formate from "@/components/createGood/formate";
 import Formlist from "@/components/createGood/formlist";
+import FormlistProduct from "@/components/createGood/formlist_product";
 import Lable from "@/components/createGood/lable";
 import Goods from "../../moke/goods";
 
@@ -51,24 +53,23 @@ export default {
     BreadCrumb,
     Formate,
     Formlist,
-    Lable
+    Lable,
+    FormlistProduct
   },
 
   data() {
     return {
       editName: "BasicInfo", // tab标签默认定位
+
       BasicInfo: {},
-      formatInfo: {}, // 规格展示
+      formatInfo: {}, // form 列表数据
 
-      // 标签
-      // showLable: false, // 展示标签
-      tags: ["标签一", "标签一", "标签一", "标签一"],
       showFormatInfo: false, // 展示规格
-
-      showFormat: false, // 展示规格
-
+      shopgoods: {}, // 可选规格列表
+      tags: [], // 已选标签
       createFormat: info.shopgoods,
       Goods: Goods,
+
       breadcrumb: [
         //面包屑
         {
@@ -81,102 +82,20 @@ export default {
         {
           name: "添加商品" //名字
         }
-      ],
-      options2: [
-        {
-          name: "name",
-          type: "textarea",
-          label: "补充说明：",
-          placeholder: "请填写购买须知",
-          rules: [
-            {
-              required: true,
-              message: "请填写购买须知",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "showPng",
-          type: "upload",
-          label: "商品展示图：",
-          title:
-            "<p>展示在商品的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。</p>",
-          placeholder: "<p>添加图片</p><span>还可以添加6张</span>",
-          value: ""
-        }
-      ],
-      options2: [
-        {
-          name: "name",
-          type: "textarea",
-          label: "补充说明：",
-          placeholder: "请填写购买须知",
-          rules: [
-            {
-              required: true,
-              message: "请填写购买须知",
-              trigger: "blur"
-            }
-          ],
-          value: ""
-        },
-        {
-          name: "showPng",
-          type: "upload",
-          label: "商品展示图：",
-          title:
-            "<p>展示在商品的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。</p>",
-          placeholder: "<p>添加图片</p><span>还可以添加6张</span>",
-          value: ""
-        }
-      ],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
-      dialogTableVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      formLabelWidth: "120px",
-      tags: [
-        { name: "标签一", type: "" },
-        { name: "标签二", type: "gray" },
-        { name: "标签三", type: "primary" },
-        { name: "标签四", type: "success" }
       ]
     };
   },
 
   created() {
-    // this.$store.dispatch
+    // @TODO 获取可选规格 this.shopgoods = "axios 请求回来的数据";
+    this.shopgoods = Goods.shopgoods;
+    // @TODO 获取已选标签
+    this.tags = [
+      { name: "标签一", type: "" },
+      { name: "标签二", type: "gray" },
+      { name: "标签三", type: "primary" },
+      { name: "标签四", type: "success" }
+    ];
   },
 
   computed: {},
@@ -198,8 +117,10 @@ export default {
     /** *
      * tab标签切换事件
      */
-    changeTab(tab, event) {
-      console.log("tab, event");
+    $_changeTab(tab, event) {
+      debugger;
+      this.editName =
+        this.editName === "ProductDetails" ? "BasicInfo" : "ProductDetails";
     },
     /** *
      * 添加规格
