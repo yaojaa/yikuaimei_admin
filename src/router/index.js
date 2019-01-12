@@ -44,6 +44,13 @@ export default new Router({
                     }
                 },
                 {
+                    path: '/purchaseList',
+                    component: resolve => require(['../view/goods/purchaseList.vue'], resolve),
+                    meta: {
+                        title: '采购品项'
+                    }
+                },
+                {
                     // 分类管理
                     path: '/categorylist',
                     component: resolve => require(['../view/goods/categorylist.vue'], resolve),

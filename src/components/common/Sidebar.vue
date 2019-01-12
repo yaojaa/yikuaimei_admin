@@ -47,7 +47,7 @@
                                 index: '/serviceList',
                                 title: '门户服务'
                             },{
-                                index: '/userincome',
+                                index: '/purchaseList',
                                 title: '采购品项'
                             }
                         ]
