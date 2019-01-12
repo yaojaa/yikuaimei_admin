@@ -19,7 +19,7 @@
           <li class="tags-li">
             {{key}}
             <router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/goodList', query: {
-                                                    [tag.key]: tag.value }}">
+                                                      [tag.key]: tag.value }}">
               {{tag.title}}</router-link>
   
           </li>
@@ -34,9 +34,9 @@
         <p>操作人:{{user.data.user_realname}}</p>
         <!-- <span>{{currentItem.name}}</span> -->
         <span slot="footer" class="dialog-footer">
-                              <el-button @click="visible = false">取 消</el-button>
-                              <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
-                          </span>
+                                <el-button @click="visible = false">取 消</el-button>
+                                <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
+                            </span>
       </el-dialog>
     </div>
   </div>
@@ -186,8 +186,8 @@
               "align": "center",
               formatter(row) {
                 return `<p style='text-align: center'>
-                                              ${Config.status[row.status]}
-                                            </p>`;
+                                                ${Config.status[row.status]}
+                                              </p>`;
               }
             },
             {
@@ -221,16 +221,13 @@
                 {
                   "label": "编辑",
                   "type": "edit",
-                  // "url": "", //优先执行url
-                  onClick(tablePage, self, row) {
-                    self.$router.push("/createGood" + row.shop_id);
-                  }
+                  "url": "/creatGood",
+                  "query": "good_id"
                 }
               ]
             }
           ]
         }
-        console.log('column', column)
         return column;
       },
   

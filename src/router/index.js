@@ -47,7 +47,14 @@ export default new Router({
                     path: '/purchaseList',
                     component: resolve => require(['../view/goods/purchaseList.vue'], resolve),
                     meta: {
-                        title: '采购品项'
+                        title: '品相管理'
+                    }
+                },
+                {
+                    path: '/fictitiousList',
+                    component: resolve => require(['../view/goods/fictitiousList.vue'], resolve),
+                    meta: {
+                        title: '虚拟卡券管理'
                     }
                 },
                 {
