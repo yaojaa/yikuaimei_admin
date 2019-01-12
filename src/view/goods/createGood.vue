@@ -25,26 +25,26 @@
 
                   <!-- 添加标签弹框 -->
                   <Lable 
-                  :tagIdArr = "formInfo.tag_id_arr" 
-                  :shopgoods="shopgoods"
-                  @addLable = "$_addLable"
-                  ref="lable" />
+                    :tagIdArr = "formInfo.tag_id_arr" 
+                    :shopgoods="shopgoods"
+                    @addLable = "$_addLable"
+                    ref="lable" />
                   <!-- 添加标签弹框 End -->
 
                   <!-- 添加规格弹框 -->
                   <Formate    
-                  :formInfo = "formInfo"
-                  @addFormat="$_addFormat"
-                  ref="formate"
-                  />
+                    :formInfo = "formInfo"
+                    @addFormat="$_addFormat"
+                    ref="formate"
+                    />
                   <!-- 添加规格弹框  End-->
                 </div>
               </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails">
                 <!-- product 表单 -->
                 <FormlistProduct
-                :formInfo = "formInfo"
-                @changeTab="$_changeTab"
+                  :formInfo = "formInfo"
+                  @changeTab="$_changeTab"
                 />
                 <!-- product 表单 End -->
               </el-tab-pane>
@@ -88,8 +88,8 @@ export default {
 
   computed: {
     ...mapState({
-      formInfo: state => state.createdGoode.formInfo, // form 列表数据
-      shopgoods: state => state.createdGoode.shopgoods // 可选规格列表
+      formInfo: state => state.createdGoode.formInfo, // form 表格数据
+      shopgoods: state => state.createdGoode.shopgoods // 可选标签数据
     })
   },
 

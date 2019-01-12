@@ -1,44 +1,6 @@
 <template>
     <!-- dialog_showLable 弹框 -->
     <el-dialog title="标签" :visible.sync="lable_show" size="large">
-    <el-col :span="12">
-      <!-- <el-menu
-        default-active="2"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose">
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>导航一</span>
-          </template>
-          <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="1-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="1-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="1-4-1">选项1</el-menu-item>
-          </el-submenu>
-        </el-submenu>
-        <el-menu-item index="2">
-          <i class="el-icon-menu"></i>
-          <span slot="title">导航二</span>
-        </el-menu-item>
-        <el-menu-item index="3" disabled>
-          <i class="el-icon-document"></i>
-          <span slot="title">导航三</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-setting"></i>
-          <span slot="title">导航四</span>
-        </el-menu-item>
-      </el-menu> -->
-    </el-col>
     <div>
         已选：
         <el-tag v-for="(tag,idx) in tagIdArr" :key="idx" closable type="gray" @close="$_deleteTag(idx)">
@@ -47,19 +9,36 @@
         <el-button type="primary" icon="searchIcon">搜索</el-button>
     </div>
     
-    <el-tabs tab-position="left">
-        <el-tab-pane  v-for="item in shopgoods.data"  :key="item.good_category_name" :label="item.good_category_name">
-            <ul class="lableList">
-                <li 
-                v-for="list in item.good_category_sons" 
-                :key="list.good_category_name"
-                @click="addLable(list.good_category_id)" 
+    <el-row>
+      <el-col :span="8">
+          <el-menu class="el-menu-vertical-demo" v-for="item in shopgoods.data" :key="item.tag_group_name">  <!-- @open="handleOpen" @close="handleClose" -->
+            <el-menu-item :index="item.tag_group_name" v-if="!item.tag_group_sons" @click="computedSons(item.tag_list)">
+              <span slot="title"> {{item.tag_group_name}} </span>
+            </el-menu-item>
+
+            <el-submenu :index="item.tag_group_name" v-else> 
+              <template slot="title"> <span>{{item.tag_group_name}}</span> </template>
+              <el-menu-item v-for="sons in item.tag_group_sons" :key="sons.tag_group_name" :index="sons.tag_group_name" @click="computedSons(sons.tag_list)">
+                {{sons.tag_group_name}}
+              </el-menu-item>
+            </el-submenu>
+          </el-menu>
+      </el-col>
+
+      <el-col :span="16">
+        <div class="grid-content bg-purple-light">
+          <ul class="lableList">
+              <li 
+                v-for="list in good_category_sons" 
+                :key="list.tag_group_name || list.tag_name"
+                @click="addLable(list.tag_group_name || list.tag_name)"
                 >
-                  {{list.good_category_name}}
-                </li>
-            </ul>
-        </el-tab-pane>
-    </el-tabs>
+                {{list.tag_group_name || list.tag_name}}
+              </li>
+          </ul>
+        </div>
+      </el-col>
+    </el-row>
     <div slot="footer" class="dialog-footer">
         <el-button @click="lable_show = false">取 消</el-button>
         <el-button type="primary" @click="$_addLable">确 定</el-button>
@@ -72,7 +51,8 @@
 export default {
   data() {
     return {
-      lable_show: false
+      lable_show: false,
+      good_category_sons:{}
     };
   },
 
@@ -91,7 +71,7 @@ export default {
     tagIdArr: {
       type: Array,
       default: () => []
-    }
+    },
   },
 
   watch: {
@@ -114,8 +94,12 @@ export default {
     /**
      * 添加标签 @请求相关联标签，添加，， 去重逻辑
      */
-    addLable(good_category_id) {
-      this.tagIdArr.push(good_category_id);
+    addLable(good_category_name,good_category_id) {
+    //  let obj =  axios.{url,paranm:{}good_category_id:1},return {
+    //     {}
+    //   }
+    //   obj.good_category_name
+      this.tagIdArr.push(good_category_name,);
     },
 
     /** *
@@ -123,6 +107,13 @@ export default {
      */
     $_deleteTag(idx) {
       this.tagIdArr.splice("idx", 1);
+    },
+
+    /** 
+     * 展示good_category_sons
+    */
+    computedSons(Sons){
+      this.good_category_sons = Sons
     }
   },
   created() {}

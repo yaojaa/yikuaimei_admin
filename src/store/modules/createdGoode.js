@@ -99,73 +99,92 @@ export default {
             "code": 0,
             "msg": "OK",
             "data": [{
-                    "good_category_id": 7,
-                    "good_category_name": "美甲",
-                    "good_category_ico": "\/o.jpg",
-                    "good_category_pid": 0,
-                    "good_category_deep": 1,
-                    "good_category_path": "",
-                    "good_category_status": 1,
-                    "good_category_ctime": "2018-11-27 14:49:03",
-                    "good_category_utime": null,
-                    "good_category_sons": //一级分类名下的所有二级分类列表
+                    "tag_group_name": "服务标签组其他", //标签组名字
+                    "tag_group_deep": 1,
+                    "tag_group_id": "29", //标签组id
+                    "tag_list": //标签列表
                         [{
-                            "good_category_id": 11,
-                            "good_category_name": "美小指甲",
-                            "good_category_ico": "\/1.jpg",
-                            "good_category_pid": 7,
-                            "good_category_deep": 2,
-                            "good_category_path": "7",
-                            "good_category_status": 1,
-                            "good_category_ctime": "2018-11-27 14:51:48",
-                            "good_category_utime": null
+                            "tag_name": "服务标签91", //标签名字
+                            "tag_id": "91" //标签id
                         },
                         {
-                            "good_category_id": 12,
-                            "good_category_name": "美中指甲",
-                            "good_category_ico": "\/2.jpg",
-                            "good_category_pid": 7,
-                            "good_category_deep": 2,
-                            "good_category_path": "7",
-                            "good_category_status": 1,
-                            "good_category_ctime": "2018-11-27 14:51:58",
-                            "good_category_utime": null
+                            "tag_name": "服务标签90", //标签名字
+                            "tag_id": "90" //标签id
                         },
                         {
-                            "good_category_id": 13,
-                            "good_category_name": "美大拇指甲",
-                            "good_category_ico": "\/3.jpg",
-                            "good_category_pid": 7,
-                            "good_category_deep": 2,
-                            "good_category_path": "7",
-                            "good_category_status": 1,
-                            "good_category_ctime": "2018-11-27 14:52:13",
-                            "good_category_utime": null
+                            "tag_name": "服务标签89", //标签名字
+                            "tag_id": "89" //标签id
                         }
                     ]
                 },
                 {
-                    "good_category_id": 9,
-                    "good_category_name": "美肤",
-                    "good_category_ico": "\/b.jpg",
-                    "good_category_pid": 0,
-                    "good_category_deep": 1,
-                    "good_category_path": "",
-                    "good_category_status": 1,
-                    "good_category_ctime": "2018-11-27 14:50:48",
-                    "good_category_utime": null,
-                    "good_category_sons": //一级分类名下的可选择二级分类列表
+                    "tag_group_name": "服务标签组总", //标签组名字
+                    "tag_group_deep": 1,
+                    "tag_group_id": "26", //标签组id
+                    "tag_group_sons": //名下二级标签组列表
                         [{
-                        "good_category_id": 20,
-                        "good_category_name": "美脸部皮肤",
-                        "good_category_ico": "\/10.jpg",
-                        "good_category_pid": 9,
-                        "good_category_deep": 2,
-                        "good_category_path": "9",
-                        "good_category_status": 1,
-                        "good_category_ctime": "2018-11-27 14:54:29",
-                        "good_category_utime": "2018-11-27 14:58:54"
-                    }]
+                            "tag_group_name": "服务标签组2", //标签组名字
+                            "tag_group_deep": 2,
+                            "tag_group_id": "28", //标签组id
+                            "tag_list": //标签列表
+                                [{
+                                    "tag_name": "服务标签88", //标签名字
+                                    "tag_id": "88" //标签id
+                                },
+                                {
+                                    "tag_name": "服务标签87",
+                                    "tag_id": "87"
+                                },
+                                {
+                                    "tag_name": "服务标签86",
+                                    "tag_id": "86"
+                                },
+                                {
+                                    "tag_name": "服务标签85",
+                                    "tag_id": "85"
+                                },
+                                {
+                                    "tag_name": "服务标签84",
+                                    "tag_id": "84"
+                                },
+                                {
+                                    "tag_name": "服务标签83",
+                                    "tag_id": "83"
+                                },
+                                {
+                                    "tag_name": "服务标签82",
+                                    "tag_id": "82"
+                                },
+                                {
+                                    "tag_name": "服务标签81",
+                                    "tag_id": "81"
+                                }
+                            ]
+                        },
+                        {
+                            "tag_group_name": "服务标签组1",
+                            "tag_group_deep": 2,
+                            "tag_group_id": "27",
+                            "tag_list": //标签组列表
+                                [{
+                                    "tag_name": "服务标签80",
+                                    "tag_id": "80"
+                                },
+                                {
+                                    "tag_name": "服务标签79",
+                                    "tag_id": "79"
+                                },
+                                {
+                                    "tag_name": "服务标签78",
+                                    "tag_id": "78"
+                                },
+                                {
+                                    "tag_name": "服务标签77",
+                                    "tag_id": "77"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }
