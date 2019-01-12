@@ -219,7 +219,7 @@
                                 {
                                     "label": "编辑",
                                     "type": "edit",
-                                    "url": "/creatGood",
+                                    "url": "/createGood",
                                     "query": "good_id"
                                 }
                             ]

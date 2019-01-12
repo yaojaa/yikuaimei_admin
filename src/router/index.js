@@ -30,7 +30,7 @@ export default new Router({
                     }
                 },
                 {
-                    path: '/createGood',
+                    path: '/createGood/:good_id',
                     component: resolve => require(['../view/goods/createGood.vue'], resolve),
                     meta: {
                         title: '平台商品'
