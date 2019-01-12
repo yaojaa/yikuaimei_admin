@@ -1,6 +1,6 @@
 <template>
     <!-- dialog showFormatInfo弹框 -->
-    <el-dialog title="添加规格" :visible.sync="showFormat" size="large">
+    <el-dialog title="添加规格" :visible.sync="format_show" size="large">
         <el-row :gutter="20">
             <el-col :span="4">&nbsp;</el-col>
             <el-col :span="4">名称</el-col>
@@ -29,7 +29,7 @@
             </el-row>
         </div>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="showFormat = false">取 消</el-button>
+            <el-button @click="format_show = false">取 消</el-button>
             <el-button type="primary" @click="$_addFormat">确 定</el-button>
         </div>
     </el-dialog>
@@ -53,7 +53,7 @@ export default {
           inputValue: ""
         }
       ],
-      showFormat: false,
+      format_show: false,
       inputVisible: false
     };
   },
@@ -65,7 +65,7 @@ export default {
      */
     $_addFormat() {
       // 传过去this.createFormat 返回code=0是成功
-      this.showFormat = false;
+      this.format_show = false;
       this.$emit("addFormat", this.formatInfo);
     },
 

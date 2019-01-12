@@ -1,14 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import user from './modules/user'
+import createdGoode from './modules/createdGoode'
+// import createLogger from '../../../src/plugins/logger'
+
+
 Vue.use(Vuex)
 
-import user from './modules/user'
-import createdGoode from './modules/user'
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
   modules: {
     user,
     createdGoode
-  }
+  },
+  // plugins: process.env.NODE_ENV !== 'production' ? [createLogger()] : []
 })

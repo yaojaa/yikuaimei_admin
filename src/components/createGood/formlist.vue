@@ -1,25 +1,33 @@
 <template>
     <!-- 表单list -->
-    <el-form ref="BasicInfo" :model="BasicInfo" :rules="rules" label-width="120px">
+    <el-form ref="formInfo" :model="formInfo" :rules="rules" label-width="120px">
     <el-form-item label="名称：" prop="good_name">
-        <el-input  v-model="BasicInfo.good_name" placeholder="名称为2-30个字" />                                                    
+        <el-input  v-model="formInfo.good_name" placeholder="名称为2-30个字" />                                                    
     </el-form-item>
     <el-form-item label="商品卖点：" prop="good_explain">
-        <el-input type="textarea" v-model="BasicInfo.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" />    
+        <el-input type="textarea" v-model="formInfo.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" />    
         <p class="input__tabs">在商品详情页标题下面展示卖点信息，建议50字以内</p>                                                
     </el-form-item>
     <el-form-item label="行业分类：" prop="category_id">
-        <el-select v-model="BasicInfo.category_id" placeholder="请选择所属行业分类">
+        <el-select v-model="formInfo.category_id" placeholder="请选择所属行业分类">
             <el-option v-for="item in categoryOptions" :label="item.category_name" :value="item.category_id" :key="item.category_name" />
         </el-select>                         
     </el-form-item>
     <el-form-item label="标签：" prop="tag_id_arr">
-        <el-input  v-model="BasicInfo.tag_id_arr" placeholder="请添加商品分类"  suffix-icon="el-icon-arrow-right" @focus="$_showLable" readonly />
+
+        <div class="el-input el-input--small el-input--suffix div__input"  v-if="formInfo.tag_id_arr">
+            <el-tag v-for="item in formInfo.tag_id_arr" :key="item">{{item}}</el-tag>
+            <span class="el-input__suffix" @click="$_showLable">
+                <span class="el-input__suffix-inner">
+                    <i class="el-input__icon el-icon-arrow-right"></i>
+                </span>
+            </span>
+        </div>
         <p class="input__tabs">可设置多个标签</p>
     </el-form-item>
     <el-form-item label="规格" props="format">
         <!-- format_none format_add -->
-        <el-radio-group v-model="BasicInfo.singleButton" @change="this.$_showFormat">
+        <el-radio-group v-model="formInfo.singleButton" @change="this.$_showFormat">
         <el-radio-button label="无规格" />
         <el-radio-button label="添加规格" />
         </el-radio-group>
@@ -27,16 +35,16 @@
 
     <el-form-item label="">
         <el-row :gutter="20">
-            <el-col :span="4">名称:
+            <!-- <el-col :span="4">名称:
                 <el-input v-model="item.name" readOnly v-for="(item,idx) in formatInfo" /> 
-            </el-col>
-            <el-col :span="12">选项：
+            </el-col> -->
+            <!-- <el-col :span="12">选项：
                 <div  v-for="(item,idx) in formatInfo">
                     <el-tag v-for="(tag,idx) in item.list" :disable-transitions="false">
                         {{tag}}
                     </el-tag>
                 </div>
-            </el-col>
+            </el-col> -->
             <el-col :span="2">
                 <el-button>编辑</el-button>
             </el-col>
@@ -71,32 +79,42 @@
         </el-table>
     </el-form-item>
     <el-form-item label="库存：" prop="exist">
-        <el-input  v-model="BasicInfo.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
+        <el-input  v-model="formInfo.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
     </el-form-item>
     <el-form-item label="单位：" prop="unit">
-        <el-input  v-model="BasicInfo.unit" placeholder="箱" suffix-icon="el-icon-arrow-right" />                                                                       
+        <el-input  v-model="formInfo.unit" placeholder="箱" suffix-icon="el-icon-arrow-right" />                                                                       
     </el-form-item>
     <el-form-item label="商品编码：" prop="productCode">
-        <el-input  v-model="BasicInfo.productCode" placeholder="支持14以内的数字+英文组合"  />                                                                              
+        <el-input  v-model="formInfo.productCode" placeholder="支持14以内的数字+英文组合"  />                                                                              
     </el-form-item>
     <el-form-item label="售价：" prop="sellPrice">
-        <el-input  v-model="BasicInfo.sellPrice" placeholder="请输入套餐在婚博会标价" />                                                                                                        
+        <el-input  v-model="formInfo.sellPrice" placeholder="请输入套餐在婚博会标价" />                                                                                                        
         <span class="outText">元</span>
     </el-form-item>
     <el-form-item label="原价：" prop="price">
-        <el-input  v-model="BasicInfo.price" placeholder="¥5000" />                                                                                                        
+        <el-input  v-model="formInfo.price" placeholder="¥5000" />                                                                                                        
         <span class="outText">元</span>
     </el-form-item>
-    <el-form-item label="商品图片：" prop="productPng">
+    <el-form-item label="商品图片：" prop="good_img_arr">
         <div class="upload-title">
         您可以上传3-6张图片及1个视频作为商品展示图，<br />
         展示在商品页顶部的图片，支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1242*1242，支持JPG、PNG等大部分格式图片，单张图片大小不超过5M 
         </div>
+        <!-- good_img_arr -->
         <el-upload
         action="https://jsonplaceholder.typicode.com/posts/"
         list-type="picture-card"
         :on-preview="handlePictureCardPreview(arguments[0],0)"
-        :on-remove="handleRemove">
+        :on-success="$_pictureSucess('on-success')"
+        :on-error="$_pictureSucess('on-success')"
+        :on-progress="$_pictureSucess('on-success')"
+        :on-remove="handleRemove"
+        :on-exceed="$_pictureSucess('on-success')"
+        :before-remove="$_pictureSucess('on-success')"
+        :before-upload="$_pictureSucess('on-success')"
+        :on-change="$_pictureSucess('on-success')"
+        :file-list="formInfo.good_img_arr"
+        >
         <i class="el-icon-plus upload-placeholder">
             <p>添加图片</p><span>还可以添加6张</span>
         </i>
@@ -108,24 +126,26 @@
         支持MP4视频格式，<a>视频大小不能超过20M</a>
         </div>
         <div class="uploadArray_content">
-        <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview(arguments[0],0)"
-            :on-remove="handleRemove">
-            <i class="el-icon-plus upload-placeholder productView">
-            <p>添加视频</p>
-            </i>
-        </el-upload>
-        <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview(arguments[0],0)"
-            :on-remove="handleRemove">
-            <i class="el-icon-plus upload-placeholder productViewFirstPng">
-            <p>添加视频首图</p>
-            </i>
-        </el-upload>
+            <el-upload
+                action="https://jsonplaceholder.typicode.com/posts/"
+                class="avatar-uploader"
+                :show-file-list="false"
+                >
+                <img v-if="formInfo.good_video" :src="formInfo.good_video" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon">
+                    <p>添加视频</p>
+                </i>
+            </el-upload>
+            <el-upload
+                action="https://jsonplaceholder.typicode.com/posts/"
+                class="avatar-uploader"
+                :show-file-list="false"
+                >
+                <img v-if="formInfo.good_video_pic" :src="formInfo.good_video_pic" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
+                <p>添加视频首图</p>
+                </i>
+            </el-upload>
         </div>
     </el-form-item>
     <el-form-item label="商品展示图：" prop="showPng">
@@ -134,10 +154,13 @@
         </div>
         <el-upload
         action="https://jsonplaceholder.typicode.com/posts/"
-        list-type="picture-card"
-        :on-preview="handlePictureCardPreview(arguments[0],0)"
-        :on-remove="handleRemove">
-        <i class="el-icon-plus upload-placeholder">
+        class="avatar-uploader"
+        :show-file-list="false"
+        :before-upload="beforeAvatarUpload"
+        :on-success="handleAvatarSuccess"
+        >
+        <img v-if="formInfo.good_ico" :src="formInfo.good_ico" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
             <p>添加图片</p><span>只能上传一张</span>
         </i>
         </el-upload>
@@ -152,36 +175,15 @@
 </template>
 
 <script>
+import { categoryOptions } from "../../constans/createdGood";
+
 export default {
   name: "createGood-formlist",
 
   data() {
     return {
-      BasicInfo: {},
       showLable: false, // 展示标签
-      // 所属行业分类
-      categoryOptions: [
-        {
-          category_id: 1,
-          category_name: "美容"
-        },
-        {
-          category_id: 2,
-          category_name: "美甲美睫"
-        },
-        {
-          category_id: 3,
-          category_name: "美发"
-        },
-        {
-          category_id: 4,
-          category_name: "美体"
-        },
-        {
-          category_id: 5,
-          category_name: "轻医美"
-        }
-      ],
+      categoryOptions, // 所属行业分类
       sku_head_arr: ["功效", "容量"], //规格数组，单规格商品不要提交该字段
       good_sku: [
         //规格sku数组，单规格商品也要按该数组格式提交
@@ -222,6 +224,18 @@ export default {
           ico_small: "/small.jpg" //规格图标，单规格商品不要提交该字段
         }
       ],
+      fileList2: [
+        {
+          name: "food.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+        },
+        {
+          name: "food2.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+        }
+      ],
       rules: {
         good_name: [
           { required: true, message: "请输入活动名称", trigger: "blur" },
@@ -249,12 +263,8 @@ export default {
     };
   },
   props: {
-    showFormatInfo: {
-      type: Boolean,
-      default: false
-    },
-    // 规格展示数据
-    formatInfo: {
+    // 表单数据展示
+    formInfo: {
       type: Object,
       default: () => {}
     }
@@ -276,15 +286,25 @@ export default {
      * 展示规格
      */
     $_showFormat() {
-      if (this.BasicInfo.singleButton === "添加规格") {
+      if (this.formInfo.singleButton === "添加规格") {
         this.$emit("changeFormatStatus");
       }
     },
 
+    /**
+     * 点击图片已经上传的钩子
+     */
     handlePictureCardPreview(file, index) {
-      // let { name } = this.formdata[index];
-      // this.form[name] = file.url;
-      // this.dialogVisible = true;
+      console.log(file, index);
+    //   let { name } = this.formdata[index];
+    //   this.form[name] = file.url;
+    //   this.dialogVisible = true;
+    },
+    /**
+     * 图片上传成功
+     */
+    $_pictureSucess(str) {
+      console.log(str);
     },
 
     handleRemove(file, fileList) {
@@ -316,12 +336,43 @@ export default {
      */
     $_changeTab() {
       this.$emit("changeTab");
+    },
+
+    handleAvatarSuccess(res, file) {
+        this.formInfo.good_ico = URL.createObjectURL(file.raw);
+      },
+
+    beforeAvatarUpload(file) {
+        debugger
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+            this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+            this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
     }
   },
   created() {}
 };
 </script>
 <style>
+.div__input {
+  border: 1px solid #dcdfe6; /** 默认 */
+  border: 1px solid #67c23a; /** 失去焦点 */
+  border: 1px solid #f56c6c; /** 报错 */
+  border: 1px solid #7224d8; /** :focus 获得焦点 */
+  padding-right: 30px;
+}
+.avatar-uploader .el-upload--text{
+    width:180px;
+    height: 180px;
+    font-size: 28px;
+    color: #8c939d;
+}
 </style>
 
 

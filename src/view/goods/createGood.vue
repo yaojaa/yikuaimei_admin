@@ -14,38 +14,55 @@
             <el-tabs v-model="editName">
               <el-tab-pane label="编辑基本信息" name="BasicInfo">
                 <div class="panel">
+                  <!-- base 表单 -->
                   <Formlist 
+                    :formInfo = "formInfo"
                     @changeLableStatus="$_changeLableStatus"
                     @changeFormatStatus="$_changeFormatStatus"
                     @changeTab="$_changeTab"
-                    :formatInfo = "formatInfo"
                   />
-                  <Lable :tags="tags" :shopgoods="shopgoods"
-                  @deleteTag="$_deleteTag"
+                  <!-- base 表单 End-->
+
+                  <!-- 添加标签弹框 -->
+                  <Lable 
+                  :tagIdArr = "formInfo.tag_id_arr" 
+                  :shopgoods="shopgoods"
+                  @addLable = "$_addLable"
                   ref="lable" />
-                  <Formate  ref="formate"  @addFormat="$_addFormat"/>
+                  <!-- 添加标签弹框 End -->
+
+                  <!-- 添加规格弹框 -->
+                  <Formate    
+                  :formInfo = "formInfo"
+                  @addFormat="$_addFormat"
+                  ref="formate"
+                  />
+                  <!-- 添加规格弹框  End-->
                 </div>
               </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails">
-                <!-- 表单list -->
-                <FormlistProduct @changeTab="$_changeTab" />
-                <!-- 表单list End -->
+                <!-- product 表单 -->
+                <FormlistProduct
+                :formInfo = "formInfo"
+                @changeTab="$_changeTab"
+                />
+                <!-- product 表单 End -->
               </el-tab-pane>
             </el-tabs>
-          </template>
-            
+          </template>          
         </div>
     </div>
 </template>
 
 <script>
-import info from "../../moke";
 import BreadCrumb from "@/components/common/BreadCrumb";
 import Formate from "@/components/createGood/formate";
 import Formlist from "@/components/createGood/formlist";
 import FormlistProduct from "@/components/createGood/formlist_product";
 import Lable from "@/components/createGood/lable";
-import Goods from "../../moke/goods";
+
+import { breadcrumb } from "../../constans/createdGood";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "tabletest",
@@ -59,74 +76,58 @@ export default {
 
   data() {
     return {
+      breadcrumb, //面包屑
       editName: "BasicInfo", // tab标签默认定位
-
-      BasicInfo: {},
-      formatInfo: {}, // form 列表数据
-
-      showFormatInfo: false, // 展示规格
-      shopgoods: {}, // 可选规格列表
-      tags: [], // 已选标签
-      createFormat: info.shopgoods,
-      Goods: Goods,
-
-      breadcrumb: [
-        //面包屑
-        {
-          name: "商品管理" //名字
-        },
-        {
-          name: "平台商品", //名字
-          url: "/goodList"
-        },
-        {
-          name: "添加商品" //名字
-        }
-      ]
     };
   },
 
   created() {
+    console.log(this.formInfo);
     // @TODO 获取可选规格 this.shopgoods = "axios 请求回来的数据";
-    this.shopgoods = Goods.shopgoods;
-    // @TODO 获取已选标签
-    this.tags = [
-      { name: "标签一", type: "" },
-      { name: "标签二", type: "gray" },
-      { name: "标签三", type: "primary" },
-      { name: "标签四", type: "success" }
-    ];
   },
 
-  computed: {},
+  computed: {
+    ...mapState({
+      formInfo: state => state.createdGoode.formInfo, // form 列表数据
+      shopgoods: state => state.createdGoode.shopgoods // 可选规格列表
+    })
+  },
 
   methods: {
+    /**
+     * 展示标签弹框
+     */
     $_changeLableStatus() {
-      this.$refs.lable.showLable = true;
-    },
-    $_changeFormatStatus() {
-      this.$refs.formate.showFormat = true;
+      this.$refs.lable.lable_show = true;
     },
 
-    $_deleteTag(idx) {
-      this.tags.splice("idx", 1);
+    /**
+     * 展示规格弹框
+     */
+    $_changeFormatStatus() {
+      this.$refs.formate.format_show = true;
     },
-    $_showFormatInfo() {
-      this.showFormatInfo = true;
-    },
+
     /** *
-     * tab标签切换事件
+     * 导航切换
      */
     $_changeTab(tab, event) {
-      debugger;
       this.editName =
         this.editName === "ProductDetails" ? "BasicInfo" : "ProductDetails";
     },
+
     /** *
-     * 添加规格
+     * @TODO 添加规格 formInfo 应该是个数组
      */
     $_addFormat(formatInfo) {
-      this.formatInfo = formatInfo;
+      this.formInfo.formatInfo = formatInfo;
+    },
+
+    /**
+     * 添加标签
+     */
+    $_addLable(tag_id_arr) {
+      this.formInfo.tag_id_arr = tag_id_arr;
     }
   }
 };
@@ -151,9 +152,6 @@ export default {
   margin-right: 10px;
   border-left: 1px solid #dcdfe6;
   border-radius: 4px !important;
-}
-
-#createGood .searchIcon {
 }
 
 #createGood .dialog_format {
