@@ -29,8 +29,10 @@
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
     
-            <el-dialog title="提示" :visible.sync="visible" width="30%">
-                <span>这是一段信息</span>
+            <el-dialog title="下架" :visible="visible" width="30%">
+                <p>确定要下架{{currentItem.good_name}}吗?</p>
+                <p>操作人:{{user.data.user_realname}}</p>
+                <!-- <span>{{currentItem.name}}</span> -->
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="visible = false">取 消</el-button>
                     <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
@@ -54,7 +56,8 @@
                 category: [
     
                 ],
-                visiable: false,
+                user: JSON.parse(localStorage.user),
+                visible: false,
                 currentItem: {},
                 tagsListGroup: {
                     "选择状态": [{
@@ -121,7 +124,29 @@
                         placeholder: "请输入名称"
                     }]
                 },
-                tableJson: {
+                tableJson: {}
+            };
+        },
+        components: {
+            NomalTable,
+            BreadCrumb,
+            TableSearch
+        },
+        created() {
+            this.tableJson = this.initColumn();
+        },
+        beforeRouteUpdate(to, from, next) {
+            this.status_filter = Object.keys(to.query)[0] + Object.values(to.query)[0];
+            this.$refs.table.getData(to.query);
+            next();
+        },
+        computed: {},
+        mounted() {
+        },
+        methods: {
+            // 获取初始化tableJson
+            initColumn() {
+                const column = {
                     "column": [
                         //行
                         {
@@ -187,18 +212,16 @@
                             "list": [{
                                     "label": "下架",
                                     "type": "edit",
-                                    "url": "", //优先执行url
+                                    // "url": "", //优先执行url
                                     onClick(tablePage, self, record) {
                                         // console.log(record);
                                         self.openModal(record)
-                                        // self.nomal = !self.nomal;
-                                        // tablePage.isShow = !tablePage.isShow;
                                     }
                                 },
                                 {
                                     "label": "编辑",
                                     "type": "edit",
-                                    "url": "", //优先执行url
+                                    // "url": "", //优先执行url
                                     onClick(tablePage, self, row) {
                                         self.$router.push("/createGood" + row.shop_id);
                                     }
@@ -207,24 +230,9 @@
                         }
                     ]
                 }
-            };
-        },
-        components: {
-            NomalTable,
-            BreadCrumb,
-            TableSearch
-        },
-        created() {},
-        beforeRouteUpdate(to, from, next) {
-            this.status_filter = Object.keys(to.query)[0] + Object.values(to.query)[0];
-            this.$refs.table.getData(to.query);
-            next();
-        },
-        computed: {},
-        mounted() {
-        },
-        methods: {
-            
+                return column;
+            },
+
             //调用子组件的getData方法
             getData(k, v) {
                 this.$refs.table.getData({
@@ -234,14 +242,12 @@
     
             // 打开上下架弹窗
             openModal(record) {
-                console.log(1);
                 this.currentItem = record;
-                this.visiable = true;
+                this.visible = true;
             },
     
             // 上下架接口调用
             doUpdateIsUse() {
-                debugger
                 const currentItem = this.currentItem;
                 const {
                     good_id,
@@ -258,16 +264,9 @@
                     is_use: newUse
                 }
                 this.$axios.post("/api/admin/shopgoods/isUse", params).then(res => {
-                    const categoryData = res.data.data.map(item => {
-                        return {
-                            title: item.category_name,
-                            key: "category_id",
-                            value: item.category_id
-                        };
-                    });
-    
-                    this.tagsListGroup["行业分类"] = categoryData;
-                    this.$forceUpdate();
+                    this.visible = false;
+                    this.$refs.table.getData({good_type: 1});
+                    this.tableJson = this.initColumn();
                 });
             }
         }

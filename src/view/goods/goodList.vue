@@ -19,7 +19,7 @@
           <li class="tags-li">
             {{key}}
             <router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/goodList', query: {
-                                          [tag.key]: tag.value }}">
+                                                    [tag.key]: tag.value }}">
               {{tag.title}}</router-link>
   
           </li>
@@ -28,6 +28,16 @@
       <nomal-table ref="table" :table-json="tableJson" :url="url" :query="{good_type: 2}">
         <table-search :searchs="searchs"></table-search>
       </nomal-table>
+  
+      <el-dialog title="下架" :visible="visible" width="30%">
+        <p>确定要下架{{currentItem.good_name}}吗?</p>
+        <p>操作人:{{user.data.user_realname}}</p>
+        <!-- <span>{{currentItem.name}}</span> -->
+        <span slot="footer" class="dialog-footer">
+                              <el-button @click="visible = false">取 消</el-button>
+                              <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
+                          </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -44,6 +54,9 @@
       return {
         status_filter: "",
         category: [],
+        user: JSON.parse(localStorage.user),
+        visible: false,
+        currentItem: {},
         tagsListGroup: {
           "选择状态:": [{
               title: "全部",
@@ -60,6 +73,32 @@
               key: "is_use",
               value: 2
             }
+          ],
+          "行业分类": [{
+              title: "美容",
+              key: "category_id",
+              value: 1
+            },
+            {
+              title: "美甲美瞳",
+              key: "category_id",
+              value: 2
+            },
+            {
+              title: "美发",
+              key: "category_id",
+              value: 3
+            },
+            {
+              title: "美体",
+              key: "category_id",
+              value: 4
+            },
+            {
+              title: "轻医美",
+              key: "category_id",
+              value: 5
+            },
           ]
         },
         url: "/api/admin/shopgoods/index",
@@ -82,7 +121,32 @@
             placeholder: "请输入名称"
           }]
         },
-        tableJson: {
+        tableJson: {}
+      };
+    },
+    components: {
+      NomalTable,
+      BreadCrumb,
+      TableSearch
+    },
+    beforeRouteUpdate(to, from, next) {
+      console.log(to.query);
+  
+      this.status_filter = Object.keys(to.query)[0] + Object.values(to.query)[0];
+  
+      // console.log(this.status_filter);
+      this.$refs.table.getData(to.query);
+      next();
+    },
+    created() {
+      this.tableJson = this.initColumn();
+    },
+    computed: {},
+    mounted() {},
+    methods: {
+      // 获取初始化tableJson
+      initColumn() {
+        const column = {
           "column": [
             //行
             {
@@ -122,8 +186,8 @@
               "align": "center",
               formatter(row) {
                 return `<p style='text-align: center'>
-                              ${Config.status[row.status]}
-                            </p>`;
+                                              ${Config.status[row.status]}
+                                            </p>`;
               }
             },
             {
@@ -148,16 +212,16 @@
               "list": [{
                   "label": "下架",
                   "type": "edit",
-                  "url": "", //优先执行url
-                  onClick(tablePage, self) {
-                    self.nomal = !self.nomal;
-                    tablePage.isShow = !tablePage.isShow;
+                  // "url": "", //优先执行url
+                  onClick(tablePage, self, record) {
+                    // console.log(record);
+                    self.openModal(record)
                   }
                 },
                 {
                   "label": "编辑",
                   "type": "edit",
-                  "url": "", //优先执行url
+                  // "url": "", //优先执行url
                   onClick(tablePage, self, row) {
                     self.$router.push("/createGood" + row.shop_id);
                   }
@@ -166,42 +230,8 @@
             }
           ]
         }
-      };
-    },
-    components: {
-      NomalTable,
-      BreadCrumb,
-      TableSearch
-    },
-    beforeRouteUpdate(to, from, next) {
-      console.log(to.query);
-  
-      this.status_filter = Object.keys(to.query)[0] + Object.values(to.query)[0];
-  
-      // console.log(this.status_filter);
-      this.$refs.table.getData(to.query);
-      next();
-    },
-    created() {},
-    computed: {},
-    mounted() {
-      this.getcategoryList();
-    },
-    methods: {
-      //获取行业分类列表
-      getcategoryList() {
-        this.$axios.get("/api/admin/select/categoryList").then(res => {
-          const categoryData = res.data.data.map(item => {
-            return {
-              title: item.category_name,
-              key: "category_id",
-              value: item.category_id
-            };
-          });
-  
-          this.tagsListGroup["行业分类"] = categoryData;
-          this.$forceUpdate();
-        });
+        console.log('column', column)
+        return column;
       },
   
       //调用子组件的getData方法
@@ -209,6 +239,38 @@
         this.$refs.table.getData({
           [k]: v
         })
+      },
+  
+      // 打开上下架弹窗
+      openModal(record) {
+        this.currentItem = record;
+        this.visible = true;
+      },
+  
+      // 上下架接口调用
+      doUpdateIsUse() {
+        const currentItem = this.currentItem;
+        const {
+          good_id,
+          is_use
+        } = currentItem;
+        let newUse;
+        if (is_use === 1) {
+          newUse = 2
+        } else if (is_use === 2) {
+          newUse = 1;
+        }
+        const params = {
+          id: good_id,
+          is_use: newUse
+        }
+        this.$axios.post("/api/admin/shopgoods/isUse", params).then(res => {
+          this.visible = false;
+          this.$refs.table.getData({
+            good_type: 1
+          });
+          this.tableJson = this.initColumn();
+        });
       }
     }
   };

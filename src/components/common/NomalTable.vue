@@ -288,7 +288,6 @@
             },
             //操作按钮
             handleButtons(handle, scope){
-                debugger
                 if(handle.url){
 
                  this.$router.push({ path: handle.url+'/'+scope.row[handle.query] })
