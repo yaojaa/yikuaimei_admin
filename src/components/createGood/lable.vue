@@ -113,8 +113,16 @@ export default {
      * 展示good_category_sons
     */
    computedSons(key, keyPath ){
-    console.log(key, keyPath )
-    // this.good_category_sons = item.tag_group_sons ? data.tag_group_sons[0].tag_list : item.tag_list
+    let data = this.shopgoods.data
+    let sons = data.filter(item => item.tag_group_name == keyPath[0])
+    if(keyPath.length === 2 && sons && sons.length){
+      sons = sons[0].tag_group_sons.filter(item => item.tag_group_name == keyPath[1])
+    }
+    this.good_category_sons =  sons.length ? sons[0].tag_list :''
+   },
+   initSons(){
+     let data = this.shopgoods.data[0]
+      this.good_category_sons = data.tag_group_sons ? data.tag_group_sons[0].tag_list : data.tag_list
    }
   },
 
@@ -128,13 +136,14 @@ export default {
     },
   },
   watch: {
-    defaultActive:function (newQuestion, oldQuestion) {
-      console.log(newQuestion, oldQuestion)
+    lable_show:function (newQuestion) {
+      if(newQuestion){
+        this.initSons()
+      }
     }
   },
   created() {
-    let data = this.shopgoods.data[0]
-    this.good_category_sons = data.tag_group_sons ? data.tag_group_sons[0].tag_list : data.tag_list
+    this.initSons()
   }
 };
 </script>
