@@ -3,22 +3,21 @@
     <el-dialog title="标签" :visible.sync="lable_show" size="large">
     <div>
         已选：
-        <el-tag v-for="(tag,idx) in tagIdArr" :key="idx" closable type="gray" @close="$_deleteTag(idx)">
+        <el-tag v-for="(tag,idx) in tagIdArr" :key="tag" closable type="gray" @close="$_deleteTag(idx)">
             {{tag}}
         </el-tag>
-        <el-button type="primary" icon="searchIcon">搜索</el-button>
     </div>
     
     <el-row>
-      <el-col :span="8">
-          <el-menu class="el-menu-vertical-demo" v-for="item in shopgoods.data" :key="item.tag_group_name">  <!-- @open="handleOpen" @close="handleClose" -->
-            <el-menu-item :index="item.tag_group_name" v-if="!item.tag_group_sons" @click="computedSons(item.tag_list)">
+      <el-col :span="8"> 
+          <el-menu class="el-menu-vertical-demo" :default-active="defaultActive" v-for="item in shopgoods.data" :key="item.tag_group_name"  @select="computedSons">
+            <el-menu-item :index="item.tag_group_name" v-if="!item.tag_group_sons">
               <span slot="title"> {{item.tag_group_name}} </span>
             </el-menu-item>
 
             <el-submenu :index="item.tag_group_name" v-else> 
               <template slot="title"> <span>{{item.tag_group_name}}</span> </template>
-              <el-menu-item v-for="sons in item.tag_group_sons" :key="sons.tag_group_name" :index="sons.tag_group_name" @click="computedSons(sons.tag_list)">
+              <el-menu-item v-for="sons in item.tag_group_sons" :key="sons.tag_group_name" :index="sons.tag_group_name">
                 {{sons.tag_group_name}}
               </el-menu-item>
             </el-submenu>
@@ -52,7 +51,8 @@ export default {
   data() {
     return {
       lable_show: false,
-      good_category_sons:{}
+      good_category_sons:{},
+      findLable:''
     };
   },
 
@@ -112,11 +112,30 @@ export default {
     /** 
      * 展示good_category_sons
     */
-    computedSons(Sons){
-      this.good_category_sons = Sons
+   computedSons(key, keyPath ){
+    console.log(key, keyPath )
+    // this.good_category_sons = item.tag_group_sons ? data.tag_group_sons[0].tag_list : item.tag_list
+   }
+  },
+
+  computed:{
+    defaultActive(){
+      let data = this.shopgoods.data[0]
+      if(!data){
+        return ''
+      }
+      return data.tag_group_sons ? data.tag_group_sons[0].tag_group_name : data.tag_group_name
+    },
+  },
+  watch: {
+    defaultActive:function (newQuestion, oldQuestion) {
+      console.log(newQuestion, oldQuestion)
     }
   },
-  created() {}
+  created() {
+    let data = this.shopgoods.data[0]
+    this.good_category_sons = data.tag_group_sons ? data.tag_group_sons[0].tag_list : data.tag_list
+  }
 };
 </script>
 <style>
@@ -137,6 +156,13 @@ export default {
 }
 .el-tag--gray .el-tag__close {
   color: rgba(255, 255, 255, 1);
+}
+
+.title_input{
+  width:100px;
+  position: absolute;
+  top: 7px;
+  right: 76px;
 }
 </style>
 
