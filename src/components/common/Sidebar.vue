@@ -47,8 +47,11 @@
                                 index: '/serviceList',
                                 title: '门户服务'
                             },{
-                                index: '/userincome',
-                                title: '采购品项'
+                                index: '/purchaseList',
+                                title: '品项管理'
+                            },{
+                                index: '/fictitiousList',
+                                title: '虚拟卡券管理'
                             }
                         ]
                     },

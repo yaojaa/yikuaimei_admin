@@ -30,7 +30,7 @@ export default new Router({
                     }
                 },
                 {
-                    path: '/createGood',
+                    path: '/createGood/:good_id',
                     component: resolve => require(['../view/goods/createGood.vue'], resolve),
                     meta: {
                         title: '平台商品'
@@ -41,6 +41,20 @@ export default new Router({
                     component: resolve => require(['../view/goods/serviceList.vue'], resolve),
                     meta: {
                         title: '门店服务'
+                    }
+                },
+                {
+                    path: '/purchaseList',
+                    component: resolve => require(['../view/goods/purchaseList.vue'], resolve),
+                    meta: {
+                        title: '品相管理'
+                    }
+                },
+                {
+                    path: '/fictitiousList',
+                    component: resolve => require(['../view/goods/fictitiousList.vue'], resolve),
+                    meta: {
+                        title: '虚拟卡券管理'
                     }
                 },
                 {

@@ -102,7 +102,7 @@
         </div>
         <!-- good_img_arr -->
         <el-upload
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="/api/admin/fileupload/image"
         list-type="picture-card"
         :on-preview="handlePictureCardPreview(arguments[0],0)"
         :on-success="$_pictureSucess('on-success')"
@@ -127,7 +127,7 @@
         </div>
         <div class="uploadArray_content">
             <el-upload
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action="/api/admin/fileupload/image"
                 class="avatar-uploader"
                 :show-file-list="false"
                 >
@@ -137,7 +137,7 @@
                 </i>
             </el-upload>
             <el-upload
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action="/api/admin/fileupload/image"
                 class="avatar-uploader"
                 :show-file-list="false"
                 >
@@ -153,7 +153,7 @@
         <p>展示在商品页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
         </div>
         <el-upload
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="/api/admin/fileupload/image"
         class="avatar-uploader"
         :show-file-list="false"
         :before-upload="beforeAvatarUpload"
@@ -343,7 +343,6 @@ export default {
       },
 
     beforeAvatarUpload(file) {
-        debugger
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
 

@@ -18,14 +18,14 @@
                 <ul>
                     <li class="tags-li">
                         {{key}}
-                        <router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/serviceList', query: {
+                        <router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/purchaseList', query: {
                                                               [tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
     
                     </li>
                 </ul>
             </div>
-            <nomal-table ref="table" :table-json="tableJson" :url="url" :query="{good_type: 1}">
+            <nomal-table ref="table" :table-json="tableJson" :url="url" :query="{good_type: 3}">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
     
