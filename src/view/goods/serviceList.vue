@@ -11,7 +11,8 @@
                 <div class="sub-actions">
                     <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/categorylist' })">管理分类</el-button>
                     <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/labellist' })">管理标签</el-button>
-                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood' })">添加商品</el-button>
+                    <!-- good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券-->
+                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=1' })">添加服务</el-button>
                 </div>
             </div>
             <div class="status_filter" v-for="(item,key,index) in tagsListGroup" :key="index">
@@ -219,8 +220,15 @@
                                 {
                                     "label": "编辑",
                                     "type": "edit",
-                                    "url": "/createGood",
-                                    "query": "good_id"
+                                    onClick(tablePage, self, record) {
+                                        self.$router.push({ 
+                                            path: '/createGood',
+                                            query: {
+                                                good_id: record.good_id,
+                                                good_type: 1    // good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券
+                                            }
+                                         })
+                                    }
                                 }
                             ]
                         }

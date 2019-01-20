@@ -57,7 +57,7 @@
                     },
                     {
                         icon: 'iconfont icon-shangjiacopy',
-                        title: '订单管理a',
+                        title: '订单管理',
                         index:'/order',
                         subs: [
                             {
@@ -65,21 +65,21 @@
                                 title: '平台商品'
                             },
                             {
-                                index: '/business',
+                                index: '/order/serviceOrderList',
                                 title: '门店服务'
                             },
                             {
-                                index: '/business',
+                                index: '/order/purchaseOrderList',
                                 title: '采购品项'
                             },
-                            {
-                                index: '/business',
-                                title: '评价管理'
-                            },
-                            {
-                                index: '/business',
-                                title: '退款初审'
-                            }
+                            // {
+                            //     index: '/business',
+                            //     title: '评价管理'
+                            // },
+                            // {
+                            //     index: '/business',
+                            //     title: '退款初审'
+                            // }
                         ]
                     },
                     {
