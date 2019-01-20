@@ -1,82 +1,85 @@
+import { post } from '@/utils/request';
+
 export default {
     namespaced: true,
     state: {
         // 列表数据
         formInfo: {
             good_type: 2, //商品类型：1服务 2实物 3采购品项 4虚拟商品
-            good_name: "商品名字4", //商品名字
-            good_explain: "商品说明1", //商品卖点
+            good_name: '商品名字4', //商品名字
+            good_explain: '商品说明1', //商品卖点
             category_id: 2, //行业id
             tag_id_arr: [8, 18, 32], //标签id数组
-            good_video: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100", //商品视频
-            good_video_pic: "", //商品视频封面图
+            good_video: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100', //商品视频
+            good_video_pic: '', //商品视频封面图
             good_img_arr: [{
-                    name: "good_img_arr0",
-                    url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+                    name: 'good_img_arr0',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 },
                 {
-                    name: "good_img_arr1",
-                    url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+                    name: 'good_img_arr1',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 }
             ], //商品图片数组
-            good_ico: "", //商品展示图
-            unit: "20盒2000克箱装", //单位 例如盒，箱
+            good_ico: '', //商品展示图
+            unit: '20盒2000克箱装', //单位 例如盒，箱
             show_img_arr: [{
-                    name: "show_img_arr0",
-                    url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+                    name: 'show_img_arr0',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 },
                 {
-                    name: "show_img_arr1",
-                    url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+                    name: 'show_img_arr1',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 }
             ], //商品详情页介绍展示图片数组
             explain_img_arr: [{
-                    name: "explain_img_arr0",
-                    url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+                    name: 'explain_img_arr0',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 },
                 {
-                    name: "explain_img_arr1",
-                    url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+                    name: 'explain_img_arr1',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 }
             ], //卖点图数组
-            good_notes: "补充说明", //补充说明
-            sku_type_arr: ["颜色", "尺寸", "材质"], //规格数组，单规格商品不要提交该字段
-            good_sku: [ //规格sku数组，单规格商品也要按该数组格式提交
+            good_notes: '补充说明', //补充说明
+            sku_type_arr: ['颜色', '尺寸', '材质'], //规格数组，单规格商品不要提交该字段
+            good_sku: [
+                //规格sku数组，单规格商品也要按该数组格式提交
                 {
-                    sku_type_arr: ["黑色1", "12寸", "棉麻1"], //规格值数组，单规格商品不要提交该字段
-                    sku_code: "23344545654654621", //商品编码 不提交该字段，则认定本条规格信息不存在
+                    sku_type_arr: ['黑色1', '12寸', '棉麻1'], //规格值数组，单规格商品不要提交该字段
+                    sku_code: '23344545654654621', //商品编码 不提交该字段，则认定本条规格信息不存在
                     price_cost: 2321, //成本
                     price: 2888, //原价(只用于展示商品原价信息)
                     price_sale: 2666, //售价(商品实际需要支付价值，线下补交时要用到)
                     price_plate: 500, //平台需实际支付价格（平台下单实际支付价格）编辑服务时必须填写
-                    ico_small: "/small.jpg" //规格图标，单规格商品不要提交该字段
+                    ico_small: '/small.jpg' //规格图标，单规格商品不要提交该字段
                 },
                 {
-                    sku_type_arr: ["黑色1", "12寸", "棉麻1"], //规格值数组，单规格商品不要提交该字段
-                    sku_code: "23344545654654621", //商品编码
+                    sku_type_arr: ['黑色1', '12寸', '棉麻1'], //规格值数组，单规格商品不要提交该字段
+                    sku_code: '23344545654654621', //商品编码
                     price_cost: 2321, //成本
                     price: 2888, //原价(只用于展示商品原价信息)
                     price_sale: 2666, //售价(商品实际需要支付价值，线下补交时要用到)
                     price_plate: 500, //平台需实际支付价格（平台下单实际支付价格）编辑服务时必须填写
-                    ico_small: "/small.jpg" //规格图标，单规格商品不要提交该字段
+                    ico_small: '/small.jpg' //规格图标，单规格商品不要提交该字段
                 },
                 {
-                    sku_type_arr: ["黑色1", "12寸", "棉麻1"], //规格值数组，单规格商品不要提交该字段
-                    sku_code: "23344545654654621", //商品编码
+                    sku_type_arr: ['黑色1', '12寸', '棉麻1'], //规格值数组，单规格商品不要提交该字段
+                    sku_code: '23344545654654621', //商品编码
                     price_cost: 2321, //成本
                     price: 2888, //原价(只用于展示商品原价信息)
                     price_sale: 2666, //售价(商品实际需要支付价值，线下补交时要用到)
                     price_plate: 500, //平台需实际支付价格（平台下单实际支付价格）编辑服务时必须填写
-                    ico_small: "/small.jpg" //规格图标，单规格商品不要提交该字段
+                    ico_small: '/small.jpg' //规格图标，单规格商品不要提交该字段
                 },
                 {
-                    sku_type_arr: ["黑色1", "12寸", "棉麻1"], //规格值数组，单规格商品不要提交该字段
-                    sku_code: "23344545654654621", //商品编码
+                    sku_type_arr: ['黑色1', '12寸', '棉麻1'], //规格值数组，单规格商品不要提交该字段
+                    sku_code: '23344545654654621', //商品编码
                     price_cost: 2321, //成本
                     price: 2888, //原价(只用于展示商品原价信息)
                     price_sale: 2666, //售价(商品实际需要支付价值，线下补交时要用到)
                     price_plate: 500, //平台需实际支付价格（平台下单实际支付价格）编辑服务时必须填写
-                    ico_small: "/small.jpg" //规格图标，单规格商品不要提交该字段
+                    ico_small: '/small.jpg' //规格图标，单规格商品不要提交该字段
                 }
             ]
         },
@@ -95,92 +98,92 @@ export default {
          * tag_id 2 标签id
          * return 200:
          */
-        shopgoods: {
-            "code": 0,
-            "msg": "OK",
-            "data": [{
-                    "tag_group_name": "服务标签组其他", //标签组名字
-                    "tag_group_deep": 1,
-                    "tag_group_id": "29", //标签组id
-                    "tag_list": //标签列表
-                        [{
-                            "tag_name": "服务标签91", //标签名字
-                            "tag_id": "91" //标签id
+        lableList: {
+            code: 0,
+            msg: 'OK',
+            data: [{
+                    tag_group_name: '服务标签组其他', //标签组名字
+                    tag_group_deep: 1,
+                    tag_group_id: '29', //标签组id
+                    //标签列表
+                    tag_list: [{
+                            tag_name: '服务标签91', //标签名字
+                            tag_id: '91' //标签id
                         },
                         {
-                            "tag_name": "服务标签90", //标签名字
-                            "tag_id": "90" //标签id
+                            tag_name: '服务标签90', //标签名字
+                            tag_id: '90' //标签id
                         },
                         {
-                            "tag_name": "服务标签89", //标签名字
-                            "tag_id": "89" //标签id
+                            tag_name: '服务标签89', //标签名字
+                            tag_id: '89' //标签id
                         }
                     ]
                 },
                 {
-                    "tag_group_name": "服务标签组总", //标签组名字
-                    "tag_group_deep": 1,
-                    "tag_group_id": "26", //标签组id
-                    "tag_group_sons": //名下二级标签组列表
-                        [{
-                            "tag_group_name": "服务标签组2", //标签组名字
-                            "tag_group_deep": 2,
-                            "tag_group_id": "28", //标签组id
-                            "tag_list": //标签列表
-                                [{
-                                    "tag_name": "服务标签88", //标签名字
-                                    "tag_id": "88" //标签id
+                    tag_group_name: '服务标签组总', //标签组名字
+                    tag_group_deep: 1,
+                    tag_group_id: '26', //标签组id
+                    //名下二级标签组列表
+                    tag_group_sons: [{
+                            tag_group_name: '服务标签组2', //标签组名字
+                            tag_group_deep: 2,
+                            tag_group_id: '28', //标签组id
+                            //标签列表
+                            tag_list: [{
+                                    tag_name: '服务标签88', //标签名字
+                                    tag_id: '88' //标签id
                                 },
                                 {
-                                    "tag_name": "服务标签87",
-                                    "tag_id": "87"
+                                    tag_name: '服务标签87',
+                                    tag_id: '87'
                                 },
                                 {
-                                    "tag_name": "服务标签86",
-                                    "tag_id": "86"
+                                    tag_name: '服务标签86',
+                                    tag_id: '86'
                                 },
                                 {
-                                    "tag_name": "服务标签85",
-                                    "tag_id": "85"
+                                    tag_name: '服务标签85',
+                                    tag_id: '85'
                                 },
                                 {
-                                    "tag_name": "服务标签84",
-                                    "tag_id": "84"
+                                    tag_name: '服务标签84',
+                                    tag_id: '84'
                                 },
                                 {
-                                    "tag_name": "服务标签83",
-                                    "tag_id": "83"
+                                    tag_name: '服务标签83',
+                                    tag_id: '83'
                                 },
                                 {
-                                    "tag_name": "服务标签82",
-                                    "tag_id": "82"
+                                    tag_name: '服务标签82',
+                                    tag_id: '82'
                                 },
                                 {
-                                    "tag_name": "服务标签81",
-                                    "tag_id": "81"
+                                    tag_name: '服务标签81',
+                                    tag_id: '81'
                                 }
                             ]
                         },
                         {
-                            "tag_group_name": "服务标签组1",
-                            "tag_group_deep": 2,
-                            "tag_group_id": "27",
-                            "tag_list": //标签组列表
-                                [{
-                                    "tag_name": "服务标签80",
-                                    "tag_id": "80"
+                            tag_group_name: '服务标签组1',
+                            tag_group_deep: 2,
+                            tag_group_id: '27',
+                            //标签组列表
+                            tag_list: [{
+                                    tag_name: '服务标签80',
+                                    tag_id: '80'
                                 },
                                 {
-                                    "tag_name": "服务标签79",
-                                    "tag_id": "79"
+                                    tag_name: '服务标签79',
+                                    tag_id: '79'
                                 },
                                 {
-                                    "tag_name": "服务标签78",
-                                    "tag_id": "78"
+                                    tag_name: '服务标签78',
+                                    tag_id: '78'
                                 },
                                 {
-                                    "tag_name": "服务标签77",
-                                    "tag_id": "77"
+                                    tag_name: '服务标签77',
+                                    tag_id: '77'
                                 }
                             ]
                         }
@@ -188,31 +191,93 @@ export default {
                 }
             ]
         }
-
     },
     actions: {
-        // ['USER_REG']({ commit }, user, token) {
-        //   fetch({
-        //     url:'http://dev.countinsight.com/api/admin/shopgoods/create',
-        //     data:{}
-        //   })
-        //   commit('USER_SIGNIN', user, token)
-        // },
-        // ['USER_SIGNIN']({ commit }, data) {
-        //   // console.log('actions USER_SIGNIN')
-        //   commit('USER_SIGNIN', data)
-        // },
-        // ['USER_SIGNOUT']({ commit }) {
-        //   commit('USER_SIGNOUT')
-        // }
+        /** 
+         * 获取商品 / 服务 / 采购品项 列表
+         * http: //dev.countinsight.com/api/admin/docs.php?path=/shopgoods/index&action=GET
+         */
+        ['FORMINFO']({ commit }, user, token) {
+            return post({
+                url: 'http://dev.countinsight.com/api/admin/shopgoods/index',
+                params: {
+                    is_page, // 是否分页 1分页 2获取全部
+                    page, // 页码
+                    page_size, // 每页数据条数
+                    good_type, // 商品类型：1服务 2商品 3采购品项 4虚拟商品
+                    id, // 商品的good_id字段
+                    good_name, // 商品/服务/采购 名字
+                    is_use, // 是否上架 1下架 2上架
+                    category_id, // 行业id
+                    tag_id // 标签id
+                }
+            }).then((res) => commit('LABLE_LIST', res.data));
+        },
+
+        /** 
+         * 添加 单规格 / 多规格 商品 / 服务 / 采购品项
+         * http: //dev.countinsight.com/api/admin/docs.php?path=/shopgoods/create&action=POST
+         */
+        ['FORMINFO_CREATE']({ commit, state }, user, token) {
+            return post({
+                url: 'http: //dev.countinsight.com/api/admin/shopgoods/create',
+                params: {
+                    formInfo
+                }
+            }).then((res) => console.log(res, '创建成功'));
+        },
+
+        /** 
+         * 修改 单规格 / 多规格 商品 / 服务 / 采购品项
+         * http: //dev.countinsight.com/api/admin/docs.php?path=/shopgoods/modify&action=POST
+         */
+        ['FORMINFO_MODIFY']({ commit, state }, user, token) {
+            return post({
+                url: 'http: //dev.countinsight.com/api/admin/shopgoods/modify',
+                params: {
+                    formInfo
+                }
+            }).then((res) => commit('LABLE_LIST', console.log(res, '修改成功')));
+        },
+
+        /** 
+         * 获取标签列表
+         * http: //dev.countinsight.com/api/admin/docs.php?path=/select/tagGroupList&action=GET
+         */
+        ['LABLE_LIST']({ commit }, user, token) {
+            return post({
+                url: 'http: //dev.countinsight.com/api/admin/select/getFriendTagList',
+                params: {
+                    tag_id // 标签id
+                }
+            }).then((res) => commit('LABLE_LIST', res.data));
+        },
+
+        /** 
+         * 获取关联标签列表
+         * http: //dev.countinsight.com/api/admin/docs.php?path=/select/getFriendTagList&action=GET
+         */
+        ['LABLE_LIST']({ commit }, user, token) {
+            return post({
+                url: 'http://dev.countinsight.com/api/admin/select/tagGroupList',
+                params: {
+                    tag_group_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+                    category_id, // 行业id
+                    get_tag_list // 是否获取标签列表 1获取 0不获取
+                }
+            }).then((res) => res.data);
+        }
     },
 
     mutations: {
-        // ['USER_REG'](state, data) {
-        //   Object.assign(state, data)
-        //   localStorage.setItem('user', JSON.stringify(state))
-        // }
+        ['FORMINFO'](state, data) {
+            state.formInfo = data;
+        },
+
+        ['LABLE_LIST'](state, data) {
+            state.lableList = data;
+        }
     },
 
     getters: {}
-}
+};
