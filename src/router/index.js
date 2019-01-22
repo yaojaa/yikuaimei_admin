@@ -121,6 +121,15 @@ export default new Router({
                     }
                 },
                 {
+                    // 订单管理-评价管理
+                    path: '/order/commentList',
+                    component: resolve => require(['../view/order/commentList.vue'], resolve),
+                    meta: {
+                        title: '评价管理',
+                        permission: true
+                    }
+                },
+                {
                     // 案例页面
                     path: '/case',
                     component: resolve => require(['../view/case/caseList.vue'], resolve),

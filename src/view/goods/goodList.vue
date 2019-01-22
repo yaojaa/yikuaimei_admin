@@ -46,7 +46,7 @@
   import NomalTable from "@/components/common/NomalTable";
   import BreadCrumb from "@/components/common/BreadCrumb";
   import TableSearch from "@/components/common/TableSearch";
-  import Config from "./config";
+import Config from "./config";
   
   export default {
     name: "tabletest",
@@ -114,12 +114,20 @@
         ],
         searchs: {
           list: [{
-            type: "input-text", //名称筛选
+            type: "input-text", //商品名称筛选
             label: "商品名称",
             name: "good_name",
             value: "",
             placeholder: "请输入名称"
-          }]
+          },
+          {
+            type: "input-text", //标签名称筛选
+            label: "标签",
+            name: "tag_name",
+            value: "",
+            placeholder: "请输入标签名称"
+          },
+          ]
         },
         tableJson: {}
       };
@@ -154,13 +162,13 @@
               "label": "商品",
               "width": "200px",
               formatter(row) {
-                let str = "<div style='display:flex; background-color#fff;'>";
+                let str = "<div style='background-color#fff;padding:8px;'>";
                 str +=
-                  "<div style='width:80px;height:80px;padding:8px; flex-shrink:0;'><img style='width:100%; height:100%;' src='" +
+                  "<div style='float:left;width:80px;height:80px;margin-right:8px;'><img style='width:100%; height:100%;' src='" +
                   row.good_ico +
                   "'></div>";
-                str +=
-                  "<span class='list-good-name'>" + row.good_name + "</span>";
+                str += "<p class='list-good-name'>" + row.good_name + "</p>";
+                str += "<p class='list-good-price' style='margin-top:10px;'>¥" + row.price_low + "</p>";
                 str += "</div>";
                 return str;
               }
@@ -169,7 +177,20 @@
               "type": "text",
               "label": "标签",
               "prop": "label_name",
-              "align": "center"
+              "align": "center",
+              formatter(row) {
+                let tag_name_arr = '';
+                if (row.tag_name_arr.length > 2) {
+                  tag_name_arr = row.tag_name_arr[0] +','+row.tag_name_arr[1]+'...'; 
+                }else if (row.tag_name_arr.length === 2) {
+                  tag_name_arr = row.tag_name_arr[0] +','+row.tag_name_arr[1]; 
+                } else if (row.tag_name_arr.length === 1) {
+                  tag_name_arr = row.tag_name_arr[0];
+                } else {
+                  tag_name_arr = '--';
+                }
+                return `<p style='text-align: center'>${tag_name_arr}</p>`;
+              }
             },
             {
               "type": "text",
@@ -195,7 +216,7 @@
               "label": "总销量",
               "align": "center",
               "width": "",
-              "prop": "switch"
+              "prop": "sell"
             },
             // {
             //   type: "text",

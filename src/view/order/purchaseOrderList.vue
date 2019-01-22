@@ -100,13 +100,6 @@
                             "label": "采购时间",
                             "prop": "purchase_ctime",
                             "width": "",
-                             formatter(row) {
-                                let str = "<div style='display:flex; background-color#fff;'>";
-                                str += "<div style='width:80px;height:80px;padding:8px; flex-shrink:0;'><img style='width:100%; height:100%;' src='/static/img/img.jpg'></div>";
-                                
-                                str += "</div>";
-                                return str;
-                            }
                         },
                         {
                             "type": "text",
@@ -144,7 +137,7 @@
                             "type": "text",
                             "align": "center",
                             "label": "提成归属",
-                            "prop": "date",
+                            "prop": "shop_user_name",
                             "width": "",
                             
                         },
@@ -152,13 +145,8 @@
                             "type": "text",
                             "align": "center",
                             "label": "审核状态",
-                            "prop": "purchase_status",
+                            "prop": "purchase_status_name",
                             "width": "",
-                            formatter(row) {
-                                return `<p style='text-align: center'>
-                                              ${Config.purchase_status[row.status]}
-                                            </p>`;
-                            }
                             
                         },
                         {

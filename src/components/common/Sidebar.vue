@@ -72,10 +72,10 @@
                                 index: '/order/purchaseOrderList',
                                 title: '采购品项'
                             },
-                            // {
-                            //     index: '/business',
-                            //     title: '评价管理'
-                            // },
+                            {
+                                index: '/order/commentList',
+                                title: '评价管理'
+                            },
                             // {
                             //     index: '/business',
                             //     title: '退款初审'
