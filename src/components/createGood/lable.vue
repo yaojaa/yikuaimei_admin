@@ -30,6 +30,7 @@
               <li 
                 v-for="list in good_category_sons" 
                 :key="list.tag_group_name || list.tag_name"
+                :class="{ li__disable: isDisable(list.tag_group_id || list.tag_id)}"
                 @click="addLable(list.tag_group_name || list.tag_name,list.tag_group_id || list.tag_id)"
                 >
                 {{list.tag_group_name || list.tag_name}}
@@ -60,7 +61,7 @@ export default {
       lable_show: false,
       good_category_sons:{},
       tag_list: []
-    };
+    }
   },
 
 
@@ -109,22 +110,31 @@ export default {
      * 添加标签 @请求相关联标签并添加
      */
     addLable(good_category_name,good_category_id) {
-      this.$axios.get("/api/admin/select/getFriendTagList", {
-          tags: '91' //good_category_id
-      }).then(res => {
-          debugger
+      let obj = {tag_id:good_category_id,tag_name:good_category_name}
+      const isdisable = this.isDisable(good_category_id)
+      if(isdisable){
+        return
+      }
+      this.$axios.get("/api/admin/select/getFriendTagList?tag_id=" + good_category_id).then(res => {
           let arr = res.data.data || []
-          arr.push({tag_name:good_category_name,tag_id:good_category_id})
-          this.tag_list = this.tag_list.push(arr);
+          arr.push(obj)
+          this.tag_list = _.unionBy(this.tag_list , arr , 'tag_id');
       })
     },
+
+    /** 
+     * 不可点击标签样式
+    */
+   isDisable(tag_id){
+      let arr = this.tag_list.filter(item=> item.tag_id == tag_id)
+      return arr.length ? true : false
+   },
 
     /** *
      * 删除标签
      */
     $_deleteTag(idx) {
-      debugger
-      this.tagIdArr.splice("idx", 1);
+      this.tag_list.splice("idx", 1);
     },
 
     /** 
@@ -171,6 +181,10 @@ export default {
   position: absolute;
   top: 7px;
   right: 76px;
+}
+
+.lableList li.li__disable{
+  color:#c3c3c3
 }
 </style>
 

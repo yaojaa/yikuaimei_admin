@@ -284,10 +284,6 @@ export default {
     ...mapState('createdGoode',['formInfo','lableList']) // 可选标签数据
   },
 
-  created(){
-      console.log(this.$route.params.good_id)
-  },
-
   mounted() {
     
     // this.$axios.get("/api/admin/select/tagGroupList", {

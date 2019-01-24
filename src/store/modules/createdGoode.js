@@ -18,8 +18,27 @@ export default {
 
     actions: {
         /** 
+         * 获取商品 / 服务 / 采购详情
+         * url http: //dev.countinsight.com/api/admin/docs.php?path=/shopgoods/getOneById&action=GET
+         * params id
+         * status ok
+         */
+
+        fetchFormInfo({
+            commit
+        }, params) {
+            // console.log(1111, Vue)
+            axios.get("/api/admin/shopgoods/getOneById", {
+                params
+            }).then(res => {
+                commit('setFormInfo', res.data.data)
+            })
+        },
+
+        /** 
          * 获取标签列表
-         * http://dev.countinsight.com/api/admin/docs.php?path=/select/tagGroupList&action=GET
+         * url http://dev.countinsight.com/api/admin/docs.php?path=/select/tagGroupList&action=GET
+         * 
          */
         fetchLableList({
             commit
@@ -35,6 +54,7 @@ export default {
         /** 
          * 获取关联标签列表
          * url http://dev.countinsight.com/api/admin/docs.php?path=/select/getFriendTagList&action=GET
+         * params tag_id
          */
         fetchFriendLableList({
             commit
@@ -43,22 +63,6 @@ export default {
                 params
             }).then(res => {
                 return res.data
-            })
-        },
-
-        /** 
-         * 获取商品 / 服务 / 采购品项 列表
-         * url http: //dev.countinsight.com/api/admin/docs.php?path=/shopgoods/getOneById&action=GET
-         */
-        fetchFormInfo({
-            commit
-        }, params) {
-            // console.log(1111, Vue)
-            axios.get("/api/admin/shopgoods/getOneById", {
-                params
-            }).then(res => {
-                console.log(res.data.data)
-
             })
         },
 

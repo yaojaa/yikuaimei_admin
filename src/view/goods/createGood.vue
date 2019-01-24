@@ -51,7 +51,7 @@ export default {
 
   created() {
     const id = this.$route.params.good_id
-    const good_type = this.$route.params.good_id  //
+    const good_type = this.$route.params.good_type  //1门店服务 2平台商品 3品项管理 4虚拟卡券
     if(+id){ // good_id存在或者不等于0 则当前是编辑页面
       // 编辑选项，获取列表信息 获取商品 / 服务 / 采购品项 列表
       this.$store.dispatch('createdGoode/fetchFormInfo', {
