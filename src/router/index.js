@@ -30,7 +30,7 @@ export default new Router({
                     }
                 },
                 {
-                    path: '/createGood/:good_id',
+                    path: '/createGood',
                     component: resolve => require(['../view/goods/createGood.vue'], resolve),
                     meta: {
                         title: '平台商品'
@@ -99,6 +99,33 @@ export default new Router({
                     component: resolve => require(['../view/order/send_goods.vue'], resolve),
                     meta: {
                         title: '发货',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理-门店服务
+                    path: '/order/serviceOrderList',
+                    component: resolve => require(['../view/order/serviceOrderList.vue'], resolve),
+                    meta: {
+                        title: '门店服务',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理-采购品项
+                    path: '/order/purchaseOrderList',
+                    component: resolve => require(['../view/order/purchaseOrderList.vue'], resolve),
+                    meta: {
+                        title: '采购品项',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理-评价管理
+                    path: '/order/commentList',
+                    component: resolve => require(['../view/order/commentList.vue'], resolve),
+                    meta: {
+                        title: '评价管理',
                         permission: true
                     }
                 },

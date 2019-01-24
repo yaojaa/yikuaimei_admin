@@ -11,7 +11,8 @@
                 <div class="sub-actions">
                     <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/categorylist' })">管理分类</el-button>
                     <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/labellist' })">管理标签</el-button>
-                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood' })">添加商品</el-button>
+                    <!-- good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券-->
+                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=1' })">添加服务</el-button>
                 </div>
             </div>
             <div class="status_filter" v-for="(item,key,index) in tagsListGroup" :key="index">
@@ -19,7 +20,7 @@
                     <li class="tags-li">
                         {{key}}
                         <router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/serviceList', query: {
-                                                              [tag.key]: tag.value }}">
+                                                                      [tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
     
                     </li>
@@ -34,9 +35,9 @@
                 <p>操作人:{{user.data.user_realname}}</p>
                 <!-- <span>{{currentItem.name}}</span> -->
                 <span slot="footer" class="dialog-footer">
-                        <el-button @click="visible = false">取 消</el-button>
-                        <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
-                    </span>
+                                <el-button @click="visible = false">取 消</el-button>
+                                <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
+                            </span>
             </el-dialog>
         </div>
     </div>
@@ -116,12 +117,20 @@
                 ],
                 searchs: {
                     list: [{
-                        type: "input-text", //名称筛选
-                        label: "门店名称",
-                        name: "good_name",
-                        value: "",
-                        placeholder: "请输入名称"
-                    }]
+                            type: "input-text", //名称筛选
+                            label: "门店名称",
+                            name: "good_name",
+                            value: "",
+                            placeholder: "请输入名称"
+                        },
+                        {
+                            type: "input-text", //标签名称筛选
+                            label: "标签",
+                            name: "tag_name",
+                            value: "",
+                            placeholder: "请输入标签名称"
+                        },
+                    ]
                 },
                 tableJson: {}
             };
@@ -152,13 +161,13 @@
                             "label": "商品",
                             "width": "200px",
                             formatter(row) {
-                                let str = "<div style='display:flex; background-color#fff;'>";
+                                let str = "<div style='background-color#fff;padding:8px;'>";
                                 str +=
-                                    "<div style='width:80px;height:80px;padding:8px; flex-shrink:0;'><img style='width:100%; height:100%;' src='" +
+                                    "<div style='float:left;width:80px;height:80px;margin-right:8px;'><img style='width:100%; height:100%;' src='" +
                                     row.good_ico +
                                     "'></div>";
-                                str +=
-                                    "<span class='list-good-name'>" + row.good_name + "</span>";
+                                str += "<p class='list-good-name'>" + row.good_name + "</p>";
+                                str += "<p class='list-good-price' style='margin-top:10px;'>¥" + row.price_low + "</p>";
                                 str += "</div>";
                                 return str;
                             }
@@ -167,7 +176,20 @@
                             "type": "text",
                             "label": "标签",
                             "prop": "label_name",
-                            "align": "center"
+                            "align": "center",
+                            formatter(row) {
+                                let tag_name_arr = '';
+                                if (row.tag_name_arr.length > 2) {
+                                    tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1] + '...';
+                                } else if (row.tag_name_arr.length === 2) {
+                                    tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1];
+                                } else if (row.tag_name_arr.length === 1) {
+                                    tag_name_arr = row.tag_name_arr[0];
+                                } else {
+                                    tag_name_arr = '--';
+                                }
+                                return `<p style='text-align: center'>${tag_name_arr}</p>`;
+                            }
                         },
                         {
                             "type": "text",
@@ -184,8 +206,8 @@
                             "align": "center",
                             formatter(row) {
                                 return `<p style='text-align: center'>
-                                              ${Config.status[row.status]}
-                                            </p>`;
+                                                      ${Config.status[row.status]}
+                                                    </p>`;
                             }
                         },
                         {
@@ -193,7 +215,7 @@
                             "label": "总销量",
                             "align": "center",
                             "width": "",
-                            "prop": "switch"
+                            "prop": "sell"
                         },
                         // {
                         //   type: "text",
@@ -219,8 +241,15 @@
                                 {
                                     "label": "编辑",
                                     "type": "edit",
-                                    "url": "/createGood",
-                                    "query": "good_id"
+                                    onClick(tablePage, self, record) {
+                                        self.$router.push({
+                                            path: '/createGood',
+                                            query: {
+                                                good_id: record.good_id,
+                                                good_type: 1 // good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券
+                                            }
+                                        })
+                                    }
                                 }
                             ]
                         }

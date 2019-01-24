@@ -13,13 +13,13 @@
         <ul>
             <li class="tags-li" >
                   {{key}} 
-<router-link :class="tag.key+tag.value == status_filter?'active':'rrrr'" v-for="(tag) in item" :key="tag.value" :to="{ path: '/order/list_goods', query: {
+<router-link :class="tag.key+tag.value == status_filter?'active':'rrrr'" v-for="(tag) in item" :key="tag.value" :to="{ path: '/order/serviceOrderList', query: {
 [tag.key]: tag.value }}">{{tag.title}}</router-link>
  
             </li>
         </ul>
       </div>
-     <nomal-table ref="table" :table-json="tableJson" :url="'/api/admin/order/index'">
+     <nomal-table ref="table" :table-json="tableJson" :url="'/api/admin/orderService/index'">
       <table-search :searchs="searchs"></table-search>
 
      </nomal-table>
@@ -39,20 +39,18 @@
                 status_filter:'',
 
                 tagsListGroup:{
-                	'订单类型：':[
-			                {title:'全部',key:'profit',value:''},
-			                {title:'利润归门店',key:'profit',value:2},
-			                {title:'利润归平台',key:'profit',value:1}
-                             ],
+                	// '订单类型：':[
+			        //         {title:'全部',key:'profit',value:''},
+			        //         {title:'利润归门店',key:'profit',value:2},
+			        //         {title:'利润归平台',key:'profit',value:1}
+                    //          ],
                      '订单状态：':[
 
                       {title:'全部',key:'status',value:0},
-                      {title:'待处理',key:'status',value:1},
-                      {title:'已付款',key:'status',value:2},
-                      {title:'已发货',key:'status',value:3},
-                      {title:'待评价',key:'status',value:4},
-                      {title:'已评价',key:'status',value:5},
-                      {title:'已取消',key:'status',value:8},
+                      {title:'待付款',key:'status',value:1},
+                      {title:'未核销',key:'status',value:2},
+                      {title:'已核销',key:'status',value:3},
+                      {title:'已取消',key:'status',value:4},
 
                      ]
                 },

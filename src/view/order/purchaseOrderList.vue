@@ -13,13 +13,13 @@
         <ul>
             <li class="tags-li" >
                   {{key}} 
-<router-link :class="tag.key+tag.value == status_filter?'active':'rrrr'" v-for="(tag) in item" :key="tag.value" :to="{ path: '/order/list_goods', query: {
+<router-link :class="tag.key+tag.value == status_filter?'active':'rrrr'" v-for="(tag) in item" :key="tag.value" :to="{ path: '/order/purchaseOrderList', query: {
 [tag.key]: tag.value }}">{{tag.title}}</router-link>
  
             </li>
         </ul>
       </div>
-     <nomal-table ref="table" :table-json="tableJson" :url="'/api/admin/order/index'">
+     <nomal-table ref="table" :table-json="tableJson" :url="'/api/admin/purchase/index'">
       <table-search :searchs="searchs"></table-search>
 
      </nomal-table>
@@ -31,6 +31,7 @@
 <script>
     import NomalTable from '@/components/common/NomalTable'
     import TableSearch from '@/components/common/TableSearch'
+    import Config from "./config";
 
     export default {
         data() {
@@ -39,20 +40,14 @@
                 status_filter:'',
 
                 tagsListGroup:{
-                	'订单类型：':[
-			                {title:'全部',key:'profit',value:''},
-			                {title:'利润归门店',key:'profit',value:2},
-			                {title:'利润归平台',key:'profit',value:1}
-                             ],
-                     '订单状态：':[
+                	
+                     '采购状态：':[
 
                       {title:'全部',key:'status',value:0},
-                      {title:'待处理',key:'status',value:1},
-                      {title:'已付款',key:'status',value:2},
-                      {title:'已发货',key:'status',value:3},
-                      {title:'待评价',key:'status',value:4},
-                      {title:'已评价',key:'status',value:5},
-                      {title:'已取消',key:'status',value:8},
+                      {title:'待审核',key:'status',value:1},
+                      {title:'不同意',key:'status',value:2},
+                      {title:'同意',key:'status',value:3},
+                      {title:'已修改',key:'status',value:4},
 
                      ]
                 },
@@ -102,62 +97,55 @@
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "商品名称",
-                            "prop": "business_ctime",
+                            "label": "采购时间",
+                            "prop": "purchase_ctime",
                             "width": "",
-                             formatter(row) {
-                                let str = "<div style='display:flex; background-color#fff;'>";
-                                str += "<div style='width:80px;height:80px;padding:8px; flex-shrink:0;'><img style='width:100%; height:100%;' src='/static/img/img.jpg'></div>";
-                                
-                                str += "</div>";
-                                return str;
-                            }
                         },
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "创建时间",
-                            "prop": "order_ctime",
+                            "label": "采购门店",
+                            "prop": "shop_name",
                             "width": "",
                             
                         },
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "姓名",
-                            "prop": "order_user_name",
+                            "label": "采购人员",
+                            "prop": "shop_user_phone",
                             "width": "",
                             
                         },
                           {
                             "type": "text",
                             "align": "center",
-                            "label": "电话",
-                            "prop": "business_phone",
+                            "label": "采购单号",
+                            "prop": "purchase_id",
                             "width": "",
                             
                         },
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "类别",
-                            "prop": "category_id",
+                            "label": "采购金额",
+                            "prop": "purchase_price",
                             "width": "",
                             
                         },
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "城市",
-                            "prop": "date",
+                            "label": "提成归属",
+                            "prop": "shop_user_name",
                             "width": "",
                             
                         },
                          {
                             "type": "text",
                             "align": "center",
-                            "label": "状态",
-                            "prop": "date",
+                            "label": "审核状态",
+                            "prop": "purchase_status_name",
                             "width": "",
                             
                         },
