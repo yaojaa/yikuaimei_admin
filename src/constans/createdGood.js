@@ -10,7 +10,7 @@ export const breadcrumb = [{
     }
 ]
 
-export const categoryOptions = [{
+export const CATEGORYOPTIONS = [{
         category_id: 1,
         category_name: "美容"
     },

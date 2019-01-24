@@ -12,41 +12,13 @@
         <div class="page-content">
           <template>
             <el-tabs v-model="editName">
-              <el-tab-pane label="编辑基本信息" name="BasicInfo">
-                <div class="panel">
-                  <!-- base 表单 -->
-                  <Formlist 
-                    :formInfo = "formInfo"
-                    @changeLableStatus="$_changeLableStatus"
-                    @changeFormatStatus="$_changeFormatStatus"
-                    @changeTab="$_changeTab"
-                  />
-                  <!-- base 表单 End-->
-
-                  <!-- 添加标签弹框 -->
-                  <Lable 
-                    :tagIdArr = "formInfo.tag_id_arr" 
-                    :shopgoods="shopgoods"
-                    @addLable = "$_addLable"
-                    ref="lable" />
-                  <!-- 添加标签弹框 End -->
-
-                  <!-- 添加规格弹框 -->
-                  <Formate    
-                    :formInfo = "formInfo"
-                    @addFormat="$_addFormat"
-                    ref="formate"
-                    />
-                  <!-- 添加规格弹框  End-->
-                </div>
+              <el-tab-pane label="编辑基本信息" name="BasicInfo" class="panel">
+                <!-- base 表单 -->
+                <FormlistItem @changeTab="$_changeTab" />
               </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails">
                 <!-- product 表单 -->
-                <FormlistProduct
-                  :formInfo = "formInfo"
-                  @changeTab="$_changeTab"
-                />
-                <!-- product 表单 End -->
+                <FormlistProduct @changeTab="$_changeTab" />
               </el-tab-pane>
             </el-tabs>
           </template>          
@@ -55,22 +27,18 @@
 </template>
 
 <script>
-import BreadCrumb from "@/components/common/BreadCrumb";
-import Formate from "@/components/createGood/formate";
-import Formlist from "@/components/createGood/formlist";
-import FormlistProduct from "@/components/createGood/formlist_product";
-import Lable from "@/components/createGood/lable";
-
 import { breadcrumb } from "../../constans/createdGood";
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
+
+import BreadCrumb from "@/components/common/BreadCrumb";
+import FormlistItem from "@/components/createGood/formlist";
+import FormlistProduct from "@/components/createGood/formlist_product";
 
 export default {
   name: "tabletest",
   components: {
     BreadCrumb,
-    Formate,
-    Formlist,
-    Lable,
+    FormlistItem,
     FormlistProduct
   },
 
@@ -82,32 +50,17 @@ export default {
   },
 
   created() {
-    console.log(this.formInfo);
-    // @TODO 获取可选规格 this.shopgoods = "axios 请求回来的数据";
-  },
-
-  computed: {
-    ...mapState({
-      formInfo: state => state.createdGoode.formInfo, // form 表格数据
-      shopgoods: state => state.createdGoode.shopgoods // 可选标签数据
-    })
+    const id = this.$route.params.good_id
+    const good_type = this.$route.params.good_id  //
+    if(+id){ // good_id存在或者不等于0 则当前是编辑页面
+      // 编辑选项，获取列表信息 获取商品 / 服务 / 采购品项 列表
+      this.$store.dispatch('createdGoode/fetchFormInfo', {
+        id, // 商品的good_id字段 @TODO
+      })
+    }
   },
 
   methods: {
-    /**
-     * 展示标签弹框
-     */
-    $_changeLableStatus() {
-      this.$refs.lable.lable_show = true;
-    },
-
-    /**
-     * 展示规格弹框
-     */
-    $_changeFormatStatus() {
-      this.$refs.formate.format_show = true;
-    },
-
     /** *
      * 导航切换
      */
@@ -115,20 +68,6 @@ export default {
       this.editName =
         this.editName === "ProductDetails" ? "BasicInfo" : "ProductDetails";
     },
-
-    /** *
-     * @TODO 添加规格 formInfo 应该是个数组
-     */
-    $_addFormat(formatInfo) {
-      this.formInfo.formatInfo = formatInfo;
-    },
-
-    /**
-     * 添加标签
-     */
-    $_addLable(tag_id_arr) {
-      this.formInfo.tag_id_arr = tag_id_arr;
-    }
   }
 };
 </script>

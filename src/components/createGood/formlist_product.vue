@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "createGood-formlist",
 
@@ -62,14 +64,11 @@ export default {
       }
     };
   },
-  props: {
-    // 规格展示数据
-    formInfo: {
-      type: Object,
-      default: () => {}
-    }
+
+  computed: {
+    ...mapState('createdGoode',['formInfo','lableList']) // 可选标签数据
   },
-  components: {},
+
   methods: {
     handlePictureCardPreview(file, index) {
       // let { name } = this.formdata[index];

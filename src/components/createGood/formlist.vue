@@ -1,189 +1,206 @@
 <template>
-    <!-- 表单list -->
-    <el-form ref="formInfo" :model="formInfo" :rules="rules" label-width="120px">
-    <el-form-item label="名称：" prop="good_name">
-        <el-input  v-model="formInfo.good_name" placeholder="名称为2-30个字" />                                                    
-    </el-form-item>
-    <el-form-item label="商品卖点：" prop="good_explain">
-        <el-input type="textarea" v-model="formInfo.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" />    
-        <p class="input__tabs">在商品详情页标题下面展示卖点信息，建议50字以内</p>                                                
-    </el-form-item>
-    <el-form-item label="行业分类：" prop="category_id">
-        <el-select v-model="formInfo.category_id" placeholder="请选择所属行业分类">
-            <el-option v-for="item in categoryOptions" :label="item.category_name" :value="item.category_id" :key="item.category_name" />
-        </el-select>                         
-    </el-form-item>
-    <el-form-item label="标签：" prop="tag_id_arr">
+    <div>
+        <!-- 表单list -->
+        <el-form ref="formInfo" :model="formInfo" :rules="rules" label-width="120px">
+            <el-form-item label="名称：" prop="good_name">
+                <el-input  v-model="formInfo.good_name" placeholder="名称为2-30个字" />                                                    
+            </el-form-item>
+            <el-form-item label="商品卖点：" prop="good_explain">
+                <el-input type="textarea" v-model="formInfo.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" />    
+                <p class="input__tabs">在商品详情页标题下面展示卖点信息，建议50字以内</p>                                                
+            </el-form-item>
+            <el-form-item label="行业分类：" prop="category_id">
+                <el-select v-model="formInfo.category_id" placeholder="请选择所属行业分类">
+                    <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="item.category_name" />
+                </el-select>                         
+            </el-form-item>
+            <el-form-item label="标签：" prop="tag_id_arr">
 
-        <div class="el-input el-input--small el-input--suffix div__input"  v-if="formInfo.tag_id_arr">
-            <el-tag v-for="item in formInfo.tag_id_arr" :key="item">{{item}}</el-tag>
-            <span class="el-input__suffix" @click="$_showLable">
-                <span class="el-input__suffix-inner">
-                    <i class="el-input__icon el-icon-arrow-right"></i>
-                </span>
-            </span>
-        </div>
-        <p class="input__tabs">可设置多个标签</p>
-    </el-form-item>
-    <el-form-item label="规格" props="format">
-        <!-- format_none format_add -->
-        <el-radio-group v-model="formInfo.singleButton" @change="this.$_showFormat">
-        <el-radio-button label="无规格" />
-        <el-radio-button label="添加规格" />
-        </el-radio-group>
-    </el-form-item>
-
-    <el-form-item label="">
-        <el-row :gutter="20">
-            <!-- <el-col :span="4">名称:
-                <el-input v-model="item.name" readOnly v-for="(item,idx) in formatInfo" /> 
-            </el-col> -->
-            <!-- <el-col :span="12">选项：
-                <div  v-for="(item,idx) in formatInfo">
-                    <el-tag v-for="(tag,idx) in item.list" :disable-transitions="false">
-                        {{tag}}
-                    </el-tag>
+                <div class="el-input el-input--small el-input--suffix div__input">
+                    <el-tag v-for="item in formInfo.tag_id_arr" :key="item">{{item}}</el-tag>
+                    <span class="el-input__suffix" @click="$_showLable">
+                        <span class="el-input__suffix-inner">
+                            <i class="el-input__icon el-icon-arrow-right"></i>
+                        </span>
+                    </span>
                 </div>
-            </el-col> -->
-            <el-col :span="2">
-                <el-button>编辑</el-button>
-            </el-col>
-        </el-row>
-    </el-form-item>
-    <el-form-item>
-        <el-table :data="good_sku" style="width: 100%" :span-method="$_SpanMethod" >
-            <!-- <el-table-column v-for="(item,idx) in sku_head_arr" :key="item" :label="item" prop="sku_type_arr[idx]" /> -->
-            <el-table-column :label="sku_head_arr[0]" prop="sku_type_arr[0]" />
-            <el-table-column :label="sku_head_arr[1]" prop="sku_type_arr[1]" v-if="sku_head_arr[1]" />
-            <el-table-column label="售价(元)" >
-                <template slot-scope="scope">
-                    <el-input  v-model="scope.row.price_sale" placeholder="10000" /> 
-                </template>
-            </el-table-column>
-            <el-table-column label="原价(元)" >
-                <template slot-scope="scope">
-                    <el-input  v-model="scope.row.price" placeholder="10000" /> 
-                </template>
-            </el-table-column>
-            <el-table-column label="成本(元)" >
-                <template slot-scope="scope">
-                    <el-input  v-model="scope.row.price_cost" placeholder="10000" /> 
-                </template>
-            </el-table-column>
-            <el-table-column label="编码" >
-                <template slot-scope="scope">
-                    <el-input  v-model="scope.row.sku_code" placeholder="10000" /> 
-                </template>
-            </el-table-column>
-            <el-table-column label="图片" prop="ico_small" />
-        </el-table>
-    </el-form-item>
-    <el-form-item label="库存：" prop="exist">
-        <el-input  v-model="formInfo.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
-    </el-form-item>
-    <el-form-item label="单位：" prop="unit">
-        <el-input  v-model="formInfo.unit" placeholder="箱" suffix-icon="el-icon-arrow-right" />                                                                       
-    </el-form-item>
-    <el-form-item label="商品编码：" prop="productCode">
-        <el-input  v-model="formInfo.productCode" placeholder="支持14以内的数字+英文组合"  />                                                                              
-    </el-form-item>
-    <el-form-item label="售价：" prop="sellPrice">
-        <el-input  v-model="formInfo.sellPrice" placeholder="请输入套餐在婚博会标价" />                                                                                                        
-        <span class="outText">元</span>
-    </el-form-item>
-    <el-form-item label="原价：" prop="price">
-        <el-input  v-model="formInfo.price" placeholder="¥5000" />                                                                                                        
-        <span class="outText">元</span>
-    </el-form-item>
-    <el-form-item label="商品图片：" prop="good_img_arr">
-        <div class="upload-title">
-        您可以上传3-6张图片及1个视频作为商品展示图，<br />
-        展示在商品页顶部的图片，支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1242*1242，支持JPG、PNG等大部分格式图片，单张图片大小不超过5M 
-        </div>
-        <!-- good_img_arr -->
-        <el-upload
-        action="/api/admin/fileupload/image"
-        list-type="picture-card"
-        :on-preview="handlePictureCardPreview(arguments[0],0)"
-        :on-success="$_pictureSucess('on-success')"
-        :on-error="$_pictureSucess('on-success')"
-        :on-progress="$_pictureSucess('on-success')"
-        :on-remove="handleRemove"
-        :on-exceed="$_pictureSucess('on-success')"
-        :before-remove="$_pictureSucess('on-success')"
-        :before-upload="$_pictureSucess('on-success')"
-        :on-change="$_pictureSucess('on-success')"
-        :file-list="formInfo.good_img_arr"
-        >
-        <i class="el-icon-plus upload-placeholder">
-            <p>添加图片</p><span>还可以添加6张</span>
-        </i>
-        </el-upload>
-    </el-form-item>
-    <el-form-item label="" prop="uploadArray">
-        <div class="upload-title">
-        展示在商品页顶部的视频，<a>最多可上传 1 个视频</a>，
-        支持MP4视频格式，<a>视频大小不能超过20M</a>
-        </div>
-        <div class="uploadArray_content">
-            <el-upload
-                action="/api/admin/fileupload/image"
-                class="avatar-uploader"
-                :show-file-list="false"
-                >
-                <img v-if="formInfo.good_video" :src="formInfo.good_video" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon">
-                    <p>添加视频</p>
-                </i>
-            </el-upload>
-            <el-upload
-                action="/api/admin/fileupload/image"
-                class="avatar-uploader"
-                :show-file-list="false"
-                >
-                <img v-if="formInfo.good_video_pic" :src="formInfo.good_video_pic" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
-                <p>添加视频首图</p>
-                </i>
-            </el-upload>
-        </div>
-    </el-form-item>
-    <el-form-item label="商品展示图：" prop="showPng">
-        <div class="upload-title">
-        <p>展示在商品页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
-        </div>
-        <el-upload
-        action="/api/admin/fileupload/image"
-        class="avatar-uploader"
-        :show-file-list="false"
-        :before-upload="beforeAvatarUpload"
-        :on-success="handleAvatarSuccess"
-        >
-        <img v-if="formInfo.good_ico" :src="formInfo.good_ico" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
-            <p>添加图片</p><span>只能上传一张</span>
-        </i>
-        </el-upload>
-    </el-form-item>
-    <el-form-item>
-        <el-button type="primary" @click="onSubmit('form')">表单提交</el-button>
-        <el-button @click="$_changeTab">下一步</el-button>
-        <el-button>取消</el-button>
-    </el-form-item>
-    </el-form>
-    <!-- 表单list End -->
+                <p class="input__tabs">可设置多个标签</p>
+            </el-form-item>
+            <el-form-item label="规格" props="format">
+                <!-- format_none format_add -->
+                <el-radio-group v-model="formInfo.singleButton" @change="this.$_showFormat">
+                <el-radio-button label="无规格" />
+                <el-radio-button label="添加规格" />
+                </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="">
+                <el-row :gutter="20">
+                    <!-- <el-col :span="4">名称:
+                        <el-input v-model="item.name" readOnly v-for="(item,idx) in formatInfo" /> 
+                    </el-col> -->
+                    <!-- <el-col :span="12">选项：
+                        <div  v-for="(item,idx) in formatInfo">
+                            <el-tag v-for="(tag,idx) in item.list" :disable-transitions="false">
+                                {{tag}}
+                            </el-tag>
+                        </div>
+                    </el-col> -->
+                    <el-col :span="2">
+                        <el-button>编辑</el-button>
+                    </el-col>
+                </el-row>
+            </el-form-item>
+                <el-form-item>
+                    <el-table :data="good_sku" style="width: 100%" :span-method="$_SpanMethod" >
+                        <!-- <el-table-column v-for="(item,idx) in sku_head_arr" :key="item" :label="item" prop="sku_type_arr[idx]" /> -->
+                        <el-table-column :label="sku_head_arr[0]" prop="sku_type_arr[0]" />
+                        <el-table-column :label="sku_head_arr[1]" prop="sku_type_arr[1]" v-if="sku_head_arr[1]" />
+                        <el-table-column label="售价(元)" >
+                            <template slot-scope="scope">
+                                <el-input  v-model="scope.row.price_sale" placeholder="10000" /> 
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="原价(元)" >
+                            <template slot-scope="scope">
+                                <el-input  v-model="scope.row.price" placeholder="10000" /> 
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="成本(元)" >
+                            <template slot-scope="scope">
+                                <el-input  v-model="scope.row.price_cost" placeholder="10000" /> 
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="编码" >
+                            <template slot-scope="scope">
+                                <el-input  v-model="scope.row.sku_code" placeholder="10000" /> 
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="图片" prop="ico_small" />
+                    </el-table>
+                </el-form-item>
+                <el-form-item label="库存：" prop="exist">
+                    <el-input  v-model="formInfo.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
+                </el-form-item>
+                <el-form-item label="单位：" prop="unit">
+                    <el-input  v-model="formInfo.unit" placeholder="箱" suffix-icon="el-icon-arrow-right" />                                                                       
+                </el-form-item>
+                <el-form-item label="商品编码：" prop="productCode">
+                    <el-input  v-model="formInfo.productCode" placeholder="支持14以内的数字+英文组合"  />                                                                              
+                </el-form-item>
+                <el-form-item label="售价：" prop="sellPrice">
+                    <el-input  v-model="formInfo.sellPrice" placeholder="请输入套餐在婚博会标价" />                                                                                                        
+                    <span class="outText">元</span>
+                </el-form-item>
+                <el-form-item label="原价：" prop="price">
+                    <el-input  v-model="formInfo.price" placeholder="¥5000" />                                                                                                        
+                    <span class="outText">元</span>
+                </el-form-item>
+                <el-form-item label="商品图片：" prop="good_img_arr">
+                    <div class="upload-title">
+                    您可以上传3-6张图片及1个视频作为商品展示图，<br />
+                    展示在商品页顶部的图片，支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1242*1242，支持JPG、PNG等大部分格式图片，单张图片大小不超过5M 
+                    </div>
+                    <!-- good_img_arr -->
+                    <el-upload
+                    action="/api/admin/fileupload/image"
+                    list-type="picture-card"
+                    :on-preview="handlePictureCardPreview(arguments[0],0)"
+                    :on-success="$_pictureSucess('on-success')"
+                    :on-error="$_pictureSucess('on-success')"
+                    :on-progress="$_pictureSucess('on-success')"
+                    :on-remove="handleRemove"
+                    :on-exceed="$_pictureSucess('on-success')"
+                    :before-remove="$_pictureSucess('on-success')"
+                    :before-upload="$_pictureSucess('on-success')"
+                    :on-change="$_pictureSucess('on-success')"
+                    :file-list="formInfo.good_img_arr"
+                    >
+                    <i class="el-icon-plus upload-placeholder">
+                        <p>添加图片</p><span>还可以添加6张</span>
+                    </i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="" prop="uploadArray">
+                    <div class="upload-title">
+                    展示在商品页顶部的视频，<a>最多可上传 1 个视频</a>，
+                    支持MP4视频格式，<a>视频大小不能超过20M</a>
+                    </div>
+                    <div class="uploadArray_content">
+                        <el-upload
+                            action="/api/admin/fileupload/image"
+                            class="avatar-uploader"
+                            :show-file-list="false"
+                            >
+                            <img v-if="formInfo.good_video" :src="formInfo.good_video" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon">
+                                <p>添加视频</p>
+                            </i>
+                        </el-upload>
+                        <el-upload
+                            action="/api/admin/fileupload/image"
+                            class="avatar-uploader"
+                            :show-file-list="false"
+                            >
+                            <img v-if="formInfo.good_video_pic" :src="formInfo.good_video_pic" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
+                            <p>添加视频首图</p>
+                            </i>
+                        </el-upload>
+                    </div>
+                </el-form-item>
+                <el-form-item label="商品展示图：" prop="showPng">
+                    <div class="upload-title">
+                    <p>展示在商品页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
+                    </div>
+                    <el-upload
+                    action="/api/admin/fileupload/image"
+                    class="avatar-uploader"
+                    :show-file-list="false"
+                    :before-upload="beforeAvatarUpload"
+                    :on-success="handleAvatarSuccess"
+                    >
+                    <img v-if="formInfo.good_ico" :src="formInfo.good_ico" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
+                        <p>添加图片</p><span>只能上传一张</span>
+                    </i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit('form')">表单提交</el-button>
+                    <el-button @click="$_changeTab">下一步</el-button>
+                    <el-button>取消</el-button>
+                </el-form-item>
+        </el-form>
+        <!-- 表单list End -->
+
+        <!-- 添加标签弹框 -->
+        <Lable ref="lable" />
+        <!-- 添加标签弹框 End -->
+
+        <!-- 添加规格弹框 -->
+        <Formate  @addFormat="$_addFormat" ref="formate" />
+        <!-- 添加规格弹框  End-->
+    </div>
 </template>
 
 <script>
-import { categoryOptions } from "../../constans/createdGood";
+import { mapState } from "vuex";
+import { CATEGORYOPTIONS } from "../../constans/createdGood";
+import Lable from "@/components/createGood/lable";
+import Formate from "@/components/createGood/formate";
 
 export default {
   name: "createGood-formlist",
 
+  components: {
+    Formate,
+    Lable,
+  },
+
   data() {
     return {
-      showLable: false, // 展示标签
-      categoryOptions, // 所属行业分类
+      CATEGORYOPTIONS, // 所属行业分类
       sku_head_arr: ["功效", "容量"], //规格数组，单规格商品不要提交该字段
       good_sku: [
         //规格sku数组，单规格商品也要按该数组格式提交
@@ -262,24 +279,52 @@ export default {
       }
     };
   },
-  props: {
-    // 表单数据展示
-    formInfo: {
-      type: Object,
-      default: () => {}
-    }
+
+  computed: {
+    ...mapState('createdGoode',['formInfo','lableList']) // 可选标签数据
   },
-  components: {},
+
+  created(){
+      console.log(this.$route.params.good_id)
+  },
+
+  mounted() {
+    
+    // this.$axios.get("/api/admin/select/tagGroupList", {
+    //     params: {
+    //       tag_group_type: 1, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+    //       category_id: 1, // 行业id @TODO 默认是1 ，变量
+    //       get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
+    //     }
+    // }).then(res => {
+    //     this.$store.commit('createdGoode/setLableList', res.data)
+    //     debugger
+    //     console.log(this.shopgoods)
+    // })
+    
+  },
+
+
   methods: {
-    $_deleted() {
-      console.log("deleted");
-    },
     /** *
      * 展示标签
      */
     $_showLable() {
-      console.log(111);
-      this.$emit("changeLableStatus");
+        // 获取标签信息
+        if(!this.formInfo.category_id){
+            alert('请先选择行业id')
+            return 
+        }
+        this.$store.dispatch('createdGoode/fetchLableList', {
+            tag_group_type: 1, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+            category_id: this.formInfo.category_id || 1, // 行业id @TODO 默认是1 ，变量
+            get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
+        })
+        this.$refs.lable.lable_show = true
+    },
+
+    $_deleted() {
+        console.log("deleted");
     },
 
     /** *
@@ -353,7 +398,15 @@ export default {
             this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
-    }
+    },
+
+
+    /** *
+     * @TODO 添加规格 formInfo 应该是个数组
+     */
+    $_addFormat(formatInfo) {
+      this.formInfo.formatInfo = formatInfo;
+    },
   },
   created() {}
 };
@@ -371,6 +424,10 @@ export default {
     height: 180px;
     font-size: 28px;
     color: #8c939d;
+}
+
+#createGood .el-input--small{
+    min-height:30px
 }
 </style>
 

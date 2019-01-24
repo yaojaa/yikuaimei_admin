@@ -3,14 +3,14 @@
     <el-dialog title="标签" :visible.sync="lable_show" size="large">
     <div>
         已选：
-        <el-tag v-for="(tag,idx) in tagIdArr" :key="tag" closable type="gray" @close="$_deleteTag(idx)">
-            {{tag}}
+        <el-tag v-for="(tag,idx) in tag_list" :key="tag.tag_id" closable type="gray" @close="$_deleteTag(idx)">
+            {{tag.tag_name}}
         </el-tag>
     </div>
     
     <el-row>
       <el-col :span="8"> 
-          <el-menu class="el-menu-vertical-demo" :default-active="defaultActive" v-for="item in shopgoods.data" :key="item.tag_group_name"  @select="computedSons">
+          <el-menu class="el-menu-vertical-demo" :default-active="defaultActive" v-for="item in lableList" :key="item.tag_group_name"  @select="computedSons">
             <el-menu-item :index="item.tag_group_name" v-if="!item.tag_group_sons">
               <span slot="title"> {{item.tag_group_name}} </span>
             </el-menu-item>
@@ -30,7 +30,7 @@
               <li 
                 v-for="list in good_category_sons" 
                 :key="list.tag_group_name || list.tag_name"
-                @click="addLable(list.tag_group_name || list.tag_name)"
+                @click="addLable(list.tag_group_name || list.tag_name,list.tag_group_id || list.tag_id)"
                 >
                 {{list.tag_group_name || list.tag_name}}
               </li>
@@ -47,94 +47,40 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import _ from 'lodash'
+
 export default {
+  name: "createGood-lable",
+
+  components: {},
+
   data() {
     return {
       lable_show: false,
       good_category_sons:{},
-      findLable:''
+      tag_list: []
     };
   },
 
-  props: {
-    /** *
-     * 可选分类
-     */
-    shopgoods: {
-      type: Object,
-      default: () => {}
-    },
-
-    /** *
-     * 已选标签
-     */
-    tagIdArr: {
-      type: Array,
-      default: () => []
-    },
-  },
-
-  watch: {
-    // lable_show: function(newQuestion, oldQuestion) {
-    //   console.log(newQuestion, oldQuestion);
-    //   this.$emit("changeStatus", newQuestion);
-    // }
-  },
-
-  methods: {
-    /** *
-     * 确定添加标签
-     */
-    $_addLable() {
-      // 传过去this.createFormat 返回code=0是成功
-      this.lable_show = false;
-      this.$emit("addLable", this.tagIdArr);
-    },
-
-    /**
-     * 添加标签 @请求相关联标签，添加，， 去重逻辑
-     */
-    addLable(good_category_name,good_category_id) {
-    //  let obj =  axios.{url,paranm:{}good_category_id:1},return {
-    //     {}
-    //   }
-    //   obj.good_category_name
-      this.tagIdArr.push(good_category_name,);
-    },
-
-    /** *
-     * 删除标签
-     */
-    $_deleteTag(idx) {
-      this.tagIdArr.splice("idx", 1);
-    },
-
-    /** 
-     * 展示good_category_sons
-    */
-   computedSons(key, keyPath ){
-    let data = this.shopgoods.data
-    let sons = data.filter(item => item.tag_group_name == keyPath[0])
-    if(keyPath.length === 2 && sons && sons.length){
-      sons = sons[0].tag_group_sons.filter(item => item.tag_group_name == keyPath[1])
-    }
-    this.good_category_sons =  sons.length ? sons[0].tag_list :''
-   },
-   initSons(){
-     let data = this.shopgoods.data[0]
-      this.good_category_sons = data.tag_group_sons ? data.tag_group_sons[0].tag_list : data.tag_list
-   }
-  },
 
   computed:{
+
+    ...mapState('createdGoode',['formInfo','lableList']), // 可选标签数据
+    
     defaultActive(){
-      let data = this.shopgoods.data[0]
+      let data = this.lableList[0] || {}
       if(!data){
         return ''
       }
       return data.tag_group_sons ? data.tag_group_sons[0].tag_group_name : data.tag_group_name
     },
   },
+
+  mounted(){
+    console.log(111)
+  },
+
   watch: {
     lable_show:function (newQuestion) {
       if(newQuestion){
@@ -142,9 +88,62 @@ export default {
       }
     }
   },
-  created() {
-    this.initSons()
-  }
+
+  // mounted(){
+  //   this.tagIdArr = this.tagIdArr.concat(this.formInfo.tag_id_arr)
+  //   console.log('this.tagIdArr' + this.tagIdArr )
+  //   this.initSons()
+  // },
+
+  methods: {
+    /** *
+     * 确定添加标签
+     */
+    $_addLable() {
+      this.formInfo.tag_list = _.cloneDeep(this.tag_list) // 更新store 里已选的数据 @TODO 提交的时候需要处理成纯id的数组
+      // this.$store.commit('createdGoode/settagIdArr',_.cloneDeep(this.tag_list))  // 同步数据
+      this.lable_show = false;
+    },
+
+    /**
+     * 添加标签 @请求相关联标签并添加
+     */
+    addLable(good_category_name,good_category_id) {
+      this.$axios.get("/api/admin/select/getFriendTagList", {
+          tags: '91' //good_category_id
+      }).then(res => {
+          debugger
+          let arr = res.data.data || []
+          arr.push({tag_name:good_category_name,tag_id:good_category_id})
+          this.tag_list = this.tag_list.push(arr);
+      })
+    },
+
+    /** *
+     * 删除标签
+     */
+    $_deleteTag(idx) {
+      debugger
+      this.tagIdArr.splice("idx", 1);
+    },
+
+    /** 
+     * 展示good_category_sons
+    */
+    computedSons(key, keyPath ){
+        let sons = this.lableList.filter(item => item.tag_group_name == keyPath[0])
+        if(keyPath.length === 2 &&  sons.length){
+          sons = sons[0].tag_group_sons.filter(item => item.tag_group_name == keyPath[1])
+        }
+        this.good_category_sons =  sons.length ? sons[0].tag_list :''
+    },
+
+    initSons(){
+        let obj = this.lableList[0] || {}
+        this.good_category_sons = obj.tag_group_sons ? obj.tag_group_sons[0].tag_list : obj.tag_list
+    }
+  },
+
 };
 </script>
 <style>
