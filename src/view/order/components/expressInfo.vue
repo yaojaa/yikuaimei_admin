@@ -68,8 +68,8 @@
 </template>
 
 <script>
-	import Config from "./config";
-	import DirList from "./components/DirList";
+	import Config from "../config";
+	import DirList from "./DirList";
 	
 	export default {
 		data() {
