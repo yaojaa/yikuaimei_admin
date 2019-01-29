@@ -1,91 +1,91 @@
 <template>
     <!-- 表单list -->
-    <el-form ref="formInfo" :model="formInfo" :rules="rules" label-width="120px">
-    <el-form-item label="商品展示图：" prop="productPng">
-        <div class="upload-title">
-        展示在商品的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。
-        </div>
-        <el-upload
-        action="https://jsonplaceholder.typicode.com/posts/"
-        list-type="picture-card"
-        :on-preview="handlePictureCardPreview(arguments[0],0)"
-        :on-remove="handleRemove"
-        :file-list="formInfo.show_img_arr">
-        >
-        <i class="el-icon-plus upload-placeholder">
-            <p>添加图片</p><span>还可以添加6张</span>
-        </i>
-        </el-upload>
-    </el-form-item>
-    <el-form-item label="补充说明：">
-        <el-input type="textarea" v-model="formInfo.good_notes" placeholder="请填写购买须知" suffix-icon="el-icon-arrow-right" />    
-        <p class="input__tabs">请填写购买须知</p>  
-    </el-form-item>
-    <el-form-item>
-        <el-button type="primary" @click="$_changeTab">上一步</el-button>
-        <el-button @click="createProduct">上架</el-button>
-    </el-form-item>
+    <el-form ref="currentFormInfo" :model="currentFormInfo" :rules="rules" label-width="120px">
+      <el-form-item label="商品展示图：" prop="show_img_arr">
+          <div class="upload-title">
+            展示在商品的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。
+          </div>
+          <el-upload
+            action="https://jsonplaceholder.typicode.com/posts/"
+            list-type="picture-card"
+            :on-preview="$_onPreview"
+            :on-success="$_success"
+            :on-error="$_error"
+            :on-remove="$_remove"
+            :on-exceed="$_exceed"
+            :before-upload="$_beforeUpload"
+            :file-list="currentFormInfo.show_img_arr"
+            :limit="6"
+            :multiple="true"
+            :class="{canAdd__goodImg:canAdd__goodImg}"
+            >
+            <i class="el-icon-plus upload-placeholder">
+                <p>添加图片</p><span>还可以添加{{limitNumber}}张</span>
+            </i>
+
+            <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </el-upload>
+      </el-form-item>
+      <el-form-item label="补充说明：" prop="good_notes">
+          <el-input type="textarea" v-model="currentFormInfo.good_notes" placeholder="请填写购买须知" suffix-icon="el-icon-arrow-right" />
+      </el-form-item>
+      <el-form-item>
+          <el-button type="primary" @click="$_changeTab">上一步</el-button>
+          <el-button @click="$_createProduct">上架</el-button>
+      </el-form-item>
     </el-form>
     <!-- 表单list End -->
 </template>
 
 <script>
 import { mapState } from "vuex";
+import _ from 'lodash'
 
 export default {
   name: "createGood-formlist",
 
   data() {
     return {
-      // @TODO
+      currentFormInfo: {
+        show_img_arr:[] , // 商品展示图
+        good_notes: ''
+      },
+      canAdd__goodImg: false,
+      dialogImageUrl: '',
+      dialogVisible: false,
+      limitNumber:6,
+  
       rules: {
-        good_name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 2, max: 30, message: "长度在2-30个字符", trigger: "blur" }
-        ],
-        good_explain: [
-          { required: true, message: "请填写商品卖点", trigger: "blur" },
-          { min: 2, max: 50, message: "请填写商品卖点", trigger: "blur" }
-        ],
-        category_id: [
-          { required: true, message: "请选择所属行业分类", trigger: "blur" }
-        ],
-        tag_id_arr: [
-          { required: true, message: "请添加标签", trigger: "blur" }
-        ],
-        format: [{ required: true, message: "请选择规格", trigger: "change" }],
-        exist: [{ required: true, message: "请选择库存", trigger: "blur" }],
-        unit: [{ required: true, message: "请选择单位", trigger: "blur" }],
-        productCode: [
-          { required: true, message: "请填写商品编码", trigger: "blur" }
-        ],
-        sellPrice: [{ required: true, message: "请填写售价", trigger: "blur" }],
-        price: [{ required: true, message: "请填写原价", trigger: "blur" }]
+        show_img_arr: [{ required: true, message: "请选择商品展示图", trigger: "change" }], // @TODO limitNumber判断是为6
+        good_notes: [{ required: true, message: "请填写购买须知", trigger: "blur" }],
       }
-    };
+    }
   },
 
   computed: {
-    ...mapState('createdGoode',['formInfo','lableList']) // 可选标签数据
+    ...mapState('createdGoode',['formInfo']) // 可选标签数据
   },
 
   methods: {
-    handlePictureCardPreview(file, index) {
-      // let { name } = this.formdata[index];
-      // this.form[name] = file.url;
-      // this.dialogVisible = true;
-    },
-
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-
-    /** *
+      /** *
      * 创建，调用创建接口
      */
-    createProduct() {
-      console.log(this.create);
-      alert("创建成功");
+    $_createProduct() {
+      // @TODO 先做校验，校验成功在请求接口
+      this.$refs.currentFormInfo.validate((valid) => {
+        if (valid) {
+            this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
+            this.$store.dispatch('createdGoode/fetchFormInfoCreate',this.formInfo).then((res)=>{
+                if(res.code === 0){
+                    this.$message.success(res.msg);
+                }else{
+                    this.$message.error(res.msg);
+                }
+            })
+        }
+      })
     },
 
     /** *
@@ -93,11 +93,72 @@ export default {
      */
     $_changeTab() {
       this.$emit("changeTab");
+    },
+
+    /** 
+     * 选择图片限制数量作出提示
+    */
+    $_exceed(files, fileList){
+        this.$message.warning(`当前限制选择 6 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+
+    /** 
+     * 添加商品图片之前，对类型和大小做判断
+    */
+    $_beforeUpload(file){
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+    },
+
+    /** 
+     * 图片上传成功
+    */
+    $_success(response, file, fileList){
+        if(fileList.length >= 6){
+            this.canAdd__goodImg = true
+        }
+        this.limitNumber = 6 - (+fileList.length)
+        this.currentFormInfo.show_img_arr.push[file.url]
+    },
+
+    /** 
+     * 图片上传失败
+    */
+    $_error(err, file, fileList){
+        this.$message.error('图片上传失败');
+    },
+
+    /** 
+     * 上传成功后照片预览
+    */
+    $_onPreview(file){
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+    },
+
+    /** 
+     * 删除图片对相关状态作出处理
+    */
+    $_remove(file, fileList){
+        this.limitNumber = 6 - (+fileList.length)
+        this.canAdd__goodImg = false
+         this.currentFormInfo.show_img_arr.splice(arr1.indexOf(file.url),1)
     }
   }
 };
 </script>
 <style>
+.canAdd__goodImg .el-upload--picture-card{
+    display: none
+}
 </style>
 
 

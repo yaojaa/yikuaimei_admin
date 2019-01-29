@@ -5,14 +5,17 @@ export default {
         /** 
          * 列表数据
          */
-        formInfo: {
-            tag_id_arr: [] // 已选标签
-        },
+        formInfo: {},
 
         /**
          * 标签list
          */
-        lableList: {}
+        lableList: {},
+
+        /** 
+         * 耗材列表
+         */
+        goodFriends: []
 
     },
 
@@ -73,11 +76,11 @@ export default {
         fetchFormInfoCreate({
             commit,
             state
-        }) {
-            Vue.$axios.get("/api/admin/shopgoods/create", {
+        }, params) {
+            return axios.get("/api/admin/shopgoods/create", {
                 params
             }).then(res => {
-                console.log(res, '创建成功')
+                return res.data
             })
         },
 
@@ -88,23 +91,52 @@ export default {
         fetchFormInfoModify({
             commit,
             state
-        }, user, token) {
-            Vue.$axios.get("/api/admin/shopgoods/modify", {
+        }, params) {
+            axios.get("/api/admin/shopgoods/modify", {
                 params
             }).then(res => {
                 commit('setLableList', res)
                 console.log(res, '修改成功')
             })
         },
+
+        /** 
+         * 获取服务耗材列表
+         * url http: //dev.countinsight.com/api/admin/docs.php?path=/select/goodsList&action=GET
+         */
+        fetchGoodFriends({
+            commit,
+            state
+        }, {
+            good_type,
+            category_id
+        }) {
+            return axios.get(`/api/admin/select/goodsList?good_type=${good_type}&category_id=${category_id}`).then(res => {
+                commit('setGoodFriends', {
+                    data: res.data.data,
+                    category_id
+                })
+                return res.data.data
+            })
+        },
     },
 
     mutations: {
         setFormInfo(state, data) {
-            state.formInfo = data;
+            state.formInfo = {...state.formInfo,
+                ...data
+            };
         },
 
         setLableList(state, data) {
             state.lableList = data;
+        },
+
+        setGoodFriends(state, {
+            data,
+            category_id
+        }) {
+            state.goodFriends[category_id] = data;
         }
     },
 

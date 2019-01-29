@@ -1,48 +1,48 @@
 <template>
     <!-- dialog_showLable 弹框 -->
     <el-dialog title="标签" :visible.sync="lable_show" size="large">
-    <div>
-        已选：
-        <el-tag v-for="(tag,idx) in tag_list" :key="tag.tag_id" closable type="gray" @close="$_deleteTag(idx)">
-            {{tag.tag_name}}
-        </el-tag>
-    </div>
-    
-    <el-row>
-      <el-col :span="8"> 
-          <el-menu class="el-menu-vertical-demo" :default-active="defaultActive" v-for="item in lableList" :key="item.tag_group_name"  @select="computedSons">
-            <el-menu-item :index="item.tag_group_name" v-if="!item.tag_group_sons">
-              <span slot="title"> {{item.tag_group_name}} </span>
-            </el-menu-item>
-
-            <el-submenu :index="item.tag_group_name" v-else> 
-              <template slot="title"> <span>{{item.tag_group_name}}</span> </template>
-              <el-menu-item v-for="sons in item.tag_group_sons" :key="sons.tag_group_name" :index="sons.tag_group_name">
-                {{sons.tag_group_name}}
+      <div>
+          已选：
+          <el-tag v-for="(tag,idx) in tag_list" :key="tag.tag_id" closable type="gray" @close="$_deleteTag(idx)">
+              {{tag.tag_name}}
+          </el-tag>
+      </div>
+      
+      <el-row>
+        <el-col :span="8"> 
+            <el-menu class="el-menu-vertical-demo" :default-active="defaultActive" v-for="item in lableList" :key="item.tag_group_name"  @select="computedSons">
+              <el-menu-item :index="item.tag_group_name" v-if="!item.tag_group_sons">
+                <span slot="title"> {{item.tag_group_name}} </span>
               </el-menu-item>
-            </el-submenu>
-          </el-menu>
-      </el-col>
 
-      <el-col :span="16">
-        <div class="grid-content bg-purple-light">
-          <ul class="lableList">
-              <li 
-                v-for="list in good_category_sons" 
-                :key="list.tag_group_name || list.tag_name"
-                :class="{ li__disable: isDisable(list.tag_group_id || list.tag_id)}"
-                @click="addLable(list.tag_group_name || list.tag_name,list.tag_group_id || list.tag_id)"
-                >
-                {{list.tag_group_name || list.tag_name}}
-              </li>
-          </ul>
-        </div>
-      </el-col>
-    </el-row>
-    <div slot="footer" class="dialog-footer">
-        <el-button @click="lable_show = false">取 消</el-button>
-        <el-button type="primary" @click="$_addLable">确 定</el-button>
-    </div>
+              <el-submenu :index="item.tag_group_name" v-else> 
+                <template slot="title"> <span>{{item.tag_group_name}}</span> </template>
+                <el-menu-item v-for="sons in item.tag_group_sons" :key="sons.tag_group_name" :index="sons.tag_group_name">
+                  {{sons.tag_group_name}}
+                </el-menu-item>
+              </el-submenu>
+            </el-menu>
+        </el-col>
+
+        <el-col :span="16">
+          <div class="grid-content bg-purple-light">
+            <ul class="lableList">
+                <li 
+                  v-for="list in good_category_sons" 
+                  :key="list.tag_group_name || list.tag_name"
+                  :class="{ li__disable: isDisable(list.tag_group_id || list.tag_id)}"
+                  @click="addLable(list.tag_group_name || list.tag_name,list.tag_group_id || list.tag_id)"
+                  >
+                  {{list.tag_group_name || list.tag_name}}
+                </li>
+            </ul>
+          </div>
+        </el-col>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+          <el-button @click="lable_show = false">取 消</el-button>
+          <el-button type="primary" @click="$_addLable">确 定</el-button>
+      </div>
     </el-dialog>
     <!-- dialog 弹框 End -->
 </template>
@@ -67,7 +67,7 @@ export default {
 
   computed:{
 
-    ...mapState('createdGoode',['formInfo','lableList']), // 可选标签数据
+    ...mapState('createdGoode',['lableList']), // 可选标签数据
     
     defaultActive(){
       let data = this.lableList[0] || {}
@@ -78,10 +78,6 @@ export default {
     },
   },
 
-  mounted(){
-    console.log(111)
-  },
-
   watch: {
     lable_show:function (newQuestion) {
       if(newQuestion){
@@ -90,20 +86,13 @@ export default {
     }
   },
 
-  // mounted(){
-  //   this.tagIdArr = this.tagIdArr.concat(this.formInfo.tag_id_arr)
-  //   console.log('this.tagIdArr' + this.tagIdArr )
-  //   this.initSons()
-  // },
-
   methods: {
     /** *
      * 确定添加标签
      */
     $_addLable() {
-      this.formInfo.tag_list = _.cloneDeep(this.tag_list) // 更新store 里已选的数据 @TODO 提交的时候需要处理成纯id的数组
-      // this.$store.commit('createdGoode/settagIdArr',_.cloneDeep(this.tag_list))  // 同步数据
       this.lable_show = false;
+      this.$emit('addLable',this.tag_list)  // 更新store 里已选的数据 @TODO 提交的时候需要处理成纯id的数组
     },
 
     /**
@@ -134,7 +123,7 @@ export default {
      * 删除标签
      */
     $_deleteTag(idx) {
-      this.tag_list.splice("idx", 1);
+      this.tag_list.splice(idx, 1);
     },
 
     /** 

@@ -13,11 +13,13 @@
           <template>
             <el-tabs v-model="editName">
               <el-tab-pane label="编辑基本信息" name="BasicInfo" class="panel">
-                <!-- base 表单 -->
                 <FormlistItem @changeTab="$_changeTab" />
               </el-tab-pane>
+              <el-tab-pane label="添加耗材" name="addGoodFriend" class="panel">
+                <!-- v-if="服务才有，要判断type" -->
+                <FormlistGoodFriend @changeTab="$_changeTab" />
+              </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails">
-                <!-- product 表单 -->
                 <FormlistProduct @changeTab="$_changeTab" />
               </el-tab-pane>
             </el-tabs>
@@ -33,13 +35,15 @@ import { mapState } from "vuex";
 import BreadCrumb from "@/components/common/BreadCrumb";
 import FormlistItem from "@/components/createGood/formlist";
 import FormlistProduct from "@/components/createGood/formlist_product";
+import FormlistGoodFriend from "@/components/createGood/formlist_goodFriend";
 
 export default {
   name: "tabletest",
   components: {
     BreadCrumb,
     FormlistItem,
-    FormlistProduct
+    FormlistProduct,
+    FormlistGoodFriend
   },
 
   data() {
@@ -49,9 +53,14 @@ export default {
     };
   },
 
+  computed: {
+    ...mapState('createdGoode',['formInfo']) // 可选标签数据
+  },
+
   created() {
-    const id = this.$route.params.good_id
-    const good_type = this.$route.params.good_type  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+    const id = this.$route.query.good_id
+    const good_type = this.$route.query.good_type  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+    this.$store.commit('createdGoode/setFormInfo',{good_type:good_type})
     if(+id){ // good_id存在或者不等于0 则当前是编辑页面
       // 编辑选项，获取列表信息 获取商品 / 服务 / 采购品项 列表
       this.$store.dispatch('createdGoode/fetchFormInfo', {

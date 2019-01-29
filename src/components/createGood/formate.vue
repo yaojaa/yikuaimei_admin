@@ -6,28 +6,64 @@
             <el-col :span="4">名称</el-col>
             <el-col :span="12">选项</el-col>
         </el-row>
-        <div v-for="(item,idx) in formatInfo" :key="item.name">
-            <el-row :gutter="20">
-                <el-col :span="4">{{idx=== 0? '一组':'二组'}}</el-col>
+        
+        <div v-for="(item,idx) in goodSkuInfo" :key="item.name">
+            <el-row :gutter="20" v-if="idx===0">
+                <el-col :span="4">一组</el-col>
                 <el-col :span="4">   
                     <el-input v-model="item.name" placeholder="请输入名称"/>                        
                 </el-col>
                 <el-col :span="12"> 
+                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list.length > 1"/>
                     <el-tag v-for="(tag,index) in item.list"  :key="tag"
-                        :closable="index!==0" :disable-transitions="false"
-                        @close="$_deletedTag(item.list,tag)">
-                        {{tag}}
+                      :disable-transitions="false"
+                      :closable="true"
+                      @close="$_deletedTag(item.list,tag)"
+                      v-if="index !== 0">
+                      {{tag}}
                     </el-tag>
-                    <el-input class="input-new-tag" v-model="item.inputValue" ref="saveTagInput" size="small" placeholder="请输入选项" 
-                    v-if="inputVisible" :style="{width:'100px'}"
-                    @keyup.enter.native="handleInputConfirm(idx,item.list)"
-                    @blur="handleInputConfirm(idx,item.list)"
-                    >
-                    </el-input>
+                    <el-input class="input-new-tag" 
+                      v-model="item.inputValue" 
+                      ref='saveTagInput0'
+                      size="small" 
+                      placeholder="请输入选项" 
+                      v-if="inputVisible0" 
+                      :style="{width:'100px'}"
+                      @keyup.enter.native="handleInputConfirm(idx,item.list)"
+                      @blur="handleInputConfirm(idx,item.list)"
+                      />
+                    <i class="el-icon-plus" @click="$_createFormat(idx)" v-else />
+                </el-col>
+            </el-row>
+            <el-row :gutter="20" v-else>
+                <el-col :span="4">二组</el-col>
+                <el-col :span="4">   
+                    <el-input v-model="item.name" placeholder="请输入名称"/>                        
+                </el-col>
+                <el-col :span="12"> 
+                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list.length > 1"/>
+                    <el-tag v-for="(tag,index) in item.list"  :key="tag"
+                      :disable-transitions="false"
+                      :closable="true"
+                      @close="$_deletedTag(item.list,tag)"
+                      v-if="index !== 0">
+                      {{tag}}
+                    </el-tag>
+                    <el-input class="input-new-tag" 
+                      v-model="item.inputValue" 
+                      ref='saveTagInput1'
+                      size="small" 
+                      placeholder="请输入选项" 
+                      v-if="inputVisible1" 
+                      :style="{width:'100px'}"
+                      @keyup.enter.native="handleInputConfirm(idx,item.list)"
+                      @blur="handleInputConfirm(idx,item.list)"
+                      />
                     <i class="el-icon-plus" @click="$_createFormat(idx)" v-else />
                 </el-col>
             </el-row>
         </div>
+
         <div slot="footer" class="dialog-footer">
             <el-button @click="format_show = false">取 消</el-button>
             <el-button type="primary" @click="$_addFormat">确 定</el-button>
@@ -40,8 +76,10 @@
 export default {
   data() {
     return {
-      dynamicTags: [],
-      formatInfo: [
+      format_show: false,
+      inputVisible0: false,
+      inputVisible1: false,
+      goodSkuInfo: [
         {
           name: "功效",
           list: ["美白保湿", "美白保湿2"],
@@ -52,40 +90,41 @@ export default {
           list: ["25ml", "50ml", "100ml"],
           inputValue: ""
         }
-      ],
-      format_show: false,
-      inputVisible: false
+      ]
     };
   },
-  props: {},
-  components: {},
+  
   methods: {
     /** *
      * 确定添加规格
      */
     $_addFormat() {
-      // 传过去this.createFormat 返回code=0是成功
       this.format_show = false;
-      this.$emit("addFormat", this.formatInfo);
+      this.$emit("addFormat", this.goodSkuInfo);
     },
 
     /** *
      * 添加规格
      */
     $_createFormat(idx) {
-      this.inputVisible = true;
+      let inputVisible = 'inputVisible' + idx
+      this[inputVisible] = true;
       this.$nextTick(_ => {
-        this.$refs.saveTagInput[idx].$refs.input.focus();
+        this.$refs[`saveTagInput${idx}`][0].$refs.input.focus();
       });
     },
 
+    /** 
+     * 点击加号和失去焦点事件
+    */
     handleInputConfirm(idx, list) {
-      let inputValue = this.formatInfo[idx].inputValue;
+      let inputVisible = 'inputVisible' + idx
+      let inputValue = this.goodSkuInfo[idx].inputValue;
       if (inputValue) {
         list.push(inputValue);
       }
-      this.formatInfo[idx].inputValue = "";
-      this.inputVisible = false;
+      this.goodSkuInfo[idx].inputValue = "";
+      this[inputVisible] = false;
     },
 
     /** *
