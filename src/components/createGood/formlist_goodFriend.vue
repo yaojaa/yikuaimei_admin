@@ -1,6 +1,6 @@
 <template>
     <div id="goodFriend">
-        <div class="header">
+        <div class="goodFriend_header">
             <el-button  type="primary" @click="$_showgoodFriend" plain>选择耗材</el-button>
         </div>
 
@@ -63,7 +63,8 @@
         </el-dialog>
 
         <div class="footer"  v-if="good_friends.length">
-            <el-button type="primary" @click="$_changeTab">下一步</el-button>    
+            <el-button type="primary" @click="$_changeTabPre">上一步</el-button>    
+            <el-button type="primary" @click="$_changeTabNext">下一步</el-button>    
         </div>
     </div>
 </template>
@@ -152,9 +153,13 @@ export default {
     /** *
      * 切换tab
      */
-    $_changeTab() {
+    $_changeTabNext() {
       this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
-      this.$emit("changeTab");
+      this.$emit("changeTabNext");
+    },
+    $_changeTabPre() {
+      this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
+      this.$emit("changeTabPre");
     },
 
     /** 

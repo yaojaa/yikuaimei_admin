@@ -32,7 +32,7 @@
           <el-input type="textarea" v-model="currentFormInfo.good_notes" placeholder="请填写购买须知" suffix-icon="el-icon-arrow-right" />
       </el-form-item>
       <el-form-item>
-          <el-button type="primary" @click="$_changeTab">上一步</el-button>
+          <el-button type="primary" @click="$_changeTabPre">上一步</el-button>
           <el-button @click="$_createProduct">上架</el-button>
       </el-form-item>
     </el-form>
@@ -49,7 +49,16 @@ export default {
   data() {
     return {
       currentFormInfo: {
-        show_img_arr:[] , // 商品展示图
+        show_img_arr:[
+            {
+                name: 'explain_img_arr0',
+                url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+            },
+            {
+                name: 'explain_img_arr1',
+                url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+            }
+        ] , // 商品展示图
         good_notes: ''
       },
       canAdd__goodImg: false,
@@ -58,7 +67,7 @@ export default {
       limitNumber:6,
   
       rules: {
-        show_img_arr: [{ required: true, message: "请选择商品展示图", trigger: "change" }], // @TODO limitNumber判断是为6
+        // show_img_arr: [{ required: true, message: "请选择商品展示图", trigger: "change" }], // @TODO limitNumber判断是为6
         good_notes: [{ required: true, message: "请填写购买须知", trigger: "blur" }],
       }
     }
@@ -80,6 +89,26 @@ export default {
             this.$store.dispatch('createdGoode/fetchFormInfoCreate',this.formInfo).then((res)=>{
                 if(res.code === 0){
                     this.$message.success(res.msg);
+                    let good_type = this.$route.query.good_type
+                    debugger
+                    switch (good_type) {
+                        case '1':
+                            this.$router.push('/serviceList')
+                            break;
+                        case '2':
+                            this.$router.push('/goodList')
+                            break;
+                        case '3':
+                            this.$router.push('/purchaseList')
+                            break;
+                        case '4':
+                            this.$router.push('/fictitiousList')
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    
                 }else{
                     this.$message.error(res.msg);
                 }
@@ -91,8 +120,8 @@ export default {
     /** *
      * 切换tab
      */
-    $_changeTab() {
-      this.$emit("changeTab");
+    $_changeTabPre() {
+      this.$emit("changeTabPre");
     },
 
     /** 
@@ -107,13 +136,13 @@ export default {
     */
     $_beforeUpload(file){
         const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        const isLt2M = file.size / 1024 / 1024 < 5;
 
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          this.$message.error('上传头像图片只能是 JPG 或 PNG格式!');
         }
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.$message.error('上传头像图片大小不能超过 5MB!');
         }
         return isJPG && isLt2M;
     },
@@ -126,7 +155,7 @@ export default {
             this.canAdd__goodImg = true
         }
         this.limitNumber = 6 - (+fileList.length)
-        this.currentFormInfo.show_img_arr.push[file.url]
+        this.currentFormInfo.show_img_arr = fileList
     },
 
     /** 
@@ -150,7 +179,7 @@ export default {
     $_remove(file, fileList){
         this.limitNumber = 6 - (+fileList.length)
         this.canAdd__goodImg = false
-         this.currentFormInfo.show_img_arr.splice(arr1.indexOf(file.url),1)
+        this.currentFormInfo.show_img_arr = fileList
     }
   }
 };

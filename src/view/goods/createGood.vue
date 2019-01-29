@@ -13,14 +13,14 @@
           <template>
             <el-tabs v-model="editName">
               <el-tab-pane label="编辑基本信息" name="BasicInfo" class="panel">
-                <FormlistItem @changeTab="$_changeTab" />
+                <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
               </el-tab-pane>
-              <el-tab-pane label="添加耗材" name="addGoodFriend" class="panel">
+              <el-tab-pane label="添加耗材" name="addGoodFriend" class="panel" v-if="isGoodFriend">
                 <!-- v-if="服务才有，要判断type" -->
-                <FormlistGoodFriend @changeTab="$_changeTab" />
+                <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
               </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails">
-                <FormlistProduct @changeTab="$_changeTab" />
+                <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
               </el-tab-pane>
             </el-tabs>
           </template>          
@@ -54,15 +54,25 @@ export default {
   },
 
   computed: {
-    ...mapState('createdGoode',['formInfo']) // 可选标签数据
+    good_type(){
+      return this.$route.query.good_type
+    },
+
+    /** 
+     * 是否是耗材，品相
+    */
+    isGoodFriend(){
+      return this.$route.query.good_type === 1  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+    }
   },
 
   created() {
     const id = this.$route.query.good_id
-    const good_type = this.$route.query.good_type  //1门店服务 2平台商品 3品项管理 4虚拟卡券
-    this.$store.commit('createdGoode/setFormInfo',{good_type:good_type})
-    if(+id){ // good_id存在或者不等于0 则当前是编辑页面
-      // 编辑选项，获取列表信息 获取商品 / 服务 / 采购品项 列表
+    this.$store.commit('createdGoode/initFormInfo')  // 每次进页面初始化信息
+    this.$store.commit('createdGoode/setFormInfo',{good_type:this.good_type})
+
+    // 编辑项目 good_id存在或不等于0 则当前是编辑页面
+    if(+id){ 
       this.$store.dispatch('createdGoode/fetchFormInfo', {
         id, // 商品的good_id字段 @TODO
       })
@@ -73,12 +83,33 @@ export default {
     /** *
      * 导航切换
      */
-    $_changeTab(tab, event) {
-      this.editName =
-        this.editName === "ProductDetails" ? "BasicInfo" : "ProductDetails";
+    $_changeTab_next(tab, event) {
+      switch (this.editName) {
+        case 'BasicInfo':
+          this.editName = this.isGoodFriend ? 'addGoodFriend' : 'ProductDetails'
+          break;
+        case 'addGoodFriend':
+          this.editName = 'ProductDetails'
+          break;
+        default:
+          break;
+      }
     },
+
+    $_changeTab_pre(tab, event) {
+      switch (this.editName) {
+        case 'ProductDetails':
+          this.editName = this.isGoodFriend ? 'addGoodFriend' : 'BasicInfo'
+          break;
+        case 'addGoodFriend':
+          this.editName = 'BasicInfo'
+          break;
+        default:
+          break;
+      }
+    }
   }
-};
+}
 </script>
 
 <style>

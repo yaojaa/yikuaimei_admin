@@ -128,6 +128,10 @@ export default {
             };
         },
 
+        initFormInfo(state, data) {
+            state.formInfo = new Object;
+        },
+
         setLableList(state, data) {
             state.lableList = data;
         },

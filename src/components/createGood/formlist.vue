@@ -6,8 +6,7 @@
                 <el-input  v-model="currentFormInfo.good_name" placeholder="名称为2-30个字" />                                                    
             </el-form-item>
             <el-form-item label="商品卖点：" prop="good_explain">
-                <el-input type="textarea" v-model="currentFormInfo.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" />    
-                <p class="input__tabs">在商品详情页标题下面展示卖点信息，建议50字以内</p>                                                
+                <el-input type="textarea" v-model="currentFormInfo.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" /> 
             </el-form-item>
             <el-form-item label="行业分类：" prop="category_id">
                 <el-select v-model="currentFormInfo.category_id" placeholder="请选择所属行业分类">
@@ -28,8 +27,8 @@
             <el-form-item label="规格" props="format">
                 <!-- format_none format_add -->
                 <el-radio-group v-model="currentFormInfo.singleButton" @change="this.$_showFormat">
-                <el-radio-button label="无规格" />
-                <el-radio-button label="添加规格" />
+                    <el-radio-button label="无规格" />
+                    <el-radio-button label="添加规格" />
                 </el-radio-group>
             </el-form-item>
 
@@ -44,22 +43,22 @@
                     <el-col :span="2"> <el-button v-if="idx === goodSkuInfo.length-1" click="$_edit">编辑</el-button></el-col>
                 </el-row>
                 <el-table :data="currentFormInfo.good_sku" style="width: 100%" :span-method="$_SpanMethod" >
-                    <!-- <el-table-column v-for="(item,idx) in sku_type_arr" :key="item" :label="item" prop="sku_type_arr[idx]" /> -->
+                    <el-table-column v-for="(item,idx) in sku_type_arr" :key="item" :label="item" :prop="sku_type_arr[idx]" />
                     <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" />
                     <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr[1]" />
                     <el-table-column label="售价(元)" >
                         <template slot-scope="scope">
-                            <el-input  v-model="scope.row.price_sale" placeholder="10000" /> 
+                            <el-input  v-model="scope.row.price_sale" placeholder="10000" /> 元
                         </template>
                     </el-table-column>
                     <el-table-column label="原价(元)" >
                         <template slot-scope="scope">
-                            <el-input  v-model="scope.row.price" placeholder="10000" /> 
+                            <el-input  v-model="scope.row.price" placeholder="10000" /> 元
                         </template>
                     </el-table-column>
                     <el-table-column label="成本(元)" >
                         <template slot-scope="scope">
-                            <el-input  v-model="scope.row.price_cost" placeholder="10000" /> 
+                            <el-input  v-model="scope.row.price_cost" placeholder="10000" /> 元
                         </template>
                     </el-table-column>
                     <el-table-column label="编码" >
@@ -70,12 +69,12 @@
                     <el-table-column label="图片" prop="ico_small" />
                 </el-table>
             </el-form-item>
-            <el-form-item label="库存：" prop="exist">
+            <!-- <el-form-item label="库存：" prop="exist">
                 <el-input  v-model="currentFormInfo.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
             </el-form-item>
             <el-form-item label="单位：" prop="unit">
                 <el-input  v-model="currentFormInfo.unit" placeholder="箱" suffix-icon="el-icon-arrow-right" />                                                                       
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="商品编码：" prop="productCode">
                 <el-input  v-model="currentFormInfo.productCode" placeholder="支持14以内的数字+英文组合"  />                                                                              
             </el-form-item>
@@ -92,7 +91,6 @@
                 您可以上传3-6张图片及1个视频作为商品展示图，<br />
                 展示在商品页顶部的图片，支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1242*1242，支持JPG、PNG等大部分格式图片，单张图片大小不超过5M 
                 </div>
-                <!-- good_img_arr -->
                 <el-upload
                     action="/api/admin/fileupload/image"
                     list-type="picture-card"
@@ -169,9 +167,7 @@
                 </el-upload>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit('form')">表单提交</el-button>
-                <el-button @click="$_changeTab">下一步</el-button>
-                <el-button>取消</el-button>
+                <el-button @click="$_changeTabNext">下一步</el-button>
             </el-form-item>
         </el-form>
         <!-- 表单list End -->
@@ -207,32 +203,30 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       currentFormInfo:{
-        good_name:'' , // 商品名字
-        good_explain:'' , // 商品卖点
+        good_name: '' , // 商品名字
+        good_explain: '' , // 商品卖点
         category_id: '' , // 行业id
         tag_id_arr: [], // 标签id数组
-        tag_list:[], // 已选标签展示数据
-        good_video:'', // 商品视频
-        good_video_pic:'', // 商品视频封面图
+        tag_list: [], // 已选标签展示数据
+        good_video: '', // 商品视频
+        good_video_pic: '', // 商品视频封面图
         good_img_arr: [], // 商品图片数组
-        good_ico:'', // 商品展示图
+        good_ico: '', // 商品展示图
         unit: '', // 单位 例如盒，箱
-        show_img_arr: [], // 详情页商品展示图数组
-
-        explain_img_arr : [],//卖点图数组   
-        sku_type_arr: [], //规格数组，单规格商品不要提交该字段
-        good_sku: [] , //规格sku数组，单规格商品也要按该数组格式提交
-        good_friends : [//服务添加耗材列表 不是服务不需要提交
-            {
-                good_id:1,//耗材id
-                sku_id:[1,2,3]//耗材sku_id列表
-            },
-            {
-                good_id:2,//耗材id
-                sku_id:[6,7,8]//耗材sku_id列表
-            }
-        ]
+        show_img_arr: [], // 详情页商品展示图数组       
+        explain_img_arr : [{
+            name: 'explain_img_arr0',
+            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        },
+        {
+            name: 'explain_img_arr1',
+            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        }],// 卖点图数组   
+        sku_type_arr: [], // 规格数组，单规格商品不要提交该字段
+        good_sku: [] , // 规格sku数组，单规格商品也要按该数组格式提交
+        good_friends : [] // //服务添加耗材列表 不是服务不需要提交
       },
+
       limitNumber:6,
       goodSkuInfo:[],
 
@@ -242,18 +236,17 @@ export default {
           { min: 2, max: 30, message: "长度在2-30个字符", trigger: "blur" }
         ],
         good_explain: [
-          { required: true, message: "请填写商品卖点", trigger: "blur" },
-          { min: 2, max: 50, message: "请填写商品卖点", trigger: "blur" }
+          { required: true, message: "在商品详情页标题下面展示卖点信息，建议50字以内", trigger: "blur" },
+          { min: 2, max: 50, message: "在商品详情页标题下面展示卖点信息，建议50字以内", trigger: "blur" }
         ],
         category_id: [
           { required: true, message: "请选择所属行业分类", trigger: "blur" }
         ],
-        tag_id_arr: [
+        //@TODO
+        tag_list: [
           { required: true, message: "请添加标签", trigger: "blur" }
         ],
         format: [{ required: true, message: "请选择规格", trigger: "change" }],
-        exist: [{ required: true, message: "请选择库存", trigger: "blur" }],
-        unit: [{ required: true, message: "请选择单位", trigger: "blur" }],
         productCode: [
           { required: true, message: "请填写商品编码", trigger: "blur" }
         ],
@@ -264,7 +257,11 @@ export default {
   },
 
   computed: {
-    ...mapState('createdGoode',['formInfo']) // 可选标签数据
+    ...mapState('createdGoode',['formInfo']), // 可选标签数据
+
+    good_type(){
+        return this.$route.query.good_type
+    }
   },
 
   methods: {
@@ -279,7 +276,7 @@ export default {
         }
         debugger
         this.$store.dispatch('createdGoode/fetchLableList', {
-            tag_group_type: this.$route.query.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+            tag_group_type: this.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
             category_id: this.currentFormInfo.category_id || 1, // 行业id @TODO 默认是1 ，变量
             get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
         }).then(()=>{
@@ -308,27 +305,28 @@ export default {
     */
     $_beforeUpload(file){
         const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        const isLt2M = file.size / 1024 / 1024 < 5;
 
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
         }
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.$message.error('上传头像图片大小不能超过 5MB!');
         }
         return isJPG && isLt2M;
     },
 
     $_beforeUpload_uploadArray_content(file){
         // @TODO 限制视频的格式和大小
-        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        debugger
+        const isJPG = file.type === 'video/mp4';
+        const isLt2M = file.size / 1024 / 1024 < 20;
 
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          this.$message.error('上传视频只能是 mp4 格式!');
         }
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.$message.error('上传视频大小不能超过 20MB!');
         }
         return isJPG && isLt2M;
     },
@@ -341,7 +339,7 @@ export default {
             this.canAdd__goodImg = true
         }
         this.limitNumber = 6 - (+fileList.length)
-        this.currentFormInfo.good_img_arr.push[file.url]
+        this.currentFormInfo.good_img_arr = fileList
     },
 
     $_success_uploadArray_content(res, file){
@@ -377,7 +375,7 @@ export default {
     $_remove(file, fileList){
         this.limitNumber = 6 - (+fileList.length)
         this.canAdd__goodImg = false
-        this.currentFormInfo.good_img_arr.splice(arr1.indexOf(file.url),1)
+        this.currentFormInfo.good_img_arr = fileList
     },
 
     /** *
@@ -432,9 +430,13 @@ export default {
     /** *
      * 切换tab
      */
-    $_changeTab() {
-      this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
-      this.$emit("changeTab");
+    $_changeTabNext() {
+        this.$refs.currentFormInfo.validate((valid) => {
+            if (valid) {
+                this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
+                this.$emit("changeTabNext");
+            }
+        })
     }
   },
 };
@@ -476,6 +478,10 @@ export default {
 }
 .canAdd__goodImg .el-upload--picture-card{
     display: none
+}
+
+.avatar{
+    width: 100%
 }
 </style>
 
