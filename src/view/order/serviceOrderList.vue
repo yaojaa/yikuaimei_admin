@@ -167,7 +167,7 @@
                             "list": [
                                 {
                                     "label":"查看详情",
-                                    "url":"/order/order_detail",
+                                    "url":"/order/order_service_detail",
                                     "query":"order_code"
                                 }
                             ]

@@ -11,15 +11,14 @@
 			<el-tabs v-model="tabName">
 				<el-tab-pane label="基本信息" name="OrderInfo">
 					<OrderDetail :order="order"></OrderDetail>
-					
-				</el-tab-pane>
-				<el-tab-pane label="物流信息" name="ExpressInfo">
-					<ExpressInfo :order-code="orderCode"></ExpressInfo>
 				</el-tab-pane>
 				<el-tab-pane label="收益提成" name="ProfitRate">
 					我是收益提成
 				</el-tab-pane>
-				<el-tab-pane label="退款/退货" name="OrderRefund">
+                <el-tab-pane label="美丽日记" name="BeautiRecord">
+					我是美丽日记
+				</el-tab-pane>
+				<el-tab-pane label="退款" name="OrderRefund">
 					我是退款退货
 				</el-tab-pane>
 			</el-tabs>
@@ -31,14 +30,12 @@
 
 <script>
 	import Config from "./config";
-	import ExpressInfo from "./components/expressInfo";
 	import OrderDetail from "./components/orderDetail";
 	
 	export default {
-		name: 'orderDetail',
+		name: 'orderServiceDetail',
 
 		components: {
-			ExpressInfo,
 			OrderDetail
 		},
 		

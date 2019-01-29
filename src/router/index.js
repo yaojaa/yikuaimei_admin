@@ -94,7 +94,16 @@ export default new Router({
                     }
                 },
                 {
-                    // 订单管理--订单详情
+                    // 订单管理--门店订单详情
+                    path: '/order/order_service_detail/:order_code',
+                    component: resolve => require(['../view/order/serviceDetail.vue'], resolve),
+                    meta: {
+                        title: '门店详情',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理--发货
                     path: '/order/send_goods/:order_code',
                     component: resolve => require(['../view/order/send_goods.vue'], resolve),
                     meta: {
