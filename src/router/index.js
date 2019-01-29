@@ -103,6 +103,15 @@ export default new Router({
                     }
                 },
                 {
+                    // 订单管理--品项报货信息
+                    path: '/order/order_purchase_detail/:purchase_id',
+                    component: resolve => require(['../view/order/purchaseDetail.vue'], resolve),
+                    meta: {
+                        title: '报货信息',
+                        permission: true
+                    }
+                },
+                {
                     // 订单管理--发货
                     path: '/order/send_goods/:order_code',
                     component: resolve => require(['../view/order/send_goods.vue'], resolve),

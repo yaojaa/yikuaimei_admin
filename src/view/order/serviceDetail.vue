@@ -16,7 +16,7 @@
 					我是收益提成
 				</el-tab-pane>
                 <el-tab-pane label="美丽日记" name="BeautiRecord">
-					我是美丽日记
+					<BeautiRecord :orderCode="orderCode"></BeautiRecord>
 				</el-tab-pane>
 				<el-tab-pane label="退款" name="OrderRefund">
 					我是退款退货
@@ -31,12 +31,14 @@
 <script>
 	import Config from "./config";
 	import OrderDetail from "./components/orderDetail";
+	import BeautiRecord from "./components/beautiRecord";
 	
 	export default {
 		name: 'orderServiceDetail',
 
 		components: {
-			OrderDetail
+            OrderDetail,
+            BeautiRecord
 		},
 		
 		data() {

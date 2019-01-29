@@ -156,9 +156,9 @@
                             "width": "200",
                             "list": [
                                 {
-                                    "label":"查看详情",
-                                    "url":"/order/order_detail",
-                                    "query":"order_code"
+                                    "label":"报货信息",
+                                    "url":"/order/order_purchase_detail",
+                                    "query":"purchase_id"
                                 }
                             ]
                         }
