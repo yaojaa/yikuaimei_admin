@@ -148,6 +148,24 @@ export default new Router({
                     }
                 },
                 {
+                    // 订单管理-退款初审
+                    path: '/order/refundAuditList',
+                    component: resolve => require(['../view/order/refundAuditList.vue'], resolve),
+                    meta: {
+                        title: '退款初审',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理-退款详情
+                    path: '/order/refundDetail/:refund_id',
+                    component: resolve => require(['../view/order/refundDetail.vue'], resolve),
+                    meta: {
+                        title: '退款详情',
+                        permission: true
+                    }
+                },
+                {
                     // 案例页面
                     path: '/case',
                     component: resolve => require(['../view/case/caseList.vue'], resolve),

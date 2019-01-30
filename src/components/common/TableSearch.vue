@@ -16,7 +16,7 @@
                       <el-option v-for="(option, optionIndex) in search.options" :key="optionIndex" :label="option.name" :value="option.value"></el-option>
                     </el-select>
 
-                    <!-- 日期 -->
+                    <!-- 日期区间 -->
                     <el-date-picker
                         v-else-if="search.type == 'input-date'"
                         v-model="search.value"
@@ -26,6 +26,16 @@
                         range-separator="至"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
+                        :picker-options="pickerOptions"> 
+                    </el-date-picker>
+
+                    <el-date-picker
+                        v-else-if="search.type == 'input-singal-date'"
+                        v-model="search.value"
+                        type="date"
+                        :align="search.align || 'center'"
+                        unlink-panels
+                        :placeholder="search.placeholder"
                         :picker-options="pickerOptions"> 
                     </el-date-picker>
 
