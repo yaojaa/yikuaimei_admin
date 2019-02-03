@@ -13,10 +13,10 @@
                     <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="item.category_name" />
                 </el-select>                         
             </el-form-item>
-            <el-form-item label="标签：" prop="tag_list">
-                <div class="el-input el-input--small el-input--suffix div__input">
+            <el-form-item label="标签：" prop="tag_list" >
+                <div class="el-input el-input--small el-input--suffix div__input"  @click="$_showLable">
                     <el-tag v-for="item in currentFormInfo.tag_list" :key="item.tag_name">{{item.tag_name}}</el-tag>
-                    <span class="el-input__suffix" @click="$_showLable">
+                    <span class="el-input__suffix">
                         <span class="el-input__suffix-inner">
                             <i class="el-input__icon el-icon-arrow-right"></i>
                         </span>
@@ -37,28 +37,27 @@
                     <el-col :span="4">名称:</el-col>
                     <el-col :span="12">选项: </el-col>
                 </el-row>
-                <el-row :gutter="20"  v-for="(item,idx) in goodSkuInfo" :key="item.name">
+                <el-row :gutter="20"  v-for="(item,idx) in goodSkuInfo" :key="item.name" class="goodSkuInfo_row">
                     <el-col :span="4"><el-button plain>{{item.name}}</el-button></el-col>
                     <el-col :span="12"><el-button v-for="tag in item.list" :key="tag" plain>{{tag}}</el-button></el-col>
-                    <el-col :span="2"> <el-button v-if="idx === goodSkuInfo.length-1" click="$_edit">编辑</el-button></el-col>
+                    <el-col :span="2"> <el-button v-if="idx === goodSkuInfo.length-1" click="$_edit" @click="showFormat()">编辑</el-button></el-col>
                 </el-row>
-                <el-table :data="currentFormInfo.good_sku" style="width: 100%" :span-method="$_SpanMethod" >
-                    <el-table-column v-for="(item,idx) in sku_type_arr" :key="item" :label="item" :prop="sku_type_arr[idx]" />
+                <el-table :data="currentFormInfo.good_sku" style="width: 100%" border :span-method="$_SpanMethod" class="table">
                     <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" />
                     <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr[1]" />
-                    <el-table-column label="售价(元)" >
+                    <el-table-column label="售价" >
                         <template slot-scope="scope">
-                            <el-input  v-model="scope.row.price_sale" placeholder="10000" /> 元
+                            <el-input  v-model="scope.row.price_sale" placeholder="10000" /> <span class="outText1">元</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="原价(元)" >
+                    <el-table-column label="原价" >
                         <template slot-scope="scope">
-                            <el-input  v-model="scope.row.price" placeholder="10000" /> 元
+                            <el-input  v-model="scope.row.price" placeholder="10000" /><span class="outText1"> 元</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="成本(元)" >
+                    <el-table-column label="成本" >
                         <template slot-scope="scope">
-                            <el-input  v-model="scope.row.price_cost" placeholder="10000" /> 元
+                            <el-input  v-model="scope.row.price_cost" placeholder="10000" /> <span class="outText1">元</span>
                         </template>
                     </el-table-column>
                     <el-table-column label="编码" >
@@ -66,9 +65,26 @@
                             <el-input  v-model="scope.row.sku_code" placeholder="10000" /> 
                         </template>
                     </el-table-column>
-                    <el-table-column label="图片" prop="ico_small" />
+                    <el-table-column label="图片" prop="ico_small">
+                        <template slot-scope="scope">
+                            <el-upload
+                                class="table_upload"
+                                :show-file-list="false"
+                                :class="{table_upload__disabled:scope.row.iconStatus}"
+                                action="/api/admin/fileupload/image"
+                                :on-error="$_error"
+                                :on-preview="$_onPreview"
+                                :before-upload="$_beforeUpload"
+                                :on-success="(res,file)=>{return $_success__table_ico_small(res,file,scope.row)}"
+                                >
+                                <img v-if="scope.row.ico_small" :src="scope.row.ico_small" class="avatar">
+                                <span class="table_icon_text" v-else><i class="el-icon-plus" />添加商品图片</span>
+                            </el-upload>
+                        </template> 
+                    </el-table-column>
                 </el-table>
             </el-form-item>
+            <!-- 一期不做 -->
             <!-- <el-form-item label="库存：" prop="exist">
                 <el-input  v-model="currentFormInfo.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
             </el-form-item>
@@ -160,7 +176,7 @@
                 :on-error="$_error"
                 :before-upload="$_beforeUpload"
                 >
-                <img v-if="currentFormInfo.good_ico" :src="currentFormInfo.good_ico" class="avatar">
+                <img v-if="currentFormInfo.good_ico" :src="currentFormInfo.de" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
                     <p>添加图片</p><span>只能上传一张</span>
                 </i>
@@ -274,14 +290,13 @@ export default {
             alert('请先选择行业id')
             return 
         }
-        debugger
         this.$store.dispatch('createdGoode/fetchLableList', {
             tag_group_type: this.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
             category_id: this.currentFormInfo.category_id || 1, // 行业id @TODO 默认是1 ，变量
             get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
         }).then(()=>{
-            debugger
             this.$refs.lable.lable_show = true
+            this.$refs.lable.initSons()
         })
     },
 
@@ -318,7 +333,6 @@ export default {
 
     $_beforeUpload_uploadArray_content(file){
         // @TODO 限制视频的格式和大小
-        debugger
         const isJPG = file.type === 'video/mp4';
         const isLt2M = file.size / 1024 / 1024 < 20;
 
@@ -348,6 +362,12 @@ export default {
 
     $_success__good_video_pic(res, file){
         this.currentFormInfo.good_video_pic = URL.createObjectURL(file.raw);
+    },
+
+    $_success__table_ico_small(res, file, targe){
+        debugger
+        targe.iconStatus = true
+        targe.ico_small = file.url
     },
 
     $_success__good_ico(res, file){
@@ -383,8 +403,12 @@ export default {
      */
     $_showFormat() {
       if (this.currentFormInfo.singleButton === "添加规格") {
-        this.$refs.formate.format_show = true;
+        this.showFormat()
       }
+    },
+    
+    showFormat() {
+        this.$refs.formate.format_show = true;
     },
 
     /** *
@@ -480,9 +504,46 @@ export default {
     display: none
 }
 
-.avatar{
+#createGood  .avatar{
     width: 100%
 }
+#createGood  .outText{
+    position: absolute;
+    top: 0;
+    left: 270px;
+}
+
+#createGood  .outText1{
+    position: absolute;
+    top: 12px;
+    left: 95px;
+}
+
+.goodSkuInfo_row{
+    margin:10px
+}
+
+#createGood .table .el-input{
+    width:80px;
+}
+#createGood .el-input input{
+    padding:5px
+}
+.table_icon_text{
+    color:#999999
+}
+.table_icon_text i{
+    margin-right: 5px
+}
+.table_upload div{
+    border: 0;
+    width:auto;
+    height: auto;
+}
+.table_upload__disabled .el-upload--picture{
+    display: none
+}
+
 </style>
 
 

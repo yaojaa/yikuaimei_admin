@@ -12,14 +12,14 @@
         <div class="page-content">
           <template>
             <el-tabs v-model="editName">
-              <el-tab-pane label="编辑基本信息" name="BasicInfo" class="panel">
+              <el-tab-pane label="编辑基本信息" name="BasicInfo" class="panel" disabled>
                 <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
               </el-tab-pane>
-              <el-tab-pane label="添加耗材" name="addGoodFriend" class="panel" v-if="isGoodFriend">
+              <el-tab-pane label="添加耗材" name="addGoodFriend" class="panel" v-if="isGoodFriend" disabled>
                 <!-- v-if="服务才有，要判断type" -->
                 <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
               </el-tab-pane>
-              <el-tab-pane label="编辑商品详情" name="ProductDetails">
+              <el-tab-pane label="编辑商品详情" name="ProductDetails" class="panel" disabled>
                 <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
               </el-tab-pane>
             </el-tabs>
@@ -284,5 +284,13 @@ export default {
 .uploadArray_content div {
   margin-right: 20px;
   border-left-width: 1px;
+}
+
+#createGood .el-tabs__item.is-disabled {
+    color: #303133;
+}
+#createGood .el-tabs__item.is-active{
+    color: #7224D8;
+    cursor: pointer;
 }
 </style>

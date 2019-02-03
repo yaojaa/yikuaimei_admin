@@ -1,6 +1,6 @@
 <template>
     <!-- dialog showFormatInfo弹框 -->
-    <el-dialog title="添加规格" :visible.sync="format_show" size="large">
+    <el-dialog title="添加规格" :visible.sync="format_show" size="large" id="format_show">
         <el-row :gutter="20">
             <el-col :span="4">&nbsp;</el-col>
             <el-col :span="4">名称</el-col>
@@ -35,6 +35,7 @@
                     <i class="el-icon-plus" @click="$_createFormat(idx)" v-else />
                 </el-col>
             </el-row>
+
             <el-row :gutter="20" v-else>
                 <el-col :span="4">二组</el-col>
                 <el-col :span="4">   
@@ -138,6 +139,34 @@ export default {
 };
 </script>
 <style>
+#format_show .el-input{
+  display: inline;
+}
+
+#format_show .el-input input{
+  width: 84px
+}
+
+#format_show .el-tag{
+    height: 32px;
+    line-height: 32px;
+    background-color: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    display: inline-block;
+    margin-right: 5px
+}
+
+.el-input.is-disabled .el-input__inner{
+  background-color: #fff;
+  border-color: #dcdfe6;
+  color: #606266;
+  cursor: default;
+}
+
+#format_show .el-row{
+  margin: 10px
+}
 </style>
 
 

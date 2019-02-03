@@ -6,7 +6,7 @@
             展示在商品的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。
           </div>
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="/api/admin/fileupload/image"
             list-type="picture-card"
             :on-preview="$_onPreview"
             :on-success="$_success"

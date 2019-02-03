@@ -9,7 +9,6 @@
               <template slot="prepend" v-if="item.key0">{{item.key0}}</template>
               <template slot="append" v-if="item.key1">{{item.key1}}</template>
             </el-input>
-            <span class="outText">{{item.outText}}</span>
             <p v-if="item.remarks">{{item.remarks}}</p>
           </template>
           <template v-if="item.type === 'timeSlot'">
@@ -296,11 +295,6 @@ export default {
 }
 .addressBox {
   display: flex;
-}
-.outText {
-  position: absolute;
-  right: -20px;
-  top: 0;
 }
 
 .upload-title{

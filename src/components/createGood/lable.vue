@@ -79,10 +79,8 @@ export default {
   },
 
   watch: {
-    lable_show:function (newQuestion) {
-      if(newQuestion){
-        this.initSons()
-      }
+    lableList(val) {
+      this.initSons()
     }
   },
 
@@ -138,8 +136,8 @@ export default {
     },
 
     initSons(){
-        let obj = this.lableList[0] || {}
-        this.good_category_sons = obj.tag_group_sons ? obj.tag_group_sons[0].tag_list : obj.tag_list
+      let obj = this.lableList[0] || {}
+      this.good_category_sons = obj.tag_group_sons ? obj.tag_group_sons[0].tag_list : obj.tag_list
     }
   },
 
