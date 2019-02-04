@@ -12,41 +12,15 @@
         <div class="page-content">
           <template>
             <el-tabs v-model="editName">
-              <el-tab-pane label="编辑基本信息" name="BasicInfo">
-                <div class="panel">
-                  <!-- base 表单 -->
-                  <Formlist 
-                    :formInfo = "formInfo"
-                    @changeLableStatus="$_changeLableStatus"
-                    @changeFormatStatus="$_changeFormatStatus"
-                    @changeTab="$_changeTab"
-                  />
-                  <!-- base 表单 End-->
-
-                  <!-- 添加标签弹框 -->
-                  <Lable 
-                    :tagIdArr = "formInfo.tag_id_arr" 
-                    :shopgoods="shopgoods"
-                    @addLable = "$_addLable"
-                    ref="lable" />
-                  <!-- 添加标签弹框 End -->
-
-                  <!-- 添加规格弹框 -->
-                  <Formate    
-                    :formInfo = "formInfo"
-                    @addFormat="$_addFormat"
-                    ref="formate"
-                    />
-                  <!-- 添加规格弹框  End-->
-                </div>
+              <el-tab-pane label="编辑基本信息" name="BasicInfo" class="panel" disabled>
+                <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
               </el-tab-pane>
-              <el-tab-pane label="编辑商品详情" name="ProductDetails">
-                <!-- product 表单 -->
-                <FormlistProduct
-                  :formInfo = "formInfo"
-                  @changeTab="$_changeTab"
-                />
-                <!-- product 表单 End -->
+              <el-tab-pane label="添加耗材" name="addGoodFriend" class="panel" v-if="isGoodFriend" disabled>
+                <!-- v-if="服务才有，要判断type" -->
+                <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
+              </el-tab-pane>
+              <el-tab-pane label="编辑商品详情" name="ProductDetails" class="panel" disabled>
+                <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
               </el-tab-pane>
             </el-tabs>
           </template>          
@@ -55,23 +29,21 @@
 </template>
 
 <script>
-import BreadCrumb from "@/components/common/BreadCrumb";
-import Formate from "@/components/createGood/formate";
-import Formlist from "@/components/createGood/formlist";
-import FormlistProduct from "@/components/createGood/formlist_product";
-import Lable from "@/components/createGood/lable";
-
 import { breadcrumb } from "../../constans/createdGood";
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
+
+import BreadCrumb from "@/components/common/BreadCrumb";
+import FormlistItem from "@/components/createGood/formlist";
+import FormlistProduct from "@/components/createGood/formlist_product";
+import FormlistGoodFriend from "@/components/createGood/formlist_goodFriend";
 
 export default {
   name: "tabletest",
   components: {
     BreadCrumb,
-    Formate,
-    Formlist,
-    Lable,
-    FormlistProduct
+    FormlistItem,
+    FormlistProduct,
+    FormlistGoodFriend
   },
 
   data() {
@@ -81,56 +53,63 @@ export default {
     };
   },
 
-  created() {
-    console.log(this.formInfo);
-    // @TODO 获取可选规格 this.shopgoods = "axios 请求回来的数据";
+  computed: {
+    good_type(){
+      return this.$route.query.good_type
+    },
+
+    /** 
+     * 是否是耗材，品相
+    */
+    isGoodFriend(){
+      return this.$route.query.good_type === 1  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+    }
   },
 
-  computed: {
-    ...mapState({
-      formInfo: state => state.createdGoode.formInfo, // form 表格数据
-      shopgoods: state => state.createdGoode.shopgoods // 可选标签数据
-    })
+  created() {
+    const id = this.$route.query.good_id
+    this.$store.commit('createdGoode/initFormInfo')  // 每次进页面初始化信息
+    this.$store.commit('createdGoode/setFormInfo',{good_type:this.good_type})
+
+    // 编辑项目 good_id存在或不等于0 则当前是编辑页面
+    if(+id){ 
+      this.$store.dispatch('createdGoode/fetchFormInfo', {
+        id, // 商品的good_id字段 @TODO
+      })
+    }
   },
 
   methods: {
-    /**
-     * 展示标签弹框
-     */
-    $_changeLableStatus() {
-      this.$refs.lable.lable_show = true;
-    },
-
-    /**
-     * 展示规格弹框
-     */
-    $_changeFormatStatus() {
-      this.$refs.formate.format_show = true;
-    },
-
     /** *
      * 导航切换
      */
-    $_changeTab(tab, event) {
-      this.editName =
-        this.editName === "ProductDetails" ? "BasicInfo" : "ProductDetails";
+    $_changeTab_next(tab, event) {
+      switch (this.editName) {
+        case 'BasicInfo':
+          this.editName = this.isGoodFriend ? 'addGoodFriend' : 'ProductDetails'
+          break;
+        case 'addGoodFriend':
+          this.editName = 'ProductDetails'
+          break;
+        default:
+          break;
+      }
     },
 
-    /** *
-     * @TODO 添加规格 formInfo 应该是个数组
-     */
-    $_addFormat(formatInfo) {
-      this.formInfo.formatInfo = formatInfo;
-    },
-
-    /**
-     * 添加标签
-     */
-    $_addLable(tag_id_arr) {
-      this.formInfo.tag_id_arr = tag_id_arr;
+    $_changeTab_pre(tab, event) {
+      switch (this.editName) {
+        case 'ProductDetails':
+          this.editName = this.isGoodFriend ? 'addGoodFriend' : 'BasicInfo'
+          break;
+        case 'addGoodFriend':
+          this.editName = 'BasicInfo'
+          break;
+        default:
+          break;
+      }
     }
   }
-};
+}
 </script>
 
 <style>
@@ -305,5 +284,13 @@ export default {
 .uploadArray_content div {
   margin-right: 20px;
   border-left-width: 1px;
+}
+
+#createGood .el-tabs__item.is-disabled {
+    color: #303133;
+}
+#createGood .el-tabs__item.is-active{
+    color: #7224D8;
+    cursor: pointer;
 }
 </style>

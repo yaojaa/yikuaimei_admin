@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const request = axios.create({
-    baseURL: `${window.location.origin}/zeus/api`,
+    baseURL: 'http://dev.countinsight.com/api',
 })
 
 // 请求附带登录信息
