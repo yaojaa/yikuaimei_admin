@@ -20,9 +20,9 @@
         },
     
         props: {
-            orderCode: {
-                type: String,
-                default: () => ''
+            refundInfo: {
+                type: Object(),
+                default: () => {}
             }
         },
     

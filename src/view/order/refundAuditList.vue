@@ -286,7 +286,7 @@
                             "list": [{
                                 "label": "详情",
                                 "url": "/order/refundDetail",
-                                "query": "refund_id"
+                                "query": "order_refund_id"
                             }]
                         },
                     ],

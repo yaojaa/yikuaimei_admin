@@ -15,7 +15,6 @@
 
 <script>
 	import Config from "./config";
-	
 	export default {
 		name: 'RefundDetail',
 
@@ -51,7 +50,7 @@
 	
 				this.$axios({
 					method: 'get',
-					url: '/api/admin/refund/info ',
+					url: '/api/admin/refund/info',
 					params: params
 				}).then((res) => {
 					this.order = res.data.data
