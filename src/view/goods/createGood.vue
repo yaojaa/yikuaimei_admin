@@ -13,14 +13,14 @@
           <template>
             <el-tabs v-model="editName">
               <el-tab-pane label="编辑基本信息" name="BasicInfo" class="panel" disabled>
-                <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
+                <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" :oldFormInfo="oldFormInfo"  />
               </el-tab-pane>
               <el-tab-pane label="添加耗材" name="addGoodFriend" class="panel" v-if="isGoodFriend" disabled>
                 <!-- v-if="服务才有，要判断type" -->
-                <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
+                <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" :oldFormInfo="oldFormInfo" />
               </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails" class="panel" disabled>
-                <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
+                <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" :oldFormInfo="oldFormInfo" />
               </el-tab-pane>
             </el-tabs>
           </template>          
@@ -50,10 +50,13 @@ export default {
     return {
       breadcrumb, //面包屑
       editName: "BasicInfo", // tab标签默认定位
+      oldFormInfo: ''
     };
   },
 
   computed: {
+    ...mapState(['formInfo']),
+
     good_type(){
       return this.$route.query.good_type
     },
@@ -75,6 +78,8 @@ export default {
     if(+id){ 
       this.$store.dispatch('createdGoode/fetchFormInfo', {
         id, // 商品的good_id字段 @TODO
+      }).then((res)=>{
+        this.oldFormInfo = res
       })
     }
   },

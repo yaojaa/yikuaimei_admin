@@ -41,7 +41,6 @@
 
 <script>
 import { mapState } from "vuex";
-import _ from 'lodash'
 
 export default {
   name: "createGood-formlist",
@@ -90,7 +89,6 @@ export default {
                 if(res.code === 0){
                     this.$message.success(res.msg);
                     let good_type = this.$route.query.good_type
-                    debugger
                     switch (good_type) {
                         case '1':
                             this.$router.push('/serviceList')

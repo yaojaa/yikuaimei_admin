@@ -38,7 +38,6 @@ export const fetch = ({
          * 处理请求异常
          */
         const processError = (error) => {
-            debugger
             // 异常信息转意
             const message = '请求失败'
 
@@ -49,7 +48,6 @@ export const fetch = ({
 
             // 返回异常错误提示
             if (globalError) {
-                debugger
                 console.log({
                     content: message,
                     duration: 3000,
@@ -60,7 +58,6 @@ export const fetch = ({
 
         // 请求结果处理
         const processResult = (responseData) => {
-            debugger
             if (loading) {
                 console.log.hide()
             }

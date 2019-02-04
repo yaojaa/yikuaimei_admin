@@ -22,7 +22,7 @@ export default {
     actions: {
         /** 
          * 获取商品 / 服务 / 采购详情
-         * url http: //dev.countinsight.com/api/admin/docs.php?path=/shopgoods/getOneById&action=GET
+         * url http://dev.countinsight.com/api/admin/docs.php?path=/shopgoods/getOneById&action=GET
          * params id
          * status ok
          */
@@ -31,10 +31,22 @@ export default {
             commit
         }, params) {
             // console.log(1111, Vue)
-            axios.get("/api/admin/shopgoods/getOneById", {
+            return axios.get("/api/admin/shopgoods/getOneById", {
                 params
             }).then(res => {
-                commit('setFormInfo', res.data.data)
+                let result = res.data.data
+                result.productCode = result.productCode ? result.productCode : result._id
+                result.sellPrice = result.price_high
+                result.price = result.price_low
+                result.good_img_arr = result.good_img_arr.map((item, idx) => {
+                    let obj = {}
+                    obj.name = 'goodImgArr' + idx
+                    obj.url = item
+                    return obj
+                })
+
+                commit('setFormInfo', result)
+                return result
             })
         },
 

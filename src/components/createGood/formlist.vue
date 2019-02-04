@@ -164,7 +164,7 @@
                     </el-upload>
                 </div>
             </el-form-item>
-            <el-form-item label="商品展示图：" prop="showPng">
+            <el-form-item label="商品展示图：" prop="good_ico">
                 <div class="upload-title">
                 <p>展示在商品页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
                 </div>
@@ -176,7 +176,7 @@
                 :on-error="$_error"
                 :before-upload="$_beforeUpload"
                 >
-                <img v-if="currentFormInfo.good_ico" :src="currentFormInfo.de" class="avatar">
+                <img v-if="currentFormInfo.good_ico" :src="currentFormInfo.good_ico" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
                     <p>添加图片</p><span>只能上传一张</span>
                 </i>
@@ -199,6 +199,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { mapState } from "vuex";
 import { CATEGORYOPTIONS } from "../../constans/createdGood";
 import Lable from "@/components/createGood/lable";
@@ -212,36 +213,31 @@ export default {
     Lable,
   },
 
+  props: ['oldFormInfo'],
+
   data() {
     return {
       CATEGORYOPTIONS, // 所属行业分类
       canAdd__goodImg: false, // 是否可添加状态 __ 商品图片
       dialogImageUrl: '',
       dialogVisible: false,
-      currentFormInfo:{
-        good_name: '' , // 商品名字
-        good_explain: '' , // 商品卖点
-        category_id: '' , // 行业id
-        tag_id_arr: [], // 标签id数组
-        tag_list: [], // 已选标签展示数据
-        good_video: '', // 商品视频
-        good_video_pic: '', // 商品视频封面图
-        good_img_arr: [], // 商品图片数组
-        good_ico: '', // 商品展示图
-        unit: '', // 单位 例如盒，箱
-        show_img_arr: [], // 详情页商品展示图数组       
-        explain_img_arr : [{
-            name: 'explain_img_arr0',
-            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        },
-        {
-            name: 'explain_img_arr1',
-            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        }],// 卖点图数组   
-        sku_type_arr: [], // 规格数组，单规格商品不要提交该字段
-        good_sku: [] , // 规格sku数组，单规格商品也要按该数组格式提交
-        good_friends : [] // //服务添加耗材列表 不是服务不需要提交
-      },
+//       currentFormInfo:{
+//         good_name: '' , // 商品名字
+//         good_explain: '' , // 商品卖点
+//         category_id: '' , // 行业id
+//         tag_id_arr: [], // 标签id数组
+//         tag_list: [], // 已选标签展示数据
+//         good_video: '', // 商品视频
+//         good_video_pic: '', // 商品视频封面图
+//         good_img_arr: [], // 商品图片数组
+//         good_ico: '', // 商品展示图
+//         unit: '', // 单位 例如盒，箱
+//         show_img_arr: [], // 详情页商品展示图数组       
+//         explain_img_arr : [],// 卖点图数组   
+//         sku_type_arr: [], // 规格数组，单规格商品不要提交该字段
+//         good_sku: [] , // 规格sku数组，单规格商品也要按该数组格式提交
+//         good_friends : [] // //服务添加耗材列表 不是服务不需要提交
+//       },
 
       limitNumber:6,
       goodSkuInfo:[],
@@ -273,11 +269,35 @@ export default {
   },
 
   computed: {
-    ...mapState('createdGoode',['formInfo']), // 可选标签数据
-
     good_type(){
         return this.$route.query.good_type
+    },
+
+    currentFormInfo(){
+        const obj = {
+            good_name: '' , // 商品名字
+            good_explain: '' , // 商品卖点
+            category_id: '' , // 行业id
+            tag_id_arr: [], // 标签id数组
+            tag_list: [], // 已选标签展示数据
+            good_video: '', // 商品视频
+            good_video_pic: '', // 商品视频封面图
+            good_img_arr: [], // 商品图片数组
+            good_ico: '', // 商品展示图
+            unit: '', // 单位 例如盒，箱
+            show_img_arr: [], // 详情页商品展示图数组       
+            explain_img_arr : [],// 卖点图数组   
+            sku_type_arr: [], // 规格数组，单规格商品不要提交该字段
+            good_sku: [] , // 规格sku数组，单规格商品也要按该数组格式提交
+            good_friends : [] // //服务添加耗材列表 不是服务不需要提交
+        }
+        return this.oldFormInfo || obj
     }
+  },
+
+  created() {
+      console.log(this.oldFormInfo)
+      console.log(this.currentFormInfo)
   },
 
   methods: {
@@ -365,7 +385,6 @@ export default {
     },
 
     $_success__table_ico_small(res, file, targe){
-        debugger
         targe.iconStatus = true
         targe.ico_small = file.url
     },
