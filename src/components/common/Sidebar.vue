@@ -54,31 +54,45 @@
                     },
                     {
                         icon: 'iconfont icon-shangjiacopy',
-                        title: '订单管理a',
+                        title: '订单管理',
                         index:'/order',
                         subs: [
                             {
                                 index: '/order/list_goods',
-                                title: '平台商品'
+                                title: '商品订单'
                             },
                             {
-                                index: '/business',
-                                title: '门店服务'
+                                index: '/order/list_service',
+                                title: '服务订单'
                             },
-                            {
-                                index: '/business',
-                                title: '采购品项'
-                            },
-                            {
-                                index: '/business',
-                                title: '评价管理'
-                            },
-                            {
-                                index: '/business',
-                                title: '退款初审'
+                             {
+                                index: '/order/product_phase',
+                                title: '品项管理'
                             }
                         ]
                     },
+
+                    {
+                        icon: 'iconfont icon-shangjiacopy',
+                        title: '评论管理',
+                        index:'/comment',
+                        subs: [
+                            {
+                                index: '/comment/list_goods',
+                                title: '服务评论'
+                            },
+                            {
+                                index: '/comment/list_service',
+                                title: '商品评论'
+                            },
+                             {
+                                index: '/comment/product_phase',
+                                title: '案例评论'
+                            }
+                        ]
+                    },
+
+
                     {
                         icon: 'iconfont icon-kefu',
                         index: '/case',

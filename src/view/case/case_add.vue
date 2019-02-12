@@ -42,11 +42,11 @@
 
       <el-form-item label="所属行业">
     <el-select @change="loadMechanic" v-model="form1.category_id" placeholder="请选择所属行业">
-      <el-option label="美容"      :value="1"></el-option>
-      <el-option label="美甲美睫"   :value="2"></el-option>
-      <el-option label="美发"      :value="3"></el-option>
-      <el-option label="美体"      :value="4"></el-option>
-      <el-option label="轻医美"     :value="5"></el-option>
+      <el-option label="美容"     :value="1"></el-option>
+      <el-option label="美甲美睫"  :value="2"></el-option>
+      <el-option label="美发"     :value="3"></el-option>
+      <el-option label="美体"     :value="4"></el-option>
+      <el-option label="轻医美"    :value="5"></el-option>
     </el-select>
   </el-form-item>
 

@@ -15,7 +15,7 @@ module.exports = {
         target:'http://dev.countinsight.com/api',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/'   //重写接口
+          '^/api': ''   //重写接口
         }
       },
       '/ms':{

@@ -16,10 +16,8 @@
         		<div class="panel-body">
 
         			<div class="info_p">
-        					用户昵称：{{d.order_user_name}}<br/>
-
+        			用户昵称：{{d.order_user_name}}<br/>
 					支付方式：{{ '微信支付 银联支付 现金支付 '.split(' ')[d.pay_type]}}<br/>
-
 					收货地址：{{d.order_user_address}}
         			</div>
 				
