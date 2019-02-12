@@ -20,7 +20,12 @@
 					我是收益提成
 				</el-tab-pane>
 				<el-tab-pane label="退款/退货" name="OrderRefund">
-					<RefundInfo></RefundInfo>
+					<div class="refund-list">
+						<el-tab-pane  :key="index" v-for="(item,index) in refundList" :label="index+1" :name="reufund">
+							<RefundInfo :refundInfo="refundInfo"></RefundInfo>
+						</el-tab-pane>
+					</div>
+					<RefundInfo :refundInfo="refundInfo"></RefundInfo>
 				</el-tab-pane>
 			</el-tabs>
 	
@@ -49,6 +54,7 @@
 				tabName: "OrderInfo", // tab标签默认定位
 				orderCode: this.$route.params.order_code,
 				order: {},
+				refundList: [],
 				order_status: { // 订单状态
 					1: '待处理',
 					2: '待发货',
@@ -70,9 +76,10 @@
 		},
 		mounted() {
 	
-	
-			this.getData(this.$route.params)
-	
+			// 获取订单信息
+			this.getData(this.$route.params);
+			// 获取退款单信息
+			this.getRefundList(this.$route.params);
 	
 	
 		},
@@ -86,6 +93,18 @@
 					params: params
 				}).then((res) => {
 					this.order = res.data.data
+				}).catch((error) => {
+				});
+			},
+
+			getRefundList(params) {
+	
+				this.$axios({
+					method: 'get',
+					url: '/api/admin/order/refundList ',
+					params: params
+				}).then((res) => {
+					this.refundList = res.data.data
 				}).catch((error) => {
 				});
 			},
