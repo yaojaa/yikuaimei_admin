@@ -204,7 +204,7 @@
                             "align": "center",
                             formatter(row) {
                                 return `<p style='text-align: center'>
-                                                      ${Config.status[row.status]}
+                                                      ${Config.status[row.is_use]}
                                                     </p>`;
                             }
                         },
