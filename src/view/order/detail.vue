@@ -20,7 +20,7 @@
 					我是收益提成
 				</el-tab-pane>
 				<el-tab-pane label="退款/退货" name="OrderRefund">
-					我是退款退货
+					<RefundInfo></RefundInfo>
 				</el-tab-pane>
 			</el-tabs>
 	
@@ -33,13 +33,15 @@
 	import Config from "./config";
 	import ExpressInfo from "./components/expressInfo";
 	import OrderDetail from "./components/orderDetail";
+	import RefundInfo from "./components/refundInfo";
 	
 	export default {
 		name: 'orderDetail',
 
 		components: {
 			ExpressInfo,
-			OrderDetail
+			OrderDetail,
+			RefundInfo
 		},
 		
 		data() {

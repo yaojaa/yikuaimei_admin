@@ -76,10 +76,10 @@
                                 index: '/order/commentList',
                                 title: '评价管理'
                             },
-                            // {
-                            //     index: '/business',
-                            //     title: '退款初审'
-                            // }
+                            {
+                                index: '/order/refundAuditList',
+                                title: '退款初审'
+                            }
                         ]
                     },
                     {
