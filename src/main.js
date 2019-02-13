@@ -33,7 +33,7 @@ Vue.use(ElementUI, { size: 'small' });
 Vue.use(BaiduMap, { ak: 'NqiLB3SI1yCO0hlXUnKBBlvqKDDZBCEV'})
 Vue.prototype.$axios = axios;
 
-axios.defaults.baseURL = 'http://dev.countinsight.com/'
+// axios.defaults.baseURL = 'http://dev.countinsight.com/'
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
     NProgress.start();

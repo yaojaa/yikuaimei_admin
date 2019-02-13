@@ -44,11 +44,14 @@
                                 index: '/goodList',
                                 title: '平台商品'
                             },{
-                                index: '/userincome',
+                                index: '/serviceList',
                                 title: '门户服务'
                             },{
-                                index: '/userincome',
-                                title: '采购品项'
+                                index: '/purchaseList',
+                                title: '品项管理'
+                            },{
+                                index: '/fictitiousList',
+                                title: '虚拟卡券管理'
                             }
                         ]
                     },
@@ -64,6 +67,8 @@
                             {
                                 index: '/order/list_service',
                                 title: '服务订单'
+                                // index: '/order/serviceOrderList',
+                                // title: '门店服务'
                             },
                              {
                                 index: '/order/product_phase',
@@ -88,6 +93,18 @@
                              {
                                 index: '/comment/product_phase',
                                 title: '案例评论'
+                            },
+                            {
+                                index: '/order/purchaseOrderList',
+                                title: '采购品项'
+                            },
+                            {
+                                index: '/order/commentList',
+                                title: '评价管理'
+                            },
+                            {
+                                index: '/order/refundAuditList',
+                                title: '退款初审'
                             }
                         ]
                     },
@@ -113,265 +130,265 @@
                             }
                         ]
                     },
-                    {
-                        icon: 'iconfont icon-yingxiaocopy',
-                        index: 'index7',
-                        title: '消费者管理',
-                        subs: [
-                            {
-                                index: '/marketcoupon',
-                                title: '消费者'
-                            },
-                            {
-                                index: '/physicalcoupon',
-                                title: '黑名单'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'iconfont icon-yingxiaocopy',
-                        index: 'index8',
-                        title: '审核管理',
-                        subs: [
-                            {
-                                index: '/marketcoupon',
-                                title: '加盟商'
-                            },
-                            {
-                                index: '/physicalcoupon',
-                                title: '门店'
-                            },
-                            {
-                                index: '/physicalcoupon',
-                                title: '提现(门店)'
-                            },
-                            {
-                                index: '/physicalcoupon',
-                                title: '提现(人)'
-                            },
-                            {
-                                index: '/physicalcoupon',
-                                title: '退款(复审)'
-                            },
-                            {
-                                index: '/physicalcoupon',
-                                title: '案例'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'iconfont icon-yingxiaocopy',
-                        index: 'index9',
-                        title: '培训'
-                    },
-                    {
-                        icon: 'iconfont icon-yingxiaocopy',
-                        index: 'index10',
-                        title: '美丽档案'
-                    },
+                //     {
+                //         icon: 'iconfont icon-yingxiaocopy',
+                //         index: 'index7',
+                //         title: '消费者管理',
+                //         subs: [
+                //             {
+                //                 index: '/marketcoupon',
+                //                 title: '消费者'
+                //             },
+                //             {
+                //                 index: '/physicalcoupon',
+                //                 title: '黑名单'
+                //             }
+                //         ]
+                //     },
+                //     {
+                //         icon: 'iconfont icon-yingxiaocopy',
+                //         index: 'index8',
+                //         title: '审核管理',
+                //         subs: [
+                //             {
+                //                 index: '/marketcoupon',
+                //                 title: '加盟商'
+                //             },
+                //             {
+                //                 index: '/physicalcoupon',
+                //                 title: '门店'
+                //             },
+                //             {
+                //                 index: '/physicalcoupon',
+                //                 title: '提现(门店)'
+                //             },
+                //             {
+                //                 index: '/physicalcoupon',
+                //                 title: '提现(人)'
+                //             },
+                //             {
+                //                 index: '/physicalcoupon',
+                //                 title: '退款(复审)'
+                //             },
+                //             {
+                //                 index: '/physicalcoupon',
+                //                 title: '案例'
+                //             }
+                //         ]
+                //     },
+                //     {
+                //         icon: 'iconfont icon-yingxiaocopy',
+                //         index: 'index9',
+                //         title: '培训'
+                //     },
+                //     {
+                //         icon: 'iconfont icon-yingxiaocopy',
+                //         index: 'index10',
+                //         title: '美丽档案'
+                //     },
 
-                   /**以下为示例页面可参考使用：***/
-                        {
-                        icon: 'iconfont icon-shouye',
-                        index: 'index1',
-                        title: '以下为示例页面可参考使用：'
-                    },
+                //    /**以下为示例页面可参考使用：***/
+                //         {
+                //         icon: 'iconfont icon-shouye',
+                //         index: 'index1',
+                //         title: '以下为示例页面可参考使用：'
+                //     },
 
-                    {
-                        icon: 'iconfont icon-guanli',
-                        index: 'index3',
-                        title: '用户管理',
-                        subs: [
-                            {
-                                index: '/userlist',
-                                title: '用户管理'
-                            },{
-                                index: '/userincome',
-                                title: '用户收入'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'iconfont icon-shangjiacopy',
-                        index: '/business2',
-                        title: '商家',
-                        subs: [
-                            {
-                                index: '/business2',
-                                title: '商家管理'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'iconfont icon-kefu',
-                        index: '/servermanage',
-                        title: '客服',
-                        subs:[
-                            {
-                                index:'/servermanage',
-                                title:'客服统计'
-                            },
-                            {
-                                index:'/servermanage/addserver',
-                                title:'添加客服'
-                            },
-                            {
-                                index:'/servermanage/check',
-                                title:'查看记录'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'iconfont icon-guanggaoguanli',
-                        index: 'index6',
-                        title: '广告',
-                        subs: [
-                            {
-                                index: '/ad/admin',
-                                title: '广告管理'
-                            },
-                            {
-                                index: '/ad/all',
-                                title: '一站搞定'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'iconfont icon-yingxiaocopy',
-                        index: 'index99',
-                        title: '营销',
-                        subs: [
-                            {
-                                index: '/marketcoupon',
-                                title: '优惠券'
-                            },
-                            {
-                                index: '/physicalcoupon',
-                                title: '实物券'
-                            },
-                            {
-                                index: '/event',
-                                title: '总部活动'
-                            },
-                            {
-                                index: '/marketgame',
-                                title: '游戏'
-                            },
-                            {
-                                index: '/content',
-                                title: '内容'
-                            },
-                            {
-                                index: '/style',
-                                title: '风格'
-                            },
-                            {
-                                index: '/care/app',
-                                title: '关怀'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'iconfont icon-xiaoxicopy',
-                        index: '/message/sms',
-                        title: '消息'
-                    },
-                    {
-                        icon: 'iconfont icon-zhanhuiguanli',
-                        index: '/exhibitionmanage',
-                        title: '展会',
-                        subs: [
-                            {
-                                index: '/exhibitionmanage',
-                                title: '展会管理'
-                            },
-                            {
-                                index: '/exhibitionchart',
-                                title: '展会数据'
-                            }
-                        ]
+                //     {
+                //         icon: 'iconfont icon-guanli',
+                //         index: 'index3',
+                //         title: '用户管理',
+                //         subs: [
+                //             {
+                //                 index: '/userlist',
+                //                 title: '用户管理'
+                //             },{
+                //                 index: '/userincome',
+                //                 title: '用户收入'
+                //             }
+                //         ]
+                //     },
+                //     {
+                //         icon: 'iconfont icon-shangjiacopy',
+                //         index: '/business2',
+                //         title: '商家',
+                //         subs: [
+                //             {
+                //                 index: '/business2',
+                //                 title: '商家管理'
+                //             }
+                //         ]
+                //     },
+                //     {
+                //         icon: 'iconfont icon-kefu',
+                //         index: '/servermanage',
+                //         title: '客服',
+                //         subs:[
+                //             {
+                //                 index:'/servermanage',
+                //                 title:'客服统计'
+                //             },
+                //             {
+                //                 index:'/servermanage/addserver',
+                //                 title:'添加客服'
+                //             },
+                //             {
+                //                 index:'/servermanage/check',
+                //                 title:'查看记录'
+                //             }
+                //         ]
+                //     },
+                //     {
+                //         icon: 'iconfont icon-guanggaoguanli',
+                //         index: 'index6',
+                //         title: '广告',
+                //         subs: [
+                //             {
+                //                 index: '/ad/admin',
+                //                 title: '广告管理'
+                //             },
+                //             {
+                //                 index: '/ad/all',
+                //                 title: '一站搞定'
+                //             }
+                //         ]
+                //     },
+                //     {
+                //         icon: 'iconfont icon-yingxiaocopy',
+                //         index: 'index99',
+                //         title: '营销',
+                //         subs: [
+                //             {
+                //                 index: '/marketcoupon',
+                //                 title: '优惠券'
+                //             },
+                //             {
+                //                 index: '/physicalcoupon',
+                //                 title: '实物券'
+                //             },
+                //             {
+                //                 index: '/event',
+                //                 title: '总部活动'
+                //             },
+                //             {
+                //                 index: '/marketgame',
+                //                 title: '游戏'
+                //             },
+                //             {
+                //                 index: '/content',
+                //                 title: '内容'
+                //             },
+                //             {
+                //                 index: '/style',
+                //                 title: '风格'
+                //             },
+                //             {
+                //                 index: '/care/app',
+                //                 title: '关怀'
+                //             }
+                //         ]
+                //     },
+                //     {
+                //         icon: 'iconfont icon-xiaoxicopy',
+                //         index: '/message/sms',
+                //         title: '消息'
+                //     },
+                //     {
+                //         icon: 'iconfont icon-zhanhuiguanli',
+                //         index: '/exhibitionmanage',
+                //         title: '展会',
+                //         subs: [
+                //             {
+                //                 index: '/exhibitionmanage',
+                //                 title: '展会管理'
+                //             },
+                //             {
+                //                 index: '/exhibitionchart',
+                //                 title: '展会数据'
+                //             }
+                //         ]
 
-                    },
-                    {
-                        icon: 'iconfont icon-yuangongguanli',
-                        index: '/checkmanage',
-                        title: '审核管理',
-                        subs: [
-                            {
-                                index: '/checkmanage',
-                                title: '审核管理'
-                            },
-                            {
-                                index: '/checkmanage/bussinessinfo',
-                                title: '商家详情'
-                            },
-                            {
-                                index: '/checkmanage/mealinfo',
-                                title: '套餐详情'
-                            },
-                            {
-                                index: '/checkmanage/caseinfo',
-                                title: '案例详情'
-                            },
-                            {
-                                index: '/checkmanage/exhibitioninfo',
-                                title: '展会详情'
-                            }
-                        ]
+                //     },
+                //     {
+                //         icon: 'iconfont icon-yuangongguanli',
+                //         index: '/checkmanage',
+                //         title: '审核管理',
+                //         subs: [
+                //             {
+                //                 index: '/checkmanage',
+                //                 title: '审核管理'
+                //             },
+                //             {
+                //                 index: '/checkmanage/bussinessinfo',
+                //                 title: '商家详情'
+                //             },
+                //             {
+                //                 index: '/checkmanage/mealinfo',
+                //                 title: '套餐详情'
+                //             },
+                //             {
+                //                 index: '/checkmanage/caseinfo',
+                //                 title: '案例详情'
+                //             },
+                //             {
+                //                 index: '/checkmanage/exhibitioninfo',
+                //                 title: '展会详情'
+                //             }
+                //         ]
 
-                    },
-                    {
-                        icon: 'iconfont icon-fenzigongsi',
-                        index: '/branchManagement',
-                        title: '分公司管理'
-                    },
-                    {
-                        icon: 'iconfont icon-jiankong',
-                        index: 'index18',
-                        title: '监控中心',
-                        subs: [
-                            {
-                                index: '/monitor/exemption',
-                                title: '抽免单'
-                            },
-                            {
-                                index: '/monitor/order',
-                                title: '订单管理'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'iconfont icon-shujubaobiao',
-                        index: '/datachart',
-                        title: '数据报表'
-                    },
-                    {
-                        icon: 'iconfont icon-shezhicopy',
-                        index: '',
-                        title: '设置',
-                        subs: [
-                            {
-                                index: '/set/member',
-                                title: '成员管理'
-                            },
-                            {
-                                index: '/set/role',
-                                title: '角色管理'
-                            },
-                            {
-                                index: '/set/log',
-                                title: '日志管理'
-                            },
-                            {
-                                index: '/set/account',
-                                title: '账号管理'
-                            },
-                            {
-                                index: '/set/alert',
-                                title: '弹窗设置'
-                            }
-                        ]
-                    }     
+                //     },
+                //     {
+                //         icon: 'iconfont icon-fenzigongsi',
+                //         index: '/branchManagement',
+                //         title: '分公司管理'
+                //     },
+                //     {
+                //         icon: 'iconfont icon-jiankong',
+                //         index: 'index18',
+                //         title: '监控中心',
+                //         subs: [
+                //             {
+                //                 index: '/monitor/exemption',
+                //                 title: '抽免单'
+                //             },
+                //             {
+                //                 index: '/monitor/order',
+                //                 title: '订单管理'
+                //             }
+                //         ]
+                //     },
+                //     {
+                //         icon: 'iconfont icon-shujubaobiao',
+                //         index: '/datachart',
+                //         title: '数据报表'
+                //     },
+                //     {
+                //         icon: 'iconfont icon-shezhicopy',
+                //         index: '',
+                //         title: '设置',
+                //         subs: [
+                //             {
+                //                 index: '/set/member',
+                //                 title: '成员管理'
+                //             },
+                //             {
+                //                 index: '/set/role',
+                //                 title: '角色管理'
+                //             },
+                //             {
+                //                 index: '/set/log',
+                //                 title: '日志管理'
+                //             },
+                //             {
+                //                 index: '/set/account',
+                //                 title: '账号管理'
+                //             },
+                //             {
+                //                 index: '/set/alert',
+                //                 title: '弹窗设置'
+                //             }
+                //         ]
+                //     }     
                 ]
             }
         },

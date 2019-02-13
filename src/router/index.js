@@ -37,6 +37,27 @@ export default new Router({
                     }
                 },
                 {
+                    path: '/serviceList',
+                    component: resolve => require(['../view/goods/serviceList.vue'], resolve),
+                    meta: {
+                        title: '门店服务'
+                    }
+                },
+                {
+                    path: '/purchaseList',
+                    component: resolve => require(['../view/goods/purchaseList.vue'], resolve),
+                    meta: {
+                        title: '品相管理'
+                    }
+                },
+                {
+                    path: '/fictitiousList',
+                    component: resolve => require(['../view/goods/fictitiousList.vue'], resolve),
+                    meta: {
+                        title: '虚拟卡券管理'
+                    }
+                },
+                {
                     // 分类管理
                     path: '/categorylist',
                     component: resolve => require(['../view/goods/categorylist.vue'], resolve),
@@ -73,11 +94,74 @@ export default new Router({
                     }
                 },
                 {
-                    // 订单管理--订单详情
+                    // 订单管理--门店订单详情
+                    path: '/order/order_service_detail/:order_code',
+                    component: resolve => require(['../view/order/serviceDetail.vue'], resolve),
+                    meta: {
+                        title: '门店详情',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理--品项报货信息
+                    path: '/order/order_purchase_detail/:purchase_id',
+                    component: resolve => require(['../view/order/purchaseDetail.vue'], resolve),
+                    meta: {
+                        title: '报货信息',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理--发货
                     path: '/order/send_goods/:order_code',
                     component: resolve => require(['../view/order/send_goods.vue'], resolve),
                     meta: {
                         title: '发货',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理-门店服务
+                    path: '/order/serviceOrderList',
+                    component: resolve => require(['../view/order/serviceOrderList.vue'], resolve),
+                    meta: {
+                        title: '门店服务',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理-采购品项
+                    path: '/order/purchaseOrderList',
+                    component: resolve => require(['../view/order/purchaseOrderList.vue'], resolve),
+                    meta: {
+                        title: '采购品项',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理-评价管理
+                    path: '/order/commentList',
+                    component: resolve => require(['../view/order/commentList.vue'], resolve),
+                    meta: {
+                        title: '评价管理',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理-退款初审
+                    path: '/order/refundAuditList',
+                    component: resolve => require(['../view/order/refundAuditList.vue'], resolve),
+                    meta: {
+                        title: '退款初审',
+                        permission: true
+                    }
+                },
+                {
+                    // 订单管理-退款详情
+                    path: '/order/refundDetail/:refund_id',
+                    component: resolve => require(['../view/order/refundDetail.vue'], resolve),
+                    meta: {
+                        title: '退款详情',
                         permission: true
                     }
                 },

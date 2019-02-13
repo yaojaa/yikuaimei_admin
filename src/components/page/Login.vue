@@ -50,7 +50,7 @@
                         })
                         .then(res => {
                             console.log(res, '0000')
-                            localStorage.setItem('ms_username',this.ruleForm.username);
+                       localStorage.setItem('ms_username',this.ruleForm.username);
                         })
                         
                     } else {

@@ -81,67 +81,77 @@
         </div>
 
 </div>
+
 </template>
 
 <script>
-  
+	import Config from "./config";
+	import ExpressInfo from "./components/expressInfo";
+	import OrderDetail from "./components/orderDetail";
+	import RefundInfo from "./components/refundInfo";
+	
+	export default {
+		name: 'orderDetail',
 
-    export default {
-        data() {
-            return {
+		components: {
+			ExpressInfo,
+			OrderDetail,
+			RefundInfo
+		},
+		
+		data() {
+			return {
+				tabName: "OrderInfo", // tab标签默认定位
+				orderCode: this.$route.params.order_code,
+				order: {},
+				order_status: { // 订单状态
+					1: '待处理',
+					2: '待发货',
+					3: '已发货',
+					4: '已完成',
+					5: '已评价',
+					8: '已取消'
+				},
+			}
+		},
 
-            	d:{}
-            }
-        },
-       
-        beforeRouteUpdate (to, from, next) {
+		beforeRouteUpdate(to, from, next) {
+	
+		},
+		created() {
+		},
+		computed: {
+	
+		},
+		mounted() {
+	
+	
+			this.getData(this.$route.params)
+	
+	
+	
+		},
+		methods: {
+	
+			getData(params) {
+	
+				this.$axios({
+					method: 'get',
+					url: '/api/admin/order/info',
+					params: params
+				}).then((res) => {
+					this.order = res.data.data
+				}).catch((error) => {
+				});
+			},
 
-        },
-        created() {
-
-        	console.log('created')
-            
-        },
-        computed: {
-           
-        },
-        mounted(){
-
-
-        	this.getData(this.$route.params)
-
-
-           
-        },
-        methods: {
-
-        	getData(params){
-
-        		this.$axios({
-				    method: 'get',
-				    url: '/api/admin/order/info',
-				    params: params
-				  }).then( (res)=> {
-				  	console.log('this',this)
-				  	console.log(res.data)
-				    this.d = res.data.data
-				  }).catch( (error)=> {
-				    console.log(error);
-				  });
-
-        		
-        	}
-
-
-        }
-    }
-
+			formatPrice(price) {
+				return (price/100).toFixed(2);
+			}
+		}
+	}
 </script>
 
 <style scoped>
-.cell_item{
-	flex: 1;
-	border: 1px solid #ddd
-}
-
+	
 </style>
