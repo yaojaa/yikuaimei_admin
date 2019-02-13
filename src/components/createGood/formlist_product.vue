@@ -90,10 +90,9 @@ export default {
       // @TODO 先做校验，校验成功在请求接口
       this.$refs.currentFormInfo.validate((valid) => {
         if (valid) {
-            debugger
-            if(good_id === 0){
+            if(good_id === '0'){
+                this.$store.dispatch('createdGoode/..handleformInfo')
                 this.$store.dispatch('createdGoode/fetchFormInfoCreate',formInfo).then((res)=>{
-                    debugger
                     if(res.code === 0){
                         this.$message.success(res.msg);
                         this.$_goOut(good_type)
@@ -119,16 +118,16 @@ export default {
     $_goOut(good_type){
         switch (good_type) {
             case '1':
-                that.$router.push('/serviceList')
+                this.$router.push('/serviceList')
                 break;
             case '2':
-                that.$router.push('/goodList')
+                this.$router.push('/goodList')
                 break;
             case '3':
-                that.$router.push('/purchaseList')
+                this.$router.push('/purchaseList')
                 break;
             case '4':
-                that.$router.push('/fictitiousList')
+                this.$router.push('/fictitiousList')
                 break;
         
             default:

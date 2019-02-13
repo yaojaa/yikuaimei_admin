@@ -112,7 +112,6 @@ export default {
   watch: {
     'formInfo.good_friends': {
       handler: function (newVal, oldVal) {
-        debugger
         this.good_friends = _.cloneDeep(newVal.good_friends)
       },
       deep: true

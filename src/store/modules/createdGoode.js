@@ -26,7 +26,9 @@ export default {
          * status ok
          */
 
-        fetchFormInfo({ commit }, params) {
+        fetchFormInfo({
+            commit
+        }, params) {
             return axios
                 .get('/api/admin/shopgoods/getOneById', {
                     params
@@ -75,7 +77,9 @@ export default {
          * url http://dev.countinsight.com/api/admin/docs.php?path=/select/tagGroupList&action=GET
          * 
          */
-        fetchLableList({ commit }, params) {
+        fetchLableList({
+            commit
+        }, params) {
             axios
                 .get('/api/admin/select/tagGroupList', {
                     params
@@ -91,7 +95,9 @@ export default {
          * url http://dev.countinsight.com/api/admin/docs.php?path=/select/getFriendTagList&action=GET
          * params tag_id
          */
-        fetchFriendLableList({ commit }, params) {
+        fetchFriendLableList({
+            commit
+        }, params) {
             axios
                 .get('/api/admin/select/getFriendTagList', {
                     params
@@ -105,9 +111,12 @@ export default {
          * 添加 单规格 / 多规格 商品 / 服务 / 采购品项
          * url http://dev.countinsight.com/api/admin/docs.php?path=/shopgoods/create&action=POST
          */
-        fetchFormInfoCreate({ commit, state }, params) {
+        fetchFormInfoCreate({
+            commit,
+            state
+        }, params) {
             return axios
-                .get('/api/admin/shopgoods/create', {
+                .post('/api/admin/shopgoods/create', {
                     params
                 })
                 .then((res) => {
@@ -119,9 +128,12 @@ export default {
          * 修改 单规格 / 多规格 商品 / 服务 / 采购品项
          * url http://dev.countinsight.com/api/admin/docs.php?path=/shopgoods/modify&action=POST
          */
-        fetchFormInfoModify({ commit, state }, params) {
+        fetchFormInfoModify({
+            commit,
+            state
+        }, params) {
             return axios
-                .get('/api/admin/shopgoods/modify', {
+                .post('/api/admin/shopgoods/modify', {
                     params
                 })
                 .then((res) => {
@@ -136,7 +148,13 @@ export default {
          * 获取服务耗材列表
          * url http: //dev.countinsight.com/api/admin/docs.php?path=/select/goodsList&action=GET
          */
-        fetchGoodFriends({ commit, state }, { good_type, category_id }) {
+        fetchGoodFriends({
+            commit,
+            state
+        }, {
+            good_type,
+            category_id
+        }) {
             return axios
                 .get(`/api/admin/select/goodsList?good_type=${good_type}&category_id=${category_id}`)
                 .then((res) => {
@@ -167,6 +185,7 @@ export default {
                 good_video: '', // 商品视频
                 good_video_pic: '', // 商品视频封面图
                 good_img_arr: [], // 商品图片数组
+                explain_img_arr: [],
                 good_ico: '', // 商品展示图
                 unit: '', // 单位 例如盒，箱
                 show_img_arr: [], // 详情页商品展示图数组
@@ -174,7 +193,17 @@ export default {
                 sku_type_arr: [], // 规格数组，单规格商品不要提交该字段
                 good_sku: [], // 规格sku数组，单规格商品也要按该数组格式提交
                 good_friends: [], // 服务添加耗材列表 不是服务不需要提交
-                goodSkuInfo: []
+                goodSkuInfo: [{
+                        name: '',
+                        list: [],
+                        inputValue: ''
+                    },
+                    {
+                        name: '',
+                        list: [],
+                        inputValue: ''
+                    }
+                ]
             };
         },
 
@@ -182,9 +211,19 @@ export default {
             state.lableList = data;
         },
 
-        setGoodFriends(state, { data, category_id }) {
+        handleformInfo(state) {
+            state.formInfo.good_img_arr = state.formInfo.good_img_arr.map(item => item.response.data.file_name)
+            state.formInfo.explain_img_arr = state.formInfo.explain_img_arr.map(item => item.response.data.file_name)
+            state.formInfo.show_img_arr = state.formInfo.show_img_arr.map(item => item.response.data.file_name)
+        },
+
+        setGoodFriends(state, {
+            data,
+            category_id
+        }) {
             state.goodFriends[category_id] = data;
-        }
+        },
+
     },
 
     getters: {}

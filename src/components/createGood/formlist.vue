@@ -131,6 +131,30 @@
                     </el-dialog>
                 </el-upload>
             </el-form-item>
+            <el-form-item label="商品卖点图：" prop="explain_img_arr">
+                <el-upload
+                    action="/api/admin/fileupload/image"
+                    list-type="picture-card"
+                    :on-preview="$_onPreview"
+                    :on-success="$_success2"
+                    :on-error="$_error"
+                    :on-remove="$_remove2"
+                    :on-exceed="$_exceed"
+                    :before-upload="$_beforeUpload"
+                    :file-list="currentFormInfo.explain_img_arr"
+                    :limit="6"
+                    :multiple="true"
+                    :class="{canAdd__goodImg:canAdd__goodImg2}"
+                    >
+                    <i class="el-icon-plus upload-placeholder">
+                        <p>添加图片</p><span>还可以添加{{limitNumber2}}张</span>
+                    </i>
+
+                    <el-dialog :visible.sync="dialogVisible">
+                        <img width="100%" :src="dialogImageUrl" alt="">
+                    </el-dialog>
+                </el-upload>
+            </el-form-item>
             <el-form-item label="" prop="uploadArray">
                 <div class="upload-title">
                 展示在商品页顶部的视频，<a>最多可上传 1 个视频</a>，
@@ -194,7 +218,7 @@
         <!-- 添加标签弹框 End -->
 
         <!-- 添加规格弹框 -->
-        <Formate  @addFormat="$_addFormat" ref="formate" />
+        <Formate  @addFormat="$_addFormat" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
         <!-- 添加规格弹框  End-->
     </div>
 </template>
@@ -219,9 +243,11 @@ export default {
       tagListKey: String(new Date()),
       CATEGORYOPTIONS, // 所属行业分类
       canAdd__goodImg: false, // 是否可添加状态 __ 商品图片
+      canAdd__goodImg2: false, // 是否可添加状态 __ 商品图片
       dialogImageUrl: '',
       dialogVisible: false,
       limitNumber:6,
+      limitNumber2:6,
       currentFormInfo:{},
       rules: {
         good_name: [
@@ -259,7 +285,13 @@ export default {
         this.currentFormInfo = _.cloneDeep(newVal)
       },
       deep: true
-    }
+    },
+    // currentFormInfo: {
+    //   handler: function (newVal, oldVal) {
+    //     debugger
+    //   },
+    //   deep: true
+    // }
   },
 
   methods: {
@@ -339,12 +371,22 @@ export default {
         this.currentFormInfo.good_img_arr = fileList
     },
 
+    $_success2(response, file, fileList){
+        if(fileList.length >= 6){
+            this.canAdd__goodImg2 = true
+        }
+        this.limitNumber2 = 6 - (+fileList.length)
+        this.currentFormInfo.explain_img_arr = fileList
+    },
+
     $_success_uploadArray_content(res, file){
-        this.currentFormInfo.good_video = URL.createObjectURL(file.raw)
+        // this.currentFormInfo.good_video = URL.createObjectURL(file.raw)
+        this.currentFormInfo.good_video = file.response.data.file_name
     },
 
     $_success__good_video_pic(res, file){
-        this.currentFormInfo.good_video_pic = URL.createObjectURL(file.raw);
+        // this.currentFormInfo.good_video_pic = URL.createObjectURL(file.raw)
+        this.currentFormInfo.good_video_pic = file.response.data.file_name
     },
 
     $_success__table_ico_small(res, file, targe){
@@ -353,7 +395,8 @@ export default {
     },
 
     $_success__good_ico(res, file){
-        this.currentFormInfo.good_ico = URL.createObjectURL(file.raw);
+        // this.currentFormInfo.good_ico = URL.createObjectURL(file.raw);
+        this.currentFormInfo.good_ico = file.response.data.file_name
     },
     
     /** 
@@ -378,6 +421,11 @@ export default {
         this.limitNumber = 6 - (+fileList.length)
         this.canAdd__goodImg = false
         this.currentFormInfo.good_img_arr = fileList
+    },
+    $_remove2(file, fileList){
+        this.limitNumber2 = 6 - (+fileList.length)
+        this.canAdd__goodImg2 = false
+        this.currentFormInfo.explain_img_arr = fileList
     },
 
     /** *
@@ -418,8 +466,7 @@ export default {
      * @TODO 添加规格 currentFormInfo 应该是个数组
      */
     $_addFormat(goodSku) {
-      let goodSkuInfo = this.currentFormInfo.goodSkuInfo
-      goodSkuInfo = goodSku
+      this.currentFormInfo.goodSkuInfo = goodSku
       let sku_type_arr_key = goodSku[0].list
       let sku_type_arr_val = goodSku[1].list
       let good_sku_arr = []

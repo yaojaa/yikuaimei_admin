@@ -7,7 +7,7 @@
             <el-col :span="12">选项</el-col>
         </el-row>
         
-        <div v-for="(item,idx) in goodSkuInfo" :key="item.name">
+        <div v-for="(item,idx) in goodSkuInfo" :key="`${item.name}${idx}`">
             <el-row :gutter="20" v-if="idx===0">
                 <el-col :span="4">一组</el-col>
                 <el-col :span="4">   
@@ -15,7 +15,7 @@
                 </el-col>
                 <el-col :span="12"> 
                     <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list.length > 1"/>
-                    <el-tag v-for="(tag,index) in item.list"  :key="tag"
+                    <el-tag v-for="(tag,index) in item.list"  :key="index"
                       :disable-transitions="false"
                       :closable="true"
                       @close="$_deletedTag(item.list,tag)"
@@ -74,7 +74,16 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
+  props:{
+    goodSkuinfo:{
+      type:Array,
+      default:()=>[]
+    }
+  },
+
   data() {
     return {
       format_show: false,
@@ -82,17 +91,26 @@ export default {
       inputVisible1: false,
       goodSkuInfo: [
         {
-          name: "功效",
-          list: ["美白保湿", "美白保湿2"],
-          inputValue: ""
+            name: '',
+            list: [],
+            inputValue: ''
         },
         {
-          name: "容量",
-          list: ["25ml", "50ml", "100ml"],
-          inputValue: ""
+            name: '',
+            list: [],
+            inputValue: ''
         }
       ]
     };
+  },
+
+  watch: {
+    goodSkuinfo: {
+      handler: function (newVal, oldVal) {
+        this.goodSkuInfo = _.cloneDeep(newVal)
+      },
+      deep: true
+    }
   },
   
   methods: {

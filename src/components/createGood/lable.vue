@@ -81,7 +81,6 @@ export default {
   watch: {
     formInfo: {
       handler: function (newVal, oldVal) {
-        debugger
         this.tag_list = _.cloneDeep(newVal.tag_list)
       },
       deep: true
