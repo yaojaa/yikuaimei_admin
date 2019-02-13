@@ -9,13 +9,14 @@
                 <el-input type="textarea" v-model="currentFormInfo.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" /> 
             </el-form-item>
             <el-form-item label="行业分类：" prop="category_id">
-                <el-select v-model="currentFormInfo.category_id" placeholder="请选择所属行业分类">
-                    <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="item.category_name" />
-                </el-select>                         
+                <el-select v-model="currentFormInfo.category_id" placeholder="请选择所属行业分类" >
+                    <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="item.category_id" />
+                </el-select>                   
             </el-form-item>
-            <el-form-item label="标签：" prop="tag_list" >
-                <div class="el-input el-input--small el-input--suffix div__input"  @click="$_showLable">
-                    <el-tag v-for="item in currentFormInfo.tag_list" :key="item.tag_name">{{item.tag_name}}</el-tag>
+            <el-form-item label="标签：" prop="tag_list">
+                <div class="el-input el-input--small el-input--suffix div__input"  @click="$_showLable" :key="tagListKey">
+                    <el-tag v-for="item in currentFormInfo.tag_list" :key="item.tag_name">
+                        {{item.tag_name}}</el-tag>
                     <span class="el-input__suffix">
                         <span class="el-input__suffix-inner">
                             <i class="el-input__icon el-icon-arrow-right"></i>
@@ -32,15 +33,15 @@
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item v-if="goodSkuInfo.length">
+            <el-form-item v-if="currentFormInfo.goodSkuInfo && currentFormInfo.goodSkuInfo.length">
                 <el-row :gutter="20">
                     <el-col :span="4">名称:</el-col>
                     <el-col :span="12">选项: </el-col>
                 </el-row>
-                <el-row :gutter="20"  v-for="(item,idx) in goodSkuInfo" :key="item.name" class="goodSkuInfo_row">
+                <el-row :gutter="20"  v-for="(item,idx) in currentFormInfo.goodSkuInfo" :key="item.name" class="goodSkuInfo_row">
                     <el-col :span="4"><el-button plain>{{item.name}}</el-button></el-col>
                     <el-col :span="12"><el-button v-for="tag in item.list" :key="tag" plain>{{tag}}</el-button></el-col>
-                    <el-col :span="2"> <el-button v-if="idx === goodSkuInfo.length-1" click="$_edit" @click="showFormat()">编辑</el-button></el-col>
+                    <el-col :span="2"> <el-button v-if="idx === currentFormInfo.goodSkuInfo.length-1" click="$_edit" @click="showFormat()">编辑</el-button></el-col>
                 </el-row>
                 <el-table :data="currentFormInfo.good_sku" style="width: 100%" border :span-method="$_SpanMethod" class="table">
                     <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" />
@@ -189,7 +190,7 @@
         <!-- 表单list End -->
 
         <!-- 添加标签弹框 -->
-        <Lable ref="lable" @addLable="$_addLable"/>
+        <Lable ref="lable" @addLable="$_addLable" :tagList = "currentFormInfo.tag_list" />
         <!-- 添加标签弹框 End -->
 
         <!-- 添加规格弹框 -->
@@ -213,35 +214,15 @@ export default {
     Lable,
   },
 
-  props: ['oldFormInfo'],
-
   data() {
     return {
+      tagListKey: String(new Date()),
       CATEGORYOPTIONS, // 所属行业分类
       canAdd__goodImg: false, // 是否可添加状态 __ 商品图片
       dialogImageUrl: '',
       dialogVisible: false,
-//       currentFormInfo:{
-//         good_name: '' , // 商品名字
-//         good_explain: '' , // 商品卖点
-//         category_id: '' , // 行业id
-//         tag_id_arr: [], // 标签id数组
-//         tag_list: [], // 已选标签展示数据
-//         good_video: '', // 商品视频
-//         good_video_pic: '', // 商品视频封面图
-//         good_img_arr: [], // 商品图片数组
-//         good_ico: '', // 商品展示图
-//         unit: '', // 单位 例如盒，箱
-//         show_img_arr: [], // 详情页商品展示图数组       
-//         explain_img_arr : [],// 卖点图数组   
-//         sku_type_arr: [], // 规格数组，单规格商品不要提交该字段
-//         good_sku: [] , // 规格sku数组，单规格商品也要按该数组格式提交
-//         good_friends : [] // //服务添加耗材列表 不是服务不需要提交
-//       },
-
       limitNumber:6,
-      goodSkuInfo:[],
-
+      currentFormInfo:{},
       rules: {
         good_name: [
           { required: true, message: "请输入活动名称", trigger: "blur" },
@@ -269,35 +250,16 @@ export default {
   },
 
   computed: {
-    good_type(){
-        return this.$route.query.good_type
-    },
-
-    currentFormInfo(){
-        const obj = {
-            good_name: '' , // 商品名字
-            good_explain: '' , // 商品卖点
-            category_id: '' , // 行业id
-            tag_id_arr: [], // 标签id数组
-            tag_list: [], // 已选标签展示数据
-            good_video: '', // 商品视频
-            good_video_pic: '', // 商品视频封面图
-            good_img_arr: [], // 商品图片数组
-            good_ico: '', // 商品展示图
-            unit: '', // 单位 例如盒，箱
-            show_img_arr: [], // 详情页商品展示图数组       
-            explain_img_arr : [],// 卖点图数组   
-            sku_type_arr: [], // 规格数组，单规格商品不要提交该字段
-            good_sku: [] , // 规格sku数组，单规格商品也要按该数组格式提交
-            good_friends : [] // //服务添加耗材列表 不是服务不需要提交
-        }
-        return this.oldFormInfo || obj
-    }
+    ...mapState('createdGoode',['formInfo']),
   },
 
-  created() {
-      console.log(this.oldFormInfo)
-      console.log(this.currentFormInfo)
+  watch: {
+    formInfo: {
+      handler: function (newVal, oldVal) {
+        this.currentFormInfo = _.cloneDeep(newVal)
+      },
+      deep: true
+    }
   },
 
   methods: {
@@ -311,12 +273,12 @@ export default {
             return 
         }
         this.$store.dispatch('createdGoode/fetchLableList', {
-            tag_group_type: this.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+            tag_group_type: this.formInfo.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
             category_id: this.currentFormInfo.category_id || 1, // 行业id @TODO 默认是1 ，变量
             get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
         }).then(()=>{
-            this.$refs.lable.lable_show = true
             this.$refs.lable.initSons()
+            this.$refs.lable.lable_show = true
         })
     },
 
@@ -326,6 +288,7 @@ export default {
     $_addLable(tag_list){
         this.currentFormInfo.tag_list = tag_list, // 已选标签展示数据
         this.currentFormInfo.tag_id_arr = tag_list.map(item => item.tag_id) 
+        this.tagListKey = String(new Date())
     },
 
     /** 
@@ -454,10 +417,11 @@ export default {
     /** *
      * @TODO 添加规格 currentFormInfo 应该是个数组
      */
-    $_addFormat(goodSkuInfo) {
-      this.goodSkuInfo = goodSkuInfo
-      let sku_type_arr_key = goodSkuInfo[0].list
-      let sku_type_arr_val = goodSkuInfo[1].list
+    $_addFormat(goodSku) {
+      let goodSkuInfo = this.currentFormInfo.goodSkuInfo
+      goodSkuInfo = goodSku
+      let sku_type_arr_key = goodSku[0].list
+      let sku_type_arr_val = goodSku[1].list
       let good_sku_arr = []
       
       for(var i=0;i<sku_type_arr_key.length;i++){
@@ -466,7 +430,7 @@ export default {
         }
       }
 
-      this.currentFormInfo.sku_type_arr = goodSkuInfo.map(item=>item.name) // 规格数组，单规格商品不要提交该字段 
+      this.currentFormInfo.sku_type_arr = goodSku.map(item=>item.name) // 规格数组，单规格商品不要提交该字段 
       this.currentFormInfo.good_sku = good_sku_arr
     },
 

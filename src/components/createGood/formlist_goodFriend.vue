@@ -70,12 +70,24 @@
 </template>
 
 <script>
+/** 
+ * 耗材详情
+*/
 import { mapState } from "vuex";
 import { CATEGORYOPTIONS } from "../../constans/createdGood";
 import productCard from "@/components/createGood/product_card";
 
 export default {
   name: "createGood-goodFriend",
+
+  props:{
+    oldFormInfo: {
+        type: Object,
+        default: ()=> {
+            return {good_friends:[]}
+        }
+    }
+  },
 
   components: {
     productCard
@@ -86,15 +98,25 @@ export default {
         currentDate: new Date(),
         goodFriend_show: false, // 选择弹框状态
         goodFriendsList:[], // 详情数据展示
-        good_friends:[], // 已选耗材
         CATEGORYOPTIONS,
         defaultActive:'美容',
-        group_sku_id:[]
+        group_sku_id:[],
+        good_friends: [] // 已选耗材
     };
   },
 
   computed: {
-    ...mapState('createdGoode',['goodFriends']) // 可选标签数据
+    ...mapState('createdGoode',['formInfo','goodFriends']), // 可选标签数据
+  },
+
+  watch: {
+    'formInfo.good_friends': {
+      handler: function (newVal, oldVal) {
+        debugger
+        this.good_friends = _.cloneDeep(newVal.good_friends)
+      },
+      deep: true
+    }
   },
 
   methods: {

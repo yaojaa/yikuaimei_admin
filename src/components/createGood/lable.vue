@@ -54,20 +54,20 @@ import _ from 'lodash'
 export default {
   name: "createGood-lable",
 
-  components: {},
+  props:['tagList'],
 
   data() {
     return {
       lable_show: false,
-      good_category_sons:{},
-      tag_list: []
+      good_category_sons: {},
+      tag_list: this.tagList || []
     }
   },
 
 
   computed:{
 
-    ...mapState('createdGoode',['lableList']), // 可选标签数据
+    ...mapState('createdGoode',['lableList','formInfo']), // 可选标签数据
     
     defaultActive(){
       let data = this.lableList[0] || {}
@@ -75,7 +75,17 @@ export default {
         return ''
       }
       return data.tag_group_sons ? data.tag_group_sons[0].tag_group_name : data.tag_group_name
-    },
+    }
+  },
+
+  watch: {
+    formInfo: {
+      handler: function (newVal, oldVal) {
+        debugger
+        this.tag_list = _.cloneDeep(newVal.tag_list)
+      },
+      deep: true
+    }
   },
 
   watch: {
