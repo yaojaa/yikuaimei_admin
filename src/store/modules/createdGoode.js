@@ -117,7 +117,7 @@ export default {
         }, params) {
             return axios
                 .post('/api/admin/shopgoods/create', {
-                    params
+                    ...params
                 })
                 .then((res) => {
                     return res.data;
@@ -134,7 +134,7 @@ export default {
         }, params) {
             return axios
                 .post('/api/admin/shopgoods/modify', {
-                    params
+                    ...params
                 })
                 .then((res) => {
                     return res.data;
@@ -212,6 +212,7 @@ export default {
         },
 
         handleformInfo(state) {
+            console.log(1);
             state.formInfo.good_img_arr = state.formInfo.good_img_arr.map(item => item.response.data.file_name)
             state.formInfo.explain_img_arr = state.formInfo.explain_img_arr.map(item => item.response.data.file_name)
             state.formInfo.show_img_arr = state.formInfo.show_img_arr.map(item => item.response.data.file_name)

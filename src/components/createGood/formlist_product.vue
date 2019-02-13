@@ -91,7 +91,7 @@ export default {
       this.$refs.currentFormInfo.validate((valid) => {
         if (valid) {
             if(good_id === '0'){
-                this.$store.dispatch('createdGoode/..handleformInfo')
+                this.$store.commit('createdGoode/handleformInfo')
                 this.$store.dispatch('createdGoode/fetchFormInfoCreate',formInfo).then((res)=>{
                     if(res.code === 0){
                         this.$message.success(res.msg);
