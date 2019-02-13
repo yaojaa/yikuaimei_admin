@@ -39,13 +39,22 @@ export default {
                     result.id = result.good_id;
                     result.sellPrice = result.price_high;
                     result.price = result.price_low;
+
                     result.good_img_arr = result.good_img_arr.map((item, idx) => {
                         let obj = {};
                         obj.name = 'goodImgArr' + idx;
                         obj.url = item;
                         return obj;
                     });
+
                     result.show_img_arr = result.show_img_arr.map((item, idx) => {
+                        let obj = {};
+                        obj.name = 'goodImgArr' + idx;
+                        obj.url = item;
+                        return obj;
+                    });
+
+                    result.explain_img_arr = result.explain_img_arr.map((item, idx) => {
                         let obj = {};
                         obj.name = 'goodImgArr' + idx;
                         obj.url = item;

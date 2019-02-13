@@ -33,7 +33,7 @@
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item v-if="currentFormInfo.goodSkuInfo && currentFormInfo.goodSkuInfo.length">
+            <el-form-item v-if="goodSkuStatus">
                 <el-row :gutter="20">
                     <el-col :span="4">名称:</el-col>
                     <el-col :span="12">选项: </el-col>
@@ -249,6 +249,7 @@ export default {
       limitNumber:6,
       limitNumber2:6,
       currentFormInfo:{},
+      goodSkuStatus:false, // 展示规格状态
       rules: {
         good_name: [
           { required: true, message: "请输入活动名称", trigger: "blur" },
@@ -283,6 +284,10 @@ export default {
     formInfo: {
       handler: function (newVal, oldVal) {
         this.currentFormInfo = _.cloneDeep(newVal)
+        if(newVal.goodSkuInfo && newVal.goodSkuInfo.length){
+            this.goodSkuStatus = true
+            this.currentFormInfo.singleButton = "添加规格"
+        }
       },
       deep: true
     },
@@ -434,6 +439,23 @@ export default {
     $_showFormat() {
       if (this.currentFormInfo.singleButton === "添加规格") {
         this.showFormat()
+      }else{
+        // @TOdO 取消显示
+        this.currentFormInfo.goodSkuInfo = [
+            {
+                name: '',
+                list: [],
+                inputValue: ''
+            },
+            {
+                name: '',
+                list: [],
+                inputValue: ''
+            }
+        ]
+        this.currentFormInfo.sku_type_arr = []
+        this.currentFormInfo.good_sku = []
+        this.goodSkuStatus = false
       }
     },
     
@@ -479,6 +501,9 @@ export default {
 
       this.currentFormInfo.sku_type_arr = goodSku.map(item=>item.name) // 规格数组，单规格商品不要提交该字段 
       this.currentFormInfo.good_sku = good_sku_arr
+      if(this.currentFormInfo.goodSkuInfo && this.currentFormInfo.goodSkuInfo.length){
+        this.goodSkuStatus = true
+      }
     },
 
     /** *
