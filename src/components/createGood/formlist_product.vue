@@ -40,41 +40,43 @@
 </template>
 
 <script>
+/** 
+ * 商品详细信息
+*/
 import { mapState } from "vuex";
-import _ from 'lodash'
 
 export default {
   name: "createGood-formlist",
 
   data() {
     return {
-      currentFormInfo: {
-        show_img_arr:[
-            {
-                name: 'explain_img_arr0',
-                url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-            },
-            {
-                name: 'explain_img_arr1',
-                url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-            }
-        ] , // 商品展示图
-        good_notes: ''
-      },
       canAdd__goodImg: false,
       dialogImageUrl: '',
       dialogVisible: false,
       limitNumber:6,
-  
+      currentFormInfo:{
+        show_img_arr:[] , // 商品展示图
+        good_notes: ''
+      },
+
       rules: {
-        // show_img_arr: [{ required: true, message: "请选择商品展示图", trigger: "change" }], // @TODO limitNumber判断是为6
+        show_img_arr: [{ required: true, message: "请选择商品展示图", trigger: "change" }], // @TODO limitNumber判断是为6
         good_notes: [{ required: true, message: "请填写购买须知", trigger: "blur" }],
       }
     }
   },
 
   computed: {
-    ...mapState('createdGoode',['formInfo']) // 可选标签数据
+    ...mapState('createdGoode',['formInfo'])
+  },
+
+  watch: {
+    formInfo: {
+      handler: function (newVal, oldVal) {
+        this.currentFormInfo = _.cloneDeep(newVal)
+      },
+      deep: true
+    }
   },
 
   methods: {
@@ -82,39 +84,55 @@ export default {
      * 创建，调用创建接口
      */
     $_createProduct() {
+      this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
+      let {good_id,good_type} = this.$route.query
+      let formInfo = this.formInfo
       // @TODO 先做校验，校验成功在请求接口
       this.$refs.currentFormInfo.validate((valid) => {
         if (valid) {
-            this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
-            this.$store.dispatch('createdGoode/fetchFormInfoCreate',this.formInfo).then((res)=>{
-                if(res.code === 0){
-                    this.$message.success(res.msg);
-                    let good_type = this.$route.query.good_type
-                    debugger
-                    switch (good_type) {
-                        case '1':
-                            this.$router.push('/serviceList')
-                            break;
-                        case '2':
-                            this.$router.push('/goodList')
-                            break;
-                        case '3':
-                            this.$router.push('/purchaseList')
-                            break;
-                        case '4':
-                            this.$router.push('/fictitiousList')
-                            break;
-                    
-                        default:
-                            break;
+            if(good_id === '0'){
+                this.$store.dispatch('createdGoode/..handleformInfo')
+                this.$store.dispatch('createdGoode/fetchFormInfoCreate',formInfo).then((res)=>{
+                    if(res.code === 0){
+                        this.$message.success(res.msg);
+                        this.$_goOut(good_type)
+                    }else{
+                        this.$message.error(res.msg);
                     }
-                    
-                }else{
-                    this.$message.error(res.msg);
-                }
-            })
+                })
+            }else{
+                this.$store.dispatch('createdGoode/fetchFormInfoModify',formInfo).then((res)=>{
+                    if(res.code === 0){
+                        this.$message.success(res.msg);
+                        this.$_goOut(good_type)
+                    }else{
+                        this.$message.error(res.msg);
+                    }
+                })
+            }
+            
         }
       })
+    },
+
+    $_goOut(good_type){
+        switch (good_type) {
+            case '1':
+                this.$router.push('/serviceList')
+                break;
+            case '2':
+                this.$router.push('/goodList')
+                break;
+            case '3':
+                this.$router.push('/purchaseList')
+                break;
+            case '4':
+                this.$router.push('/fictitiousList')
+                break;
+        
+            default:
+                break;
+        }
     },
 
     /** *

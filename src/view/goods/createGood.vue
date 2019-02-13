@@ -13,14 +13,14 @@
           <template>
             <el-tabs v-model="editName">
               <el-tab-pane label="编辑基本信息" name="BasicInfo" class="panel" disabled>
-                <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
+                <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" />
               </el-tab-pane>
               <el-tab-pane label="添加耗材" name="addGoodFriend" class="panel" v-if="isGoodFriend" disabled>
                 <!-- v-if="服务才有，要判断type" -->
-                <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
+                <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" />
               </el-tab-pane>
               <el-tab-pane label="编辑商品详情" name="ProductDetails" class="panel" disabled>
-                <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre"/>
+                <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" />
               </el-tab-pane>
             </el-tabs>
           </template>          
@@ -29,9 +29,8 @@
 </template>
 
 <script>
-import { breadcrumb } from "../../constans/createdGood";
 import { mapState } from "vuex";
-
+import { breadcrumb } from "../../constans/createdGood";
 import BreadCrumb from "@/components/common/BreadCrumb";
 import FormlistItem from "@/components/createGood/formlist";
 import FormlistProduct from "@/components/createGood/formlist_product";
@@ -49,13 +48,19 @@ export default {
   data() {
     return {
       breadcrumb, //面包屑
-      editName: "BasicInfo", // tab标签默认定位
+      editName: "BasicInfo" // tab标签默认定位
     };
   },
 
   computed: {
+    ...mapState('createdGoode',['formInfo']),
+
     good_type(){
       return this.$route.query.good_type
+    },
+
+    good_id(){
+      return this.$route.query.good_id
     },
 
     /** 
@@ -69,10 +74,10 @@ export default {
   created() {
     const id = this.$route.query.good_id
     this.$store.commit('createdGoode/initFormInfo')  // 每次进页面初始化信息
-    this.$store.commit('createdGoode/setFormInfo',{good_type:this.good_type})
+    this.$store.commit('createdGoode/setFormInfo',{good_type:this.good_type,good_id:this.good_id})
 
     // 编辑项目 good_id存在或不等于0 则当前是编辑页面
-    if(+id){ 
+    if(+id){
       this.$store.dispatch('createdGoode/fetchFormInfo', {
         id, // 商品的good_id字段 @TODO
       })
