@@ -78,7 +78,7 @@
                                 :before-upload="$_beforeUpload"
                                 :on-success="(res,file)=>{return $_success__table_ico_small(res,file,scope.row)}"
                                 >
-                                <img v-if="scope.row.ico_small" :src="scope.row.ico_small" class="avatar">
+                                <img v-if="scope.row.ico_small" :src="scope.row.ico_small__url" class="avatar">
                                 <span class="table_icon_text" v-else><i class="el-icon-plus" />添加商品图片</span>
                             </el-upload>
                         </template> 
@@ -168,8 +168,9 @@
                         :on-success="$_success_uploadArray_content"
                         :on-error="$_error"
                         :before-upload="$_beforeUpload_uploadArray_content"
+                        :key="good_video__Key"
                         >
-                        <img v-if="currentFormInfo.good_video" :src="currentFormInfo.good_video" class="avatar">
+                        <video v-if="currentFormInfo.good_video__url" :src="currentFormInfo.good_video__url" class="avatar" controls="controls">您的浏览器不支持视频播放</video>
                         <i v-else class="el-icon-plus avatar-uploader-icon">
                             <p>添加视频</p>
                         </i>
@@ -181,8 +182,9 @@
                         :on-success="$_success__good_video_pic"
                         :on-error="$_error"
                         :before-upload="$_beforeUpload"
+                        :key="good_video_pic__Key"
                         >
-                        <img v-if="currentFormInfo.good_video_pic" :src="currentFormInfo.good_video_pic" class="avatar">
+                        <img v-if="currentFormInfo.good_video_pic__url" :src="currentFormInfo.good_video_pic__url" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
                             <p>添加视频首图</p>
                         </i>
@@ -200,8 +202,9 @@
                 :on-success="$_success__good_ico"
                 :on-error="$_error"
                 :before-upload="$_beforeUpload"
+                :key="good_ico__Key"
                 >
-                <img v-if="currentFormInfo.good_ico" :src="currentFormInfo.good_ico" class="avatar">
+                <img v-if="currentFormInfo.good_ico__url" :src="currentFormInfo.good_ico__url" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
                     <p>添加图片</p><span>只能上传一张</span>
                 </i>
@@ -240,7 +243,10 @@ export default {
 
   data() {
     return {
-      tagListKey: String(new Date()),
+      good_ico__Key: String(new Date() + 1) ,
+      good_video_pic__Key: String(new Date() + 2),
+      good_video__Key: String(new Date() + 3),
+      tagListKey: String(new Date() + 4),
       CATEGORYOPTIONS, // 所属行业分类
       canAdd__goodImg: false, // 是否可添加状态 __ 商品图片
       canAdd__goodImg2: false, // 是否可添加状态 __ 商品图片
@@ -385,23 +391,27 @@ export default {
     },
 
     $_success_uploadArray_content(res, file){
-        // this.currentFormInfo.good_video = URL.createObjectURL(file.raw)
+        this.currentFormInfo.good_video__url = file.response.data.url
         this.currentFormInfo.good_video = file.response.data.file_name
+        this.good_video__Key = String(new Date())
     },
 
     $_success__good_video_pic(res, file){
-        // this.currentFormInfo.good_video_pic = URL.createObjectURL(file.raw)
+        this.currentFormInfo.good_video_pic__url = URL.createObjectURL(file.raw)
         this.currentFormInfo.good_video_pic = file.response.data.file_name
+        this.good_video_pic__Key = String(new Date())        
     },
 
     $_success__table_ico_small(res, file, targe){
         targe.iconStatus = true
-        targe.ico_small = file.url
+        targe.ico_small = file.response.data.file_name
+        targe.ico_small__url = file.url
     },
 
     $_success__good_ico(res, file){
-        // this.currentFormInfo.good_ico = URL.createObjectURL(file.raw);
+        this.currentFormInfo.good_ico__url = URL.createObjectURL(file.raw);
         this.currentFormInfo.good_ico = file.response.data.file_name
+        this.good_ico__Key = String(new Date())        
     },
     
     /** 
@@ -495,7 +505,7 @@ export default {
       
       for(var i=0;i<sku_type_arr_key.length;i++){
         for(var j=0;j<sku_type_arr_val.length;j++){
-          good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]],sku_code:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: ''})
+          good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]],sku_code:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
         }
       }
 

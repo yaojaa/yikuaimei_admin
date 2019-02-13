@@ -37,8 +37,8 @@ export default {
                     let result = res.data.data;
                     result.productCode = result.productCode ? result.productCode : result._id;
                     result.id = result.good_id;
-                    result.sellPrice = result.price_high;
-                    result.price = result.price_low;
+                    result.sellPrice = (+result.price_high) / 100;
+                    result.price = (+result.price_low) / 100;
 
                     result.good_img_arr = result.good_img_arr.map((item, idx) => {
                         let obj = {};
@@ -60,7 +60,17 @@ export default {
                         obj.url = item;
                         return obj;
                     });
-                    result.good_sku = result.sku_list;
+                    result.good_sku = result.sku_list.map(item => {
+                        item.ico_small__url = item.ico_small
+                        item.price_cost = (+item.price_cost) / 100
+                        item.price = (+item.price) / 100
+                        item.price_sale = (+item.price_sale) / 100
+                        return item
+                    });
+                    result.good_video_pic__url = result.good_video_pic
+                    result.good_ico__url = result.good_ico
+                    result.good_video__url = result.good_video
+
                     result.goodSkuInfo = [];
                     let sku_list = _.cloneDeep(result.sku_list) || [];
                     if (sku_list.length) {
@@ -218,13 +228,6 @@ export default {
 
         setLableList(state, data) {
             state.lableList = data;
-        },
-
-        handleformInfo(state) {
-            console.log(1);
-            state.formInfo.good_img_arr = state.formInfo.good_img_arr.map(item => item.response.data.file_name)
-            state.formInfo.explain_img_arr = state.formInfo.explain_img_arr.map(item => item.response.data.file_name)
-            state.formInfo.show_img_arr = state.formInfo.show_img_arr.map(item => item.response.data.file_name)
         },
 
         setGoodFriends(state, {

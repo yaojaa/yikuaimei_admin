@@ -60,7 +60,7 @@ export default {
     return {
       lable_show: false,
       good_category_sons: {},
-      tag_list: this.tagList || []
+      tag_list: []
     }
   },
 
@@ -79,18 +79,16 @@ export default {
   },
 
   watch: {
-    formInfo: {
+    tagList: {
       handler: function (newVal, oldVal) {
-        this.tag_list = _.cloneDeep(newVal.tag_list)
+        this.tag_list = _.cloneDeep(newVal)
       },
       deep: true
-    }
-  },
-
-  watch: {
+    },
     lableList(val) {
       this.initSons()
     }
+    
   },
 
   methods: {

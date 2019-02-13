@@ -91,8 +91,18 @@ export default {
       this.$refs.currentFormInfo.validate((valid) => {
         if (valid) {
             if(good_id === '0'){
-                this.$store.commit('createdGoode/handleformInfo')
-                this.$store.dispatch('createdGoode/fetchFormInfoCreate',formInfo).then((res)=>{
+                let params = _.cloneDeep(formInfo)
+                params.good_img_arr = params.good_img_arr.map(item => item.response.data.file_name)
+                params.explain_img_arr = params.explain_img_arr.map(item => item.response.data.file_name)
+                params.show_img_arr = params.show_img_arr.map(item => item.response.data.file_name)
+                params.price = (+params.price)*100
+                params.sellPrice = (+params.sellPrice)*100
+                params.good_sku = params.good_sku.map(item=>{
+                    item.price_cost = (+item.price_cost)*100
+                    item.price = (+item.price)*100
+                    item.price_sale = (+item.price_sale)*100
+                })
+                this.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
                     if(res.code === 0){
                         this.$message.success(res.msg);
                         this.$_goOut(good_type)
@@ -101,7 +111,22 @@ export default {
                     }
                 })
             }else{
-                this.$store.dispatch('createdGoode/fetchFormInfoModify',formInfo).then((res)=>{
+                let params = _.cloneDeep(formInfo)
+                params.good_img_arr = params.good_img_arr.map(item => item.url)
+                params.show_img_arr = params.show_img_arr.map(item => item.url)
+                params.explain_img_arr = params.explain_img_arr.map(item => item.url)
+
+                params.sellPrice = params.sellPrice * 100
+                params.price = params.price * 100
+
+                params.good_sku = params.good_sku.map(item=>{
+                    item.price_cost = (+item.price_cost)*100
+                    item.price = (+item.price)*100
+                    item.price_sale = (+item.price_sale)*100
+                    return item
+                })
+                    
+                this.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
                     if(res.code === 0){
                         this.$message.success(res.msg);
                         this.$_goOut(good_type)
