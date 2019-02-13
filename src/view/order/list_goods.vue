@@ -63,21 +63,23 @@
                         {
                             "type": "input-text",  //输入文本
                             "label": "用户名",
-                            "name": "user_name",
+                            "name": "order_user_name",
+
                             "value": "",
                             "placeholder": "用户名",
                         },
                         {
                             "type": "input-text",  //输入文本
                             "label": "手机号",
-                            "name": "phone",
+                            "name": "order_user_phone",
+
                             "value": "",
                             "placeholder": "",
                         },
                         {
                             "type": "input-text",  //选择器
                             "label": "订单号",
-                            "name": "order_number",
+                            "name": "order_code",
                             "value": ""
                             
                         },
@@ -104,10 +106,17 @@
                             "align": "center",
                             "label": "商品名称",
                             "prop": "business_ctime",
-                            "width": "",
+                            "width": "300",
                              formatter(row) {
-                                let str = "<div style='display:flex; background-color#fff;'>";
-                                str += "<div style='width:80px;height:80px;padding:8px; flex-shrink:0;'><img style='width:100%; height:100%;' src='/static/img/img.jpg'></div>";
+                                let str = '';
+                                row.goods_list.forEach(item=>{
+                                   str += '<div class="flex_box"><div class="flex_item">'
+                                   +'<img width="30" height="30" src="'+item.goods_img+'"/></div>'
+                                   +'<div class="flex_item">'+item.goods_name +'</div>'
+                                   +'<div class="flex_item">'+
+                                    '¥'+item.goods_price + '✖️ '+item.goods_num
+                                    +'</div></div>'
+                                })
                                 
                                 str += "</div>";
                                 return str;
@@ -124,55 +133,54 @@
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "姓名",
+                            "label": "用户/手机号",
                             "prop": "order_user_name",
                             "width": "",
+                            formatter(row) {
+                              let str = row.order_user_name +'<br/>' +row.order_user_phone;
+                              return str;
+                            }
                             
                         },
                           {
                             "type": "text",
                             "align": "center",
-                            "label": "电话",
-                            "prop": "business_phone",
+                            "label": "实付金额",
+                            "prop": "order_price",
                             "width": "",
                             
                         },
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "类别",
-                            "prop": "category_id",
-                            "width": "",
+                            "label": "订单状态",
+                            "prop": "order_status_name",
+                            "width": ""
                             
                         },
                         {
                             "type": "text",
-                            "align": "center",
-                            "label": "城市",
-                            "prop": "date",
-                            "width": "",
-                            
-                        },
-                         {
-                            "type": "text",
-                            "align": "center",
-                            "label": "状态",
-                            "prop": "date",
-                            "width": "",
-                            
-                        },
-                        {
-                            "type": "handle",
                             "label":"操作",
                             "align": "center",
                             "width": "200",
-                            "list": [
-                                {
-                                    "label":"查看详情",
-                                    "url":"/order/order_detail",
-                                    "query":"order_code"
-                                }
-                            ]
+                            formatter:function(row){
+
+                                var str = '<div style="text-align:right">'
+                                if(row.order_status ==1){
+
+ str +='<a href="/order/send_goods/'+row.order_code+'" class="el-button reset el-button--default el-button--small" >去发货</a>'
+}
+
+                                str +='<a href="/order/order_detail/'+row.order_code+'" class="el-button reset el-button--default el-button--small is-plain" >详情</a>'
+
+                                str += '</div>'
+
+                                return str
+                                
+
+
+                            }
+                           
                         }
                     ],
                 }

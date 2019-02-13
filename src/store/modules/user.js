@@ -1,8 +1,10 @@
 import Vue from 'vue'
 
 function setHeaders(state) {
-  console.log('设置请求header信息')
   Vue.prototype.$axios.defaults.headers = Object.assign(Vue.prototype.$axios.defaults.headers, state);
+
+  console.log('设置请求header信息',Vue.prototype.$axios.defaults.headers)
+
 }
 export default {
   state: {

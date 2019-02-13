@@ -175,6 +175,46 @@ export default new Router({
                     }
                 },
 
+                 {
+                    // 服务订单
+                    path: '/order/list_service',
+                    component: resolve => require(['../view/service/list_service.vue'], resolve),
+                    meta: {
+                        title: '服务订单',
+                        permission: true
+                    }
+                },
+
+                   {
+                    // 服务订单详情
+                    path: '/order/service_detail/:order_code',
+                    component: resolve => require(['../view/service/detail.vue'], resolve),
+                    meta: {
+                        title: '服务订单详情',
+                        permission: true
+                    }
+                },
+
+                 {
+                    // 品项管理
+                    path: '/order/product_phase',
+                    component: resolve => require(['../view/product_phase/list.vue'], resolve),
+                    meta: {
+                        title: '品项管理',
+                        permission: true
+                    }
+                },
+
+                {
+                    // 品项管理详情
+                    path: '/order/product_phase/:purchase_id',
+                    component: resolve => require(['../view/product_phase/detail.vue'], resolve),
+                    meta: {
+                        title: '品项管理',
+                        permission: true
+                    }
+                },
+
                 {
                     // 案例页面
                     path: '/case/add',
