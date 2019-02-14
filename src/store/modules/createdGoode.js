@@ -60,7 +60,8 @@ export default {
                         obj.url = item;
                         return obj;
                     });
-                    result.good_sku = result.sku_list.map(item => {
+                    let good_sku_list = result.sku_list || []
+                    result.good_sku = good_sku_list.map(item => {
                         item.ico_small__url = item.ico_small
                         item.price_cost = (+item.price_cost) / 100
                         item.price = (+item.price) / 100

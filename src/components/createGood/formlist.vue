@@ -10,12 +10,12 @@
             </el-form-item>
             <el-form-item label="行业分类：" prop="category_id">
                 <el-select v-model="currentFormInfo.category_id" placeholder="请选择所属行业分类" >
-                    <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="item.category_id" />
+                    <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="`${item.category_id}category_id`" />
                 </el-select>                   
             </el-form-item>
             <el-form-item label="标签：" prop="tag_list">
-                <div class="el-input el-input--small el-input--suffix div__input"  @click="$_showLable" :key="tagListKey">
-                    <el-tag v-for="item in currentFormInfo.tag_list" :key="item.tag_name">
+                <div class="el-input el-input--small el-input--suffix div__input"  @click="$_showLable" :key="tagList__key">
+                    <el-tag v-for="item in currentFormInfo.tag_list" :key="`${item.tag_name}`">
                         {{item.tag_name}}</el-tag>
                     <span class="el-input__suffix">
                         <span class="el-input__suffix-inner">
@@ -38,9 +38,9 @@
                     <el-col :span="4">名称:</el-col>
                     <el-col :span="12">选项: </el-col>
                 </el-row>
-                <el-row :gutter="20"  v-for="(item,idx) in currentFormInfo.goodSkuInfo" :key="item.name" class="goodSkuInfo_row">
+                <el-row :gutter="20"  v-for="(item,idx) in currentFormInfo.goodSkuInfo" :key="`${item.name}${idx}`" class="goodSkuInfo_row">
                     <el-col :span="4"><el-button plain>{{item.name}}</el-button></el-col>
-                    <el-col :span="12"><el-button v-for="tag in item.list" :key="tag" plain>{{tag}}</el-button></el-col>
+                    <el-col :span="12"><el-button v-for="tag in item.list" :key="`${tag}tag`" plain>{{tag}}</el-button></el-col>
                     <el-col :span="2"> <el-button v-if="idx === currentFormInfo.goodSkuInfo.length-1" click="$_edit" @click="showFormat()">编辑</el-button></el-col>
                 </el-row>
                 <el-table :data="currentFormInfo.good_sku" style="width: 100%" border :span-method="$_SpanMethod" class="table">
@@ -246,7 +246,7 @@ export default {
       good_ico__Key: String(new Date() + 1) ,
       good_video_pic__Key: String(new Date() + 2),
       good_video__Key: String(new Date() + 3),
-      tagListKey: String(new Date() + 4),
+      tagList__key: String(new Date() + 4),
       CATEGORYOPTIONS, // 所属行业分类
       canAdd__goodImg: false, // 是否可添加状态 __ 商品图片
       canAdd__goodImg2: false, // 是否可添加状态 __ 商品图片
@@ -296,13 +296,7 @@ export default {
         }
       },
       deep: true
-    },
-    // currentFormInfo: {
-    //   handler: function (newVal, oldVal) {
-    //     debugger
-    //   },
-    //   deep: true
-    // }
+    }
   },
 
   methods: {
@@ -331,7 +325,7 @@ export default {
     $_addLable(tag_list){
         this.currentFormInfo.tag_list = tag_list, // 已选标签展示数据
         this.currentFormInfo.tag_id_arr = tag_list.map(item => item.tag_id) 
-        this.tagListKey = String(new Date())
+        this.tagList__key = String(new Date()+14)
     },
 
     /** 
@@ -393,13 +387,13 @@ export default {
     $_success_uploadArray_content(res, file){
         this.currentFormInfo.good_video__url = file.response.data.url
         this.currentFormInfo.good_video = file.response.data.file_name
-        this.good_video__Key = String(new Date())
+        this.good_video__Key = String(new Date()+11)
     },
 
     $_success__good_video_pic(res, file){
         this.currentFormInfo.good_video_pic__url = URL.createObjectURL(file.raw)
         this.currentFormInfo.good_video_pic = file.response.data.file_name
-        this.good_video_pic__Key = String(new Date())        
+        this.good_video_pic__Key = String(new Date()+12)        
     },
 
     $_success__table_ico_small(res, file, targe){
@@ -411,7 +405,7 @@ export default {
     $_success__good_ico(res, file){
         this.currentFormInfo.good_ico__url = URL.createObjectURL(file.raw);
         this.currentFormInfo.good_ico = file.response.data.file_name
-        this.good_ico__Key = String(new Date())        
+        this.good_ico__Key = String(new Date()+13)        
     },
     
     /** 

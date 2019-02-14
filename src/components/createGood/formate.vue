@@ -14,7 +14,7 @@
                     <el-input v-model="item.name" placeholder="请输入名称"/>                        
                 </el-col>
                 <el-col :span="12"> 
-                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list.length > 1"/>
+                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list && item.list.length > 1"/>
                     <el-tag v-for="(tag,index) in item.list"  :key="index"
                       :disable-transitions="false"
                       :closable="true"
@@ -42,7 +42,7 @@
                     <el-input v-model="item.name" placeholder="请输入名称"/>                        
                 </el-col>
                 <el-col :span="12"> 
-                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list.length > 1"/>
+                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list && item.list.length > 1"/>
                     <el-tag v-for="(tag,index) in item.list"  :key="tag"
                       :disable-transitions="false"
                       :closable="true"
@@ -80,7 +80,16 @@ export default {
   props:{
     goodSkuinfo:{
       type:Array,
-      default:()=>[]
+      default:()=>[{
+            name: '',
+            list: [],
+            inputValue: ''
+        },
+        {
+            name: '',
+            list: [],
+            inputValue: ''
+        }]
     }
   },
 

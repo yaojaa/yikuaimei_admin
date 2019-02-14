@@ -3,7 +3,7 @@
         <div class="goodFriend_header">
             <el-button  type="primary" @click="$_showgoodFriend" plain>选择耗材</el-button>
         </div>
-
+{{good_friends}}
         <el-table
             :data="good_friends"
             style="width: 100%" v-if="good_friends.length">
@@ -17,9 +17,13 @@
             <el-table-column
                 label="规格">
                 <template slot-scope="scope">
-                    <el-checkbox-group v-model="group_sku_id" size="small">
-                        <el-checkbox :label="item.sku_str" v-for="item in scope.row.sku_id" :key="item.sku_str" border></el-checkbox>
-                    </el-checkbox-group>
+                    <!-- <el-checkbox-group v-model="scope.row.good_id" size="small">
+                        <el-checkbox :label="item.sku_str" v-for="item in scope.row.sku_id" :key="`${item.sku_str}${scope.row.good_id}`" border></el-checkbox>
+                    </el-checkbox-group> -->
+                    <!-- <el-checkbox-group > -->
+                        <el-checkbox v-model="scope.row.sku_id" size="small" :label="item.sku_str" v-for="item in scope.row.sku_id" :key="`${item.sku_str}${scope.row.sku_id}`" border></el-checkbox>
+                    <!-- </el-checkbox-group> -->
+
                 </template>
             </el-table-column>
         </el-table>
@@ -30,16 +34,16 @@
                 <productCard 
                     @deleteTag="$_deleteTag(idx)" 
                     :closeble="true" 
-                    v-for="(item,idx) in good_friends" 
-                    :key="item.good_id" 
+                    v-for="(item,idx) in good_friendsDialog" 
+                    :key="`${item.good_name}good_friendsDialog`" 
                     :goodName="item.good_name" 
                     :price="item.price_low"
                     />
-                <span v-if="!good_friends.length">还没有选择任何耗材</span>
+                <span v-if="!good_friendsDialog.length">还没有选择任何耗材</span>
             </div>
             <el-row>
                 <el-col :span="3"> 
-                    <el-menu class="el-menu-vertical-demo" :default-active="defaultActive" v-for="item in CATEGORYOPTIONS" :key="item.category_name" @select="computedRightData(item.category_id,item.category_name)" >
+                    <el-menu class="el-menu-vertical-demo" :default-active="defaultActive" v-for="item in CATEGORYOPTIONS" :key="`${item.category_name}category_name`" @select="computedRightData(item.category_id,item.category_name)" >
                         <el-menu-item :index="item.category_name">
                             <span slot="title"> {{item.category_name}} </span>
                         </el-menu-item>
@@ -50,7 +54,7 @@
                         :goodName="list.good_name" 
                         :price="list.price_low"
                         v-for="list in goodFriendsList" 
-                        :key="list.good_id"
+                        :key="`${list.good_name}goodFriendsList`"
                         :class="{productCard__disable: isDisable(list.good_id) }" 
                         @click="$_addGoodFriend(list)"
                     />
@@ -62,7 +66,7 @@
             </div>
         </el-dialog>
 
-        <div class="footer"  v-if="good_friends.length">
+        <div class="footer">
             <el-button type="primary" @click="$_changeTabPre">上一步</el-button>    
             <el-button type="primary" @click="$_changeTabNext">下一步</el-button>    
         </div>
@@ -80,15 +84,6 @@ import productCard from "@/components/createGood/product_card";
 export default {
   name: "createGood-goodFriend",
 
-  props:{
-    oldFormInfo: {
-        type: Object,
-        default: ()=> {
-            return {good_friends:[]}
-        }
-    }
-  },
-
   components: {
     productCard
   },
@@ -101,7 +96,8 @@ export default {
         CATEGORYOPTIONS,
         defaultActive:'美容',
         group_sku_id:[],
-        good_friends: [] // 已选耗材
+        good_friends: [], // 已选耗材
+        good_friendsDialog:[]
     };
   },
 
@@ -110,7 +106,7 @@ export default {
   },
 
   watch: {
-    'formInfo.good_friends': {
+    formInfo: {
       handler: function (newVal, oldVal) {
         this.good_friends = _.cloneDeep(newVal.good_friends)
       },
@@ -124,6 +120,7 @@ export default {
       */
      $_showgoodFriend(){
         this.computedRightData(1,this.defaultActive)
+        this.good_friendsDialog = _.cloneDeep(this.good_friends)
         this.goodFriend_show = true
      },
 
@@ -131,7 +128,7 @@ export default {
       * 已选标签不可点选
      */
     isDisable(good_id){
-        let findObj = this.good_friends.filter(item => item.good_id === good_id)
+        let findObj = this.good_friendsDialog.filter(item => item.good_id === good_id)
         if(findObj.length > 0){
             return true
         }else{
@@ -152,7 +149,7 @@ export default {
                 price_low: goodFriendsInfo.price_low , // 耗材价格区间低
                 price_high: goodFriendsInfo.price_high // 耗材价格区间高
             }
-            this.good_friends.push(obj)
+            this.good_friendsDialog.push(obj)
         }
     },
 
@@ -160,7 +157,7 @@ export default {
      * 确定添加按钮
     */
     $_confirmAdd(){
-        this.$store.commit('createdGoode/setFormInfo',{good_friends:this.good_friends})
+        this.good_friends = _.cloneDeep(this.good_friendsDialog)
         this.goodFriend_show = false
     },
 
@@ -168,18 +165,19 @@ export default {
      * 删除标签
     */
     $_deleteTag(idx){
-        this.good_friends.splice(idx,1)
+        this.good_friendsDialog.splice(idx,1)
     },
 
     /** *
      * 切换tab
      */
     $_changeTabNext() {
-      this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
-      this.$emit("changeTabNext");
+      if(!good_friends.length){
+        this.$emit("changeTabNext");
+      }
+      this.$store.commit('createdGoode/setFormInfo',{good_friends:this.good_friends})
     },
     $_changeTabPre() {
-      this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
       this.$emit("changeTabPre");
     },
 
