@@ -110,7 +110,7 @@
                         name: "商品管理"
                     },
                     {
-                        name: "门店服务",
+                        name: "品项管理",
                         url: "/serviceList"
                     }
                 ],
