@@ -3,7 +3,6 @@
         <div class="goodFriend_header">
             <el-button  type="primary" @click="$_showgoodFriend" plain>选择耗材</el-button>
         </div>
-{{good_friends}}
         <el-table
             :data="good_friends"
             style="width: 100%" v-if="good_friends.length">
@@ -17,13 +16,9 @@
             <el-table-column
                 label="规格">
                 <template slot-scope="scope">
-                    <!-- <el-checkbox-group v-model="scope.row.good_id" size="small">
+                    <el-checkbox-group v-model="scope.row.group_sku_id" size="small">
                         <el-checkbox :label="item.sku_str" v-for="item in scope.row.sku_id" :key="`${item.sku_str}${scope.row.good_id}`" border></el-checkbox>
-                    </el-checkbox-group> -->
-                    <!-- <el-checkbox-group > -->
-                        <el-checkbox v-model="scope.row.sku_id" size="small" :label="item.sku_str" v-for="item in scope.row.sku_id" :key="`${item.sku_str}${scope.row.sku_id}`" border></el-checkbox>
-                    <!-- </el-checkbox-group> -->
-
+                    </el-checkbox-group>
                 </template>
             </el-table-column>
         </el-table>
@@ -147,7 +142,8 @@ export default {
                 good_name: goodFriendsInfo.good_name , // 耗材名字
                 good_ico: goodFriendsInfo.good_ico , //耗材图标
                 price_low: goodFriendsInfo.price_low , // 耗材价格区间低
-                price_high: goodFriendsInfo.price_high // 耗材价格区间高
+                price_high: goodFriendsInfo.price_high, // 耗材价格区间高
+                group_sku_id:[]
             }
             this.good_friendsDialog.push(obj)
         }

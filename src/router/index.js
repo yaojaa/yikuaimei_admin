@@ -57,23 +57,22 @@ export default new Router({
                         title: '虚拟卡券管理'
                     }
                 },
-                {
-                    // 分类管理
-                    path: '/categorylist',
-                    component: resolve => require(['../view/goods/categorylist.vue'], resolve),
-                    meta: {
-                        title: '分类管理'
-                    }
-                },
-                {
-                    // 添加分类
-                    path: '/createCategory',
-                    component: resolve => require(['../view/goods/createCategory.vue'], resolve),
-                    meta: {
-                        title: '添加分类'
-                    }
-                },
-
+                // {
+                //     // 分类管理
+                //     path: '/categorylist',
+                //     component: resolve => require(['../view/goods/categorylist.vue'], resolve),
+                //     meta: {
+                //         title: '分类管理'
+                //     }
+                // },
+                // {
+                //     // 添加分类
+                //     path: '/createCategory',
+                //     component: resolve => require(['../view/goods/createCategory.vue'], resolve),
+                //     meta: {
+                //         title: '添加分类'
+                //     }
+                // },
                 {
                     // 订单管理
                     path: '/order/list_goods',
@@ -165,17 +164,54 @@ export default new Router({
                         permission: true
                     }
                 },
+                // 网站管理
                 {
                     // 案例页面
-                    path: '/case',
+                    path: '/manage/case',
                     component: resolve => require(['../view/case/caseList.vue'], resolve),
                     meta: {
                         title: '案例列表',
                         permission: true
                     }
                 },
-
-                 {
+                {
+                    // 案例添加
+                    path: '/manage/case/add',
+                    component: resolve => require(['../view/case/case_add.vue'], resolve),
+                    meta: {
+                        title: '添加案例',
+                        permission: true
+                    }
+                },
+                {
+                    // 案例编辑
+                    path: '/manage/case/add/:id',
+                    component: resolve => require(['../view/case/case_add.vue'], resolve),
+                    meta: { title: '编辑案例', permission: true }
+                },
+                {
+                    // 案例详情
+                    path: '/manage/case/:id',
+                    component: resolve => require(['../view/case/case_detail.vue'], resolve),
+                    meta: { title: '案例详情', permission: true }
+                },
+                {
+                    // 标签管理
+                    path: '/manage/label',
+                    component: resolve => require(['../view/label/labelList.vue'], resolve),
+                    meta: {
+                        title: '标签管理'
+                    }
+                },
+                // {
+                //     // 添加分类
+                //     path: '/manage/createLabel',
+                //     component: resolve => require(['../view/label/createLabel.vue'], resolve),
+                //     meta: {
+                //         title: '添加标签'
+                //     }
+                // },
+                {
                     // 服务订单
                     path: '/order/list_service',
                     component: resolve => require(['../view/service/list_service.vue'], resolve),
@@ -213,28 +249,6 @@ export default new Router({
                         title: '品项管理',
                         permission: true
                     }
-                },
-
-                {
-                    // 案例页面
-                    path: '/case/add',
-                    component: resolve => require(['../view/case/case_add.vue'], resolve),
-                    meta: {
-                        title: '添加案例',
-                        permission: true
-                    }
-                },
-                  {
-                    // 案例页面
-                    path: '/case/add/:id',
-                    component: resolve => require(['../view/case/case_add.vue'], resolve),
-                    meta: { title: '编辑案例', permission: true }
-                },
-                  {
-                    // 案例页面
-                    path: '/case/:id',
-                    component: resolve => require(['../view/case/case_detail.vue'], resolve),
-                    meta: { title: '案例详情', permission: true }
                 },
                 {
                     // 权限页面
