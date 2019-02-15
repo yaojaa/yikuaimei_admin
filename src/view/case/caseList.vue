@@ -11,7 +11,7 @@
         <ul>
             <li class="tags-li" >
                   {{key}} 
-<router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/case', query: {
+<router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/manage/case', query: {
 [tag.key]: tag.value }}">
 {{tag.title}}</router-link>
  
@@ -115,7 +115,7 @@
                                     "label":"详情",
                                     "type":"detail",
                                     onClick(tablePage, self, row){
-                                        self.$router.push("/case/"+row.cases_id)
+                                        self.$router.push("/manage/case/"+row.cases_id)
                                     }
 
                                 },
@@ -123,7 +123,7 @@
                                     "label":"修改",
                                     "type":"edit",
                                      onClick(tablePage, self, row){
-                                        self.$router.push("/case/add/"+row.cases_id)
+                                        self.$router.push("/manage/case/add/"+row.cases_id)
                                     }
                                     
 

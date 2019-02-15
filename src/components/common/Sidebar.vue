@@ -86,9 +86,21 @@
                     },
                     {
                         icon: 'iconfont icon-kefu',
-                        index: '/case',
-                        title: '案例'
+                        index: '/manage',
+                        title: '网站管理',
+                        subs: [
+                            {
+                                index: '/manage/case',
+                                title: '案例管理'
+                            },
+                            {
+                                index: '/manage/label',
+                                title: '标签管理'
+                            }
+                        ]
                     },
+
+                    
                     {
                         icon: 'iconfont icon-guanggaoguanli',
                         index: 'index61',

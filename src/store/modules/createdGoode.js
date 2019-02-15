@@ -60,13 +60,11 @@ export default {
                         obj.url = item;
                         return obj;
                     });
-
-
-                    if(typeof result.sku_list == 'undefined'){
+                    let good_sku_list = result.sku_list || []
+                    if (typeof result.sku_list == 'undefined') {
                         alert('数据接口缺少 sku_list字段')
                     }
-
-                    console.log('result.sku_list',result.sku_list) //undefined
+                    console.log('result.sku_list', result.sku_list) //undefined
                     result.good_sku = result.sku_list.map(item => {
                         item.ico_small__url = item.ico_small
                         item.price_cost = (+item.price_cost) / 100

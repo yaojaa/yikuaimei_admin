@@ -19,7 +19,7 @@
                 <!-- v-if="服务才有，要判断type" -->
                 <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" />
               </el-tab-pane>
-              <el-tab-pane label="编辑商品详情" name="ProductDetails" class="panel" disabled>
+              <el-tab-pane label="编辑商品详情" name="ProductDetails" class="panel" disabled v-if="!isCoupon">
                 <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" />
               </el-tab-pane>
             </el-tabs>
@@ -64,10 +64,17 @@ export default {
     },
 
     /** 
-     * 是否是耗材，品相
+     * 是否是耗材，门店服务
     */
     isGoodFriend(){
-      return this.$route.query.good_type === 1  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+      return this.$route.query.good_type === '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+    },
+
+    /** 
+     * isCard
+    */
+    isCoupon(){
+      return this.$route.query.good_type === '4'?true:false  //1门店服务 2平台商品 3品项管理 4虚拟卡券
     }
   },
 

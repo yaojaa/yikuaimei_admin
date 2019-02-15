@@ -14,7 +14,7 @@
                     <el-input v-model="item.name" placeholder="请输入名称"/>                        
                 </el-col>
                 <el-col :span="12"> 
-                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list.length > 1"/>
+                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list && item.list.length > 1"/>
                     <el-tag v-for="(tag,index) in item.list"  :key="index"
                       :disable-transitions="false"
                       :closable="true"
@@ -42,7 +42,7 @@
                     <el-input v-model="item.name" placeholder="请输入名称"/>                        
                 </el-col>
                 <el-col :span="12"> 
-                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list.length > 1"/>
+                    <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list && item.list.length > 1"/>
                     <el-tag v-for="(tag,index) in item.list"  :key="tag"
                       :disable-transitions="false"
                       :closable="true"
@@ -80,7 +80,16 @@ export default {
   props:{
     goodSkuinfo:{
       type:Array,
-      default:()=>[]
+      default:()=>[{
+            name: '',
+            list: [],
+            inputValue: ''
+        },
+        {
+            name: '',
+            list: [],
+            inputValue: ''
+        }]
     }
   },
 
@@ -118,8 +127,26 @@ export default {
      * 确定添加规格
      */
     $_addFormat() {
-      this.format_show = false;
-      this.$emit("addFormat", this.goodSkuInfo);
+      console.log(this.goodSkuInfo);
+      const goodSkuInfo = this.goodSkuInfo;
+      let flag = true;
+      for (let i = 0; i<goodSkuInfo.length; i++) {
+        if (!goodSkuInfo[i].list.length) {
+          flag = false;
+          break
+        } else {
+          flag = true;
+        }
+      }
+      if (flag) {
+        this.format_show = false;
+        this.$emit("addFormat", this.goodSkuInfo);
+      }else{
+        this.$message({
+          message: '请填写规格',
+          type: 'warning'
+        });
+      }
     },
 
     /** *
