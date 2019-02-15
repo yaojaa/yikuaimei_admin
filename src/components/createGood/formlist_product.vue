@@ -1,9 +1,9 @@
 <template>
     <!-- 表单list -->
     <el-form ref="currentFormInfo" :model="currentFormInfo" :rules="rules" label-width="120px">
-      <el-form-item label="商品展示图：" prop="show_img_arr">
+      <el-form-item :label="`${type}展示图：`" prop="show_img_arr">
           <div class="upload-title">
-            展示在商品的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。
+            展示{{type}}的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。
           </div>
           <el-upload
             action="/api/admin/fileupload/image"
@@ -44,6 +44,7 @@
  * 商品详细信息
 */
 import { mapState } from "vuex";
+import { type } from "../../constans/createdGood";
 
 export default {
   name: "createGood-formlist",
@@ -60,7 +61,7 @@ export default {
       },
 
       rules: {
-        show_img_arr: [{ required: true, message: "请选择商品展示图", trigger: "change" }], // @TODO limitNumber判断是为6
+        show_img_arr: [{ required: true, message: `请选择${this.type}展示图`, trigger: "change" }], // @TODO limitNumber判断是为6
         good_notes: [{ required: true, message: "请填写购买须知", trigger: "blur" }],
       }
     }
@@ -77,6 +78,10 @@ export default {
       },
       deep: true
     }
+  },
+
+  created() {
+    this.type = type[this.$route.query.good_type]
   },
 
   methods: {
