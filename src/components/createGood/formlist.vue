@@ -25,7 +25,7 @@
                 </div>
                 <p class="input__tabs">可设置多个标签</p>
             </el-form-item>
-            <el-form-item label="规格" props="format">
+            <el-form-item label="规格" props="format"  v-if="isGoodFriend">
                 <!-- format_none format_add -->
                 <el-radio-group v-model="currentFormInfo.singleButton" @change="this.$_showFormat">
                     <el-radio-button label="无规格" />
@@ -285,6 +285,12 @@ export default {
 
   computed: {
     ...mapState('createdGoode',['formInfo']),
+    /** 
+     * 是否是耗材，门店服务
+    */
+    isGoodFriend(){
+      return this.$route.query.good_type === '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+    },
   },
 
   watch: {
