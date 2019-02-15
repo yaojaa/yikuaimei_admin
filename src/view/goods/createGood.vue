@@ -10,20 +10,14 @@
 
         <!-- tab 内容 -->
         <div class="page-content">
-          <template>
-            <el-tabs v-model="editName">
-              <el-tab-pane label="编辑基本信息" name="BasicInfo" class="panel" disabled>
-                <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" />
-              </el-tab-pane>
-              <el-tab-pane label="添加耗材" name="addGoodFriend" class="panel" v-if="isGoodFriend" disabled>
-                <!-- v-if="服务才有，要判断type" -->
-                <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" />
-              </el-tab-pane>
-              <el-tab-pane label="编辑商品详情" name="ProductDetails" class="panel" disabled v-if="!isCoupon">
-                <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" />
-              </el-tab-pane>
-            </el-tabs>
-          </template>          
+          <el-steps :active="active" finish-status="success" simple>
+            <el-step title="编辑基本信息" />
+            <el-step title="添加耗材" v-if="isGoodFriend" />
+            <el-step title="编辑商品详情" />
+          </el-steps>
+          <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-if="active===0" />
+          <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-if="active===1 && isGoodFriend"/>              
+          <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-if="active===1 && !isGoodFriend || active===2 " /> 
         </div>
     </div>
 </template>
@@ -47,8 +41,8 @@ export default {
 
   data() {
     return {
-      breadcrumb, //面包屑
-      editName: "BasicInfo" // tab标签默认定位
+      breadcrumb: [], //面包屑
+      active: 0 // tab标签默认定位
     };
   },
 
@@ -80,6 +74,7 @@ export default {
 
   created() {
     const id = this.$route.query.good_id
+    this.breadcrumb = breadcrumb[this.good_type]
     this.$store.commit('createdGoode/initFormInfo')  // 每次进页面初始化信息
     this.$store.commit('createdGoode/setFormInfo',{good_type:this.good_type,good_id:this.good_id})
 
@@ -95,31 +90,9 @@ export default {
     /** *
      * 导航切换
      */
-    $_changeTab_next(tab, event) {
-      switch (this.editName) {
-        case 'BasicInfo':
-          this.editName = this.isGoodFriend ? 'addGoodFriend' : 'ProductDetails'
-          break;
-        case 'addGoodFriend':
-          this.editName = 'ProductDetails'
-          break;
-        default:
-          break;
-      }
-    },
+    $_changeTab_next() {this.active++},
 
-    $_changeTab_pre(tab, event) {
-      switch (this.editName) {
-        case 'ProductDetails':
-          this.editName = this.isGoodFriend ? 'addGoodFriend' : 'BasicInfo'
-          break;
-        case 'addGoodFriend':
-          this.editName = 'BasicInfo'
-          break;
-        default:
-          break;
-      }
-    }
+    $_changeTab_pre(tab, event) {this.active--}
   }
 }
 </script>
@@ -127,6 +100,25 @@ export default {
 <style>
 #createGood .panel {
   padding: 20px 0;
+}
+
+#createGood .el-steps--simple{
+  width: 960px;
+  background: rgba(238, 239, 255, 1);
+  margin:20px 0 30px 0
+}
+
+#createGood .page-content{
+  background: #fff;
+  padding:0;
+  padding-bottom: 20px;
+  margin: 20px
+}
+
+#createGood .el-step__title{
+  color: rgba(102, 102, 102, 1);
+  font-size: 18px;
+  font-weight: normal;
 }
 
 #createGood .input__tabs {

@@ -168,7 +168,7 @@ export default {
      * 切换tab
      */
     $_changeTabNext() {
-      if(!good_friends.length){
+      if(!this.good_friends.length){
         this.$emit("changeTabNext");
       }
       this.$store.commit('createdGoode/setFormInfo',{good_friends:this.good_friends})
