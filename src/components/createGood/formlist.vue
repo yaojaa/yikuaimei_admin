@@ -5,7 +5,7 @@
             <el-form-item label="名称：" prop="good_name">
                 <el-input  v-model="currentFormInfo.good_name" placeholder="名称为2-30个字" />                                                    
             </el-form-item>
-            <el-form-item label="商品卖点：" prop="good_explain">
+            <el-form-item :label="`${type}卖点：`" prop="good_explain">
                 <el-input type="textarea" v-model="currentFormInfo.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" /> 
             </el-form-item>
             <el-form-item label="行业分类：" prop="category_id">
@@ -25,8 +25,8 @@
                 </div>
                 <p class="input__tabs">可设置多个标签</p>
             </el-form-item>
+            <!-- 服务不用设置规格 -->
             <el-form-item label="规格" props="format" v-if="!isGoodFriend">
-                <!-- format_none format_add -->
                 <el-radio-group v-model="currentFormInfo.singleButton" @change="this.$_showFormat">
                     <el-radio-button label="无规格" />
                     <el-radio-button label="添加规格" />
@@ -79,7 +79,7 @@
                                 :on-success="(res,file)=>{return $_success__table_ico_small(res,file,scope.row)}"
                                 >
                                 <img v-if="scope.row.ico_small" :src="scope.row.ico_small__url" class="avatar">
-                                <span class="table_icon_text" v-else><i class="el-icon-plus" />添加商品图片</span>
+                                <span class="table_icon_text" v-else><i class="el-icon-plus" />添加{{type}}图片</span>
                             </el-upload>
                         </template> 
                     </el-table-column>
@@ -92,7 +92,7 @@
             <el-form-item label="单位：" prop="unit">
                 <el-input  v-model="currentFormInfo.unit" placeholder="箱" suffix-icon="el-icon-arrow-right" />                                                                       
             </el-form-item> -->
-            <el-form-item label="商品编码：" prop="productCode">
+            <el-form-item :label="`${type}编码：`" prop="productCode">
                 <el-input  v-model="currentFormInfo.productCode" placeholder="支持14以内的数字+英文组合"  />                                                                              
             </el-form-item>
             <el-form-item label="售价：" prop="sellPrice">
@@ -103,10 +103,10 @@
                 <el-input  v-model="currentFormInfo.price" placeholder="¥5000" />                                                                                                        
                 <span class="outText">元</span>
             </el-form-item>
-            <el-form-item label="商品图片：" prop="good_img_arr">
+            <el-form-item :label="`${type}图片：`" prop="good_img_arr">
                 <div class="upload-title">
-                您可以上传3-6张图片及1个视频作为商品展示图，<br />
-                展示在商品页顶部的图片，支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1242*1242，支持JPG、PNG等大部分格式图片，单张图片大小不超过5M 
+                您可以上传3-6张图片及1个视频作为{{type}}展示图，<br />
+                展示{{type}}页顶部的图片，支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1242*1242，支持JPG、PNG等大部分格式图片，单张图片大小不超过5M 
                 </div>
                 <el-upload
                     action="/api/admin/fileupload/image"
@@ -131,7 +131,7 @@
                     </el-dialog>
                 </el-upload>
             </el-form-item>
-            <el-form-item label="商品卖点图：" prop="explain_img_arr">
+            <el-form-item :label="`${type}卖点图：`" prop="explain_img_arr">
                 <el-upload
                     action="/api/admin/fileupload/image"
                     list-type="picture-card"
@@ -157,7 +157,7 @@
             </el-form-item>
             <el-form-item label="" prop="uploadArray">
                 <div class="upload-title">
-                展示在商品页顶部的视频，<a>最多可上传 1 个视频</a>，
+                展示在{{type}}页顶部的视频，<a>最多可上传 1 个视频</a>，
                 支持MP4视频格式，<a>视频大小不能超过20M</a>
                 </div>
                 <div class="uploadArray_content">
@@ -191,9 +191,9 @@
                     </el-upload>
                 </div>
             </el-form-item>
-            <el-form-item label="商品展示图：" prop="good_ico">
+            <el-form-item :label="`${type}展示图：`" prop="good_ico">
                 <div class="upload-title">
-                <p>展示在商品页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
+                <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
                 </div>
                 <el-upload
                 action="/api/admin/fileupload/image"
@@ -210,7 +210,7 @@
                 </i>
                 </el-upload>
             </el-form-item>
-            <el-form-item>
+            <el-form-item class="form-footer">
                 <el-button @click="$_changeTabNext">下一步</el-button>
             </el-form-item>
         </el-form>
@@ -229,7 +229,7 @@
 <script>
 import _ from 'lodash'
 import { mapState } from "vuex";
-import { CATEGORYOPTIONS } from "../../constans/createdGood";
+import { CATEGORYOPTIONS,type } from "../../constans/createdGood";
 import Lable from "@/components/createGood/lable";
 import Formate from "@/components/createGood/formate";
 
@@ -257,14 +257,15 @@ export default {
       limitNumber2:6,
       currentFormInfo:{},
       goodSkuStatus:false, // 展示规格状态
+      type:'',
       rules: {
         good_name: [
           { required: true, message: "请输入活动名称", trigger: "blur" },
           { min: 2, max: 30, message: "长度在2-30个字符", trigger: "blur" }
         ],
         good_explain: [
-          { required: true, message: "在商品详情页标题下面展示卖点信息，建议50字以内", trigger: "blur" },
-          { min: 2, max: 50, message: "在商品详情页标题下面展示卖点信息，建议50字以内", trigger: "blur" }
+          { required: true, message: `${this.type}在详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" },
+          { min: 2, max: 50, message: `在${this.type}详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" }
         ],
         category_id: [
           { required: true, message: "请选择所属行业分类", trigger: "blur" }
@@ -275,12 +276,16 @@ export default {
         ],
         format: [{ required: true, message: "请选择规格", trigger: "change" }],
         productCode: [
-          { required: true, message: "请填写商品编码", trigger: "blur" }
+          { required: true, message: `请填写${this.type}编码`, trigger: "blur" }
         ],
         sellPrice: [{ required: true, message: "请填写售价", trigger: "blur" }],
         price: [{ required: true, message: "请填写原价", trigger: "blur" }]
       }
     };
+  },
+
+  created() {
+    this.type = type[this.$route.query.good_type]
   },
 
   computed: {
@@ -609,7 +614,9 @@ export default {
 .table_upload__disabled .el-upload--picture{
     display: none
 }
-
+.form-footer{
+    text-align: center
+}
 </style>
 
 
