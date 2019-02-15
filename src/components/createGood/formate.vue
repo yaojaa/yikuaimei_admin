@@ -127,8 +127,26 @@ export default {
      * 确定添加规格
      */
     $_addFormat() {
-      this.format_show = false;
-      this.$emit("addFormat", this.goodSkuInfo);
+      console.log(this.goodSkuInfo);
+      const goodSkuInfo = this.goodSkuInfo;
+      let flag = true;
+      for (let i = 0; i<goodSkuInfo.length; i++) {
+        if (!goodSkuInfo[i].list.length) {
+          flag = false;
+          break
+        } else {
+          flag = true;
+        }
+      }
+      if (flag) {
+        this.format_show = false;
+        this.$emit("addFormat", this.goodSkuInfo);
+      }else{
+        this.$message({
+          message: '请填写规格',
+          type: 'warning'
+        });
+      }
     },
 
     /** *
