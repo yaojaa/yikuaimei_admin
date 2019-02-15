@@ -233,7 +233,6 @@ import { CATEGORYOPTIONS } from "../../constans/createdGood";
 import Lable from "@/components/createGood/lable";
 import Formate from "@/components/createGood/formate";
 
-
 export default {
   name: "createGood-formlist",
 

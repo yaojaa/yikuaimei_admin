@@ -6,13 +6,46 @@
             </div>
         </div>
         <div class="page-content">
+
+
+
+<el-steps :active="1" simple>
+  <el-step title="步骤 1" icon="el-icon-edit"></el-step>
+  <el-step title="步骤 2" icon="el-icon-upload"></el-step>
+  <el-step title="步骤 3" icon="el-icon-picture"></el-step>
+</el-steps>
+
+
+
+
             <div class="panel">
                 <div class="form-panel p-xl">
                    <!--form start-->
  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-  <el-form-item label="活动名称" prop="name">
+
+
+  <el-form-item label="公司名称" prop="name">
     <el-input v-model="ruleForm.name"></el-input>
   </el-form-item>
+
+    <el-form-item label="公司地址" prop="name">
+    <el-input v-model="ruleForm.name"></el-input>
+  </el-form-item>
+
+
+  <el-form-item label="法人姓名" prop="name">
+    <el-input v-model="ruleForm.name"></el-input>
+  </el-form-item>
+
+  <el-form-item label="手机号" prop="name">
+    <el-input v-model="ruleForm.name"></el-input>
+  </el-form-item>
+
+
+
+
+
+
   <el-form-item label="活动区域" prop="region">
     <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
       <el-option label="区域一" value="shanghai"></el-option>
@@ -77,14 +110,10 @@ export default {
       breadcrumb: [
         //面包屑
         {
-          name: "营销管理" //名字
+          name: "加盟商管理" //名字
         },
         {
-          name: "优惠券", //名字
-          url: "/marketcoupon"
-        },
-        {
-          name: "添加优惠券" //名字
+          name: "添加加盟商" //名字
         }
       ],
       ruleForm: {
