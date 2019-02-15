@@ -25,7 +25,7 @@
                 </div>
                 <p class="input__tabs">可设置多个标签</p>
             </el-form-item>
-            <el-form-item label="规格" props="format"  v-if="isGoodFriend">
+            <el-form-item label="规格" props="format" v-if="!isGoodFriend">
                 <!-- format_none format_add -->
                 <el-radio-group v-model="currentFormInfo.singleButton" @change="this.$_showFormat">
                     <el-radio-button label="无规格" />
