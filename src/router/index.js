@@ -203,14 +203,22 @@ export default new Router({
                         title: '标签管理'
                     }
                 },
-                // {
-                //     // 添加分类
-                //     path: '/manage/createLabel',
-                //     component: resolve => require(['../view/label/createLabel.vue'], resolve),
-                //     meta: {
-                //         title: '添加标签'
-                //     }
-                // },
+                {
+                    // 添加分类
+                    path: '/manage/label/add',
+                    component: resolve => require(['../view/label/add.vue'], resolve),
+                    meta: {
+                        title: '添加标签'
+                    }
+                },
+                  {
+                    // 添加分类
+                    path: '/manage/label/groupAdd',
+                    component: resolve => require(['../view/label/groupAdd.vue'], resolve),
+                    meta: {
+                        title: '添加标签组'
+                    }
+                },
                 {
                     // 服务订单
                     path: '/order/list_service',
