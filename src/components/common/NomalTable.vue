@@ -76,8 +76,8 @@
                                 v-model="scope.row[column.prop]"
                                 :active-color="column.config.activeColoe || '#7224D8'"
                                 :inactive-color="column.config.inactiveColor || '#999'"
-                                :active-value="column.config.value[1]"
-                                :inactive-value="column.config.value[0]"
+                                :active-text="column.config.value[1]"
+                                :inactive-text="column.config.value[0]"
                                 @change="switchChange(scope.row, column)">
                             </el-switch>
 
