@@ -7,7 +7,17 @@
             </el-breadcrumb>
         </div>
         <div class="page-content">
-            <div class="status_filter" v-for="(item,key,index) in tagsListGroup" :key="index">
+            <div class="filter-tag-box">
+                <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup">
+                    <div class="tag-hd">{{key}}</div>
+                    <div class="tag-bd">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/order/list_goods', query: {
+[tag.key]: tag.value }}">
+                            {{tag.title}}</router-link>
+                    </div>
+                </div>
+            </div>
+<!--             <div class="status_filter" v-for="(item,key,index) in tagsListGroup" :key="index">
                 <ul>
                     <li class="tags-li">
                         {{key}}
@@ -15,7 +25,7 @@
     [tag.key]: tag.value }}">{{tag.title}}</router-link>
                     </li>
                 </ul>
-            </div>
+            </div> -->
             <nomal-table ref="table" :table-json="tableJson" :url="'/api/admin/order/index'">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>

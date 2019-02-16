@@ -1051,7 +1051,9 @@ ol {
 .search-box .el-form-item--small.el-form-item {
     margin-bottom: 20px;
 }
-
+.el-form-item__label{
+    color: #44465A;
+}
 .info-box .el-row {
     margin-bottom: 20px;
     font-size: 14px;
