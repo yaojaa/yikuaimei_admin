@@ -36,7 +36,9 @@ a {
     text-decoration: none;
     outline: none;
 }
-
+img{
+    vertical-align: middle;
+}
 ul,
 ol {
     list-style-type: none;
@@ -565,6 +567,36 @@ ol {
 }
 
 
+.img-xs {
+    width: 50px;
+    height: 50px;
+}
+
+.img-sm {
+    width: 80px;
+    height: 80px;
+}
+
+.img-df {
+    width: 120px;
+    height: 120px;
+}
+
+.img-lg {
+    width: 200px;
+    height: 200px;
+}
+
+.img-xl {
+    width: 300px;
+    height: 300px;
+}
+
+.img-xxl {
+    width: 500px;
+    height: 500px;
+}
+
 .no-content {
     padding: 30px;
     background: #fff;
@@ -647,10 +679,10 @@ ol {
 
 
 
-
 /*页面块*/
 .page-container {
     min-width: 960px;
+    position: relative;
 }
 
 .page-content {
@@ -660,7 +692,17 @@ ol {
 .page-header+.page-content {
     padding-top: 0
 }
-
+.page-footer{
+    background: #fff;
+    text-align: center;
+    padding: 20px;
+}
+.page-footer.fixed{
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
+}
 .page-title {
     margin-top: 0;
     margin-bottom: 0;
@@ -1016,12 +1058,12 @@ ol {
 }
 
 .info-box .hd {
-    color: #666;
+    color: #44465A;
     text-align: right;
 }
 
 .info-box .bd {
-    color: #333;
+    color: #15151C;
 }
 
 .flex_box {
@@ -1030,4 +1072,39 @@ ol {
 
 .flex_item {
     flex: 1
+}
+
+/*评论*/
+.comment-panel{
+
+}
+.comment-item{
+    padding: 15px 0;
+    border-bottom: 1px solid #f8f8f8;
+}
+.comment-box{
+    display: flex;
+}
+.comment-box .hd{
+
+}
+.comment-box .bd{
+    flex: 1;
+}
+.reply-box{
+    background: #f8f8f8;
+    padding: 15px;
+    margin-top: 15px;
+}
+.reply-box .reply{
+    display: flex;
+}
+.reply-box .reply .avatar img{
+    border-radius: 50%;
+}
+.reply-box .reply .body{
+    flex: 1;
+}
+.reply-box .reply .body .name{
+    line-height: 30px;
 }
