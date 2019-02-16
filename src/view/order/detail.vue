@@ -1,121 +1,111 @@
 <template>
-	<div class="page">
-		<div class="page-header">
-			<el-breadcrumb separator-class="el-icon-arrow-right">
-				<el-breadcrumb-item>订单管理</el-breadcrumb-item>
-				<el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-			</el-breadcrumb>
-		</div>
-	
-		<div class="page-content">
-			<el-tabs v-model="tabName">
-				<el-tab-pane label="基本信息" name="OrderInfo">
-					<OrderDetail :order="order"></OrderDetail>
-					
-				</el-tab-pane>
-				<el-tab-pane label="物流信息" name="ExpressInfo">
-					<ExpressInfo :order-code="orderCode"></ExpressInfo>
-				</el-tab-pane>
-				<el-tab-pane label="收益提成" name="ProfitRate">
-					我是收益提成
-				</el-tab-pane>
-				<el-tab-pane label="退款/退货" name="OrderRefund">
-					<div class="refund-list">
-						<el-tab-pane  :key="index" v-for="(item,index) in refundList" :label="index+1" :name="reufund">
-							<RefundInfo :refundInfo="refundInfo"></RefundInfo>
-						</el-tab-pane>
-					</div>
-					<RefundInfo :refundInfo="refundInfo"></RefundInfo>
-				</el-tab-pane>
-			</el-tabs>
-	
-		</div>
-	
-	</div>
+    <div class="page">
+        <div class="page-header">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item>订单管理</el-breadcrumb-item>
+                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="page-content">
+            <el-tabs v-model="tabName">
+                <el-tab-pane label="基本信息" name="OrderInfo">
+                    <OrderDetail :order="order"></OrderDetail>
+                </el-tab-pane>
+                <el-tab-pane label="物流信息" name="ExpressInfo">
+                    <ExpressInfo :order-code="orderCode"></ExpressInfo>
+                </el-tab-pane>
+                <el-tab-pane label="收益提成" name="ProfitRate">
+                    我是收益提成
+                </el-tab-pane>
+                <el-tab-pane label="退款/退货" name="OrderRefund">
+                    <div class="refund-list">
+                        <el-tab-pane :key="index" v-for="(item,index) in refundList" :label="index+1" :name="reufund">
+                            <RefundInfo :refundInfo="refundInfo"></RefundInfo>
+                        </el-tab-pane>
+                    </div>
+                    <RefundInfo :refundInfo="refundInfo"></RefundInfo>
+                </el-tab-pane>
+            </el-tabs>
+        </div>
+    </div>
 </template>
-
 <script>
-	import Config from "./config";
-	import ExpressInfo from "./components/expressInfo";
-	import OrderDetail from "./components/orderDetail";
-	import RefundInfo from "./components/refundInfo";
-	
-	export default {
-		name: 'orderDetail',
+import Config from "./config";
+import ExpressInfo from "./components/expressInfo";
+import OrderDetail from "./components/orderDetail";
+import RefundInfo from "./components/refundInfo";
 
-		components: {
-			ExpressInfo,
-			OrderDetail,
-			RefundInfo
-		},
-		
-		data() {
-			return {
-				tabName: "OrderInfo", // tab标签默认定位
-				orderCode: this.$route.params.order_code,
-				order: {},
-				refundList: [],
-				order_status: { // 订单状态
-					1: '待处理',
-					2: '待发货',
-					3: '已发货',
-					4: '已完成',
-					5: '已评价',
-					8: '已取消'
-				},
-			}
-		},
+export default {
+    name: 'orderDetail',
 
-		beforeRouteUpdate(to, from, next) {
-	
-		},
-		created() {
-		},
-		computed: {
-	
-		},
-		mounted() {
-	
-			// 获取订单信息
-			this.getData(this.$route.params);
-			// 获取退款单信息
-			this.getRefundList(this.$route.params);
-	
-	
-		},
-		methods: {
-	
-			getData(params) {
-	
-				this.$axios({
-					method: 'get',
-					url: '/api/admin/order/info',
-					params: params
-				}).then((res) => {
-					this.order = res.data.data
-				}).catch((error) => {
-				});
-			},
+    components: {
+        ExpressInfo,
+        OrderDetail,
+        RefundInfo
+    },
 
-			getRefundList(params) {
-	
-				this.$axios({
-					method: 'get',
-					url: '/api/admin/order/refundList ',
-					params: params
-				}).then((res) => {
-					this.refundList = res.data.data
-				}).catch((error) => {
-				});
-			},
+    data() {
+        return {
+            tabName: "OrderInfo", // tab标签默认定位
+            orderCode: this.$route.params.order_code,
+            order: {},
+            refundList: [],
+            order_status: { // 订单状态
+                1: '待处理',
+                2: '待发货',
+                3: '已发货',
+                4: '已完成',
+                5: '已评价',
+                8: '已取消'
+            },
+        }
+    },
 
-			formatPrice(price) {
-				return (price/100).toFixed(2);
-			}
-		}
-	}
+    beforeRouteUpdate(to, from, next) {
+
+    },
+    created() {},
+    computed: {
+
+    },
+    mounted() {
+
+        // 获取订单信息
+        this.getData(this.$route.params);
+        // 获取退款单信息
+        this.getRefundList(this.$route.params);
+
+
+    },
+    methods: {
+
+        getData(params) {
+
+            this.$axios({
+                method: 'get',
+                url: '/api/admin/order/info',
+                params: params
+            }).then((res) => {
+                this.order = res.data.data
+            }).catch((error) => {});
+        },
+
+        getRefundList(params) {
+
+            this.$axios({
+                method: 'get',
+                url: '/api/admin/order/refundList ',
+                params: params
+            }).then((res) => {
+                this.refundList = res.data.data
+            }).catch((error) => {});
+        },
+
+        formatPrice(price) {
+            return (price / 100).toFixed(2);
+        }
+    }
+}
 </script>
-
 <style scoped>
-	
 </style>

@@ -7,15 +7,15 @@
             </el-breadcrumb>
         </div>
         <div class="page-content">
-            <div class="status_filter" v-for="(item,key,index) in tagsListGroup">
-                <ul>
-                    <li class="tags-li">
-                        {{key}}
-                        <router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/manage/case', query: {
+            <div class="filter-tag-box mb-lg">
+                <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup">
+                    <div class="tag-hd">{{key}}</div>
+                    <div class="tag-bd">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/manage/case', query: {
 [tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
             <nomal-table ref="table" :table-json="tableJson" :url="'/api/admin/cases/index'"></nomal-table>
         </div>
@@ -98,7 +98,8 @@ export default {
                         "prop": "review_status",
                         "width": "",
                         formatter(row) { //格式数据
-                            var str = "<div style='border:10px solid #ccc;'><div style='color:#f00; font-weight:700'>" + ['', '待审核', '审核通过', '审核不通过'][row.review_status] + "</div>";
+                            console.log(row.review_status)
+                            var str = '<div class=' + (row.review_status == 3 ? 'text-red' : 'text-default') + '>' + ['', '待审核', '审核通过', '审核不通过'][row.review_status] + '</div>';
                             return str;
                         }
 
@@ -176,7 +177,7 @@ export default {
                         }
                     })
 
-                    this.tagsListGroup['行业分类'] = categoryData
+                    this.tagsListGroup['行业分类:'] = categoryData
                     this.$forceUpdate()
                 })
         }
