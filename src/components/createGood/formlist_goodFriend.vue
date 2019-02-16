@@ -16,8 +16,8 @@
             <el-table-column
                 label="规格">
                 <template slot-scope="scope">
-                    <el-checkbox-group v-model="scope.row.group_sku_id" size="small">
-                        <el-checkbox :label="item.sku_str" v-for="item in scope.row.sku_id" :key="`${item.sku_str}${scope.row.good_id}`" border></el-checkbox>
+                    <el-checkbox-group v-model="scope.row.group_sku_str" size="small">
+                        <el-checkbox :label="item.sku_str" v-for="item in scope.row.sku_list" :key="`${item.sku_str}${scope.row.good_id}`" border></el-checkbox>
                     </el-checkbox-group>
                 </template>
             </el-table-column>
@@ -87,11 +87,10 @@ export default {
     return {
         currentDate: new Date(),
         goodFriend_show: false, // 选择弹框状态
-        goodFriendsList:[], // 详情数据展示
         CATEGORYOPTIONS,
         defaultActive:'美容',
-        group_sku_id:[],
         good_friends: [], // 已选耗材
+        goodFriendsList:[], // 详情数据展示
         good_friendsDialog:[]
     };
   },
@@ -104,9 +103,31 @@ export default {
     formInfo: {
       handler: function (newVal, oldVal) {
         this.good_friends = _.cloneDeep(newVal.good_friends)
-      },
-      deep: true
+        this.good_friends.forEach(good => {
+            let sku_id = good.sku_id
+            let sku_list = good.sku_list
+            good.group_sku_str = []
+            sku_id.forEach(id => {
+                let obj = sku_list.find(item => item.sku_id === id)
+                good.group_sku_str.push(obj.sku_str)
+            })
+        })
+    },
+    deep: true
     }
+  },
+
+  created(){
+      this.good_friends = _.cloneDeep(this.formInfo.good_friends)
+      this.good_friends.forEach(good => {
+        let sku_id = good.sku_id
+        let sku_list = good.sku_list
+        good.group_sku_str = []
+        sku_id.forEach(id => {
+            let obj = sku_list.find(item => item.sku_id === id)
+            good.group_sku_str.push(obj.sku_str)
+        })
+      })
   },
 
   methods: {
@@ -138,7 +159,7 @@ export default {
         if(!this.isDisable(goodFriendsInfo.good_id)){
             let obj = {
                 good_id: goodFriendsInfo.good_id , //耗材id
-                sku_id: goodFriendsInfo.sku_list , // 耗材sku_id列表
+                sku_list: goodFriendsInfo.sku_list , // 耗材sku_id列表
                 good_name: goodFriendsInfo.good_name , // 耗材名字
                 good_ico: goodFriendsInfo.good_ico , //耗材图标
                 price_low: goodFriendsInfo.price_low , // 耗材价格区间低
@@ -168,10 +189,31 @@ export default {
      * 切换tab
      */
     $_changeTabNext() {
+
+
       if(!this.good_friends.length){
         this.$emit("changeTabNext");
       }
-      this.$store.commit('createdGoode/setFormInfo',{good_friends:this.good_friends})
+      let canNext = true
+      this.good_friends.forEach(good => {
+        let group_sku_str = good.group_sku_str
+        let sku_list = good.sku_list
+        good.group_sku_id = []
+        if(!group_sku_str.length){
+            canNext = false
+        }
+        group_sku_str.forEach(str => {
+            let obj = sku_list.find(item => item.sku_str === str)
+            good.group_sku_id.push(obj.sku_id)
+        })
+      })
+
+      if(!canNext){
+          alert('规格至少选一个')
+      }else{
+          this.$store.commit('createdGoode/setFormInfo',{good_friends:this.good_friends})
+          this.$emit("changeTabNext");
+      }
     },
     $_changeTabPre() {
       this.$emit("changeTabPre");
