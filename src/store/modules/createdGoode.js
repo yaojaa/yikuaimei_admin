@@ -104,12 +104,14 @@ export default {
                             sellPrice,
                             price_sale,
                             price,
-                            price_total
+                            price_total,
+                            price_cost
                         } = sku_list[0]
                         result.sku_code = sku_code
                         result.sellPrice = sellPrice
                         result.price_sale = price_sale
                         result.price = price
+                        result.price_cost = price_cost
                         result.price_total = price_total
                     } else {
                         result.singleButton = "添加规格"

@@ -16,7 +16,6 @@
             <el-table-column
                 label="规格">
                 <template slot-scope="scope">
-                    scope.row.group_sku_str{{scope.row.group_sku_str}}
                     <el-checkbox-group v-model="scope.row.group_sku_str" size="small">
                         <el-checkbox :label="item.sku_str" v-for="item in scope.row.sku_list" :key="`${item.sku_str}${scope.row.good_id}`" border></el-checkbox>
                     </el-checkbox-group>

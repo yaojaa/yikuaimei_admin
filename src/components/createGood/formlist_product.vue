@@ -119,7 +119,7 @@ export default {
                 })
                 this.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
                     if(res.code === 0){
-                        this.$message.success(res.msg);
+                        this.$alert("创建成功");
                         this.$_goOut(good_type)
                     }else{
                         this.$message.error(res.msg);
@@ -148,15 +148,17 @@ export default {
                     return item
                 })
 
-                if(params.singleButton === '无规格' || this.$route.query.good_type == '1'){
+                if(this.$route.query.good_type == '1'){
                     delete params.sku_type_arr
-                    delete params.good_sku
                     delete params.sku_list
+                }
+                if(params.singleButton === '无规格'){
+                    delete params.sku_type_arr
                 }
                     
                 this.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
                     if(res.code === 0){
-                        this.$message.success(res.msg);
+                        this.$alert("编辑成功");
                         this.$_goOut(good_type)
                     }else{
                         this.$message.error(res.msg);

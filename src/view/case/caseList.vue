@@ -1,10 +1,15 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>案例</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+            <div class="crumbs">
+                <el-breadcrumb separator-class="el-icon-arrow-right">
+                    <el-breadcrumb-item>案例</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
+            <div class="page-header-actions">
+                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/case/add' })">添加案例</el-button>
+            </div>
         </div>
         <div class="page-content">
             <div class="filter-tag-box mb-lg">
