@@ -275,6 +275,7 @@ export default new Router({
                         title: '加盟商'
                     }
                 },
+
                 {
                     // 加盟商
                     path: '/business/alliance_add',
@@ -289,6 +290,38 @@ export default new Router({
                     component: resolve => require(['../view/business/alliance_detail.vue'], resolve),
                     meta: {
                         title: '加盟商详情'
+                    }
+                },
+                {
+                    // 门店审核
+                    path: '/audit/shop',
+                    component: resolve => require(['../view/audit_shop/list.vue'], resolve),
+                    meta: {
+                        title: '门店审核列表'
+                    }
+                },
+                {
+                    // 门店审核
+                    path: '/audit/shop/:id',
+                    component: resolve => require(['../view/audit_shop/list.vue'], resolve),
+                    meta: {
+                        title: '门店审核详情'
+                    }
+                },
+                {
+                    // 加盟商审核
+                    path: '/audit/business',
+                    component: resolve => require(['../view/audit_business/list.vue'], resolve),
+                    meta: {
+                        title: '加盟商审核列表'
+                    }
+                },
+                {
+                    // 加盟商审核
+                    path: '/audit/business/:id',
+                    component: resolve => require(['../view/audit_business/detail.vue'], resolve),
+                    meta: {
+                        title: '加盟商审核详情'
                     }
                 },
                 {
