@@ -137,11 +137,7 @@ export default {
                     console.log(res.data);
                     if (res.data.data.length) {
                         commit('setLableList', res.data.data);
-                    } else {
-                        alert('暂无标签数据，请联系后台人员添加');
                     }
-                    
-                    
                 });
         },
 

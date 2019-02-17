@@ -66,7 +66,7 @@
         </div>
 
         <div slot="footer" class="dialog-footer">
-            <el-button @click="format_show = false">取 消</el-button>
+            <el-button @click="$_closeFormat">取 消</el-button>
             <el-button type="primary" @click="$_addFormat">确 定</el-button>
         </div>
     </el-dialog>
@@ -145,6 +145,11 @@ export default {
           type: 'warning'
         });
       }
+    },
+
+    $_closeFormat() {
+      this.format_show = false;
+      this.$emit("closeFormat");
     },
 
     /** *

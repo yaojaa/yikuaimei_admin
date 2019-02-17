@@ -246,7 +246,7 @@
         <!-- 添加标签弹框 End -->
 
         <!-- 添加规格弹框 -->
-        <Formate  @addFormat="$_addFormat" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
+        <Formate  @addFormat="$_addFormat" @closeFormat="$_closeFormat" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
         <!-- 添加规格弹框  End-->
     </div>
 </template>
@@ -708,6 +708,10 @@ export default {
           this.goodSkuStatus = false
       }
       this.goodsku__key = String(new Date() + 'goodsku__key')
+    },
+
+    $_closeFormat() {
+        this.currentFormInfo.singleButton = '无规格'
     },
 
     /** *
