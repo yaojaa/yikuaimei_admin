@@ -4,15 +4,12 @@
             <div class="crumbs">
                 <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
             </div>
+            <div class="page-header-actions">
+               <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label' })">管理标签</el-button>
+                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=4' })">添加虚拟卡券</el-button>
+            </div>
         </div>
         <div class="page-content">
-            <div class="sub-heading">
-				<h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
-				<div class="sub-actions">
-					<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label' })">管理标签</el-button>
-					<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=4' })">添加虚拟卡券</el-button>
-				</div>
-			</div>
             <div class="filter-tag-box">
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>

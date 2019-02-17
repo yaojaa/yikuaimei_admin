@@ -71,6 +71,17 @@
                                 v-html="handle.label">
                             </el-button>
 
+                            <el-button 
+                                v-if="column.type == 'switch_btn'" 
+                                size="small" 
+                                type="text" 
+                                @click="handleSwitch(scope,column)"
+                                v-html="scope.row[column.prop]?column.value[0]:column.value[1]">
+                            </el-button>
+
+
+                            
+
                             <el-switch
                                 v-if="column.type == 'switch'"
                                 v-model="scope.row[column.prop]"
@@ -285,6 +296,12 @@
 
             handleSelectionChange(selection){ //勾选选择框
                 console.log(selection)
+            },
+            handleSwitch(scope,column){
+                console.log('$emit listenSwitchChange data is',column.prop,scope.row[column.prop])
+
+                this.$emit('listenSwitchChange',{key:column.prop,value:scope.row})
+
             },
             //操作按钮
             handleButtons(handle, scope){
