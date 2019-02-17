@@ -33,7 +33,7 @@
                 </el-radio-group> 
             </el-form-item>
             
-            <el-form-item v-if="goodSkuStatus">
+            <el-form-item v-if="goodSkuStatus" :key="goodsku__key">
                 <el-row :gutter="20">
                     <el-col :span="4">名称:</el-col>
                     <el-col :span="12">选项: </el-col>
@@ -271,6 +271,7 @@ export default {
       good_video_pic__Key: String(new Date() + 2),
       good_video__Key: String(new Date() + 3),
       tagList__key: String(new Date() + 4),
+      goodsku__key:String(new Date() + 'goodsku__key'),
       CATEGORYOPTIONS, // 所属行业分类
       canAdd__goodImg: false, // 是否可添加状态 __ 商品图片
       canAdd__goodImg2: false, // 是否可添加状态 __ 商品图片
@@ -537,7 +538,7 @@ export default {
     },
 
     /** *
-     * @TODO 添加规格 currentFormInfo 应该是个数组
+     * 添加规格
      */
     $_addFormat(goodSku) {
       this.currentFormInfo.goodSkuInfo = goodSku
@@ -568,7 +569,10 @@ export default {
       this.currentFormInfo.good_sku = good_sku_arr
       if(this.currentFormInfo.goodSkuInfo && this.currentFormInfo.goodSkuInfo.length){
         this.goodSkuStatus = true
+      }else{
+          this.goodSkuStatus = false
       }
+      this.goodsku__key = String(new Date() + 'goodsku__key')
     },
 
     /** *
@@ -587,7 +591,6 @@ export default {
             this.currentFormInfo.good_sku.push(obj)
             delete this.currentFormInfo.sku_type_arr
         }
-            console.log(this.currentFormInfo)
         this.$refs.currentFormInfo.validate((valid) => {
             if (valid) {
                 this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
