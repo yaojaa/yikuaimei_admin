@@ -94,7 +94,7 @@ export const breadcrumbEdit = {
     ],
 }
 
-export const type = ['', '服务', '商品', '品项', '虚拟']
+export const type = ['', '服务', '商品', '品项', '虚拟卡券']
 
 export const CATEGORYOPTIONS = [{
         category_id: 1,
