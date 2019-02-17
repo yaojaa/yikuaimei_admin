@@ -166,7 +166,7 @@
                     :on-exceed="$_exceed"
                     :before-upload="$_beforeUpload"
                     :file-list="currentFormInfo.explain_img_arr"
-                    :limit="6"
+                    :limit="4"
                     :multiple="true"
                     :class="{canAdd__goodImg:canAdd__goodImg2}"
                     >
@@ -235,7 +235,8 @@
                 </el-upload>
             </el-form-item>
             <el-form-item class="form-footer">
-                <el-button @click="$_changeTabNext">下一步</el-button>
+                <el-button @click="$_changeTabNext" v-if="isCoupon">下一步</el-button>
+                <el-button @click="$_changeTabNext" v-else>上架</el-button>
             </el-form-item>
         </el-form>
         <!-- 表单list End -->
@@ -245,7 +246,7 @@
         <!-- 添加标签弹框 End -->
 
         <!-- 添加规格弹框 -->
-        <Formate  @addFormat="$_addFormat" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
+        <Formate  @addFormat="$_createProduct" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
         <!-- 添加规格弹框  End-->
     </div>
 </template>
@@ -322,7 +323,14 @@ export default {
      * 是否是耗材，门店服务
     */
     isGoodFriend(){
-      return this.$route.query.good_type === '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+      return this.$route.query.good_type == '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+    },
+
+    /** 
+     * isCard
+    */
+    isCoupon(){
+      return this.$route.query.good_type == '4'?true:false  //1门店服务 2平台商品 3品项管理 4虚拟卡券
     }
   },
 
@@ -356,6 +364,117 @@ export default {
             this.$refs.lable.initSons()
             this.$refs.lable.lable_show = true
         })
+    },
+
+      /** *
+     * 创建，调用创建接口
+     */
+    $_createProduct() {
+        if(this.currentFormInfo.singleButton === '无规格' || this.isGoodFriend){
+            this.currentFormInfo.good_sku = []
+            let obj = {
+                'sku_code' : this.currentFormInfo.sku_code,
+                'price_cost' : this.currentFormInfo.price_cost,
+                'price_sale' : this.currentFormInfo.price_sale,
+                'price' : this.currentFormInfo.price,
+                'price_total' : this.currentFormInfo.price_total
+            }
+            this.currentFormInfo.good_sku.push(obj)
+            delete this.currentFormInfo.sku_type_arr
+        }
+        let currentFormInfo = this.currentFormInfo
+        let {good_id,good_type} = this.$route.query
+        let formInfo = this.formInfo
+        this.$refs.currentFormInfo.validate((valid) => {
+            this.$store.commit('createdGoode/setFormInfo',currentFormInfo)
+            if(good_id === '0'){
+                let ico_small = ''
+                let params = _.cloneDeep(formInfo)
+                params.good_img_arr = params.good_img_arr.map(item => item.response.data.file_name)
+                params.explain_img_arr = params.explain_img_arr.map(item => item.response.data.file_name)
+                params.show_img_arr = params.show_img_arr.map(item => item.response.data.file_name)
+                params.price = (+params.price)*100
+                params.sellPrice = (+params.sellPrice)*100
+                params.good_sku = params.good_sku.map(item=>{
+                    if (item.ico_small) {
+                       ico_small = item.ico_small
+                    }
+                    item.ico_small = ico_small;
+                    item.price_cost = (+item.price_cost)*100
+                    item.price = (+item.price)*100
+                    item.price_sale = (+item.price_sale)*100
+                    if(item.price_total) {
+                       item.price_total = (+item.price_total)*100 
+                    }
+                    return item
+                })
+                this.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
+                    if(res.code === 0){
+                        this.$message.success(res.msg);
+                        this.$_goOut(good_type)
+                    }else{
+                        this.$message.error(res.msg);
+                    }
+                })
+            }else{
+                let params = _.cloneDeep(formInfo)
+                let ico_small = ''
+                params.good_img_arr = params.good_img_arr.map(item => item.url)
+                params.show_img_arr = params.show_img_arr.map(item => item.url)
+                params.explain_img_arr = params.explain_img_arr.map(item => item.url)
+
+                params.sellPrice = params.sellPrice * 100
+                params.price = params.price * 100
+                params.good_sku = params.good_sku.map(item=>{
+                    if (item.ico_small) {
+                       ico_small = item.ico_small;
+                    }
+                    item.ico_small = ico_small;
+                    item.price_cost = (+item.price_cost)*100
+                    item.price = (+item.price)*100
+                    item.price_sale = (+item.price_sale)*100
+                    if(item.price_total) {
+                       item.price_total = (+item.price_total)*100 
+                    }
+                    return item
+                })
+
+                if(params.singleButton === '无规格' || this.$route.query.good_type == '1'){
+                    delete params.sku_type_arr
+                    delete params.good_sku
+                    delete params.sku_list
+                }
+                    
+                this.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
+                    if(res.code === 0){
+                        this.$message.success(res.msg);
+                        this.$_goOut(good_type)
+                    }else{
+                        this.$message.error(res.msg);
+                    }
+                })
+            }
+        })
+    },
+
+    $_goOut(good_type){
+        switch (good_type) {
+            case '1':
+                this.$router.push('/serviceList')
+                break;
+            case '2':
+                this.$router.push('/goodList')
+                break;
+            case '3':
+                this.$router.push('/purchaseList')
+                break;
+            case '4':
+                this.$router.push('/fictitiousList')
+                break;
+        
+            default:
+                break;
+        }
     },
 
     /** 
@@ -416,7 +535,7 @@ export default {
     },
 
     $_success2(response, file, fileList){
-        if(fileList.length >= 6){
+        if(fileList.length >= 4){
             this.canAdd__goodImg2 = true
         }
         this.limitNumber2 = 6 - (+fileList.length)
@@ -471,7 +590,7 @@ export default {
         this.currentFormInfo.good_img_arr = fileList
     },
     $_remove2(file, fileList){
-        this.limitNumber2 = 6 - (+fileList.length)
+        this.limitNumber2 = 4 - (+fileList.length)
         this.canAdd__goodImg2 = false
         this.currentFormInfo.explain_img_arr = fileList
     },
