@@ -510,7 +510,7 @@ export default {
      */
     $_SpanMethod({ row, column, rowIndex, columnIndex }) {
       const columnIndexNum = this.isGoodFriend ? 7 : 6;
-      if (columnIndex === 0 || columnIndex === 7) {
+      if (columnIndex === 0 || columnIndex === 6) {
         let len = 0
         if(this.currentFormInfo.goodSkuInfo && this.currentFormInfo.goodSkuInfo.length>1){
             len = this.currentFormInfo.goodSkuInfo[1].list.length

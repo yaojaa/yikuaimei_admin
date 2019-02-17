@@ -97,6 +97,7 @@ export default {
       this.$refs.currentFormInfo.validate((valid) => {
         if (valid) {
             if(good_id === '0'){
+                let ico_small = ''
                 let params = _.cloneDeep(formInfo)
                 params.good_img_arr = params.good_img_arr.map(item => item.response.data.file_name)
                 params.explain_img_arr = params.explain_img_arr.map(item => item.response.data.file_name)
@@ -104,6 +105,10 @@ export default {
                 params.price = (+params.price)*100
                 params.sellPrice = (+params.sellPrice)*100
                 params.good_sku = params.good_sku.map(item=>{
+                    if (item.ico_small) {
+                       ico_small = item.ico_small
+                    }
+                    item.ico_small = ico_small;
                     item.price_cost = (+item.price_cost)*100
                     item.price = (+item.price)*100
                     item.price_sale = (+item.price_sale)*100
@@ -119,14 +124,18 @@ export default {
                 })
             }else{
                 let params = _.cloneDeep(formInfo)
+                let ico_small = ''
                 params.good_img_arr = params.good_img_arr.map(item => item.url)
                 params.show_img_arr = params.show_img_arr.map(item => item.url)
                 params.explain_img_arr = params.explain_img_arr.map(item => item.url)
 
                 params.sellPrice = params.sellPrice * 100
                 params.price = params.price * 100
-
                 params.good_sku = params.good_sku.map(item=>{
+                    if (item.ico_small) {
+                       ico_small = item.ico_small;
+                    }
+                    item.ico_small = ico_small;
                     item.price_cost = (+item.price_cost)*100
                     item.price = (+item.price)*100
                     item.price_sale = (+item.price_sale)*100
