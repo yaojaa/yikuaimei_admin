@@ -11,7 +11,7 @@
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
-                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/order/list_service', query: {[tag.key]: tag.value }}">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/order/serviceOrderList', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
                     </div>
                 </div>
@@ -33,20 +33,18 @@ export default {
             status_filter: '',
 
             tagsListGroup: {
-                '订单类型：': [
-                    { title: '全部', key: 'business_type', value: '' },
-                    { title: '利润归门店', key: 'business_type', value: 1 },
-                    { title: '利润归平台', key: 'business_type', value: 2 }
-                ],
+                // '订单类型：':[
+                //         {title:'全部',key:'profit',value:''},
+                //         {title:'利润归门店',key:'profit',value:2},
+                //         {title:'利润归平台',key:'profit',value:1}
+                //          ],
                 '订单状态：': [
 
                     { title: '全部', key: 'status', value: 0 },
-                    { title: '待处理', key: 'status', value: 1 },
-                    { title: '已付款', key: 'status', value: 2 },
-                    { title: '已发货', key: 'status', value: 3 },
-                    { title: '待评价', key: 'status', value: 4 },
-                    { title: '已评价', key: 'status', value: 5 },
-                    { title: '已取消', key: 'status', value: 8 },
+                    { title: '待付款', key: 'status', value: 1 },
+                    { title: '未核销', key: 'status', value: 2 },
+                    { title: '已核销', key: 'status', value: 3 },
+                    { title: '已取消', key: 'status', value: 4 },
 
                 ]
             },
@@ -56,28 +54,28 @@ export default {
                 "list": [{
                         "type": "input-text", //输入文本
                         "label": "用户名",
-                        "name": "order_user_name",
+                        "name": "user_name",
                         "value": "",
                         "placeholder": "用户名",
                     },
                     {
                         "type": "input-text", //输入文本
                         "label": "手机号",
-                        "name": "order_user_phone",
+                        "name": "phone",
                         "value": "",
                         "placeholder": "",
                     },
                     {
                         "type": "input-text", //选择器
                         "label": "订单号",
-                        "name": "order_code",
+                        "name": "order_number",
                         "value": ""
 
                     },
                     {
                         "type": "input-text", //选择器
                         "label": "商品名称",
-                        "name": "option",
+                        "name": "goods_name",
                         "value": ""
 
                     },
@@ -97,17 +95,10 @@ export default {
                         "align": "center",
                         "label": "商品名称",
                         "prop": "business_ctime",
-                        "width": "300",
+                        "width": "",
                         formatter(row) {
-                            let str = '';
-                            row.goods_list.forEach(item => {
-                                str += '<div class="flex_box"><div class="flex_item">' +
-                                    '<img width="30" height="30" src="' + item.goods_img + '"/></div>' +
-                                    '<div class="flex_item">' + item.goods_name + '</div>' +
-                                    '<div class="flex_item">' +
-                                    '¥' + item.goods_price + '✖️ ' + item.goods_num +
-                                    '</div></div>'
-                            })
+                            let str = "<div style='display:flex; background-color#fff;'>";
+                            str += "<div style='width:80px;height:80px;padding:8px; flex-shrink:0;'><img style='width:100%; height:100%;' src='/static/img/img.jpg'></div>";
 
                             str += "</div>";
                             return str;
@@ -124,48 +115,53 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "用户/手机号",
+                        "label": "姓名",
                         "prop": "order_user_name",
                         "width": "",
-                        formatter(row) {
-                            let str = row.order_user_name + '<br/>' + row.order_user_phone;
-                            return str;
-                        }
 
                     },
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "实付金额",
-                        "prop": "order_price",
+                        "label": "电话",
+                        "prop": "business_phone",
                         "width": "",
 
                     },
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "订单状态",
-                        "prop": "order_status_name",
-                        "width": ""
+                        "label": "类别",
+                        "prop": "category_id",
+                        "width": "",
+
                     },
                     {
                         "type": "text",
+                        "align": "center",
+                        "label": "城市",
+                        "prop": "date",
+                        "width": "",
+
+                    },
+                    {
+                        "type": "text",
+                        "align": "center",
+                        "label": "状态",
+                        "prop": "date",
+                        "width": "",
+
+                    },
+                    {
+                        "type": "handle",
                         "label": "操作",
                         "align": "center",
                         "width": "200",
-                        formatter: function(row) {
-
-                            let str = '<div>'
-                            str += '<a href="/order/order_service_detail/' + row.order_code + '" class="el-button reset el-button--default el-button--small is-plain" >详情</a>'
-
-                            str += '</div>'
-
-                            return str
-
-
-
-                        }
-
+                        "list": [{
+                            "label": "查看详情",
+                            "url": "/order/order_service_detail",
+                            "query": "order_code"
+                        }]
                     }
                 ],
             }
@@ -202,15 +198,9 @@ export default {
         //
         getData(k, v) {
             this.$refs.table.getData({
-                [k]: v })
-        },
-
-        //获取订单提成利润时间
-        //
-        getAliceData() {
-            ///api/admin/orderService/profit 
+                [k]: v
+            })
         }
-
 
 
     }

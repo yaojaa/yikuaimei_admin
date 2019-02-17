@@ -65,10 +65,10 @@
                                 title: '商品订单'
                             },
                             {
-                                index: '/order/list_service',
+                                // index: '/order/list_service',
+                                // title: '服务订单'
+                                index: '/order/serviceOrderList',
                                 title: '服务订单'
-                                // index: '/order/serviceOrderList',
-                                // title: '门店服务'
                             },
                             {
                                 index: '/order/purchaseOrderList',
