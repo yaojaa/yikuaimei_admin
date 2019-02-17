@@ -150,7 +150,6 @@ export default {
 
                 if(this.$route.query.good_type == '1'){
                     delete params.sku_type_arr
-                    delete params.good_sku
                     delete params.sku_list
                 }
                 if(params.singleButton === '无规格'){
