@@ -30,8 +30,9 @@
                 <el-radio-group v-model="currentFormInfo.singleButton" @change="this.$_showFormat">
                     <el-radio-button label="无规格" />
                     <el-radio-button label="添加规格" />
-                </el-radio-group>
+                </el-radio-group> 
             </el-form-item>
+            
             <el-form-item v-if="goodSkuStatus">
                 <el-row :gutter="20">
                     <el-col :span="4">名称:</el-col>
@@ -42,15 +43,16 @@
                     <el-col :span="12"><el-button v-for="tag in item.list" :key="`${tag}tag`" plain>{{tag}}</el-button></el-col>
                     <el-col :span="2"> 
                         <el-button  v-if="idx === currentFormInfo.sku_type_arr.length-1"  @click="showFormat()">
-                            编辑{{currentFormInfo.sku_type_arr}}
+                            编辑
                         </el-button>
                     </el-col>
                 </el-row>
+                
                 <el-table :data="currentFormInfo.good_sku" style="width: 100%" border :span-method="$_SpanMethod" class="table">
                     <!-- 功能列 -->
-                    <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" /> 
+                    <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" v-if="currentFormInfo.sku_type_arr[0]" /> 
                     <!-- 容量列 -->
-                    <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr[1]" />
+                    <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr.length>1" />
                     <el-table-column label="售价" >
                         <template slot-scope="scope">
                             <el-input  v-model="scope.row.price_sale" placeholder="10000" /> <span class="outText1">元</span>
@@ -509,9 +511,10 @@ export default {
     $_SpanMethod({ row, column, rowIndex, columnIndex }) {
       const columnIndexNum = this.isGoodFriend ? 7 : 6;
       if (columnIndex === 0 || columnIndex === 7) {
-        //   this.currentFormInfo.sku_type_arr.length
-        console.log(this.currentFormInfo.goodSkuInfo[1].list)
-        let len = this.currentFormInfo.goodSkuInfo[1].list.length || 0
+        let len = 0
+        if(this.currentFormInfo.goodSkuInfo && this.currentFormInfo.goodSkuInfo.length>1){
+            len = this.currentFormInfo.goodSkuInfo[1].list.length
+        }
         if(!len || len === 1){
             return {
                 rowspan: 1,
@@ -552,12 +555,13 @@ export default {
             good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i]],sku_code:'',price_total:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
         }
       }
-      let sku_type_arr = this.currentFormInfo.sku_type_arr || []
-       goodSku.forEach(function(item){
+      let arr = []
+      goodSku.forEach(function(item){
           if(item.name){
-              sku_type_arr.push(item.name)
+              arr.push(item.name)
           }
       }) // 功能容量
+      this.currentFormInfo.sku_type_arr = arr
 
       this.currentFormInfo.good_sku = good_sku_arr
       if(this.currentFormInfo.goodSkuInfo && this.currentFormInfo.goodSkuInfo.length){
