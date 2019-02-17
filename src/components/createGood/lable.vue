@@ -9,7 +9,7 @@
       </div>
       
       <el-row>
-        <el-col :span="8"> 
+        <el-col :span="6"> 
             <el-menu class="el-menu-vertical-demo" :default-active="defaultActive" v-for="item in lableList" :key="item.tag_group_name"  @select="computedSons">
               <el-menu-item :index="item.tag_group_name" v-if="!item.tag_group_sons">
                 <span slot="title"> {{item.tag_group_name}} </span>
@@ -24,7 +24,7 @@
             </el-menu>
         </el-col>
 
-        <el-col :span="16">
+        <el-col :span="18">
           <div class="grid-content bg-purple-light">
             <ul class="lableList">
                 <li 
