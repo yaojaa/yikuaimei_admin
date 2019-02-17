@@ -1184,3 +1184,38 @@ ol {
 .filter-tag-item .tag-fd{
     
 }
+
+.item-list{
+
+}
+.item-list .item{
+    margin-bottom: 12px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+}
+.item-list .item:last-child{
+    margin-bottom: 0;
+}
+.item-list .item .hd{
+    color:#666;
+    margin-right: 5px;
+}
+.item-list .item .bd{
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    -o-flex: 1;
+    flex: 1;
+}
+.item-list.four-text .hd{
+    width: 5em;
+}
+.item-list.five-text .hd{
+    width: 6em;
+}
+.item-list.six-text .hd{
+    width: 7em;
+}
