@@ -235,8 +235,8 @@
                 </el-upload>
             </el-form-item>
             <el-form-item class="form-footer">
-                <el-button @click="$_changeTabNext" v-if="isCoupon">下一步</el-button>
-                <el-button @click="$_changeTabNext" v-else>上架</el-button>
+                <el-button @click="$_changeTabNext" v-if="!isCoupon">下一步</el-button>
+                <el-button @click="$_createProduct" v-if="isCoupon">上架</el-button>
             </el-form-item>
         </el-form>
         <!-- 表单list End -->
@@ -358,7 +358,7 @@ export default {
         }
         this.$store.dispatch('createdGoode/fetchLableList', {
             // tag_group_type: this.formInfo.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
-            tag_group_type: +this.formInfo.good_type === 3 ? 1 : +this.formInfo.good_type === 4 ? 3 : +this.formInfo.good_type , // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+            tag_group_type: +this.formInfo.good_type === 3 ? 1 : +this.formInfo.good_type === 4 ? 1 : +this.formInfo.good_type , // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
             category_id: this.currentFormInfo.category_id || 1, // 行业id @TODO 默认是1 ，变量
             get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
         }).then(()=>{
@@ -411,7 +411,7 @@ export default {
                 })
                 this.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
                     if(res.code === 0){
-                        this.$message.success(res.msg);
+                        this.$alert('添加成功');
                         this.$_goOut(good_type)
                     }else{
                         this.$message.error(res.msg);
@@ -440,15 +440,19 @@ export default {
                     return item
                 })
 
-                if(params.singleButton === '无规格' || this.$route.query.good_type == '1'){
+                // if(params.singleButton === '无规格' || this.$route.query.good_type == '1'){
+                //     delete params.sku_type_arr
+                //     delete params.good_sku
+                //     delete params.sku_list
+                // }
+
+                if(params.singleButton === '无规格'){
                     delete params.sku_type_arr
-                    delete params.good_sku
-                    delete params.sku_list
                 }
                     
                 this.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
                     if(res.code === 0){
-                        this.$message.success(res.msg);
+                        this.$alert('编辑成功');
                         this.$_goOut(good_type)
                     }else{
                         this.$message.error(res.msg);
