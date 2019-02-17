@@ -6,22 +6,15 @@
 			</div>
 		</div>
 		<div class="sub-heading">
-			<h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
+			<h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">标签管理</span></h3>
 			<div class="sub-actions">
-				<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/createLabel' })">添加标签</el-button>
+
+				<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label/groupAdd' })">添加标签组</el-button>
+
+				<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label/add' })">添加标签</el-button>
 			</div>
 		</div>
-		<div class="status_filter" v-for="(item,key,index) in tagsListGroup" :key="index">
-			<ul>
-				<li class="tags-li">
-					{{key}}
-					<router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/manage/label', query: {
-																					[tag.key]: tag.value }}">
-						{{tag.title}}</router-link>
 	
-				</li>
-			</ul>
-		</div>
 		<div class="page-content">
 			<nomal-table ref="table" :table-json="tableJson" :url="url">
 				<table-search :searchs="searchs"></table-search>

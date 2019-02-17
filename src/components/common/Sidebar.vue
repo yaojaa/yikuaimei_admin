@@ -116,21 +116,7 @@
                             }
                         ]
                     },
-                //     {
-                //         icon: 'iconfont icon-yingxiaocopy',
-                //         index: 'index7',
-                //         title: '消费者管理',
-                //         subs: [
-                //             {
-                //                 index: '/marketcoupon',
-                //                 title: '消费者'
-                //             },
-                //             {
-                //                 index: '/physicalcoupon',
-                //                 title: '黑名单'
-                //             }
-                //         ]
-                //     },
+                  
                 //     {
                 //         icon: 'iconfont icon-yingxiaocopy',
                 //         index: 'index8',

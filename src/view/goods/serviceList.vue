@@ -9,8 +9,7 @@
             <div class="sub-heading">
                 <h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
                 <div class="sub-actions">
-                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/categorylist' })">管理分类</el-button>
-                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/labellist' })">管理标签</el-button>
+                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label' })">管理标签</el-button>
                     <!-- good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券-->
                     <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=1' })">添加服务</el-button>
                 </div>
