@@ -39,7 +39,7 @@
                     <el-col :span="12">选项: </el-col>
                 </el-row>
                 <el-row :gutter="20"  v-for="(item,idx) in currentFormInfo.goodSkuInfo" :key="`${item.name}${idx}`" class="goodSkuInfo_row">
-                    <el-col :span="4"><el-button plain>{{item.name}}</el-button></el-col>
+                    <el-col :span="4"><el-button   v-if="item.name" plain>{{item.name}}</el-button></el-col>
                     <el-col :span="12"><el-button v-for="tag in item.list" :key="`${tag}tag`" plain>{{tag}}</el-button></el-col>
                     <el-col :span="2"> <el-button v-if="idx === currentFormInfo.goodSkuInfo.length-1" click="$_edit" @click="showFormat()">编辑</el-button></el-col>
                 </el-row>
@@ -281,8 +281,8 @@ export default {
           { min: 2, max: 30, message: "长度在2-30个字符", trigger: "blur" }
         ],
         good_explain: [
-          { required: true, message: `${this.type}在详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" },
-          { min: 2, max: 50, message: `在${this.type}详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" }
+          { required: true, message: `${type[this.$route.query.good_type]}在详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" },
+          { min: 2, max: 50, message: `在${type[this.$route.query.good_type]}详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" }
         ],
         category_id: [
           { required: true, message: "请选择所属行业分类", trigger: "blur" }
@@ -293,10 +293,10 @@ export default {
         ],
         format: [{ required: true, message: "请选择规格", trigger: "change" }],
         productCode: [
-          { required: true, message: `请填写${this.type}编码`, trigger: "blur" }
+          { required: true, message: `请填写${type[this.$route.query.good_type]}编码`, trigger: "blur" }
         ],
         price_sale: [{ required: true, message: "请填写售价", trigger: "blur" }],
-        sku_code: [{ required: true, message: `请填写${this.type}编码`, trigger: "blur" }],
+        sku_code: [{ required: true, message: `请填写${type[this.$route.query.good_type]}编码`, trigger: "blur" }],
         price: [{ required: true, message: "请填写原价", trigger: "blur" }],
         price_cost: [{ required: true, message: "请填写成本", trigger: "blur" }],
         price_total: [{ required: true, message: "请填写总价", trigger: "blur" }]
@@ -475,7 +475,7 @@ export default {
     $_showFormat() {
       if (this.currentFormInfo.singleButton === "添加规格") {
         this.showFormat()
-      }else if(!isGoodFriend){
+      }else if(!this.isGoodFriend){
         // @TOdO 取消显示
         this.currentFormInfo.goodSkuInfo = [
             {
@@ -524,7 +524,6 @@ export default {
      * @TODO 添加规格 currentFormInfo 应该是个数组
      */
     $_addFormat(goodSku) {
-      debugger
       this.currentFormInfo.goodSkuInfo = goodSku
       let sku_type_arr_key = goodSku[0].list
       let sku_type_arr_val = goodSku[1].list
@@ -559,7 +558,6 @@ export default {
             this.currentFormInfo.good_sku.push(obj)
             delete this.currentFormInfo.sku_type_arr
         }
-            debugger
             console.log(this.currentFormInfo)
         this.$refs.currentFormInfo.validate((valid) => {
             if (valid) {

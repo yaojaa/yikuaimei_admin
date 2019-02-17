@@ -87,8 +87,14 @@ export default {
     },
     lableList(val) {
       this.initSons()
-    }
-    
+    },
+    lable_show:{
+      handler: function (newVal, oldVal) {
+        if(newVal){
+          this.tag_list = _.cloneDeep(this.tagList|| [])
+        }
+      }
+    },
   },
 
   methods: {

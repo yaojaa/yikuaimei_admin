@@ -61,7 +61,7 @@ export default {
       },
 
       rules: {
-        show_img_arr: [{ required: true, message: `请选择${this.type}展示图`, trigger: "change" }], // @TODO limitNumber判断是为6
+        show_img_arr: [{ required: true, message: `请选择${type[this.$route.query.good_type]}展示图`, trigger: "change" }], // @TODO limitNumber判断是为6
         good_notes: [{ required: true, message: "请填写购买须知", trigger: "blur" }],
       }
     }
