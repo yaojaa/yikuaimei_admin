@@ -19,11 +19,13 @@
                 </el-tab-pane>
                 <el-tab-pane label="退款/退货" name="OrderRefund">
                     <div class="refund-list">
-                        <el-tab-pane :key="index" v-for="(item,index) in refundList" :label="index+1" :name="reufund">
-                            <RefundInfo :refundInfo="refundInfo"></RefundInfo>
-                        </el-tab-pane>
+                        <!-- {{refundList}} -->
+                        <el-tabs v-model="refundTabName">
+                            <el-tab-pane :key="item.order_refund_id" v-for="(item,index) in refundList" :label="`订单`+(index+1)" :name="`refund_`+index">
+                                <RefundInfo :refundInfo="item"></RefundInfo>
+                            </el-tab-pane>
+                        </el-tabs>
                     </div>
-                    <RefundInfo :refundInfo="refundInfo"></RefundInfo>
                 </el-tab-pane>
             </el-tabs>
         </div>
@@ -47,6 +49,7 @@ export default {
     data() {
         return {
             tabName: "OrderInfo", // tab标签默认定位
+            refundTabName: "refund_0",
             orderCode: this.$route.params.order_code,
             order: {},
             refundList: [],
@@ -94,10 +97,12 @@ export default {
 
             this.$axios({
                 method: 'get',
-                url: '/api/admin/order/refundList ',
+                url: '/api/admin/order/refundList',
                 params: params
             }).then((res) => {
+                console.log(res.data);
                 this.refundList = res.data.data
+                console.log(this.refundList);
             }).catch((error) => {});
         },
 

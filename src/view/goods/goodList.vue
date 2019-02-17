@@ -1,16 +1,18 @@
 <template>
-    <div class="page">
-        <div class="page-header">
-            <div class="crumbs">
-                <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
-            </div>
-            <div class="page-header-actions">
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/categorylist' })">管理分类</el-button>
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/labellist' })">管理标签</el-button>
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=2' })">添加商品</el-button>
-            </div>
-        </div>
-        <div class="page-content">
+	<div class="page">
+		<div class="page-header">
+			<div class="crumbs">
+				<bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
+			</div>
+		</div>
+		<div class="page-content">
+			<div class="sub-heading">
+				<h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
+				<div class="sub-actions">
+					<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label' })">管理标签</el-button>
+					<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=2' })">添加商品</el-button>
+				</div>
+			</div>
             <div class="filter-tag-box">
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
@@ -161,7 +163,7 @@ export default {
                                 row.good_ico +
                                 "'></div>";
                             str += "<p class='list-good-name'>" + row.good_name + "</p>";
-                            str += "<p class='list-good-price' style='margin-top:10px;'>¥" + row.price_low + "</p>";
+                            str += "<p class='list-good-price' style='margin-top:10px;'>¥" + (row.price_low / 100).toFixed(2) + "</p>";
                             str += "</div>";
                             return str;
                         }
@@ -173,12 +175,16 @@ export default {
                         "align": "center",
                         formatter(row) {
                             let tag_name_arr = '';
-                            if (row.tag_name_arr.length > 2) {
-                                tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1] + '...';
-                            } else if (row.tag_name_arr.length === 2) {
-                                tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1];
-                            } else if (row.tag_name_arr.length === 1) {
-                                tag_name_arr = row.tag_name_arr[0];
+                            if (row.tag_name_arr) {
+                                if (row.tag_name_arr.length > 2) {
+                                    tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1] + '...';
+                                } else if (row.tag_name_arr.length === 2) {
+                                    tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1];
+                                } else if (row.tag_name_arr.length === 1) {
+                                    tag_name_arr = row.tag_name_arr[0];
+                                } else {
+                                    tag_name_arr = '--';
+                                }
                             } else {
                                 tag_name_arr = '--';
                             }

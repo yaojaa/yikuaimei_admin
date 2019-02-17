@@ -35,8 +35,10 @@ export default {
                 })
                 .then((res) => {
                     let result = res.data.data;
-                    result.productCode = result.productCode ? result.productCode : result._id;
                     result.id = result.good_id;
+
+                    // 单规格的时候 编码，售价，原价，成本
+                    result.productCode = result.productCode ? result.productCode : result._id;
                     result.sellPrice = (+result.price_high) / 100;
                     result.price = (+result.price_low) / 100;
 
@@ -70,6 +72,7 @@ export default {
                         item.price_cost = (+item.price_cost) / 100
                         item.price = (+item.price) / 100
                         item.price_sale = (+item.price_sale) / 100
+                        item.price_total = (+item.price_total) / 100
                         return item
                     });
                     result.good_video_pic__url = result.good_video_pic
@@ -82,6 +85,7 @@ export default {
                         let arr = [];
                         arr[0] = Array.from(new Set(sku_list.map((item) => item.sku_type_arr[0])));
                         arr[1] = Array.from(new Set(sku_list.map((item) => item.sku_type_arr[1])));
+                        arr[2] = Array.from(new Set(sku_list.map((item) => item.sku_type_arr[2])));
                         for (var i = 0; i < result.sku_type_arr.length; i++) {
                             let goodSkuInfoitem = {
                                 inputValue: '',
@@ -91,6 +95,38 @@ export default {
                             result.goodSkuInfo.push(goodSkuInfoitem);
                         }
                     }
+
+                    // 单规格
+                    if (!result.sku_type_arr || !result.sku_type_arr.length) {
+                        result.singleButton = "无规格"
+                        let {
+                            sku_code,
+                            sellPrice,
+                            price_sale,
+                            price,
+                            price_total
+                        } = sku_list[0]
+                        result.sku_code = sku_code
+                        result.sellPrice = sellPrice
+                        result.price_sale = price_sale
+                        result.price = price
+                        result.price_total = price_total
+                    } else {
+                        result.singleButton = "添加规格"
+                    }
+
+                    let {
+                        sku_code,
+                        price_cost,
+                        price_sale,
+                        price,
+                        price_total
+                    } = sku_list[0]
+                    result.sku_code = sku_code
+                    result.price_cost = price_cost
+                    result.price_sale = price_sale
+                    result.price = price
+                    result.price_total = price_total
                     commit('setFormInfo', result);
                     return result;
                 });
