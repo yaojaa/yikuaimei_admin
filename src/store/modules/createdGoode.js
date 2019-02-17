@@ -114,19 +114,6 @@ export default {
                     } else {
                         result.singleButton = "添加规格"
                     }
-
-                    let {
-                        sku_code,
-                        price_cost,
-                        price_sale,
-                        price,
-                        price_total
-                    } = sku_list[0]
-                    result.sku_code = sku_code
-                    result.price_cost = price_cost
-                    result.price_sale = price_sale
-                    result.price = price
-                    result.price_total = price_total
                     commit('setFormInfo', result);
                     return result;
                 });

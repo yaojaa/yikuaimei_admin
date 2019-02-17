@@ -141,6 +141,12 @@ export default {
                     item.price_sale = (+item.price_sale)*100
                     return item
                 })
+
+                if(params.singleButton === '无规格' || this.$route.query.good_type == '1'){
+                    delete params.sku_type_arr
+                    delete params.good_sku
+                    delete params.sku_list
+                }
                     
                 this.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
                     if(res.code === 0){

@@ -481,6 +481,18 @@ export default {
      */
     $_showFormat() {
       if (this.currentFormInfo.singleButton === "添加规格") {
+          this.currentFormInfo.goodSkuInfo = [
+            {
+                name: '',
+                list: [],
+                inputValue: ''
+            },
+            {
+                name: '',
+                list: [],
+                inputValue: ''
+            }
+        ]
         this.showFormat()
       }else if(!this.isGoodFriend){
         // @TOdO 取消显示
@@ -496,9 +508,10 @@ export default {
                 inputValue: ''
             }
         ]
-        this.currentFormInfo.sku_type_arr = []
-        this.currentFormInfo.good_sku = []
+        delete this.currentFormInfo.sku_type_arr
+        delete this.currentFormInfo.good_sku
         this.goodSkuStatus = false
+        delete this.currentFormInfo.sku_list
       }
     },
     
@@ -589,9 +602,10 @@ export default {
             this.currentFormInfo.good_sku.push(obj)
             delete this.currentFormInfo.sku_type_arr
         }
+        let currentFormInfo = this.currentFormInfo
         this.$refs.currentFormInfo.validate((valid) => {
             if (valid) {
-                this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
+                this.$store.commit('createdGoode/setFormInfo',currentFormInfo)
                 this.$emit("changeTabNext");
             }
         })
