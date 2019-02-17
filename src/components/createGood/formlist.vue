@@ -542,8 +542,6 @@ export default {
      */
     $_addFormat(goodSku) {
       this.currentFormInfo.goodSkuInfo = goodSku
-      debugger
-      console.log(goodSku)
       let sku_type_arr_key = goodSku[0].list  // 功能  list :[美白，保湿]
       let sku_type_arr_val = goodSku[1].list  // 容量  list :[50ml,100ml,15ml]
       let good_sku_arr = []

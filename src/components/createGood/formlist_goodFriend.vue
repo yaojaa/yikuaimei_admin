@@ -213,11 +213,13 @@ export default {
       })
 
       if(!canNext){
-          alert('规格至少选一个')
+          this.$message({
+          message: '规格至少选一个',
+          type: 'warning'
+        });
       }else{
           this.currentFormInfo.good_friends = this.good_friends
           this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
-          debugger
           this.$emit("changeTabNext");
       }
     },
