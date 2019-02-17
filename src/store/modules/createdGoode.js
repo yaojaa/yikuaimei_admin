@@ -135,9 +135,7 @@ export default {
                 })
                 .then((res) => {
                     console.log(res.data);
-                    if (res.data.data.length) {
-                        commit('setLableList', res.data.data);
-                    }
+                    commit('setLableList', res.data.data);
                 });
         },
 

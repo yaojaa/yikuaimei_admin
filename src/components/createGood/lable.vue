@@ -1,7 +1,8 @@
 <template>
     <!-- dialog_showLable 弹框 -->
     <el-dialog title="标签" :visible.sync="lable_show" size="large">
-      <div>
+      <p v-if="JSON.stringify(lableList) === '{}' || lableList.length === 0">暂无标签数据，请联系后台人员添加</p>
+      <div v-if="lableList.length">
           已选：
           <el-tag v-for="(tag,idx) in tag_list" :key="tag.tag_id" closable type="gray" @close="$_deleteTag(idx)">
               {{tag.tag_name}}
