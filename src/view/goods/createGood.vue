@@ -61,7 +61,7 @@ export default {
      * 是否是耗材，门店服务
     */
     isGoodFriend(){
-      return this.$route.query.good_type === '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+      return this.$route.query.good_type == '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
     },
 
     /** 

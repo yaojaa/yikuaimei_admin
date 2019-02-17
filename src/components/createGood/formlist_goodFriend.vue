@@ -196,6 +196,7 @@ export default {
     $_changeTabNext() {
       if(this.good_friends.length === 0){
         this.$emit("changeTabNext");
+        return
       }
       let canNext = true
       this.good_friends.forEach(good => {
@@ -216,6 +217,7 @@ export default {
       }else{
           this.currentFormInfo.good_friends = this.good_friends
           this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
+          debugger
           this.$emit("changeTabNext");
       }
     },
