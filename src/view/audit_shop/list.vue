@@ -7,7 +7,7 @@
             </el-breadcrumb>
         </div>
         <div class="page-content">
-            <div class="filter-tag-box mb-lg">
+            <div class="filter-tag-box">
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
