@@ -371,6 +371,7 @@ export default {
      * 创建，调用创建接口
      */
     $_createProduct() {
+        debugger
         if(this.currentFormInfo.singleButton === '无规格' || this.isGoodFriend){
             this.currentFormInfo.good_sku = []
             let obj = {
@@ -385,9 +386,10 @@ export default {
         }
         let currentFormInfo = this.currentFormInfo
         let {good_id,good_type} = this.$route.query
-        let formInfo = this.formInfo
+        
         this.$refs.currentFormInfo.validate((valid) => {
             this.$store.commit('createdGoode/setFormInfo',currentFormInfo)
+            let formInfo = this.formInfo
             if(good_id === '0'){
                 let ico_small = ''
                 let params = _.cloneDeep(formInfo)
