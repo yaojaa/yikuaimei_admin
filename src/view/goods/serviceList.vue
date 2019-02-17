@@ -10,7 +10,6 @@
                 <h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
                 <div class="sub-actions">
                     <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label' })">管理标签</el-button>
-                    <!-- good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券-->
                     <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=1' })">添加服务</el-button>
                 </div>
             </div>
@@ -19,24 +18,22 @@
                     <li class="tags-li">
                         {{key}}
                         <router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/serviceList', query: {
-                                                                      [tag.key]: tag.value }}">
+                                                                          [tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
-    
                     </li>
                 </ul>
             </div>
             <nomal-table ref="table" :table-json="tableJson" :url="url" :query="{good_type: 1}">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
-    
             <el-dialog title="下架" :visible="visible" width="30%">
                 <p>确定要下架{{currentItem.good_name}}吗?</p>
                 <p>操作人:{{user.data.user_realname}}</p>
                 <!-- <span>{{currentItem.name}}</span> -->
                 <span slot="footer" class="dialog-footer">
-                                <el-button @click="visible = false">取 消</el-button>
-                                <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
-                            </span>
+                                    <el-button @click="visible = false">取 消</el-button>
+                                    <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
+                                </span>
             </el-dialog>
         </div>
     </div>
@@ -166,7 +163,7 @@
                                     row.good_ico +
                                     "'></div>";
                                 str += "<p class='list-good-name'>" + row.good_name + "</p>";
-                                str += "<p class='list-good-price' style='margin-top:10px;'>¥" + row.price_low + "</p>";
+                                str += "<p class='list-good-price' style='margin-top:10px;'>¥" + (row.price_low / 100).toFixed(2) + "</p>";
                                 str += "</div>";
                                 return str;
                             }
@@ -178,12 +175,16 @@
                             "align": "center",
                             formatter(row) {
                                 let tag_name_arr = '';
-                                if (row.tag_name_arr.length > 2) {
-                                    tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1] + '...';
-                                } else if (row.tag_name_arr.length === 2) {
-                                    tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1];
-                                } else if (row.tag_name_arr.length === 1) {
-                                    tag_name_arr = row.tag_name_arr[0];
+                                if (row.tag_name_arr) {
+                                    if (row.tag_name_arr.length > 2) {
+                                        tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1] + '...';
+                                    } else if (row.tag_name_arr.length === 2) {
+                                        tag_name_arr = row.tag_name_arr[0] + ',' + row.tag_name_arr[1];
+                                    } else if (row.tag_name_arr.length === 1) {
+                                        tag_name_arr = row.tag_name_arr[0];
+                                    } else {
+                                        tag_name_arr = '--';
+                                    }
                                 } else {
                                     tag_name_arr = '--';
                                 }
@@ -205,8 +206,8 @@
                             "align": "center",
                             formatter(row) {
                                 return `<p style='text-align: center'>
-                                                      ${Config.status[row.is_use]}
-                                                    </p>`;
+                                                          ${Config.status[row.is_use]}
+                                                        </p>`;
                             }
                         },
                         {

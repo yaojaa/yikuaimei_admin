@@ -1,6 +1,6 @@
 <template>
     <div class="refund_info">
-        我是退货退款
+        {{refundInfo}}
     </div>
 </template>
 
@@ -15,7 +15,7 @@
     
         data() {
             return {
-                refundList: []
+                
             }
         },
     
@@ -36,20 +36,10 @@
         },
     
         mounted() {
-            this.getData(this.$route.params);
         },
     
         methods: {
-            getData(params) {
-				this.$axios({
-					method: 'get',
-					url: '/api/admin/order/refundList',
-					params: params
-				}).then((res) => {
-                    console.log(res.data);
-                    this.refundList = res.data.data;
-				}).catch((error) => {});
-            }
+            
         }
     }
 </script>
