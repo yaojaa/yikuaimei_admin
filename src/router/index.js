@@ -269,20 +269,56 @@ export default new Router({
                 },
                 {
                     // 加盟商
-                    path: '/alliance',
-                    component: resolve => require(['../view/alliance.vue'], resolve),
+                    path: '/business/alliance',
+                    component: resolve => require(['../view/business/alliance.vue'], resolve),
                     meta: {
                         title: '加盟商'
                     }
                 },
                 {
                     // 加盟商
-                    path: '/alliance_add',
-                    component: resolve => require(['../view/alliance_add.vue'], resolve),
+                    path: '/business/alliance_add',
+                    component: resolve => require(['../view/business/alliance_add.vue'], resolve),
                     meta: {
                         title: '添加加盟商'
                     }
                 },
+                {
+                    // 加盟商
+                    path: '/business/alliance_detail/:id',
+                    component: resolve => require(['../view/business/alliance_detail.vue'], resolve),
+                    meta: {
+                        title: '加盟商详情'
+                    }
+                },
+                {
+                    // 门店
+                    path: '/shop/list',
+                    component: resolve => require(['../view/shop/list.vue'], resolve),
+                    meta: {
+                        title: '门店'
+                    }
+                },
+
+                 {
+                    // 门店
+                    path: '/shop/add',
+                    component: resolve => require(['../view/shop/add.vue'], resolve),
+                    meta: {
+                        title: '添加门店'
+                    }
+                },
+
+                 {
+                    // 加盟商
+                    path: '/shop/detail/:id',
+                    component: resolve => require(['../view/shop/detail.vue'], resolve),
+                    meta: {
+                        title: '门店详情'
+                    }
+                },
+
+
                 {
                     // 测试表格
                     path: '/slot',

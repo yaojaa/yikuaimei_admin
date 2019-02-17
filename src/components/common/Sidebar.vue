@@ -107,11 +107,11 @@
                         title: '加盟商管理',
                         subs: [
                             {
-                                index: '/alliance',
+                                index: '/business/alliance',
                                 title: '加盟商'
                             },
                             {
-                                index: '/ad/all',
+                                index: '/shop/list',
                                 title: '门店'
                             }
                         ]

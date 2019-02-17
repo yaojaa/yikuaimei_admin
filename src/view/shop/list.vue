@@ -2,15 +2,15 @@
  <div class="page">
         <div class="page-header">
          <el-breadcrumb separator-class="el-icon-arrow-right" >
-                <el-breadcrumb-item>加盟商</el-breadcrumb-item>
+                <el-breadcrumb-item>门店</el-breadcrumb-item>
                 <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
             </el-breadcrumb> 
 
             <div class="sub-heading">
             <h3  class="sub-title">
-                <span  class="title">加盟商列表</span></h3> 
+                <span  class="title">门店列表</span></h3> 
                 <div class="sub-actions">
-<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/business/alliance_add' })">添加加盟商</el-button>
+<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/shop/add' })">添加门店</el-button>
                 </div>
         </div>
         </div> 
@@ -34,7 +34,7 @@
 
  
      <el-dialog :title="is_use==0?'停用':'启用'" :visible.sync="dialog" width="30%">
-              <p style="color:red">此操作会{{is_use==0?'停用':'启用'}}加盟商名下所有门店</p>
+              <p style="color:red">此操作会{{is_use==0?'停用':'启用'}}门店</p>
               <p>操作人:{{user.data.user_realname}}</p>
                  <p>操作备注:</p>
                  <p><el-input
@@ -75,9 +75,9 @@
                              ],
 
                     '选择状态:':[
-			                {title:'全部',key:'business_is_use',value:''},
-			                {title:'停用',key:'business_is_use',value:0},
-			                {title:'启用',key:'business_is_use',value:1}
+			                {title:'全部',key:'shop_is_use',value:''},
+			                {title:'停用',key:'shop_is_use',value:0},
+			                {title:'启用',key:'shop_is_use',value:1}
                              ]
                 },
                 searchs:{
@@ -125,21 +125,21 @@
                         },
                     ]
                 },
-                url: "/api/admin/business/index",
+                url: "/api/admin/shop/index",
 
                 tableJson: {
                     "column": [ //行
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "加盟日期",
-                            "prop": "business_ctime",
+                            "label": "创建时间",
+                            "prop": "shop_ctime",
                             "width": ""
                         },
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "加盟商门店",
+                            "label": "门店名称",
                             "prop": "business_name",
                             "width": "",
                             
@@ -147,15 +147,9 @@
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "法人姓名/手机号",
-                            "prop": "business_corporation",
-                            "width": "200",
-                            formatter(row) {
-                                return `<p style='text-align: center'>
-                                ${row.business_corporation}<br/>
-                                ${row.business_phone}
-                                                    </p>`;
-                            }
+                            "label": "店长",
+                            "prop": "shop_account_name",
+                            "width": "200"
                             
                         },
                       
@@ -165,23 +159,23 @@
                             "label": "类型",
                             "width": "",
                             formatter(row){
-                                return row.business_type==1?'加盟':'非加盟'
+                                return row.shop_type==1?'旗舰店':'分店'
                             }
                             
                         },
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "公司地址",
-                            "prop": "business_company_adress",
+                            "label": "城市",
+                            "prop": "shop_address",
                             "width": "200",
                             
                         },
                            {
                             "type": "text",
                             "align": "center",
-                            "label": "推荐人账号",
-                            "prop": "p_name",
+                            "label": "归属加盟商",
+                            "prop": "business_name",
                             
                         },
                             {
@@ -191,7 +185,7 @@
                             "width": "",
                             formatter(row){
                                 return `<div style="color:red">
-                                ${row.business_is_use==0?'停用':'启用'}
+                                ${row.shop_is_use==0?'停用':'启用'}
                                 </div>`
                             }
                             
@@ -201,7 +195,7 @@
                             "label":"操作",
                             "align": "center",
                             "width": "50",
-                            "prop": "business_is_use",
+                            "prop": "shop_is_use",
                             "value":['停用','启用']
                          },
 
@@ -215,7 +209,7 @@
                                     "label":"详情",
                                     "type":"detail",
                                     onClick(tablePage, self, row){
-                                        self.$router.push("/business/alliance_detail/"+row.business_id)
+                                        self.$router.push("/shop/detail/"+row.shop_id)
                                     }
 
                                 }]
@@ -246,11 +240,11 @@
 
 
 
-                const {business_id,business_is_use} = data.value
-                console.log(business_is_use)
+                const {business_id,shop_is_use} = data.value
+                console.log(shop_is_use)
 
                 this.business_id= business_id
-                this.is_use = business_is_use==1? 0 : 1
+                this.is_use = shop_is_use==1? 0 : 1
                 console.log(this.is_use)
 
                 this.dialog = true
@@ -264,7 +258,7 @@
                 }
 
 
-                this.$axios.post("/api/admin/business/isUse", params).then(res => {
+                this.$axios.post("/api/admin/shop/isUse", params).then(res => {
                     this.dialog = false;
 
                     console.log(res)
