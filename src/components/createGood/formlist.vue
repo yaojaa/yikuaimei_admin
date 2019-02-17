@@ -371,7 +371,6 @@ export default {
      * 创建，调用创建接口
      */
     $_createProduct() {
-        debugger
         if(this.currentFormInfo.singleButton === '无规格' || this.isGoodFriend){
             this.currentFormInfo.good_sku = []
             let obj = {
