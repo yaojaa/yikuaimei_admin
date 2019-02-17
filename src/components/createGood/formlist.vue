@@ -30,10 +30,10 @@
                 <el-radio-group v-model="currentFormInfo.singleButton" @change="this.$_showFormat">
                     <el-radio-button label="无规格" />
                     <el-radio-button label="添加规格" />
-                </el-radio-group>
+                </el-radio-group> 
             </el-form-item>
-
-            <el-form-item v-if="goodSkuStatus">
+            
+            <el-form-item v-if="goodSkuStatus" :key="goodsku__key">
                 <el-row :gutter="20">
                     <el-col :span="4">名称:</el-col>
                     <el-col :span="12">选项: </el-col>
@@ -41,12 +41,18 @@
                 <el-row :gutter="20"  v-for="(item,idx) in currentFormInfo.goodSkuInfo" :key="`${item.name}${idx}`" class="goodSkuInfo_row">
                     <el-col :span="4"><el-button   v-if="item.name" plain>{{item.name}}</el-button></el-col>
                     <el-col :span="12"><el-button v-for="tag in item.list" :key="`${tag}tag`" plain>{{tag}}</el-button></el-col>
-                    <el-col :span="2"> <el-button v-if="idx === currentFormInfo.goodSkuInfo.length-1" click="$_edit" @click="showFormat()">编辑</el-button></el-col>
+                    <el-col :span="2"> 
+                        <el-button  v-if="idx === currentFormInfo.sku_type_arr.length-1"  @click="showFormat()">
+                            编辑
+                        </el-button>
+                    </el-col>
                 </el-row>
+                
                 <el-table :data="currentFormInfo.good_sku" style="width: 100%" border :span-method="$_SpanMethod" class="table">
-                    <!-- <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr[1]" /> -->
-                    <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" />
-
+                    <!-- 功能列 -->
+                    <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" v-if="currentFormInfo.sku_type_arr[0]" /> 
+                    <!-- 容量列 -->
+                    <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr.length>1" />
                     <el-table-column label="售价" >
                         <template slot-scope="scope">
                             <el-input  v-model="scope.row.price_sale" placeholder="10000" /> <span class="outText1">元</span>
@@ -160,7 +166,7 @@
                     :on-exceed="$_exceed"
                     :before-upload="$_beforeUpload"
                     :file-list="currentFormInfo.explain_img_arr"
-                    :limit="6"
+                    :limit="4"
                     :multiple="true"
                     :class="{canAdd__goodImg:canAdd__goodImg2}"
                     >
@@ -229,7 +235,8 @@
                 </el-upload>
             </el-form-item>
             <el-form-item class="form-footer">
-                <el-button @click="$_changeTabNext">下一步</el-button>
+                <el-button @click="$_changeTabNext" v-if="isCoupon">下一步</el-button>
+                <el-button @click="$_changeTabNext" v-else>上架</el-button>
             </el-form-item>
         </el-form>
         <!-- 表单list End -->
@@ -239,7 +246,7 @@
         <!-- 添加标签弹框 End -->
 
         <!-- 添加规格弹框 -->
-        <Formate  @addFormat="$_addFormat" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
+        <Formate  @addFormat="$_createProduct" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
         <!-- 添加规格弹框  End-->
     </div>
 </template>
@@ -265,6 +272,7 @@ export default {
       good_video_pic__Key: String(new Date() + 2),
       good_video__Key: String(new Date() + 3),
       tagList__key: String(new Date() + 4),
+      goodsku__key:String(new Date() + 'goodsku__key'),
       CATEGORYOPTIONS, // 所属行业分类
       canAdd__goodImg: false, // 是否可添加状态 __ 商品图片
       canAdd__goodImg2: false, // 是否可添加状态 __ 商品图片
@@ -315,7 +323,14 @@ export default {
      * 是否是耗材，门店服务
     */
     isGoodFriend(){
-      return this.$route.query.good_type === '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+      return this.$route.query.good_type == '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+    },
+
+    /** 
+     * isCard
+    */
+    isCoupon(){
+      return this.$route.query.good_type == '4'?true:false  //1门店服务 2平台商品 3品项管理 4虚拟卡券
     }
   },
 
@@ -342,13 +357,125 @@ export default {
             return 
         }
         this.$store.dispatch('createdGoode/fetchLableList', {
-            tag_group_type: this.formInfo.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+            // tag_group_type: this.formInfo.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+            tag_group_type: +this.formInfo.good_type === 3 ? 1 : +this.formInfo.good_type === 4 ? 3 : +this.formInfo.good_type , // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
             category_id: this.currentFormInfo.category_id || 1, // 行业id @TODO 默认是1 ，变量
             get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
         }).then(()=>{
             this.$refs.lable.initSons()
             this.$refs.lable.lable_show = true
         })
+    },
+
+      /** *
+     * 创建，调用创建接口
+     */
+    $_createProduct() {
+        if(this.currentFormInfo.singleButton === '无规格' || this.isGoodFriend){
+            this.currentFormInfo.good_sku = []
+            let obj = {
+                'sku_code' : this.currentFormInfo.sku_code,
+                'price_cost' : this.currentFormInfo.price_cost,
+                'price_sale' : this.currentFormInfo.price_sale,
+                'price' : this.currentFormInfo.price,
+                'price_total' : this.currentFormInfo.price_total
+            }
+            this.currentFormInfo.good_sku.push(obj)
+            delete this.currentFormInfo.sku_type_arr
+        }
+        let currentFormInfo = this.currentFormInfo
+        let {good_id,good_type} = this.$route.query
+        let formInfo = this.formInfo
+        this.$refs.currentFormInfo.validate((valid) => {
+            this.$store.commit('createdGoode/setFormInfo',currentFormInfo)
+            if(good_id === '0'){
+                let ico_small = ''
+                let params = _.cloneDeep(formInfo)
+                params.good_img_arr = params.good_img_arr.map(item => item.response.data.file_name)
+                params.explain_img_arr = params.explain_img_arr.map(item => item.response.data.file_name)
+                params.show_img_arr = params.show_img_arr.map(item => item.response.data.file_name)
+                params.price = (+params.price)*100
+                params.sellPrice = (+params.sellPrice)*100
+                params.good_sku = params.good_sku.map(item=>{
+                    if (item.ico_small) {
+                       ico_small = item.ico_small
+                    }
+                    item.ico_small = ico_small;
+                    item.price_cost = (+item.price_cost)*100
+                    item.price = (+item.price)*100
+                    item.price_sale = (+item.price_sale)*100
+                    if(item.price_total) {
+                       item.price_total = (+item.price_total)*100 
+                    }
+                    return item
+                })
+                this.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
+                    if(res.code === 0){
+                        this.$message.success(res.msg);
+                        this.$_goOut(good_type)
+                    }else{
+                        this.$message.error(res.msg);
+                    }
+                })
+            }else{
+                let params = _.cloneDeep(formInfo)
+                let ico_small = ''
+                params.good_img_arr = params.good_img_arr.map(item => item.url)
+                params.show_img_arr = params.show_img_arr.map(item => item.url)
+                params.explain_img_arr = params.explain_img_arr.map(item => item.url)
+
+                params.sellPrice = params.sellPrice * 100
+                params.price = params.price * 100
+                params.good_sku = params.good_sku.map(item=>{
+                    if (item.ico_small) {
+                       ico_small = item.ico_small;
+                    }
+                    item.ico_small = ico_small;
+                    item.price_cost = (+item.price_cost)*100
+                    item.price = (+item.price)*100
+                    item.price_sale = (+item.price_sale)*100
+                    if(item.price_total) {
+                       item.price_total = (+item.price_total)*100 
+                    }
+                    return item
+                })
+
+                if(params.singleButton === '无规格' || this.$route.query.good_type == '1'){
+                    delete params.sku_type_arr
+                    delete params.good_sku
+                    delete params.sku_list
+                }
+                    
+                this.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
+                    if(res.code === 0){
+                        this.$message.success(res.msg);
+                        this.$_goOut(good_type)
+                    }else{
+                        this.$message.error(res.msg);
+                    }
+                })
+            }
+        })
+    },
+
+    $_goOut(good_type){
+        switch (good_type) {
+            case '1':
+                this.$router.push('/serviceList')
+                break;
+            case '2':
+                this.$router.push('/goodList')
+                break;
+            case '3':
+                this.$router.push('/purchaseList')
+                break;
+            case '4':
+                this.$router.push('/fictitiousList')
+                break;
+        
+            default:
+                break;
+        }
     },
 
     /** 
@@ -409,7 +536,7 @@ export default {
     },
 
     $_success2(response, file, fileList){
-        if(fileList.length >= 6){
+        if(fileList.length >= 4){
             this.canAdd__goodImg2 = true
         }
         this.limitNumber2 = 6 - (+fileList.length)
@@ -464,7 +591,7 @@ export default {
         this.currentFormInfo.good_img_arr = fileList
     },
     $_remove2(file, fileList){
-        this.limitNumber2 = 6 - (+fileList.length)
+        this.limitNumber2 = 4 - (+fileList.length)
         this.canAdd__goodImg2 = false
         this.currentFormInfo.explain_img_arr = fileList
     },
@@ -474,6 +601,18 @@ export default {
      */
     $_showFormat() {
       if (this.currentFormInfo.singleButton === "添加规格") {
+          this.currentFormInfo.goodSkuInfo = [
+            {
+                name: '',
+                list: [],
+                inputValue: ''
+            },
+            {
+                name: '',
+                list: [],
+                inputValue: ''
+            }
+        ]
         this.showFormat()
       }else if(!this.isGoodFriend){
         // @TOdO 取消显示
@@ -489,9 +628,10 @@ export default {
                 inputValue: ''
             }
         ]
-        this.currentFormInfo.sku_type_arr = []
-        this.currentFormInfo.good_sku = []
+        delete this.currentFormInfo.sku_type_arr
+        delete this.currentFormInfo.good_sku
         this.goodSkuStatus = false
+        delete this.currentFormInfo.sku_list
       }
     },
     
@@ -504,42 +644,66 @@ export default {
      */
     $_SpanMethod({ row, column, rowIndex, columnIndex }) {
       const columnIndexNum = this.isGoodFriend ? 7 : 6;
-      if (columnIndex === 0 || columnIndex === 7) {
-        //   this.currentFormInfo.sku_type_arr.length
-        if (rowIndex % (this.currentFormInfo.good_sku.length/2) === 0) {
-          return {
-            rowspan: this.currentFormInfo.good_sku.length/2,
-            colspan: 1
-          };
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0
-          };
+      if (columnIndex === 0 || columnIndex === 6) {
+        let len = 0
+        if(this.currentFormInfo.goodSkuInfo && this.currentFormInfo.goodSkuInfo.length>1){
+            len = this.currentFormInfo.goodSkuInfo[1].list.length
+        }
+        if(!len || len === 1){
+            return {
+                rowspan: 1,
+                colspan: 1
+            };
+        }else {
+            if (rowIndex % len === 0){
+                return {
+                    rowspan: len,
+                    colspan: 1
+                };
+            } else {
+                return {
+                    rowspan: 0,
+                    colspan: 0
+                };
+            }
         }
       }
     },
 
     /** *
-     * @TODO 添加规格 currentFormInfo 应该是个数组
+     * 添加规格
      */
     $_addFormat(goodSku) {
       this.currentFormInfo.goodSkuInfo = goodSku
-      let sku_type_arr_key = goodSku[0].list
-      let sku_type_arr_val = goodSku[1].list
+      let sku_type_arr_key = goodSku[0].list  // 功能  list :[美白，保湿]
+      let sku_type_arr_val = goodSku[1].list  // 容量  list :[50ml,100ml,15ml]
       let good_sku_arr = []
-      
-      for(var i=0;i<sku_type_arr_key.length;i++){
-        for(var j=0;j<sku_type_arr_val.length;j++){
-          good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]],sku_code:'',price_total:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
+      if(sku_type_arr_val.length){
+        for(var i=0;i<sku_type_arr_key.length;i++){
+            for(var j=0;j<sku_type_arr_val.length;j++){
+                good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]],sku_code:'',price_total:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
+            }
+        }
+      }else{
+        for(var i=0;i<sku_type_arr_key.length;i++){
+            good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i]],sku_code:'',price_total:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
         }
       }
+      let arr = []
+      goodSku.forEach(function(item){
+          if(item.name){
+              arr.push(item.name)
+          }
+      }) // 功能容量
+      this.currentFormInfo.sku_type_arr = arr
 
-      this.currentFormInfo.sku_type_arr = goodSku.map(item=>item.name) // 规格数组，单规格商品不要提交该字段 
       this.currentFormInfo.good_sku = good_sku_arr
       if(this.currentFormInfo.goodSkuInfo && this.currentFormInfo.goodSkuInfo.length){
         this.goodSkuStatus = true
+      }else{
+          this.goodSkuStatus = false
       }
+      this.goodsku__key = String(new Date() + 'goodsku__key')
     },
 
     /** *
@@ -558,10 +722,10 @@ export default {
             this.currentFormInfo.good_sku.push(obj)
             delete this.currentFormInfo.sku_type_arr
         }
-            console.log(this.currentFormInfo)
+        let currentFormInfo = this.currentFormInfo
         this.$refs.currentFormInfo.validate((valid) => {
             if (valid) {
-                this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
+                this.$store.commit('createdGoode/setFormInfo',currentFormInfo)
                 this.$emit("changeTabNext");
             }
         })

@@ -16,7 +16,6 @@
             <el-table-column
                 label="规格">
                 <template slot-scope="scope">
-                    scope.row.group_sku_str{{scope.row.group_sku_str}}
                     <el-checkbox-group v-model="scope.row.group_sku_str" size="small">
                         <el-checkbox :label="item.sku_str" v-for="item in scope.row.sku_list" :key="`${item.sku_str}${scope.row.good_id}`" border></el-checkbox>
                     </el-checkbox-group>
@@ -213,11 +212,13 @@ export default {
       })
 
       if(!canNext){
-          alert('规格至少选一个')
+          this.$message({
+          message: '规格至少选一个',
+          type: 'warning'
+        });
       }else{
           this.currentFormInfo.good_friends = this.good_friends
           this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
-          debugger
           this.$emit("changeTabNext");
       }
     },

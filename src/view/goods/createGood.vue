@@ -13,7 +13,7 @@
           <el-steps :active="active" finish-status="success" simple>
             <el-step title="编辑基本信息" />
             <el-step title="添加耗材" v-if="isGoodFriend" />
-            <el-step title="编辑商品详情" />
+            <el-step title="编辑商品详情" v-if="!isCoupon"/>
           </el-steps>
           <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-show="active===0" />
           <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-show="active===1 && isGoodFriend"/>              
@@ -68,7 +68,7 @@ export default {
      * isCard
     */
     isCoupon(){
-      return this.$route.query.good_type === '4'?true:false  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+      return this.$route.query.good_type == '4'?true:false  //1门店服务 2平台商品 3品项管理 4虚拟卡券
     }
   },
 
@@ -98,13 +98,12 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
 #createGood .panel {
   padding: 20px 0;
 }
 
 #createGood .el-steps--simple{
-  width: 960px;
   background: rgba(238, 239, 255, 1);
   margin:20px 0 30px 0
 }

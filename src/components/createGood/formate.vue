@@ -127,7 +127,6 @@ export default {
      * 确定添加规格
      */
     $_addFormat() {
-      console.log(this.goodSkuInfo);
       const goodSkuInfo = this.goodSkuInfo;
       // for (let i = 0; i<goodSkuInfo.length; i++) {
       //   if (!goodSkuInfo[i].list.length) {

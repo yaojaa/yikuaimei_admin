@@ -8,7 +8,7 @@ export const breadcrumb = {
             url: "/goodList"
         },
         {
-            name: "添加商品" //名字
+            name: "添加门店" //名字
         }
     ],
     '2': [{
@@ -30,18 +30,18 @@ export const breadcrumb = {
             url: "/purchaseList"
         },
         {
-            name: "添加商品" //名字
+            name: "添加品相" //名字
         }
     ],
     '4': [{
             name: "商品管理" //名字
         },
         {
-            name: "虚拟卡券", //名字
+            name: "虚拟卡券管理", //名字
             url: "/fictitiousList"
         },
         {
-            name: "添加商品" //名字
+            name: "添加虚拟卡券" //名字
         }
     ],
 }
@@ -56,7 +56,7 @@ export const breadcrumbEdit = {
             url: "/goodList"
         },
         {
-            name: "编辑商品" //名字
+            name: "编辑门店" //名字
         }
     ],
     '2': [{
@@ -78,23 +78,23 @@ export const breadcrumbEdit = {
             url: "/purchaseList"
         },
         {
-            name: "编辑商品" //名字
+            name: "编辑品相" //名字
         }
     ],
     '4': [{
             name: "商品管理" //名字
         },
         {
-            name: "虚拟卡券", //名字
+            name: "虚拟卡券管理", //名字
             url: "/fictitiousList"
         },
         {
-            name: "编辑商品" //名字
+            name: "编辑虚拟卡券" //名字
         }
     ],
 }
 
-export const type = ['', '服务', '商品', '品项', '虚拟']
+export const type = ['', '服务', '商品', '品项', '虚拟卡券']
 
 export const CATEGORYOPTIONS = [{
         category_id: 1,
