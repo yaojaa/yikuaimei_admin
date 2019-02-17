@@ -13,15 +13,14 @@
 					<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=2' })">添加商品</el-button>
 				</div>
 			</div>
-			<div class="status_filter" v-for="(item,key,index) in tagsListGroup" :key="index">
-				<ul>
-					<li class="tags-li">
-						{{key}}
-						<router-link :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/goodList', query: {
-	                                                        [tag.key]: tag.value }}">
+            <div class="filter-tag-box">
+                <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
+                    <div class="tag-hd">{{key}}</div>
+                    <div class="tag-bd">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/goodList', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
             <nomal-table ref="table" :table-json="tableJson" :url="url" :query="{good_type: 2}">
                 <table-search :searchs="searchs"></table-search>
