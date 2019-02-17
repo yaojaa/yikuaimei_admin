@@ -119,7 +119,7 @@ export default {
                 })
                 this.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
                     if(res.code === 0){
-                        this.$message.success(res.msg);
+                        this.$alert("创建成功");
                         this.$_goOut(good_type)
                     }else{
                         this.$message.error(res.msg);
@@ -156,7 +156,7 @@ export default {
                     
                 this.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
                     if(res.code === 0){
-                        this.$message.success(res.msg);
+                        this.$alert("编辑成功");
                         this.$_goOut(good_type)
                     }else{
                         this.$message.error(res.msg);

@@ -4,7 +4,7 @@
             <img src="../../assets/2.png" class="image">
             <div class="right">
                 <p class="right_title">{{goodName}}</p>
-                <span>¥{{price}}</span>
+                <span>¥{{(price/100).toFixed(2)}}</span>
             </div>
             <i class="el-icon-error product_card_icon" @click="$_deleteTag" v-if="closeble" />
         </div>
