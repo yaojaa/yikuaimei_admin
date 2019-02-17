@@ -82,6 +82,7 @@ export default {
 
   created() {
     this.type = type[this.$route.query.good_type]
+    this.currentFormInfo = _.cloneDeep(this.formInfo)
   },
 
   methods: {

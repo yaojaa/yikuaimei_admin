@@ -24,7 +24,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { breadcrumb } from "../../constans/createdGood";
+import { breadcrumb, breadcrumbEdit } from "../../constans/createdGood";
 import BreadCrumb from "@/components/common/BreadCrumb";
 import FormlistItem from "@/components/createGood/formlist";
 import FormlistProduct from "@/components/createGood/formlist_product";
@@ -74,7 +74,8 @@ export default {
 
   created() {
     const id = this.$route.query.good_id
-    this.breadcrumb = breadcrumb[this.good_type]
+    this.breadcrumb = this.good_id === '0' ? breadcrumb[this.good_type] : breadcrumbEdit[this.good_type]
+    
     this.$store.commit('createdGoode/initFormInfo')  // 每次进页面初始化信息
     this.$store.commit('createdGoode/setFormInfo',{good_type:this.good_type,good_id:this.good_id})
 

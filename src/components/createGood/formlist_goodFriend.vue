@@ -16,6 +16,7 @@
             <el-table-column
                 label="规格">
                 <template slot-scope="scope">
+                    scope.row.group_sku_str{{scope.row.group_sku_str}}
                     <el-checkbox-group v-model="scope.row.group_sku_str" size="small">
                         <el-checkbox :label="item.sku_str" v-for="item in scope.row.sku_list" :key="`${item.sku_str}${scope.row.good_id}`" border></el-checkbox>
                     </el-checkbox-group>
@@ -89,6 +90,7 @@ export default {
         goodFriend_show: false, // 选择弹框状态
         CATEGORYOPTIONS,
         defaultActive:'美容',
+        currentFormInfo:{},
         good_friends: [], // 已选耗材
         goodFriendsList:[], // 详情数据展示
         good_friendsDialog:[]
@@ -102,9 +104,10 @@ export default {
   watch: {
     formInfo: {
       handler: function (newVal, oldVal) {
+        this.currentFormInfo = _.cloneDeep(newVal)
         this.good_friends = _.cloneDeep(newVal.good_friends)
         this.good_friends.forEach(good => {
-            let sku_id = good.sku_id
+            let sku_id = good.group_sku_id
             let sku_list = good.sku_list
             good.group_sku_str = []
             sku_id.forEach(id => {
@@ -118,9 +121,11 @@ export default {
   },
 
   created(){
+      this.currentFormInfo = _.cloneDeep(this.formInfo)
       this.good_friends = _.cloneDeep(this.formInfo.good_friends)
+      debugger
       this.good_friends.forEach(good => {
-        let sku_id = good.sku_id
+        let sku_id = good.group_sku_id
         let sku_list = good.sku_list
         good.group_sku_str = []
         sku_id.forEach(id => {
@@ -164,7 +169,8 @@ export default {
                 good_ico: goodFriendsInfo.good_ico , //耗材图标
                 price_low: goodFriendsInfo.price_low , // 耗材价格区间低
                 price_high: goodFriendsInfo.price_high, // 耗材价格区间高
-                group_sku_id:[]
+                group_sku_id:[],
+                group_sku_str:[]
             }
             this.good_friendsDialog.push(obj)
         }
@@ -189,9 +195,8 @@ export default {
      * 切换tab
      */
     $_changeTabNext() {
-
-
-      if(!this.good_friends.length){
+        debugger
+      if(this.good_friends.length === 0){
         this.$emit("changeTabNext");
       }
       let canNext = true
@@ -211,7 +216,9 @@ export default {
       if(!canNext){
           alert('规格至少选一个')
       }else{
-          this.$store.commit('createdGoode/setFormInfo',{good_friends:this.good_friends})
+          this.currentFormInfo.good_friends = this.good_friends
+          debugger
+          this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
           this.$emit("changeTabNext");
       }
     },
