@@ -15,9 +15,9 @@
             <el-step title="添加耗材" v-if="isGoodFriend" />
             <el-step title="编辑商品详情" />
           </el-steps>
-          <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-if="active===0" />
-          <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-if="active===1 && isGoodFriend"/>              
-          <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-if="active===1 && !isGoodFriend || active===2 " /> 
+          <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-show="active===0" />
+          <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-show="active===1 && isGoodFriend"/>              
+          <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-show="active===1 && !isGoodFriend || active===2 " /> 
         </div>
     </div>
 </template>

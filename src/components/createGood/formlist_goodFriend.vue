@@ -107,7 +107,7 @@ export default {
         this.currentFormInfo = _.cloneDeep(newVal)
         this.good_friends = _.cloneDeep(newVal.good_friends)
         this.good_friends.forEach(good => {
-            let sku_id = good.group_sku_id
+            let sku_id = good.group_sku_id || good.sku_id
             let sku_list = good.sku_list
             good.group_sku_str = []
             sku_id.forEach(id => {
@@ -123,9 +123,8 @@ export default {
   created(){
       this.currentFormInfo = _.cloneDeep(this.formInfo)
       this.good_friends = _.cloneDeep(this.formInfo.good_friends)
-      debugger
       this.good_friends.forEach(good => {
-        let sku_id = good.group_sku_id
+        let sku_id = good.group_sku_id || good.sku_id
         let sku_list = good.sku_list
         good.group_sku_str = []
         sku_id.forEach(id => {
@@ -195,7 +194,6 @@ export default {
      * 切换tab
      */
     $_changeTabNext() {
-        debugger
       if(this.good_friends.length === 0){
         this.$emit("changeTabNext");
       }
@@ -217,7 +215,6 @@ export default {
           alert('规格至少选一个')
       }else{
           this.currentFormInfo.good_friends = this.good_friends
-          debugger
           this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
           this.$emit("changeTabNext");
       }
