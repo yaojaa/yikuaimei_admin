@@ -117,37 +117,37 @@
                         ]
                     },
                   
-                //     {
-                //         icon: 'iconfont icon-yingxiaocopy',
-                //         index: 'index8',
-                //         title: '审核管理',
-                //         subs: [
-                //             {
-                //                 index: '/marketcoupon',
-                //                 title: '加盟商'
-                //             },
-                //             {
-                //                 index: '/physicalcoupon',
-                //                 title: '门店'
-                //             },
-                //             {
-                //                 index: '/physicalcoupon',
-                //                 title: '提现(门店)'
-                //             },
-                //             {
-                //                 index: '/physicalcoupon',
-                //                 title: '提现(人)'
-                //             },
-                //             {
-                //                 index: '/physicalcoupon',
-                //                 title: '退款(复审)'
-                //             },
-                //             {
-                //                 index: '/physicalcoupon',
-                //                 title: '案例'
-                //             }
-                //         ]
-                //     },
+                    {
+                        icon: 'iconfont icon-yingxiaocopy',
+                        index: 'index8',
+                        title: '审核管理',
+                        subs: [
+                            {
+                                index: '/audit/business',
+                                title: '加盟商'
+                            },
+                            {
+                                index: '/audit/shop',
+                                title: '门店'
+                            },
+                            // {
+                            //     index: '/physicalcoupon',
+                            //     title: '提现(门店)'
+                            // },
+                            // {
+                            //     index: '/physicalcoupon',
+                            //     title: '提现(人)'
+                            // },
+                            // {
+                            //     index: '/physicalcoupon',
+                            //     title: '退款(复审)'
+                            // },
+                            // {
+                            //     index: '/physicalcoupon',
+                            //     title: '案例'
+                            // }
+                        ]
+                    },
                 //     {
                 //         icon: 'iconfont icon-yingxiaocopy',
                 //         index: 'index9',

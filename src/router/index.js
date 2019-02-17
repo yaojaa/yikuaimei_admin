@@ -303,7 +303,7 @@ export default new Router({
                 {
                     // 门店审核
                     path: '/audit/shop/:id',
-                    component: resolve => require(['../view/audit_shop/list.vue'], resolve),
+                    component: resolve => require(['../view/audit_shop/detail.vue'], resolve),
                     meta: {
                         title: '门店审核详情'
                     }
