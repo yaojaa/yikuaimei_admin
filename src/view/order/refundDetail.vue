@@ -7,7 +7,7 @@
             </el-breadcrumb>
         </div>
         <div class="page-content">
-            <el-tabs v-model="tab" @tab-click="handleClick" class="primary-tab">
+            <el-tabs v-model="tab" @tab-click="" class="primary-tab">
                 <el-tab-pane label="商品" name="goods"></el-tab-pane>
                 <el-tab-pane label="服务" name="service"></el-tab-pane>
             </el-tabs>
@@ -15,7 +15,7 @@
                 <div><span>状态：</span><span class="f18 bold">待审核</span></div>
                 <div>
                     <el-button size="mini" plain @click="">拒绝退款</el-button>
-                    <el-button size="mini" type="primary" @click="">同意退款</el-button>
+                    <el-button size="mini" type="primary" @click="successModel = true">同意退款</el-button>
                 </div>
             </div>
             <div class="page-column">
@@ -82,17 +82,17 @@
                             <h3 class="panel-title bold">审核记录</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="item-list f14" >
-                            	  <div class="item">
-                            	  	<div class="bd bold">平台初审同意退款，退款处理中</div>
-                            	  </div>
+                            <div class="item-list f14 four-text">
+                                <div class="item">
+                                    <div class="bd bold">平台初审同意退款，退款处理中</div>
+                                </div>
                                 <div class="item">
                                     <div class="hd">处理人：</div>
                                     <div class="bd">孙妮雅</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">处理时间：</div>
-                                    <div class="bd">2018-11-12  12:27:53</div>
+                                    <div class="bd">2018-11-12 12:27:53</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">备注：</div>
@@ -104,6 +104,13 @@
                 </div>
             </div>
         </div>
+        <el-dialog title="同意退款" :visible.sync="successModel" width="40%">
+
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="successModel = false">取 消</el-button>
+                <el-button type="primary" @click="successModel = false">创 建</el-button>
+              </span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -118,6 +125,7 @@ export default {
             tab: 'goods',
             refundId: this.$route.params.refund_id,
             refundInfo: {},
+            successModel:false
         }
     },
 
