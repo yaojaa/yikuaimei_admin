@@ -44,6 +44,16 @@ ol {
     list-style-type: none;
 }
 
+.cf::after,
+.cf::before {
+    display: table;
+    content: " "
+}
+
+.cf::after {
+    clear: both
+}
+
 .number {
     font-family: Arial !important;
 }

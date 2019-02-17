@@ -89,7 +89,7 @@
                         <el-col :span=4 class="hd">报告图片:</el-col>
                         <el-col :span=20 class="bd">
                             <el-row :gutter=15>
-                                <el-col :span=6 v-for="(el,index) in info.report">
+                                <el-col :span=6 v-for="(el,index) in info.report" :key="index">
                                     <img :src="el" class="w-full" />
                               </el-col>
                             </el-row>
@@ -107,7 +107,7 @@
                         <el-col :span=20 class="bd">
                             <p>{{info.expert_suggest_content}}</p>
                             <p>
-                                <img v-for="(el,index) in info.expert_suggest_pic_list" width="200" :src="el" />
+                                <img v-for="(el,index) in info.expert_suggest_pic_list" width="200" :src="el" :key="index" />
                             </p>
                         </el-col>
                     </el-row>
@@ -116,7 +116,7 @@
                         <el-col :span=20 class="bd">
                             <p>{{info.product_introduce_content}}</p>
                             <p>
-                                <img v-for="(el,index) in info.product_introduce_pic_list" width="200" :src="el" />
+                                <img v-for="(el,index) in info.product_introduce_pic_list" width="200" :src="el" :key="index" />
                             </p>
                         </el-col>
                     </el-row>
@@ -125,7 +125,7 @@
                         <el-col :span=20 class="bd">
                             <p>{{info.operate_process_content}}</p>
                             <p>
-                                <img v-for="(el,index) in info.operate_process_pic_list" width="200" :src="el" />
+                                <img v-for="(el,index) in info.operate_process_pic_list" width="200" :src="el" :key="index" />
                             </p>
                         </el-col>
                     </el-row>
@@ -134,7 +134,7 @@
                         <el-col :span=20 class="bd">
                             <p>{{info.operate_record_content}}</p>
                             <p>
-                                <img v-for="(el,index) in info.operate_record_pic_list" width="200" :src="el" />
+                                <img v-for="(el,index) in info.operate_record_pic_list" width="200" :src="el" :key="index" />
                 </p>
                         </el-col>
                     </el-row>
@@ -143,7 +143,7 @@
                         <el-col :span=20 class="bd">
                             <p>{{info.data_contrast_content}}</p>
                             <p>
-                                <img v-for="(el,index) in info.data_contrast_pic_list" width="200" :src="el" />
+                                <img v-for="(el,index) in info.data_contrast_pic_list" width="200" :src="el" :key="index" />
                             </p>
                         </el-col>
                     </el-row>
@@ -152,7 +152,7 @@
                         <el-col :span=20 class="bd">
                             <p>{{info.expert_analysis_content}}</p>
                             <p>
-                                <img v-for="(el,index) in info.expert_analysis_pic_list" width="200" :src="el" />
+                                <img v-for="(el,index) in info.expert_analysis_pic_list" width="200" :src="el" :key="index" />
                             </p>
                         </el-col>
                     </el-row>
@@ -161,7 +161,7 @@
                         <el-col :span=20 class="bd">
                             <p>{{info.expert_review_content}}</p>
                             <p>
-                                <img v-for="(el,index) in info.expert_review_pic_list" width="200" :src="el" />
+                                <img v-for="(el,index) in info.expert_review_pic_list" width="200" :src="el" :key="index" />
                             </p>
                         </el-col>
                     </el-row>
@@ -183,7 +183,7 @@
                                     <div class="title f14"><span class="text-info">天天：</span><span></span>第一条为示例内容，后期注释</div>
                                     <div class="photo mt-sm">
                                         <el-row :gutter=15>
-                                            <el-col :span=3 v-for="item in 3">
+                                            <el-col :span=3 v-for="(item,index) in 3" :key="index">
                                                 <div class="mb-sm">
                                                     <img src="https://fakeimg.pl/200x200/"  class="w-full" />
                                               </div>
