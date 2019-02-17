@@ -11,9 +11,9 @@
                 <el-tab-pane label="基本信息" name="OrderInfo">
                     <OrderDetail :order="order"></OrderDetail>
                 </el-tab-pane>
-                <el-tab-pane label="收益提成" name="ProfitRate">
+                <!-- <el-tab-pane label="收益提成" name="ProfitRate">
                     我是收益提成
-                </el-tab-pane>
+                </el-tab-pane> -->
                 <el-tab-pane label="美丽日记" name="BeautiRecord">
                     <BeautiRecord :orderCode="orderCode"></BeautiRecord>
                 </el-tab-pane>

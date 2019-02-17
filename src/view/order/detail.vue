@@ -14,9 +14,9 @@
                 <el-tab-pane label="物流信息" name="ExpressInfo">
                     <ExpressInfo :order-code="orderCode"></ExpressInfo>
                 </el-tab-pane>
-                <el-tab-pane label="收益提成" name="ProfitRate">
+                <!-- <el-tab-pane label="收益提成" name="ProfitRate">
                     我是收益提成
-                </el-tab-pane>
+                </el-tab-pane> -->
                 <el-tab-pane label="退款/退货" name="OrderRefund">
                     <div class="refund-list">
                         <!-- {{refundList}} -->
