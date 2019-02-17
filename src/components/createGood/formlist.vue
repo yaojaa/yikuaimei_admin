@@ -246,7 +246,7 @@
         <!-- 添加标签弹框 End -->
 
         <!-- 添加规格弹框 -->
-        <Formate  @addFormat="$_createProduct" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
+        <Formate  @addFormat="$_addFormat" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
         <!-- 添加规格弹框  End-->
     </div>
 </template>
@@ -358,7 +358,7 @@ export default {
         }
         this.$store.dispatch('createdGoode/fetchLableList', {
             // tag_group_type: this.formInfo.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
-            tag_group_type: +this.formInfo.good_type === 3 ? 1 : +this.formInfo.good_type === 4 ? 1 : +this.formInfo.good_type , // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+            tag_group_type: +this.formInfo.good_type === 3 ? 1 : +this.formInfo.good_type === 4 ? 3 : +this.formInfo.good_type , // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
             category_id: this.currentFormInfo.category_id || 1, // 行业id @TODO 默认是1 ，变量
             get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
         }).then(()=>{
