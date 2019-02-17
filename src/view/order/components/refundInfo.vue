@@ -1,6 +1,6 @@
 <template>
     <div class="refund_info">
-        我是退货退款
+        {{refundInfo}}
     </div>
 </template>
 
@@ -8,48 +8,28 @@
     import Config from "../config";
     export default {
         name: 'OrderRefundInfo',
-    
         components: {
     
         },
-    
         data() {
             return {
-                refundList: []
+                
             }
         },
-    
         props: {
             refundInfo: {
-                type: Object(),
+                type: Object,
                 default: () => {}
             }
         },
-    
         computed: {},
-    
-        beforeRouteUpdate(to, from, next) {
-    
-        },
-    
         created() {
+            console.log(this.refundInfo);
         },
-    
         mounted() {
-            this.getData(this.$route.params);
         },
     
-        methods: {
-            getData(params) {
-				this.$axios({
-					method: 'get',
-					url: '/api/admin/order/refundList',
-					params: params
-				}).then((res) => {
-                    console.log(res.data);
-                    this.refundList = res.data.data;
-				}).catch((error) => {});
-            }
+        methods: { 
         }
     }
 </script>

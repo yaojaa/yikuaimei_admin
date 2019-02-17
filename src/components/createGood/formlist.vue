@@ -39,13 +39,14 @@
                     <el-col :span="12">选项: </el-col>
                 </el-row>
                 <el-row :gutter="20"  v-for="(item,idx) in currentFormInfo.goodSkuInfo" :key="`${item.name}${idx}`" class="goodSkuInfo_row">
-                    <el-col :span="4"><el-button plain>{{item.name}}</el-button></el-col>
+                    <el-col :span="4"><el-button   v-if="item.name" plain>{{item.name}}</el-button></el-col>
                     <el-col :span="12"><el-button v-for="tag in item.list" :key="`${tag}tag`" plain>{{tag}}</el-button></el-col>
                     <el-col :span="2"> <el-button v-if="idx === currentFormInfo.goodSkuInfo.length-1" click="$_edit" @click="showFormat()">编辑</el-button></el-col>
                 </el-row>
                 <el-table :data="currentFormInfo.good_sku" style="width: 100%" border :span-method="$_SpanMethod" class="table">
+                    <!-- <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr[1]" /> -->
                     <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" />
-                    <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr[1]" />
+
                     <el-table-column label="售价" >
                         <template slot-scope="scope">
                             <el-input  v-model="scope.row.price_sale" placeholder="10000" /> <span class="outText1">元</span>
@@ -59,6 +60,11 @@
                     <el-table-column label="成本" >
                         <template slot-scope="scope">
                             <el-input  v-model="scope.row.price_cost" placeholder="10000" /> <span class="outText1">元</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="总价" v-if="isGoodFriend">
+                        <template slot-scope="scope">
+                            <el-input  v-model="scope.row.price_total" placeholder="10000" /><span class="outText1"> 元</span>
                         </template>
                     </el-table-column>
                     <el-table-column label="编码" >
@@ -92,17 +98,29 @@
             <el-form-item label="单位：" prop="unit">
                 <el-input  v-model="currentFormInfo.unit" placeholder="箱" suffix-icon="el-icon-arrow-right" />                                                                       
             </el-form-item> -->
-            <el-form-item :label="`${type}编码：`" prop="productCode">
-                <el-input  v-model="currentFormInfo.productCode" placeholder="支持14以内的数字+英文组合"  />                                                                              
-            </el-form-item>
-            <el-form-item label="售价：" prop="sellPrice">
-                <el-input  v-model="currentFormInfo.sellPrice" placeholder="请输入套餐在婚博会标价" />                                                                                                        
-                <span class="outText">元</span>
-            </el-form-item>
-            <el-form-item label="原价：" prop="price">
-                <el-input  v-model="currentFormInfo.price" placeholder="¥5000" />                                                                                                        
-                <span class="outText">元</span>
-            </el-form-item>
+            <template v-if="currentFormInfo.singleButton === '无规格' || isGoodFriend">
+                <el-form-item :label="`${type}编码：`" prop="sku_code">
+                    <el-input  v-model="currentFormInfo.sku_code" placeholder="支持14以内的数字+英文组合"  />                                                                              
+                </el-form-item>
+                <el-form-item label="售价：" prop="price_sale">
+                    <el-input  v-model="currentFormInfo.price_sale" placeholder="请输入套餐在婚博会标价" />                                                                                                        
+                    <span class="outText">元</span>
+                </el-form-item>
+                <el-form-item label="原价：" prop="price">
+                    <el-input  v-model="currentFormInfo.price" placeholder="¥5000" />                                                                                                        
+                    <span class="outText">元</span>
+                </el-form-item>
+                <el-form-item label="成本" prop="price_cost">
+                    <el-input  v-model="currentFormInfo.price_cost" placeholder="¥5000" />                                                                                                        
+                    <span class="outText">元</span>
+                </el-form-item>
+                <el-form-item label="总价" prop="price_total"  v-if="isGoodFriend">
+                    <el-input  v-model="currentFormInfo.price_total" placeholder="¥5000" />                                                                                                        
+                    <span class="outText">元</span>
+                </el-form-item>
+            </template>
+            
+
             <el-form-item :label="`${type}图片：`" prop="good_img_arr">
                 <div class="upload-title">
                 您可以上传3-6张图片及1个视频作为{{type}}展示图，<br />
@@ -263,8 +281,8 @@ export default {
           { min: 2, max: 30, message: "长度在2-30个字符", trigger: "blur" }
         ],
         good_explain: [
-          { required: true, message: `${this.type}在详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" },
-          { min: 2, max: 50, message: `在${this.type}详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" }
+          { required: true, message: `${type[this.$route.query.good_type]}在详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" },
+          { min: 2, max: 50, message: `在${type[this.$route.query.good_type]}详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" }
         ],
         category_id: [
           { required: true, message: "请选择所属行业分类", trigger: "blur" }
@@ -275,10 +293,13 @@ export default {
         ],
         format: [{ required: true, message: "请选择规格", trigger: "change" }],
         productCode: [
-          { required: true, message: `请填写${this.type}编码`, trigger: "blur" }
+          { required: true, message: `请填写${type[this.$route.query.good_type]}编码`, trigger: "blur" }
         ],
-        sellPrice: [{ required: true, message: "请填写售价", trigger: "blur" }],
-        price: [{ required: true, message: "请填写原价", trigger: "blur" }]
+        price_sale: [{ required: true, message: "请填写售价", trigger: "blur" }],
+        sku_code: [{ required: true, message: `请填写${type[this.$route.query.good_type]}编码`, trigger: "blur" }],
+        price: [{ required: true, message: "请填写原价", trigger: "blur" }],
+        price_cost: [{ required: true, message: "请填写成本", trigger: "blur" }],
+        price_total: [{ required: true, message: "请填写总价", trigger: "blur" }]
       }
     };
   },
@@ -289,21 +310,21 @@ export default {
 
   computed: {
     ...mapState('createdGoode',['formInfo']),
+
     /** 
      * 是否是耗材，门店服务
     */
     isGoodFriend(){
       return this.$route.query.good_type === '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
-    },
+    }
   },
 
   watch: {
     formInfo: {
       handler: function (newVal, oldVal) {
         this.currentFormInfo = _.cloneDeep(newVal)
-        if(newVal.goodSkuInfo && newVal.goodSkuInfo.length){
+        if(newVal.singleButton  === "添加规格" && !this.isGoodFriend){
             this.goodSkuStatus = true
-            this.currentFormInfo.singleButton = "添加规格"
         }
       },
       deep: true
@@ -454,7 +475,7 @@ export default {
     $_showFormat() {
       if (this.currentFormInfo.singleButton === "添加规格") {
         this.showFormat()
-      }else{
+      }else if(!this.isGoodFriend){
         // @TOdO 取消显示
         this.currentFormInfo.goodSkuInfo = [
             {
@@ -482,12 +503,12 @@ export default {
      * 合并列
      */
     $_SpanMethod({ row, column, rowIndex, columnIndex }) {
-      const columnIndexNum = this.currentFormInfo.sku_type_arr.length === 2 ? 6 : 5;
-
-      if (columnIndex === 0 || columnIndex === 6) {
-        if (rowIndex % (this.currentFormInfo.good_sku.length/this.currentFormInfo.sku_type_arr.length) === 0) {
+      const columnIndexNum = this.isGoodFriend ? 7 : 6;
+      if (columnIndex === 0 || columnIndex === 7) {
+        //   this.currentFormInfo.sku_type_arr.length
+        if (rowIndex % (this.currentFormInfo.good_sku.length/2) === 0) {
           return {
-            rowspan: this.currentFormInfo.good_sku.length/this.currentFormInfo.sku_type_arr.length,
+            rowspan: this.currentFormInfo.good_sku.length/2,
             colspan: 1
           };
         } else {
@@ -510,7 +531,7 @@ export default {
       
       for(var i=0;i<sku_type_arr_key.length;i++){
         for(var j=0;j<sku_type_arr_val.length;j++){
-          good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]],sku_code:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
+          good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]],sku_code:'',price_total:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
         }
       }
 
@@ -525,6 +546,19 @@ export default {
      * 切换tab
      */
     $_changeTabNext() {
+        if(this.currentFormInfo.singleButton === '无规格' || this.isGoodFriend){
+            this.currentFormInfo.good_sku = []
+            let obj = {
+                'sku_code' : this.currentFormInfo.sku_code,
+                'price_cost' : this.currentFormInfo.price_cost,
+                'price_sale' : this.currentFormInfo.price_sale,
+                'price' : this.currentFormInfo.price,
+                'price_total' : this.currentFormInfo.price_total
+            }
+            this.currentFormInfo.good_sku.push(obj)
+            delete this.currentFormInfo.sku_type_arr
+        }
+            console.log(this.currentFormInfo)
         this.$refs.currentFormInfo.validate((valid) => {
             if (valid) {
                 this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
@@ -583,12 +617,6 @@ export default {
     left: 270px;
 }
 
-#createGood  .outText1{
-    position: absolute;
-    top: 12px;
-    left: 95px;
-}
-
 .goodSkuInfo_row{
     margin:10px
 }
@@ -615,6 +643,17 @@ export default {
 }
 .form-footer{
     text-align: center
+}
+#createGood  .el-table__row .cell{
+    position: relative;
+}
+
+
+
+#createGood  .el-table__row .cell .outText1{
+    position: absolute;
+    top: 6px;
+    left: 95px;
 }
 </style>
 

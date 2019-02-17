@@ -15,16 +15,16 @@
             <el-step title="添加耗材" v-if="isGoodFriend" />
             <el-step title="编辑商品详情" />
           </el-steps>
-          <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-if="active===0" />
-          <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-if="active===1 && isGoodFriend"/>              
-          <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-if="active===1 && !isGoodFriend || active===2 " /> 
+          <FormlistItem @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-show="active===0" />
+          <FormlistGoodFriend @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-show="active===1 && isGoodFriend"/>              
+          <FormlistProduct @changeTabNext="$_changeTab_next" @changeTabPre="$_changeTab_pre" v-show="active===1 && !isGoodFriend || active===2 " /> 
         </div>
     </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { breadcrumb } from "../../constans/createdGood";
+import { breadcrumb, breadcrumbEdit } from "../../constans/createdGood";
 import BreadCrumb from "@/components/common/BreadCrumb";
 import FormlistItem from "@/components/createGood/formlist";
 import FormlistProduct from "@/components/createGood/formlist_product";
@@ -61,7 +61,7 @@ export default {
      * 是否是耗材，门店服务
     */
     isGoodFriend(){
-      return this.$route.query.good_type === '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
+      return this.$route.query.good_type == '1'  //1门店服务 2平台商品 3品项管理 4虚拟卡券
     },
 
     /** 
@@ -74,7 +74,8 @@ export default {
 
   created() {
     const id = this.$route.query.good_id
-    this.breadcrumb = breadcrumb[this.good_type]
+    this.breadcrumb = this.good_id === '0' ? breadcrumb[this.good_type] : breadcrumbEdit[this.good_type]
+    
     this.$store.commit('createdGoode/initFormInfo')  // 每次进页面初始化信息
     this.$store.commit('createdGoode/setFormInfo',{good_type:this.good_type,good_id:this.good_id})
 

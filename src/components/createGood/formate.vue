@@ -129,16 +129,15 @@ export default {
     $_addFormat() {
       console.log(this.goodSkuInfo);
       const goodSkuInfo = this.goodSkuInfo;
-      let flag = true;
-      for (let i = 0; i<goodSkuInfo.length; i++) {
-        if (!goodSkuInfo[i].list.length) {
-          flag = false;
-          break
-        } else {
-          flag = true;
-        }
-      }
-      if (flag) {
+      // for (let i = 0; i<goodSkuInfo.length; i++) {
+      //   if (!goodSkuInfo[i].list.length) {
+      //     flag = false;
+      //     break
+      //   } else {
+      //     flag = true;
+      //   }
+      // }
+      if(goodSkuInfo[0].list.length){
         this.format_show = false;
         this.$emit("addFormat", this.goodSkuInfo);
       }else{
