@@ -8,38 +8,28 @@
     import Config from "../config";
     export default {
         name: 'OrderRefundInfo',
-    
         components: {
     
         },
-    
         data() {
             return {
                 
             }
         },
-    
         props: {
             refundInfo: {
                 type: Object(),
                 default: () => {}
             }
         },
-    
         computed: {},
-    
-        beforeRouteUpdate(to, from, next) {
-    
-        },
-    
         created() {
+            console.log(refundInfo);
         },
-    
         mounted() {
         },
     
-        methods: {
-            
+        methods: { 
         }
     }
 </script>

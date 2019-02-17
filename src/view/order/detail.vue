@@ -22,7 +22,8 @@
                         <!-- {{refundList}} -->
                         <el-tabs v-model="refundTabName">
                             <el-tab-pane :key="item.order_refund_id" v-for="(item,index) in refundList" :label="`订单`+(index+1)" :name="`refund_`+index">
-                                <RefundInfo :refundInfo="item"></RefundInfo>
+                                {{item}}
+                                <!-- <RefundInfo :key="`refund_`+item.order_refund_id" :refundInfo="item"></RefundInfo> -->
                             </el-tab-pane>
                         </el-tabs>
                     </div>
@@ -100,9 +101,7 @@ export default {
                 url: '/api/admin/order/refundList',
                 params: params
             }).then((res) => {
-                console.log(res.data);
                 this.refundList = res.data.data
-                console.log(this.refundList);
             }).catch((error) => {});
         },
 
