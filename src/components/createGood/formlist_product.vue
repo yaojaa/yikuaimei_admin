@@ -112,6 +112,9 @@ export default {
                     item.price_cost = (+item.price_cost)*100
                     item.price = (+item.price)*100
                     item.price_sale = (+item.price_sale)*100
+                    if(item.price_total) {
+                       item.price_total = (+item.price_total)*100 
+                    }
                     return item
                 })
                 this.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
@@ -139,6 +142,9 @@ export default {
                     item.price_cost = (+item.price_cost)*100
                     item.price = (+item.price)*100
                     item.price_sale = (+item.price_sale)*100
+                    if(item.price_total) {
+                       item.price_total = (+item.price_total)*100 
+                    }
                     return item
                 })
 
