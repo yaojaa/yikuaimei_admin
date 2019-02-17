@@ -22,15 +22,15 @@
             <nomal-table ref="table" :table-json="tableJson" :url="url" :query="{good_type: 4}">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
-            <el-dialog title="下架" :visible="visible" width="30%">
-                <p>确定要下架{{currentItem.good_name}}吗?</p>
-                <p>操作人:{{user.data.user_realname}}</p>
-                <!-- <span>{{currentItem.name}}</span> -->
-                <span slot="footer" class="dialog-footer">
-                                <el-button @click="visible = false">取 消</el-button>
-                                <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
-                            </span>
-            </el-dialog>
+            <el-dialog :title="+currentItem.is_use === 1 ? '下架' : '上架'" :visible="visible" width="30%">
+				<p>确定要{{+currentItem.is_use === 1 ? '下架' : '上架'}}{{currentItem.good_name}}吗?</p>
+				<p>操作人:{{user.data.user_realname}}</p>
+				<!-- <span>{{currentItem.name}}</span> -->
+				<span slot="footer" class="dialog-footer">
+		            <el-button @click="visible = false">取 消</el-button>
+		            <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
+		        </span>
+			</el-dialog>
         </div>
     </div>
 </template>
@@ -225,7 +225,7 @@ export default {
                         "align": "center",
                         "width": "",
                         "list": [{
-                                "label": "下架",
+                                "label": "上/下架",
                                 "type": "edit",
                                 // "url": "", //优先执行url
                                 onClick(tablePage, self, record) {
