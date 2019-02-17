@@ -698,7 +698,29 @@ ol {
 .page-content {
     padding: 20px;
 }
-
+.page-content.page-column{
+    padding: 20px;
+}
+.page-column {
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.page-main{
+    -moz-flex: 1;
+    -ms-flex: 1;
+    -o-flex: 1;
+    -webkit-box-flex: 1;
+            flex: 1;
+}
+.page-side{
+    width: 220px;
+    background: #fff;
+    margin-left: 20px;
+}
 .page-header+.page-content {
     padding-top: 0
 }
@@ -1023,9 +1045,22 @@ ol {
     color: #7224d8;
 }
 
-
-
-
+.primary-tab .el-tabs__header{
+    margin-bottom: 0;
+}
+.primary-tab .el-tabs__nav-wrap::after{
+    display: none;
+}
+.primary-tab .el-tabs__item{
+    font-size: 16px;
+    color:#44465A;
+    font-weight: normal;
+}
+.primary-tab .el-tabs__item.el-tabs__item.is-active{
+    font-size: 18px;
+    font-weight: bold;
+    color:#7224D8;
+}
 /*框架修改*/
 
 .el-breadcrumb__item .iconfont {
