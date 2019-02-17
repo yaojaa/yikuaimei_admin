@@ -223,36 +223,50 @@ export default {
                     //   prop: "shop_category_name",
                     //   align: "center",
                     //   width: ""
-                    // },
-                    {
-                        "type": "handle",
+					// },
+					{
+                        "type": "text",
                         "label": "操作",
                         "align": "center",
-                        "width": "",
-                        "list": [{
-                                "label": "下架",
-                                "type": "edit",
-                                // "url": "", //优先执行url
-                                onClick(tablePage, self, record) {
-                                    // console.log(record);
-                                    self.openModal(record)
-                                }
-                            },
-                            {
-                                "label": "编辑",
-                                "type": "edit",
-                                onClick(tablePage, self, record) {
-                                    self.$router.push({
-                                        path: '/createGood',
-                                        query: {
-                                            good_id: record.good_id,
-                                            good_type: 2 // good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券
-                                        }
-                                    })
-                                }
-                            }
-                        ]
+                        "width": "200",
+                        formatter: function(row) {
+                            var str = '<div style="text-align:right">'
+                            str += '<a @click="openModal(row)" class="el-button reset el-button--default el-button--small">'+ Config.option[row.is_use]+'</a>'
+                            str += '<a href="/createGood?good_id' + row.good_id + '&good_type=2" class="el-button reset el-button--default el-button--small is-plain" >编辑</a>'
+                            str += '</div>'
+                            return str
+                        }
+
                     }
+                    // {
+                    //     "type": "handle",
+                    //     "label": "操作",
+                    //     "align": "center",
+                    //     "width": "",
+                    //     "list": [{
+                    //             "label": "下架",
+                    //             "type": "edit",
+                    //             // "url": "", //优先执行url
+                    //             onClick(tablePage, self, record) {
+                    //                 // console.log(record);
+                    //                 self.openModal(record)
+                    //             }
+                    //         },
+                    //         {
+                    //             "label": "编辑",
+                    //             "type": "edit",
+                    //             onClick(tablePage, self, record) {
+                    //                 self.$router.push({
+                    //                     path: '/createGood',
+                    //                     query: {
+                    //                         good_id: record.good_id,
+                    //                         good_type: 2 // good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券
+                    //                     }
+                    //                 })
+                    //             }
+                    //         }
+                    //     ]
+                    // }
                 ]
             }
             return column;
@@ -267,6 +281,7 @@ export default {
 
         // 打开上下架弹窗
         openModal(record) {
+			alert(1);
             this.currentItem = record;
             this.visible = true;
         },

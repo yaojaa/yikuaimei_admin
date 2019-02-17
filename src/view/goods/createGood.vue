@@ -104,7 +104,6 @@ export default {
 }
 
 #createGood .el-steps--simple{
-  width: 960px;
   background: rgba(238, 239, 255, 1);
   margin:20px 0 30px 0
 }
