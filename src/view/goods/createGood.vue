@@ -98,7 +98,7 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
 #createGood .panel {
   padding: 20px 0;
 }
