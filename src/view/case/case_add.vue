@@ -7,7 +7,7 @@
         </div>
         <div class="page-content">
             <div class="panel">
-                <el-steps :active="step" finish-status="success" align-center>
+                <el-steps :active="step" simple>
                     <el-step @click.native="goNextStep(1)" title="顾客信息"></el-step>
                     <el-step @click.native="goNextStep(2)" title="检测报告"></el-step>
                     <el-step @click.native="goNextStep(3)" title="案列详情"></el-step>
