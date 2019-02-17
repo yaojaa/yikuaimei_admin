@@ -30,6 +30,12 @@ import NProgress from 'nprogress'
 import '../static/css/nprogress.css'
 NProgress.configure({ showSpinner: false });
 
+//城市三级联动
+import { pca, pcaa } from 'area-data'; // v5 or higher
+import 'vue-area-linkage/dist/index.css'; // v2 or higher
+import VueAreaLinkage from 'vue-area-linkage';
+Vue.use(VueAreaLinkage)
+
 // vue-lodash
 import VueLodash from 'vue-lodash'
 Vue.use(VueLodash, { name: 'lodash' })
