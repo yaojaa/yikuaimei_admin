@@ -32,7 +32,6 @@
                     <el-radio-button label="添加规格" />
                 </el-radio-group>
             </el-form-item>
-
             <el-form-item v-if="goodSkuStatus">
                 <el-row :gutter="20">
                     <el-col :span="4">名称:</el-col>
@@ -41,12 +40,17 @@
                 <el-row :gutter="20"  v-for="(item,idx) in currentFormInfo.goodSkuInfo" :key="`${item.name}${idx}`" class="goodSkuInfo_row">
                     <el-col :span="4"><el-button   v-if="item.name" plain>{{item.name}}</el-button></el-col>
                     <el-col :span="12"><el-button v-for="tag in item.list" :key="`${tag}tag`" plain>{{tag}}</el-button></el-col>
-                    <el-col :span="2"> <el-button v-if="idx === currentFormInfo.goodSkuInfo.length-1" click="$_edit" @click="showFormat()">编辑</el-button></el-col>
+                    <el-col :span="2"> 
+                        <el-button  v-if="idx === currentFormInfo.sku_type_arr.length-1"  @click="showFormat()">
+                            编辑{{currentFormInfo.sku_type_arr}}
+                        </el-button>
+                    </el-col>
                 </el-row>
                 <el-table :data="currentFormInfo.good_sku" style="width: 100%" border :span-method="$_SpanMethod" class="table">
-                    <!-- <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr[1]" /> -->
-                    <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" />
-
+                    <!-- 功能列 -->
+                    <el-table-column :label="currentFormInfo.sku_type_arr[0]" prop="sku_type_arr[0]" /> 
+                    <!-- 容量列 -->
+                    <el-table-column :label="currentFormInfo.sku_type_arr[1]" prop="sku_type_arr[1]" v-if="currentFormInfo.sku_type_arr[1]" />
                     <el-table-column label="售价" >
                         <template slot-scope="scope">
                             <el-input  v-model="scope.row.price_sale" placeholder="10000" /> <span class="outText1">元</span>
@@ -506,16 +510,25 @@ export default {
       const columnIndexNum = this.isGoodFriend ? 7 : 6;
       if (columnIndex === 0 || columnIndex === 7) {
         //   this.currentFormInfo.sku_type_arr.length
-        if (rowIndex % (this.currentFormInfo.good_sku.length/2) === 0) {
-          return {
-            rowspan: this.currentFormInfo.good_sku.length/2,
-            colspan: 1
-          };
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0
-          };
+        console.log(this.currentFormInfo.goodSkuInfo[1].list)
+        let len = this.currentFormInfo.goodSkuInfo[1].list.length || 0
+        if(!len || len === 1){
+            return {
+                rowspan: 1,
+                colspan: 1
+            };
+        }else {
+            if (rowIndex % len === 0){
+                return {
+                    rowspan: len,
+                    colspan: 1
+                };
+            } else {
+                return {
+                    rowspan: 0,
+                    colspan: 0
+                };
+            }
         }
       }
     },
@@ -525,17 +538,27 @@ export default {
      */
     $_addFormat(goodSku) {
       this.currentFormInfo.goodSkuInfo = goodSku
-      let sku_type_arr_key = goodSku[0].list
-      let sku_type_arr_val = goodSku[1].list
+      let sku_type_arr_key = goodSku[0].list  // 功能  list :[美白，保湿]
+      let sku_type_arr_val = goodSku[1].list  // 容量  list :[50ml,100ml,15ml]
       let good_sku_arr = []
-      
-      for(var i=0;i<sku_type_arr_key.length;i++){
-        for(var j=0;j<sku_type_arr_val.length;j++){
-          good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]],sku_code:'',price_total:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
+      if(sku_type_arr_val.length){
+        for(var i=0;i<sku_type_arr_key.length;i++){
+            for(var j=0;j<sku_type_arr_val.length;j++){
+                good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]],sku_code:'',price_total:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
+            }
+        }
+      }else{
+        for(var i=0;i<sku_type_arr_key.length;i++){
+            good_sku_arr.push({sku_type_arr:[sku_type_arr_key[i]],sku_code:'',price_total:'',price_cost: '',price: '',price_sale: '', price_plate: '',ico_small: '',ico_small__url: ''})
         }
       }
+      let sku_type_arr = this.currentFormInfo.sku_type_arr || []
+       goodSku.forEach(function(item){
+          if(item.name){
+              sku_type_arr.push(item.name)
+          }
+      }) // 功能容量
 
-      this.currentFormInfo.sku_type_arr = goodSku.map(item=>item.name) // 规格数组，单规格商品不要提交该字段 
       this.currentFormInfo.good_sku = good_sku_arr
       if(this.currentFormInfo.goodSkuInfo && this.currentFormInfo.goodSkuInfo.length){
         this.goodSkuStatus = true
