@@ -16,7 +16,7 @@
 
   <el-form-item label="行业" prop="tag_name">
     <el-radio-group v-model="ruleForm.category_id">
-    <el-radio v-for="(c,i) in CATEGORYOPTIONS " :label="c.category_id">{{c.category_name}} </el-radio>
+    <el-radio v-for="(c,i) in CATEGORYOPTIONS " :label="c.category_id" :key="index">{{c.category_name}} </el-radio>
   </el-radio-group>
 </el-form-item>
 

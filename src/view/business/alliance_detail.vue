@@ -33,8 +33,7 @@
      </nomal-table>
 
  
-     <el-dialog :title="is_use==0?'停用':'启用'" :visible.sync="dialog" width="30%">
-              <p style="color:red">此操作会{{is_use==0?'停用':'启用'}}加盟商名下所有门店</p>
+     <el-dialog title="启停" :visible.sync="dialog" width="30%">
               <p>操作人:{{user.data.user_realname}}</p>
                  <p>操作备注:</p>
                  <p><el-input
@@ -149,7 +148,7 @@
                             "align": "center",
                             "label": "法人姓名/手机号",
                             "prop": "business_corporation",
-                            "width": "200",
+                            "width": "",
                             formatter(row) {
                                 return `<p style='text-align: center'>
                                 ${row.business_corporation}<br/>
@@ -172,35 +171,16 @@
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "公司地址",
-                            "prop": "business_company_adress",
-                            "width": "200",
-                            
-                        },
-                           {
-                            "type": "text",
-                            "align": "center",
-                            "label": "推荐人账号",
-                            "prop": "p_name",
-                            
-                        },
-                            {
-                            "type": "text",
-                            "align": "center",
-                            "label": "状态",
+                            "label": "城市",
+                            "prop": "city_name",
                             "width": "",
-                            formatter(row){
-                                return `<div style="color:red">
-                                ${row.business_is_use==0?'停用':'启用'}
-                                </div>`
-                            }
                             
                         },
                         {
                             "type": "switch_btn",
                             "label":"操作",
                             "align": "center",
-                            "width": "50",
+                            "width": "200",
                             "prop": "business_is_use",
                             "value":['停用','启用']
                          },
@@ -209,7 +189,7 @@
                             "type": "handle",
                             "label":"查看",
                             "align": "center",
-                            "width": "50",
+                            "width": "200",
                             "list": [
                                 {
                                     "label":"详情",
@@ -245,13 +225,12 @@
             listenSwitchChange(data){
 
 
+                console.log(data)
 
                 const {business_id,business_is_use} = data.value
-                console.log(business_is_use)
 
                 this.business_id= business_id
-                this.is_use = business_is_use==1? 0 : 1
-                console.log(this.is_use)
+                this.is_use = business_is_use==0?"0":"1"
 
                 this.dialog = true
             },
@@ -271,12 +250,9 @@
 
                     if(res.data.code == 0){
 
-                        this.$alert('操作成功'+res.data.data)
-
-                        this.$refs.table.getData({is_page: 1,
-                        page: 1});
+                        this.$alert('操作成功')
                     }else{
-                        this.$alert('操作失败'+res.data.msg)
+                        this.$alert('操作失败')
 
                     }
 

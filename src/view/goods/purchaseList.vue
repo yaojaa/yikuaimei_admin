@@ -4,15 +4,12 @@
             <div class="crumbs">
                 <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
             </div>
+            <div class="page-header-actions">
+                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label' })">管理标签</el-button>
+                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=3' })">添加品项</el-button>
+            </div>
         </div>
         <div class="page-content">
-            <div class="sub-heading">
-				<h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
-				<div class="sub-actions">
-					<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label' })">管理标签</el-button>
-					<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=3' })">添加品项</el-button>
-				</div>
-			</div>
             <div class="filter-tag-box">
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
@@ -25,15 +22,15 @@
             <nomal-table ref="table" :table-json="tableJson" :url="url" :query="{good_type: 3}">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
-            <el-dialog title="下架" :visible="visible" width="30%">
-                <p>确定要下架{{currentItem.good_name}}吗?</p>
-                <p>操作人:{{user.data.user_realname}}</p>
-                <!-- <span>{{currentItem.name}}</span> -->
-                <span slot="footer" class="dialog-footer">
-                                    <el-button @click="visible = false">取 消</el-button>
-                                    <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
-                                </span>
-            </el-dialog>
+            <el-dialog :title="+currentItem.is_use === 1 ? '下架' : '上架'" :visible="visible" width="30%">
+				<p>确定要{{+currentItem.is_use === 1 ? '下架' : '上架'}}{{currentItem.good_name}}吗?</p>
+				<p>操作人:{{user.data.user_realname}}</p>
+				<!-- <span>{{currentItem.name}}</span> -->
+				<span slot="footer" class="dialog-footer">
+		            <el-button @click="visible = false">取 消</el-button>
+		            <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
+		        </span>
+			</el-dialog>
         </div>
     </div>
 </template>
@@ -229,7 +226,7 @@ export default {
                         "align": "center",
                         "width": "",
                         "list": [{
-                                "label": "下架",
+                                "label": "上/下架",
                                 "type": "edit",
                                 // "url": "", //优先执行url
                                 onClick(tablePage, self, record) {

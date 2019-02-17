@@ -2,9 +2,9 @@
     <div class="header">
         <!-- 折叠按钮 -->
         <div class="collapse-btn" @click="collapseChage">
-            <img style="margin-top:13px" src="/static/img/logo.png" width="40">
+            <img src="/static/img/logo.png" width="34">
         </div>
-        <div class="logo">一块美后台管理系统</div>
+        <div class="logo">偷偷美后台管理系统</div>
 
 <!-- <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"> -->
   <!-- <el-menu-item index="1">首页</el-menu-item> -->

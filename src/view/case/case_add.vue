@@ -32,13 +32,13 @@
                         </el-form-item>
                         <el-form-item label="发布人">
                             <el-select v-model="form1.create_user.shop_account_id" placeholder="请选择发布人">
-                                <el-option v-for="(el,index) in accountList" :label="el.shop_account_name" :value="el.shop_account_id">{{el.shop_account_name}} {{el.shop_account_id}}</el-option>
+                                <el-option v-for="(el,index) in accountList" :label="el.shop_account_name" :value="el.shop_account_id" :key="index">{{el.shop_account_name}} {{el.shop_account_id}}</el-option>
                             </el-select>
                         </el-form-item>
                         <!-- /api/admin/select/shopAccountList  -->
                         <el-form-item label="发布人职务">
                             <el-select v-model="form1.create_user.shop_account_melevel" placeholder="请选择发布人职务">
-                                <el-option v-for="(el,index) in mechanicList" :label="el.mechanic_name" :value="el.mechanic_id">
+                                <el-option v-for="(el,index) in mechanicList" :label="el.mechanic_name" :value="el.mechanic_id" :key="index">
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -109,7 +109,7 @@
                                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.report.length">
-                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.report">
+                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.report" :key="index">
                                     <img :src="img" alt="" class="el-upload-list__item-thumbnail">
                                     <a class="el-upload-list__item-name"><i class="el-icon-document"></i>
     </a>
@@ -154,7 +154,7 @@
                                 <div slot="tip" class="el-upload__tip">图片或者视频</div>
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.expert_suggest.pic_list.length">
-                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.expert_suggest.pic_list">
+                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.expert_suggest.pic_list" :key="index">
                                     <img :src="img" alt="" class="el-upload-list__item-thumbnail">
                                     <a class="el-upload-list__item-name"><i class="el-icon-document"></i>
     </a>
@@ -179,7 +179,7 @@
                                 <div slot="tip" class="el-upload__tip">图片或者视频</div>
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.product_introduce.pic_list.length">
-                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.product_introduce.pic_list">
+                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.product_introduce.pic_list" :key="index">
                                     <img :src="img" alt="" class="el-upload-list__item-thumbnail">
                                     <a class="el-upload-list__item-name"><i class="el-icon-document"></i>
     </a>
@@ -204,7 +204,7 @@
                                 <div slot="tip" class="el-upload__tip">图片或者视频</div>
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.operate_process.pic_list.length">
-                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.operate_process.pic_list">
+                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.operate_process.pic_list" :key="index">
                                     <img :src="img" alt="" class="el-upload-list__item-thumbnail">
                                     <a class="el-upload-list__item-name"><i class="el-icon-document"></i>
     </a>
@@ -230,7 +230,7 @@
                             </el-upload>
                             <!---->
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.operate_record.pic_list.length">
-                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.operate_record.pic_list">
+                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.operate_record.pic_list" :key="index">
                                     <img :src="img" alt="" class="el-upload-list__item-thumbnail">
                                     <a class="el-upload-list__item-name"><i class="el-icon-document"></i>
           </a>
@@ -255,7 +255,7 @@
                                 <div slot="tip" class="el-upload__tip">图片或者视频</div>
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.data_contrast.pic_list.length">
-                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.data_contrast.pic_list">
+                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.data_contrast.pic_list" :key="index">
                                     <img :src="img" alt="" class="el-upload-list__item-thumbnail">
                                     <a class="el-upload-list__item-name"><i class="el-icon-document"></i>
           </a>
@@ -280,7 +280,7 @@
                                 <div slot="tip" class="el-upload__tip">图片或者视频</div>
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.expert_analysis.pic_list.length">
-                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.expert_analysis.pic_list">
+                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.expert_analysis.pic_list" :key="index">
                                     <img :src="img" alt="" class="el-upload-list__item-thumbnail">
                                     <a class="el-upload-list__item-name"><i class="el-icon-document"></i>
           </a>
@@ -305,7 +305,7 @@
                                 <div slot="tip" class="el-upload__tip">图片或者视频</div>
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.expert_review.pic_list.length">
-                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.expert_review.pic_list">
+                                <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.expert_review.pic_list" :key="index">
                                     <img :src="img" alt="" class="el-upload-list__item-thumbnail">
                                     <a class="el-upload-list__item-name"><i class="el-icon-document"></i>
     </a>
