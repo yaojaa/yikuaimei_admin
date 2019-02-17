@@ -18,13 +18,13 @@
         },
         props: {
             refundInfo: {
-                type: Object(),
+                type: Object,
                 default: () => {}
             }
         },
         computed: {},
         created() {
-            console.log(refundInfo);
+            console.log(this.refundInfo);
         },
         mounted() {
         },

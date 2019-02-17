@@ -22,8 +22,7 @@
                         <!-- {{refundList}} -->
                         <el-tabs v-model="refundTabName">
                             <el-tab-pane :key="item.order_refund_id" v-for="(item,index) in refundList" :label="`订单`+(index+1)" :name="`refund_`+index">
-                                {{item}}
-                                <!-- <RefundInfo :key="`refund_`+item.order_refund_id" :refundInfo="item"></RefundInfo> -->
+                                <RefundInfo :key="`refund_`+item.order_refund_id" :refundInfo="item"></RefundInfo>
                             </el-tab-pane>
                         </el-tabs>
                     </div>
