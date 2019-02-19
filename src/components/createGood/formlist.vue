@@ -100,10 +100,10 @@
             <!-- 一期不做 -->
             <!-- <el-form-item label="库存：" prop="exist">
                 <el-input  v-model="currentFormInfo.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
-            </el-form-item>
-            <el-form-item label="单位：" prop="unit">
-                <el-input  v-model="currentFormInfo.unit" placeholder="箱" suffix-icon="el-icon-arrow-right" />                                                                       
             </el-form-item> -->
+            <el-form-item label="单位：" prop="unit">
+                <el-input  v-model="currentFormInfo.unit" placeholder="箱" />                                                                       
+            </el-form-item>
             <template v-if="currentFormInfo.singleButton === '无规格' || isGoodFriend">
                 <el-form-item :label="`${type}编码：`" prop="sku_code">
                     <el-input  v-model="currentFormInfo.sku_code" placeholder="支持14以内的数字+英文组合"  />                                                                              
