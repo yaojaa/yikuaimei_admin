@@ -356,9 +356,18 @@ export default {
             alert('请先选择行业id')
             return 
         }
+        let tag_group_type;
+        const good_type = this.formInfo.good_type;
+        if (+good_type === 1 || +good_type === 3) {
+            tag_group_type = 2
+        } else if (+good_type === 2) {
+            tag_group_type = 1
+        } else if (+good_type === 4) {
+            tag_group_type = 4
+        }
         this.$store.dispatch('createdGoode/fetchLableList', {
             // tag_group_type: this.formInfo.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
-            tag_group_type: +this.formInfo.good_type === 3 ? 1 : +this.formInfo.good_type === 4 ? 3 : +this.formInfo.good_type , // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
+            tag_group_type: tag_group_type,
             category_id: this.currentFormInfo.category_id || 1, // 行业id @TODO 默认是1 ，变量
             get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
         }).then(()=>{

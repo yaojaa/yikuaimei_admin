@@ -22,8 +22,8 @@
             <nomal-table ref="table" :table-json="tableJson" :url="url" :query="{good_type: 4}">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
-            <el-dialog :title="+currentItem.is_use === 1 ? '下架' : '上架'" :visible="visible" width="30%">
-				<p>确定要{{+currentItem.is_use === 1 ? '下架' : '上架'}}{{currentItem.good_name}}吗?</p>
+            <el-dialog :title="+currentItem.is_use === 2 ? '下架' : '上架'" :visible="visible" width="30%">
+				<p>确定要{{+currentItem.is_use === 2 ? '下架' : '上架'}}{{currentItem.good_name}}吗?</p>
 				<p>操作人:{{user.data.user_realname}}</p>
 				<!-- <span>{{currentItem.name}}</span> -->
 				<span slot="footer" class="dialog-footer">
