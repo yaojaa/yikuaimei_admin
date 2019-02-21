@@ -28,8 +28,8 @@
             </el-dialog>
           </el-upload>
       </el-form-item>
-      <el-form-item label="补充说明：" prop="good_notes">
-          <el-input type="textarea" v-model="currentFormInfo.good_notes" placeholder="请填写购买须知" suffix-icon="el-icon-arrow-right" />
+      <el-form-item label="购买须知：" prop="good_notes">
+          <el-input type="textarea" v-model="currentFormInfo.good_notes" placeholder="请填写购买须知" rows="3" class="good_notes" />
       </el-form-item>
       <el-form-item>
           <el-button type="primary" @click="$_changeTabPre">上一步</el-button>
@@ -93,6 +93,8 @@ export default {
       this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
       let {good_id,good_type} = this.$route.query
       let formInfo = this.formInfo
+      let that = this
+      debugger
       // @TODO 先做校验，校验成功在请求接口
       this.$refs.currentFormInfo.validate((valid) => {
         if (valid) {
@@ -117,12 +119,12 @@ export default {
                     }
                     return item
                 })
-                this.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
+                that.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
                     if(res.code === 0){
-                        this.$alert("创建成功");
-                        this.$_goOut(good_type)
+                        that.$alert("创建成功");
+                        that.$_goOut(good_type)
                     }else{
-                        this.$message.error(res.msg);
+                        that.$message.error(res.msg);
                     }
                 })
             }else{
@@ -148,20 +150,19 @@ export default {
                     return item
                 })
 
-                if(this.$route.query.good_type == '1'){
+                if(that.$route.query.good_type == '1'){
                     delete params.sku_type_arr
                     delete params.sku_list
                 }
                 if(params.singleButton === '无规格'){
                     delete params.sku_type_arr
                 }
-                    
-                this.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
+                that.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
                     if(res.code === 0){
-                        this.$alert("编辑成功");
-                        this.$_goOut(good_type)
+                        that.$alert("编辑成功");
+                        that.$_goOut(good_type)
                     }else{
-                        this.$message.error(res.msg);
+                        that.$message.error(res.msg);
                     }
                 })
             }
@@ -184,6 +185,18 @@ export default {
             case '4':
                 this.$router.push('/fictitiousList')
                 break;
+            case 1:
+                this.$router.push('/serviceList')
+                break;
+            case 2:
+                this.$router.push('/goodList')
+                break;
+            case 3:
+                this.$router.push('/purchaseList')
+                break;
+            case 4:
+                this.$router.push('/fictitiousList')
+                break;
         
             default:
                 break;
@@ -194,6 +207,7 @@ export default {
      * 切换tab
      */
     $_changeTabPre() {
+      this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
       this.$emit("changeTabPre");
     },
 
@@ -260,6 +274,10 @@ export default {
 <style>
 .canAdd__goodImg .el-upload--picture-card{
     display: none
+}
+#createGood .el-form-item--small .el-form-item__content .good_notes .el-textarea__inner{
+    max-width: 400px;
+    width: 310px
 }
 </style>
 

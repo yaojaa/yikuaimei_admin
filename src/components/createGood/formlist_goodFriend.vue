@@ -223,7 +223,34 @@ export default {
       }
     },
     $_changeTabPre() {
-      this.$emit("changeTabPre");
+        if(this.good_friends.length === 0){
+        this.$emit("changeTabPre");
+        return
+      }
+      let canNext = true
+      this.good_friends.forEach(good => {
+        let group_sku_str = good.group_sku_str
+        let sku_list = good.sku_list
+        good.group_sku_id = []
+        if(!group_sku_str.length){
+            canNext = false
+        }
+        group_sku_str.forEach(str => {
+            let obj = sku_list.find(item => item.sku_str === str)
+            good.group_sku_id.push(obj.sku_id)
+        })
+      })
+
+      if(!canNext){
+          this.$message({
+          message: '规格至少选一个',
+          type: 'warning'
+        });
+      }else{
+          this.currentFormInfo.good_friends = this.good_friends
+          this.$store.commit('createdGoode/setFormInfo',this.currentFormInfo)
+          this.$emit("changeTabPre");
+      }
     },
 
     /** 

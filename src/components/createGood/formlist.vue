@@ -279,7 +279,7 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       limitNumber:6,
-      limitNumber2:6,
+      limitNumber2:4,
       currentFormInfo:{},
       goodSkuStatus:false, // 展示规格状态
       type:'',
@@ -367,7 +367,7 @@ export default {
         }
         this.$store.dispatch('createdGoode/fetchLableList', {
             // tag_group_type: this.formInfo.good_type, // 标签组类型 1商品 2服务 3虚拟券 4评价 5用户
-            tag_group_type: tag_group_type,
+            tag_group_type: tag_group_type, 
             category_id: this.currentFormInfo.category_id || 1, // 行业id @TODO 默认是1 ，变量
             get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
         }).then(()=>{
@@ -398,6 +398,7 @@ export default {
         this.$refs.currentFormInfo.validate((valid) => {
             this.$store.commit('createdGoode/setFormInfo',currentFormInfo)
             let formInfo = this.formInfo
+            let that = this
             if(good_id === '0'){
                 let ico_small = ''
                 let params = _.cloneDeep(formInfo)
@@ -419,12 +420,12 @@ export default {
                     }
                     return item
                 })
-                this.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
+                that.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
                     if(res.code === 0){
-                        this.$alert('添加成功');
-                        this.$_goOut(good_type)
+                        that.$alert('添加成功');
+                        that.$_goOut(good_type)
                     }else{
-                        this.$message.error(res.msg);
+                        that.$message.error(res.msg);
                     }
                 })
             }else{
@@ -460,12 +461,13 @@ export default {
                     delete params.sku_type_arr
                 }
                     
-                this.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
+                that.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
                     if(res.code === 0){
-                        this.$alert('编辑成功');
-                        this.$_goOut(good_type)
+                        that.$_goOut(good_type)
+                        that.$alert('编辑成功');
                     }else{
-                        this.$message.error(res.msg);
+                        that.$message.error(res.msg);
+                        return false
                     }
                 })
             }
@@ -484,6 +486,18 @@ export default {
                 this.$router.push('/purchaseList')
                 break;
             case '4':
+                this.$router.push('/fictitiousList')
+                break;
+            case 1:
+                this.$router.push('/serviceList')
+                break;
+            case 2:
+                this.$router.push('/goodList')
+                break;
+            case 3:
+                this.$router.push('/purchaseList')
+                break;
+            case 4:
                 this.$router.push('/fictitiousList')
                 break;
         
@@ -553,7 +567,7 @@ export default {
         if(fileList.length >= 4){
             this.canAdd__goodImg2 = true
         }
-        this.limitNumber2 = 6 - (+fileList.length)
+        this.limitNumber2 = 4 - (+fileList.length)
         this.currentFormInfo.explain_img_arr = fileList
     },
 
