@@ -242,11 +242,11 @@
         <!-- 表单list End -->
 
         <!-- 添加标签弹框 -->
-        <Lable ref="lable" @addLable="$_addLable" :tagList = "currentFormInfo.tag_list" />
+        <Lable ref="lable" @addLable="$_addLable" :tagList = "currentFormInfo.tag_list"/>
         <!-- 添加标签弹框 End -->
 
         <!-- 添加规格弹框 -->
-        <Formate  @addFormat="$_addFormat" @closeFormat="$_closeFormat" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo" />
+        <Formate  @addFormat="$_addFormat" @closeFormat="$_closeFormat" ref="formate" :goodSkuinfo = "currentFormInfo.goodSkuInfo"  @changeSingleButton="$_changeSingleButton"  />
         <!-- 添加规格弹框  End-->
     </div>
 </template>
@@ -347,6 +347,10 @@ export default {
   },
 
   methods: {
+    $_changeSingleButton(){
+        debugger
+        this.currentFormInfo.singleButton  = "无规格"
+    },
     /** *
      * 展示标签
      */
@@ -374,6 +378,10 @@ export default {
             this.$refs.lable.initSons()
             this.$refs.lable.lable_show = true
         })
+    },
+
+    $_closed(){
+
     },
 
       /** *
@@ -850,6 +858,10 @@ export default {
     position: absolute;
     top: 6px;
     left: 95px;
+}
+
+#createGood .el-tag--small {
+    margin: 0 5px;
 }
 </style>
 

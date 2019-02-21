@@ -1,6 +1,6 @@
 <template>
     <!-- dialog showFormatInfo弹框 -->
-    <el-dialog title="添加规格" :visible.sync="format_show" size="large" id="format_show">
+    <el-dialog title="添加规格" :visible.sync="format_show" size="large" id="format_show"  @close="$_close" >
         <el-row :gutter="20">
             <el-col :span="4">&nbsp;</el-col>
             <el-col :span="4">名称</el-col>
@@ -144,6 +144,12 @@ export default {
           message: '请填写规格',
           type: 'warning'
         });
+      }
+    },
+
+    $_close(){
+      if(!this.goodSkuInfo[0].list.length){
+        this.$emit("changeSingleButton");
       }
     },
 
