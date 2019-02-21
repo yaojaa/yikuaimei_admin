@@ -5,7 +5,7 @@ export const breadcrumb = {
         },
         {
             name: "门店服务", //名字
-            url: "/goodList"
+            url: "/serviceList"
         },
         {
             name: "添加门店" //名字
@@ -16,7 +16,7 @@ export const breadcrumb = {
         },
         {
             name: "平台商品", //名字
-            url: "/serviceList"
+            url: "/goodList"
         },
         {
             name: "添加商品" //名字
@@ -53,7 +53,7 @@ export const breadcrumbEdit = {
         },
         {
             name: "门店服务", //名字
-            url: "/goodList"
+            url: "/serviceList"
         },
         {
             name: "编辑门店" //名字
@@ -64,7 +64,7 @@ export const breadcrumbEdit = {
         },
         {
             name: "平台商品", //名字
-            url: "/serviceList"
+            url: "/goodList"
         },
         {
             name: "编辑商品" //名字

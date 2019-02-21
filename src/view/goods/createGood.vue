@@ -128,8 +128,8 @@ export default {
 
 #createGood .el-input--small,
 .el-textarea__inner {
-  max-width: 520px;
-  min-height: 100px !important;
+  max-width: 260px;
+  /* min-height: 100px !important; */
 }
 
 #createGood .el-radio-button__inner {
