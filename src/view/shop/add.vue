@@ -281,10 +281,8 @@ export default {
     "shop_longitude" : "",//门店经度
     "shop_latitude" : "",//门店纬度
     "shop_environment" : [],//门店环境图片数组
-    "review_id" : "5be55f3e4c22ad1bd0007e2c",//加盟商审核信息的_id
     "business_id" : 13,//加盟商审核信息的business_id
-
-    shop_environment:[]
+    "shop_environment":[]
   },
 
         rules: {
