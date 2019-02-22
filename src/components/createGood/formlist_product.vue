@@ -94,7 +94,6 @@ export default {
       let {good_id,good_type} = this.$route.query
       let formInfo = this.formInfo
       let that = this
-      debugger
       // @TODO 先做校验，校验成功在请求接口
       this.$refs.currentFormInfo.validate((valid) => {
         if (valid) {
@@ -122,7 +121,12 @@ export default {
                 that.$store.dispatch('createdGoode/fetchFormInfoCreate',params).then((res)=>{
                     if(res.code === 0){
                         that.$alert("创建成功");
-                        that.$_goOut(good_type)
+                        if(+good_type === 1 || +good_type === 2){
+                            that.$_goPreview(+res.data,+good_type);
+                        } else {
+                            that.$_goOut(+good_type)
+                        }
+                        
                     }else{
                         that.$message.error(res.msg);
                     }
@@ -160,7 +164,12 @@ export default {
                 that.$store.dispatch('createdGoode/fetchFormInfoModify',params).then((res)=>{
                     if(res.code === 0){
                         that.$alert("编辑成功");
-                        that.$_goOut(good_type)
+                        if(+good_type === 1 || +good_type === 2){
+                            that.$_goPreview(+res.data,+good_type);
+                        } else {
+                            that.$_goOut(+good_type)
+                        }
+                        
                     }else{
                         that.$message.error(res.msg);
                     }
@@ -173,18 +182,6 @@ export default {
 
     $_goOut(good_type){
         switch (good_type) {
-            case '1':
-                this.$router.push('/serviceList')
-                break;
-            case '2':
-                this.$router.push('/goodList')
-                break;
-            case '3':
-                this.$router.push('/purchaseList')
-                break;
-            case '4':
-                this.$router.push('/fictitiousList')
-                break;
             case 1:
                 this.$router.push('/serviceList')
                 break;
@@ -201,6 +198,10 @@ export default {
             default:
                 break;
         }
+    },
+
+    $_goPreview(good_id,good_type){
+        this.$router.push('/goodPreview?good_id='+good_id+'&good_type='+good_type)
     },
 
     /** *
