@@ -102,8 +102,16 @@
                 <el-input  v-model="currentFormInfo.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
             </el-form-item> -->
             <el-form-item label="单位：" prop="unit">
-                <el-input  v-model="currentFormInfo.unit" placeholder="箱" />                                                                       
-            </el-form-item>
+                    <el-radio-group v-model="currentFormInfo.unit">
+                        <el-radio v-for="item in UNIT" :label="item" :key="`${item}unit`" />
+                    </el-radio-group>                                                                       
+                </el-form-item>
+                <!-- 产地只有商品有 -->
+                <el-form-item label="产地：" prop="country" v-if="type === '商品'">
+                    <el-select v-model="currentFormInfo.country" placeholder="请选择活动区域">
+                        <el-option v-for="item in COUNTRY" :label="item" :value="item" :key="`${item}country`" />
+                    </el-select>                                                                      
+                </el-form-item>
             <template v-if="currentFormInfo.singleButton === '无规格' || isGoodFriend">
                 <el-form-item :label="`${type}编码：`" prop="sku_code">
                     <el-input  v-model="currentFormInfo.sku_code" placeholder="支持14以内的数字+英文组合"  />                                                                              
@@ -254,7 +262,7 @@
 <script>
 import _ from 'lodash'
 import { mapState } from "vuex";
-import { CATEGORYOPTIONS,type } from "../../constans/createdGood";
+import { CATEGORYOPTIONS,type,UNIT, COUNTRY } from "../../constans/createdGood";
 import Lable from "@/components/createGood/lable";
 import Formate from "@/components/createGood/formate";
 
@@ -268,47 +276,52 @@ export default {
 
   data() {
     return {
-      good_ico__Key: String(new Date() + 1) ,
-      good_video_pic__Key: String(new Date() + 2),
-      good_video__Key: String(new Date() + 3),
-      tagList__key: String(new Date() + 4),
-      goodsku__key:String(new Date() + 'goodsku__key'),
-      CATEGORYOPTIONS, // 所属行业分类
-      canAdd__goodImg: false, // 是否可添加状态 __ 商品图片
-      canAdd__goodImg2: false, // 是否可添加状态 __ 商品图片
-      dialogImageUrl: '',
-      dialogVisible: false,
-      limitNumber:6,
-      limitNumber2:4,
-      currentFormInfo:{},
-      goodSkuStatus:false, // 展示规格状态
-      type:'',
-      rules: {
-        good_name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 2, max: 30, message: "长度在2-30个字符", trigger: "blur" }
-        ],
-        good_explain: [
-          { required: true, message: `${type[this.$route.query.good_type]}在详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" },
-          { min: 2, max: 50, message: `在${type[this.$route.query.good_type]}详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" }
-        ],
-        category_id: [
-          { required: true, message: "请选择所属行业分类", trigger: "blur" }
-        ],
-        //@TODO
-        tag_list: [
-          { required: true, message: "请添加标签", trigger: "blur" }
-        ],
-        format: [{ required: true, message: "请选择规格", trigger: "change" }],
-        productCode: [
-          { required: true, message: `请填写${type[this.$route.query.good_type]}编码`, trigger: "blur" }
-        ],
-        price_sale: [{ required: true, message: "请填写售价", trigger: "blur" }],
-        sku_code: [{ required: true, message: `请填写${type[this.$route.query.good_type]}编码`, trigger: "blur" }],
-        price: [{ required: true, message: "请填写原价", trigger: "blur" }],
-        price_cost: [{ required: true, message: "请填写成本", trigger: "blur" }],
-        price_total: [{ required: true, message: "请填写总价", trigger: "blur" }]
-      }
+        UNIT, 
+        COUNTRY,
+        good_ico__Key: String(new Date() + 1) ,
+        good_video_pic__Key: String(new Date() + 2),
+        good_video__Key: String(new Date() + 3),
+        tagList__key: String(new Date() + 4),
+        goodsku__key:String(new Date() + 'goodsku__key'),
+        CATEGORYOPTIONS, // 所属行业分类
+        canAdd__goodImg: false, // 是否可添加状态 __ 商品图片
+        canAdd__goodImg2: false, // 是否可添加状态 __ 商品图片
+        dialogImageUrl: '',
+        dialogVisible: false,
+        limitNumber:6,
+        limitNumber2:4,
+        currentFormInfo:{},
+        goodSkuStatus:false, // 展示规格状态
+        type:'',
+        rules: {
+            good_name: [
+            { required: true, message: "请输入活动名称", trigger: "blur" },
+            { min: 2, max: 30, message: "长度在2-30个字符", trigger: "blur" }
+            ],
+            good_explain: [
+            { required: true, message: `${type[this.$route.query.good_type]}在详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" },
+            { min: 2, max: 50, message: `在${type[this.$route.query.good_type]}详情页标题下面展示卖点信息，建议50字以内`, trigger: "blur" }
+            ],
+            category_id: [
+            { required: true, message: "请选择所属行业分类", trigger: "blur" }
+            ],
+            //@TODO
+            tag_list: [
+            { required: true, message: "请添加标签", trigger: "blur" }
+            ],
+            format: [{ required: true, message: "请选择规格", trigger: "change" }],
+            productCode: [
+            { required: true, message: `请填写${type[this.$route.query.good_type]}编码`, trigger: "blur" }
+            ],
+            price_sale: [{ required: true, message: "请填写售价", trigger: "blur" }],
+            sku_code: [{ required: true, message: `请填写${type[this.$route.query.good_type]}编码`, trigger: "blur" }],
+            price: [{ required: true, message: "请填写原价", trigger: "blur" }],
+            price_cost: [{ required: true, message: "请填写成本", trigger: "blur" }],
+            price_total: [{ required: true, message: "请填写总价", trigger: "blur" }],
+            unit: [{ required: true, message: "请选择单位", trigger: "change" }],
+            country: [{ required: true, message: "请选择产地", trigger: "change" }],
+            
+        }
     };
   },
 
@@ -378,10 +391,6 @@ export default {
             this.$refs.lable.initSons()
             this.$refs.lable.lable_show = true
         })
-    },
-
-    $_closed(){
-
     },
 
       /** *

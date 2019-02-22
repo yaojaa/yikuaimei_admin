@@ -117,3 +117,6 @@ export const CATEGORYOPTIONS = [{
         category_name: "轻医美"
     }
 ]
+
+export const COUNTRY = ['法国', '美国', '以色列', '意大利', '韩国']
+export const UNIT = ['个', '箱', '盒', '瓶', '袋']
