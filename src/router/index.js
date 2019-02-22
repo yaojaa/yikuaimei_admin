@@ -33,7 +33,7 @@ export default new Router({
                     path: '/createGood',
                     component: resolve => require(['../view/goods/createGood.vue'], resolve),
                     meta: {
-                        title: '平台商品'
+                        title: '添加商品'
                     }
                 },
                 {
@@ -55,6 +55,13 @@ export default new Router({
                     component: resolve => require(['../view/goods/fictitiousList.vue'], resolve),
                     meta: {
                         title: '虚拟卡券管理'
+                    }
+                },
+                {
+                    path: '/shareAd',
+                    component: resolve => require(['../view/goods/shareAd.vue'], resolve),
+                    meta: {
+                        title: '分享海报'
                     }
                 },
                 // {

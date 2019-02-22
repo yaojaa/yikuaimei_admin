@@ -246,7 +246,20 @@
                                             }
                                         })
                                     }
-                                }
+                                },
+                                {
+									"label": "分享海报",
+									"type": "edit",
+									onClick(tablePage, self, record) {
+										self.$router.push({
+											path: '/shareAd',
+											query: {
+												good_id: record.good_id,
+												good_type: 1 // good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券
+											}
+										})
+									}
+								}
                             ]
                         }
                     ]
