@@ -1,5 +1,4 @@
 <template>
-    <!-- dialog showFormatInfo弹框 -->
     <el-dialog title="添加规格" :visible.sync="format_show" size="large" id="format_show"  @close="$_close" >
         <el-row :gutter="20">
             <el-col :span="4">&nbsp;</el-col>

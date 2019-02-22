@@ -224,38 +224,6 @@ export default {
             };
         },
 
-        initFormInfo(state, data) {
-            state.formInfo = {
-                good_name: '', // 商品名字
-                good_explain: '', // 商品卖点
-                category_id: '', // 行业id
-                tag_id_arr: [], // 标签id数组
-                tag_list: [], // 已选标签展示数据
-                good_video: '', // 商品视频
-                good_video_pic: '', // 商品视频封面图
-                good_img_arr: [], // 商品图片数组
-                explain_img_arr: [],
-                good_ico: '', // 商品展示图
-                unit: '', // 单位 例如盒，箱
-                show_img_arr: [], // 详情页商品展示图数组
-                explain_img_arr: [], // 卖点图数组
-                sku_type_arr: [], // 规格数组，单规格商品不要提交该字段
-                good_sku: [], // 规格sku数组，单规格商品也要按该数组格式提交
-                good_friends: [], // 服务添加耗材列表 不是服务不需要提交
-                goodSkuInfo: [{
-                        name: '',
-                        list: [],
-                        inputValue: ''
-                    },
-                    {
-                        name: '',
-                        list: [],
-                        inputValue: ''
-                    }
-                ]
-            };
-        },
-
         setLableList(state, data) {
             state.lableList = data;
         },

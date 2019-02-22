@@ -95,6 +95,9 @@ export const breadcrumbEdit = {
 }
 
 export const type = ['', '服务', '商品', '品项', '虚拟卡券']
+export const COUNTRY = ['法国', '美国', '以色列', '意大利', '韩国']
+export const UNIT = ['个', '箱', '盒', '瓶', '袋']
+
 
 export const CATEGORYOPTIONS = [{
         category_id: 1,
@@ -117,3 +120,125 @@ export const CATEGORYOPTIONS = [{
         category_name: "轻医美"
     }
 ]
+
+export const GOODTYPE = {
+    'serviceList': 1,
+    'goodList': 2,
+    'purchaseList': 3,
+    'fictitiousList': 4
+}
+
+export const INITFORMINFO = {
+    good_name: '', // 商品名字
+    good_explain: '', // 商品卖点
+    category_id: '', // 行业id
+    tag_id_arr: [], // 标签id数组
+    tag_list: [], // 已选标签展示数据
+    good_video: '', // 商品视频
+    good_video_pic: '', // 商品视频封面图
+    good_img_arr: [], // 商品图片数组
+    explain_img_arr: [],
+    good_ico: '', // 商品展示图
+    unit: '', // 单位 例如盒，箱
+    show_img_arr: [], // 详情页商品展示图数组
+    explain_img_arr: [], // 卖点图数组
+    sku_type_arr: [], // 规格数组，单规格商品不要提交该字段
+    good_sku: [], // 规格sku数组，单规格商品也要按该数组格式提交
+    good_friends: [], // 服务添加耗材列表 不是服务不需要提交
+    goodSkuInfo: [{
+            name: '',
+            list: [],
+            inputValue: ''
+        },
+        {
+            name: '',
+            list: [],
+            inputValue: ''
+        }
+    ]
+}
+
+export function Rules(type) {
+    return {
+        good_name: [{
+                required: true,
+                message: "请输入活动名称",
+                trigger: "blur"
+            },
+            {
+                min: 2,
+                max: 30,
+                message: "长度在2-30个字符",
+                trigger: "blur"
+            }
+        ],
+        good_explain: [{
+                required: true,
+                message: `${type}在详情页标题下面展示卖点信息，建议50字以内`,
+                trigger: "blur"
+            },
+            {
+                min: 2,
+                max: 50,
+                message: `在${type}详情页标题下面展示卖点信息，建议50字以内`,
+                trigger: "blur"
+            }
+        ],
+        category_id: [{
+            required: true,
+            message: "请选择所属行业分类",
+            trigger: "blur"
+        }],
+        //@TODO
+        tag_list: [{
+            required: true,
+            message: "请添加标签",
+            trigger: "blur"
+        }],
+        format: [{
+            required: true,
+            message: "请选择规格",
+            trigger: "change"
+        }],
+        productCode: [{
+            required: true,
+            message: `请填写${type}编码`,
+            trigger: "blur"
+        }],
+        price_sale: [{
+            required: true,
+            message: "请填写售价",
+            trigger: "blur"
+        }],
+        sku_code: [{
+            required: true,
+            message: `请填写${type}编码`,
+            trigger: "blur"
+        }],
+        price: [{
+            required: true,
+            message: "请填写原价",
+            trigger: "blur"
+        }],
+        price_cost: [{
+            required: true,
+            message: "请填写成本",
+            trigger: "blur"
+        }],
+        price_total: [{
+            required: true,
+            message: "请填写总价",
+            trigger: "blur"
+        }],
+        show_img_arr: [{
+            required: true,
+            message: `请选择${type}展示图`,
+            trigger: "change"
+        }],
+        good_notes: [{
+            required: true,
+            message: "请填写购买须知",
+            trigger: "blur"
+        }],
+    }
+}
