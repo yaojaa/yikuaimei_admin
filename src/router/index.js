@@ -64,6 +64,13 @@ export default new Router({
                         title: '分享海报'
                     }
                 },
+                {
+                    path: '/goodPreview',
+                    component: resolve => require(['../view/goods/goodPreview.vue'], resolve),
+                    meta: {
+                        title: '商品预览'
+                    }
+                },
                 // {
                 //     // 分类管理
                 //     path: '/categorylist',
