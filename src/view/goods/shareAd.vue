@@ -96,7 +96,6 @@ export default {
         type_name:'经典版',  // 分享卡片
         img_url: '',
       })
-    debugger
     if(list && list.length){
       this.cardList = list
     }
@@ -108,9 +107,10 @@ export default {
 
   methods: {
     $_change(res,file, target){
+      let url = target.type_name === '分享卡片' ? 'share/fetchCreateCard' : 'share/fetchCreateShareList'
       if(res.status === 'success'){
         target.img_url = URL.createObjectURL(res.raw)
-        this.$store.dispatch('share/fetchCreateShareList',{
+        this.$store.dispatch(url,{
           id : this.goodId ,
           type_name : target.type_name,
           img_url : file[0].response.data.file_name ,
@@ -136,11 +136,12 @@ export default {
     },
 
     $_clearFiles(item){
+      let url = item.type_name === '分享卡片' ? 'share/fetchCreateCard' : 'share/fetchCreateShareList'      
       item.imageUrl = ''
       item.img_url = ''
-      this.$store.dispatch('share/fetchCreateShareList',{
+      this.$store.dispatch(url ,{
         id : this.goodId ,
-        type_name : target.type_name,
+        type_name : item.type_name,
         img_url : '',
       })
     }

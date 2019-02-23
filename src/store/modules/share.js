@@ -45,8 +45,8 @@ export default {
                     ...params
                 })
                 .then((res) => {
-                    commit('setCard', res.data);
-                    return res.data;
+                    commit('setCard', res.data.data);
+                    return res.data.data;
                 });
         },
 
