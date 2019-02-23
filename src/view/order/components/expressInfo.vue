@@ -11,7 +11,7 @@
 			</div>
 	
 	
-			<div :key="index" v-for="(item,index) in orderExpress.package_list" class="package_item">
+			<div v-if="orderExpress.package_list.length > 0" :key="index" v-for="(item,index) in orderExpress.package_list" class="package_item">
 				<div class="package_info flex_box">
 					<div class="package_info_col">
 						<p>{{'快递 自取'.split(' ')[item.order_dis_package_type]}}</p>
@@ -53,6 +53,7 @@
 					</div>
 				</div>
 			</div>
+			<p v-if="!orderExpress.package_list || orderExpress.package_list.length === 0" style="text-align: center;margin-top: 15px;">暂无物流信息</p>
 		</div>
 		<div class="dis_list">
 			<el-tabs v-model="tabName">

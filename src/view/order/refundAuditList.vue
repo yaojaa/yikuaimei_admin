@@ -39,6 +39,17 @@ export default {
             status_filter: '',
 
             tagsListGroup: {
+                '商品类型' : [{
+                        title: '商品',
+                        key: 'order_type ',
+                        value: 2
+                    },
+                    {
+                        title: '服务',
+                        key: 'order_type',
+                        value: 1
+                    },
+                ],
                 '退款方式：': [{
                         title: '全部',
                         key: 'pay_type',

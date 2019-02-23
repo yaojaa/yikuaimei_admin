@@ -42,7 +42,10 @@
                     {
                         name: "门店服务",
                         url: "/serviceList"
-                    }
+					},
+					{
+						name: "在线预览"
+					}
 				];
 				this.reqParams.page = '/pages/service-detail/index'
 			} else if (+this.$route.query.good_type === 2) {
@@ -53,7 +56,10 @@
                     {
                         name: "平台商品",
                         url: "/goodList"
-                    }
+                    },
+					{
+						name: "在线预览"
+					}
 				];
 				this.reqParams.page = '/pages/goods-detail/index'
 			}

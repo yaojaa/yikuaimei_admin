@@ -79,7 +79,7 @@
                                 title: '评价管理'
                             },
                             {
-                                index: '/order/refundAuditList',
+                                index: '/order/refundAuditList?order_type=2',
                                 title: '退款初审'
                             }
                         ]
@@ -146,6 +146,17 @@
                             //     index: '/physicalcoupon',
                             //     title: '案例'
                             // }
+                        ]
+                    },
+                    {
+                        icon: 'iconfont icon-guanli',
+                        index: '/user',
+                        title: '用户管理',
+                        subs: [
+                            {
+                                index: '/userList',
+                                title: '用户列表'
+                            }
                         ]
                     },
                 //     {

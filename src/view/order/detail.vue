@@ -20,9 +20,10 @@
                     <div class="refund-list">
                         <!-- {{refundList}} -->
                         <el-tabs v-model="refundTabName">
-                            <el-tab-pane :key="item.order_refund_id" v-for="(item,index) in refundList" :label="`订单`+(index+1)" :name="`refund_`+index">
-                                <RefundInfo :key="`refund_`+item.order_refund_id" :refundInfo="item"></RefundInfo>
+                            <el-tab-pane v-if="refundList.length > 0" :key="item.order_refund_id" v-for="(item,index) in refundList" :label="`订单`+(index+1)" :name="`refund_`+index">
+                                <RefundInfo :key="`refund_`+item.order_refund_id" :refundInfo="item" :backUrl="backurl" from="0"></RefundInfo>
                             </el-tab-pane>
+                            <p v-if="refundList.length === 0" style="text-align: center;">暂无退款退货信息</p>
                         </el-tabs>
                     </div>
                 </el-tab-pane>
@@ -57,7 +58,7 @@
                         name: "订单管理", //名字 
                     },
                     {
-                        name: "服务订单", //名字
+                        name: "商品订单", //名字
                         url: "/order/list_goods"
                     },
                     {
@@ -76,6 +77,7 @@
                     5: '已评价',
                     8: '已取消'
                 },
+                backurl: location.pathname
             }
         },
     

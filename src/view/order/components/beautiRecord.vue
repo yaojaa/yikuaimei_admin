@@ -1,6 +1,6 @@
 <template>
     <div class="record_list">
-        <div class="record_item" :key="index" v-for="(item, index) in recordList">
+        <div v-if="recordList.length>0" class="record_item" :key="index" v-for="(item, index) in recordList">
             <p class="record_create_time">{{item.create_time}}</p>
             <p class="record_content">{{item.content}}</p>
             <div class="img_list">
@@ -10,6 +10,7 @@
                 商家回复：<span>{{item.reply_info_reply}}</span>
             </p>
         </div>
+        <p v-if="recordList.length === 0" style="text-align: center">暂无美丽日记信息</p>
     </div>
 </template>
 
