@@ -160,6 +160,16 @@ export const INITFORMINFO = {
 
 export function Rules(type) {
     return {
+        unit: [{
+            required: true,
+            message: "请选择单位",
+            trigger: "blur"
+        }],
+        country: [{
+            required: true,
+            message: "请选择产地",
+            trigger: "blur"
+        }],
         good_name: [{
                 required: true,
                 message: "请输入活动名称",

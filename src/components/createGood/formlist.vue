@@ -42,8 +42,7 @@
                         <el-radio v-for="item in UNIT" :label="item" :key="`${item}unit`" />
                     </el-radio-group>                                                                       
                 </el-form-item>
-                <!-- 产地只有商品有 -->
-                <el-form-item label="产地：" prop="country">
+                <el-form-item label="产地：" prop="country" v-if="goodType === GOODTYPE['goodList']">
                     <el-select v-model="createdData.country" placeholder="请选择活动区域">
                         <el-option v-for="item in COUNTRY" :label="item" :value="item" :key="`${item}country`" />
                     </el-select>                                                                      
