@@ -11,12 +11,12 @@
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
-                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/order/purchaseOrderList', query: {[tag.key]: tag.value }}">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/user/userList', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
                     </div>
                 </div>
             </div>
-            <nomal-table ref="table" :table-json="tableJson" :url="'/api/admin/purchase/index'">
+            <nomal-table ref="table" :table-json="tableJson" url="/api/admin/user/index">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
         </div>
@@ -29,80 +29,98 @@
     import Config from "./config";
     
     export default {
+        name: 'userList',
+        components: {
+            NomalTable,
+            TableSearch
+        },
         data() {
             return {
-    
                 status_filter: '',
-    
                 tagsListGroup: {
-    
-                    '采购状态：': [
-    
+                    '注册渠道': [
                         {
-                            title: '全部',
-                            key: 'status',
-                            value: 0
+							title: "安卓平台",
+							key: "channel",
+							value: 1
+						},
+                        {
+							title: "ios平台",
+							key: "channel",
+							value: 2
+						},
+                        {
+							title: "微信小程序",
+							key: "channel",
+							value: 3
+						},
+                        {
+							title: "微信服务号",
+							key: "channel",
+							value: 4
+						},
+                        {
+							title: "PC网页",
+							key: "channel",
+							value: 5
+						},
+                        {
+							title: "移动平台网页",
+							key: "channel",
+							value: 6
+						},
+                        {
+							title: "未知注册渠道",
+							key: "channel",
+							value: 0
                         },
                         {
-                            title: '待审核',
-                            key: 'status',
-                            value: 1
+							title: "其他",
+							key: "channel",
+							value: 7
+						},
+                    ],
+                    "选择状态": [
+                        {
+							title: "未拉黑",
+							key: "is_black",
+							value: 0
                         },
                         {
-                            title: '不同意',
-                            key: 'status',
-                            value: 2
-                        },
-                        {
-                            title: '同意',
-                            key: 'status',
-                            value: 3
-                        },
-                        {
-                            title: '已修改',
-                            key: 'status',
-                            value: 4
-                        },
-    
+							title: "已拉黑",
+							key: "is_black",
+							value: 1
+						},
                     ]
                 },
                 //状态 0全部 1待处理 2已付款/待发货 3已发货 4已发货/待评价 5已评价 8已取消
-    
                 searchs: {
-                    "list": [{
-                            "type": "input-text", //输入文本
-                            "label": "用户名",
-                            "name": "user_name",
-                            "value": "",
-                            "placeholder": "用户名",
+                    list: [{
+                            type: "input-text", //输入文本
+                            label: "用户名",
+                            name: "real_name",
+                            value: "",
+                            placeholder: "用户名",
                         },
                         {
-                            "type": "input-text", //输入文本
-                            "label": "手机号",
-                            "name": "phone",
-                            "value": "",
-                            "placeholder": "",
+                            type: "input-text", //输入文本
+                            label: "手机号",
+                            name: "bind_phone",
+                            value: "",
+                            placeholder: "手机号",
                         },
                         {
-                            "type": "input-text", //选择器
-                            "label": "订单号",
-                            "name": "order_number",
-                            "value": ""
-    
+                            type: "input-text", //选择器
+                            label: "推荐人/门店",
+                            name: "recommend_name",
+                            value: "",
+                            placeholder: "推荐人/门店",
                         },
                         {
-                            "type": "input-text", //选择器
-                            "label": "商品名称",
-                            "name": "goods_name",
-                            "value": ""
-    
-                        },
-                        {
-                            "type": "input-date", //输入日期
-                            "label": "日期",
-                            "name": "date",
-                            "value": "",
-    
+                            type: "input-date", //输入日期
+                            label: "日期",
+                            name: "date",
+                            value: "",
                         },
                     ]
                 },
@@ -112,15 +130,12 @@
                             "type": "text",
                             "align": "center",
                             "label": "用户/手机号",
-                            "width": "",
+                            "width": "250",
                             formatter(row) {
                                 let str = "<div style='background-color#fff;padding:8px;'>";
-                                str +=
-                                    "<div style='float:left;width:80px;height:80px;margin-right:8px;'><img style='width:100%; height:100%;' src='" +
-                                    row.user_info_head_img +
-                                    "'></div>";
+                                str += "<div style='float:left;width:80px;height:80px;margin-right:8px;'><img style='width:100%; height:100%;' src='" +row.user_info_head_img + "'></div>";
                                 str += "<p class='list-good-name'>" + row.user_info_nick_name + "</p>";
-                                str += "<p class='list-good-price' style='margin-top:10px;'>" + row.mobile + "</p>";
+                                str += "<p class='list-good-price' style='margin-top:10px;'>" + row.user_bind_phone + "</p>";
                                 str += "</div>";
                                 return str;
                             }
@@ -131,7 +146,11 @@
                             "label": "注册时间",
                             "prop": "user_info_ctime",
                             "width": "",
-    
+                            formatter(row) {
+								return `<p style='text-align: center'>
+		                                    ${row.user_info_ctime || '--'}
+		                                </p>`;
+							}
                         },
                         {
                             "type": "text",
@@ -139,39 +158,37 @@
                             "label": "注册渠道",
                             "prop": "",
                             "width": "",
+                            formatter(row) {
+								return `<p style='text-align: center'>
+		                                    ${Config.user_from[row.user_from] || '--'}
+		                                </p>`;
+							}
     
                         },
                         {
                             "type": "text",
                             "align": "center",
                             "label": "推荐人门店",
-                            "prop": "purchase_id",
+                            "prop": "my_superior",
                             "width": "",
+                            formatter(row) {
+								return `<p style='text-align: center'>
+		                                    ${row.my_superior || '--'}
+		                                </p>`;
+							}
     
                         },
                         {
                             "type": "text",
                             "align": "center",
                             "label": "状态",
-                            "prop": "user_info_status",
+                            "prop": "",
                             "width": "",
-    
-                        },
-                        {
-                            "type": "text",
-                            "align": "center",
-                            "label": "提成归属",
-                            "prop": "shop_user_name",
-                            "width": "",
-    
-                        },
-                        {
-                            "type": "text",
-                            "align": "center",
-                            "label": "审核状态",
-                            "prop": "purchase_status_name",
-                            "width": "",
-    
+                            formatter(row) {
+								return `<p style='text-align: center'>
+		                                    ${Config.is_black[row.is_black] || '--'}
+		                                </p>`;
+							}
                         },
                         {
                             "type": "handle",
@@ -179,9 +196,9 @@
                             "align": "center",
                             "width": "200",
                             "list": [{
-                                "label": "报货信息",
-                                "url": "/order/order_purchase_detail",
-                                "query": "purchase_id"
+                                "label": "查看详情",
+                                "url": "/user/detail",
+                                "query": "user_id"
                             }]
                         }
                     ],
@@ -191,39 +208,25 @@
     
             }
         },
-        components: {
-            NomalTable,
-            TableSearch
-        },
         beforeRouteUpdate(to, from, next) {
-    
             console.log(to.query)
-    
             this.status_filter = Object.keys(to.query)[0] + Object.values(to.query)[0]
-    
             console.log(this.status_filter)
-    
             this.$refs.table.getData(to.query)
             next()
         },
         created() {
-    
             console.log('created')
-    
         },
         computed: {
-    
         },
         methods: {
             //调用子组件的gatData方法
-            //
             getData(k, v) {
                 this.$refs.table.getData({
                     [k]: v
                 })
             }
-    
-    
         }
     }
 </script>

@@ -154,8 +154,8 @@
                         title: '用户管理',
                         subs: [
                             {
-                                index: '/userList',
-                                title: '用户列表'
+                                index: '/user/userList?is_black=0',
+                                title: '用户管理'
                             }
                         ]
                     },

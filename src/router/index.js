@@ -253,7 +253,7 @@ export default new Router({
                     }
                 },
 
-                 {
+                {
                     // 品项管理
                     path: '/order/product_phase',
                     component: resolve => require(['../view/product_phase/list.vue'], resolve),
@@ -365,6 +365,23 @@ export default new Router({
                     }
                 },
 
+                // 用户管理
+                {
+                   // 用户列表
+                   path: '/user/userList',
+                   component: resolve => require(['../view/user/userList.vue'], resolve),
+                   meta: {
+                       title: '用户管理'
+                   } 
+                },
+                {
+                    // 用户详情
+                    path: '/user/detail',
+                    component: resolve => require(['../view/user/userDetail.vue'], resolve),
+                    meta: {
+                        title: '用户详情'
+                    } 
+                 },
 
                 {
                     // 测试表格
