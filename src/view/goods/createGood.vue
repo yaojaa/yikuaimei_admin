@@ -59,15 +59,8 @@ export default {
   },
 
   created() {
-    const {good_type,good_id} = this.$route.query.good_id
+    const {good_type,good_id} = this
     this.breadcrumb = !good_id ? breadcrumb[good_type] : breadcrumbEdit[good_type]
-
-    /** 
-     * good_id [0：添加，1:编辑]
-     */
-    if(good_id){
-      this.$store.dispatch('createdGoode/fetchFormInfo', {id:good_id})
-    }
   },
 
   methods: {

@@ -47,7 +47,7 @@ import { CATEGORYOPTIONS } from "../../constans/createdGood";
 import productCard from "@/components/createGood/product_card";
 
 export default {
-  name: "createGood-goodFriend",
+  name: "dialog-goodFriend",
 
   components: {
     productCard

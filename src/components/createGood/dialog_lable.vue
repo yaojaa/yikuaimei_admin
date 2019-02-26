@@ -53,7 +53,7 @@ import { mapState } from "vuex";
 import _ from 'lodash'
 
 export default {
-  name: "createGood-lable",
+  name: "dialog-lable",
 
   props:['tagList'],
 

@@ -76,6 +76,8 @@
 import _ from 'lodash'
 
 export default {
+  name: "dialog-formate",
+
   props:{
     goodSkuinfo:{
       type:Array,
