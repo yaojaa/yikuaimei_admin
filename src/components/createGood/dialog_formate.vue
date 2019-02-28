@@ -81,16 +81,7 @@ export default {
   props:{
     goodSkuinfo:{
       type:Array,
-      default:()=>[{
-            name: '',
-            list: [],
-            inputValue: ''
-        },
-        {
-            name: '',
-            list: [],
-            inputValue: ''
-        }]
+      default:()=>[]
     }
   },
 
@@ -117,7 +108,9 @@ export default {
   watch: {
     goodSkuinfo: {
       handler: function (newVal, oldVal) {
-        this.goodSkuInfo = _.cloneDeep(newVal)
+        if(this.goodSkuinfo.length){
+          this.goodSkuInfo = _.cloneDeep(newVal)
+        }
       },
       deep: true
     }
@@ -129,14 +122,6 @@ export default {
      */
     $_addFormat() {
       const goodSkuInfo = this.goodSkuInfo;
-      // for (let i = 0; i<goodSkuInfo.length; i++) {
-      //   if (!goodSkuInfo[i].list.length) {
-      //     flag = false;
-      //     break
-      //   } else {
-      //     flag = true;
-      //   }
-      // }
       if(goodSkuInfo[0].list.length){
         this.format_show = false;
         this.$emit("addFormat", this.goodSkuInfo);

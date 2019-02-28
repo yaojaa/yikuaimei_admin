@@ -68,7 +68,7 @@ export default {
 
   computed:{
 
-    ...mapState('createdGoode',['lableList','formInfo']), // 可选标签数据
+    ...mapState('createdGoode',['lableList']), // 可选标签数据
     
     defaultActive(){
       let data = this.lableList[0] || {}
@@ -86,9 +86,11 @@ export default {
       },
       deep: true
     },
+
     lableList(val) {
       this.initSons()
     },
+    
     lable_show:{
       handler: function (newVal, oldVal) {
         if(newVal){

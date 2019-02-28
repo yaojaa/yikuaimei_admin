@@ -404,16 +404,7 @@ export default {
              */ 
             good_friends: [],
         },
-        goodSkuInfo: [{
-            name: '',
-            list: [],
-            inputValue: ''
-        },
-        {
-            name: '',
-            list: [],
-            inputValue: ''
-        }], // 多规格展示信息
+        goodSkuInfo: [], // 多规格展示信息
 
         // 上传图片控制对象
         good_img_arr: {
@@ -633,25 +624,12 @@ export default {
     $_showFormat() {
       if (this.singleButton === "添加规格") {
         this.showFormat()
-      }else if(!this.goodType === GOODTYPE['serviceList']){
-        // @TOdO 取消显示 单规格 初始化数据
+      }else{
+        // @TOdO !this.goodType === GOODTYPE['serviceList'] 取消显示 单规格 初始化数据
         this.goodSkuInfo = []
         this.createdData.sku_type_arr = []
-        this.createdData.good_sku = []
-        this.createdData.sku_list = []
-      }else{
-        this.createdData.sku_type_arr = []
         this.createdData.good_sku = [{}]
-        this.goodSkuInfo = [{
-            name: '',
-            list: [],
-            inputValue: ''
-        },
-        {
-            name: '',
-            list: [],
-            inputValue: ''
-        }]
+        this.createdData.sku_list = []
       }
     },
     
@@ -778,7 +756,7 @@ export default {
       const columnIndexNum = this.goodType === GOODTYPE['serviceList'] ? 7 : 6;
       if (columnIndex === 0 || columnIndex === 6) {
         let len = 0
-        if(this.goodSkuInfo && this.goodSkuInfo.length>1){
+        if(this.goodSkuInfo.length>1){
             len = this.goodSkuInfo[1].list.length
         }
         if(!len || len === 1){
@@ -806,57 +784,42 @@ export default {
      * 添加规格
      */
     $_addFormat(goodSku) {
-    //   this.goodSkuInfo = goodSku
-    //   let sku_type_arr_key = goodSku[0].list  // 功能  list :[美白，保湿]
-    //   let sku_type_arr_val = goodSku[1].list  // 容量  list :[50ml,100ml,15ml]
-    //   let good_sku_arr = []
-    //   if(sku_type_arr_val.length){
-    //     for(var i=0;i<sku_type_arr_key.length;i++){
-    //         for(var j=0;j<sku_type_arr_val.length;j++){
-    //             good_sku_arr.push({
-    //                 sku_type_arr: [sku_type_arr_key[i], sku_type_arr_val[j]],
-    //                 sku_code:'',
-    //                 price_total:'',
-    //                 price_cost: '',
-    //                 price: '',
-    //                 price_sale: '', 
-    //                 price_plate: '',
-    //                 ico_small: '',
-    //                 canAdd: false , // 是否可添加商品图
-    //                 limit: 1,
-    //                 imgVisible : false ,
-    //                 url : '',
-    //                 over: 1
-    //             })
-    //         }
-    //     }
-    //   }else{
-    //     for(var i=0;i<sku_type_arr_key.length;i++){
-    //         good_sku_arr.push({
-    //             sku_type_arr:[sku_type_arr_key[i]],
-    //             sku_code:'',
-    //             price_total:'',
-    //             price_cost: '',
-    //             price: '',
-    //             price_sale: '', 
-    //             price_plate: '',
-    //             ico_small: '',
-    //             canAdd: false , // 是否可添加商品图
-    //             limit: 1,
-    //             imgVisible : false ,
-    //             url : '',
-    //             over: 1
-    //         })
-    //     }
-    //   }
-    //   let arr = []
-    //   goodSku.forEach(function(item){
-    //       if(item.name){
-    //           arr.push(item.name)
-    //       }
-    //   }) // 功能容量
-    //   this.createdData.sku_type_arr = arr
-    //   this.createdData.good_sku = good_sku_arr
+      this.goodSkuInfo = goodSku
+      let sku_type_arr_key = goodSku[0].list  // 功能  list :[美白，保湿]
+      let sku_type_arr_val = goodSku[1].list  // 容量  list :[50ml,100ml,15ml]
+      let good_sku_arr = []
+    for(var i=0;i<sku_type_arr_key.length;i++){
+        let obj = {
+            sku_type_arr:[sku_type_arr_key[i]],
+            sku_code:'',
+            price_total:'',
+            price_cost: '',
+            price: '',
+            price_sale: '', 
+            price_plate: '',
+            ico_small: '',
+            canAdd: false , // 是否可添加商品图
+            limit: 1,
+            imgVisible : false ,
+            url : '',
+            over: 1
+        }
+        if(sku_type_arr_val.length){
+            for(var j=0;j<sku_type_arr_val.length;j++){
+                good_sku_arr.push({...obj,sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]]})
+            }
+        }else{
+            good_sku_arr.push(obj)
+        }
+      }
+      let arr = []
+      goodSku.forEach(function(item){
+          if(item.name){
+              arr.push(item.name)
+          }
+      }) // 功能容量
+      this.createdData.sku_type_arr = arr
+      this.createdData.good_sku = good_sku_arr
     },
         // params.good_img_arr = params.good_img_arr.map(item => item.response.data.file_name)
         // params.explain_img_arr = params.explain_img_arr.map(item => item.response.data.file_name)
