@@ -22,6 +22,15 @@ export default new Router({
                         title: '首页'
                     }
                 },
+                //  ==========
+                {
+                    path: '/aa',
+                    component: resolve => require(['../view/admin/addAndModifiyJS.vue'], resolve)
+                }, {
+                    path: '/bb',
+                    component: resolve => require(['../view/admin/createAndModifiyCY.vue'], resolve)
+                },
+                // =========
                 {
                     path: '/goodList',
                     component: resolve => require(['../view/goods/goodList.vue'], resolve),
@@ -201,13 +210,19 @@ export default new Router({
                     // 案例编辑
                     path: '/manage/case/add/:id',
                     component: resolve => require(['../view/case/case_add.vue'], resolve),
-                    meta: { title: '编辑案例', permission: true }
+                    meta: {
+                        title: '编辑案例',
+                        permission: true
+                    }
                 },
                 {
                     // 案例详情
                     path: '/manage/case/:id',
                     component: resolve => require(['../view/case/case_detail.vue'], resolve),
-                    meta: { title: '案例详情', permission: true }
+                    meta: {
+                        title: '案例详情',
+                        permission: true
+                    }
                 },
                 {
                     // 标签管理
@@ -225,7 +240,7 @@ export default new Router({
                         title: '添加标签'
                     }
                 },
-                  {
+                {
                     // 添加分类
                     path: '/manage/label/groupAdd',
                     component: resolve => require(['../view/label/groupAdd.vue'], resolve),
@@ -243,7 +258,7 @@ export default new Router({
                     }
                 },
 
-                   {
+                {
                     // 服务订单详情
                     path: '/order/service_detail/:order_code',
                     component: resolve => require(['../view/service/detail.vue'], resolve),
@@ -347,7 +362,7 @@ export default new Router({
                     }
                 },
 
-                 {
+                {
                     // 门店
                     path: '/shop/add',
                     component: resolve => require(['../view/shop/add.vue'], resolve),
@@ -356,7 +371,7 @@ export default new Router({
                     }
                 },
 
-                 {
+                {
                     // 加盟商
                     path: '/shop/detail/:id',
                     component: resolve => require(['../view/shop/detail.vue'], resolve),
@@ -367,12 +382,12 @@ export default new Router({
 
                 // 用户管理
                 {
-                   // 用户列表
-                   path: '/user/userList',
-                   component: resolve => require(['../view/user/userList.vue'], resolve),
-                   meta: {
-                       title: '用户管理'
-                   } 
+                    // 用户列表
+                    path: '/user/userList',
+                    component: resolve => require(['../view/user/userList.vue'], resolve),
+                    meta: {
+                        title: '用户管理'
+                    }
                 },
                 {
                     // 用户详情
@@ -380,8 +395,8 @@ export default new Router({
                     component: resolve => require(['../view/user/userDetail.vue'], resolve),
                     meta: {
                         title: '用户详情'
-                    } 
-                 },
+                    }
+                },
 
                 {
                     // 测试表格

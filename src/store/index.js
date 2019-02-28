@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import user from './modules/user'
 import createdGoode from './modules/createdGoode'
 import share from './modules/share'
+import adminUser from './modules/adminUser'
+import adminRole from './modules/adminRole'
 // import createLogger from '../../../src/plugins/logger'
 
 
@@ -14,7 +16,9 @@ export default new Vuex.Store({
     modules: {
         user,
         createdGoode,
-        share
+        share,
+        adminUser,
+        adminRole
     },
     // plugins: process.env.NODE_ENV !== 'production' ? [createLogger()] : []
 })
