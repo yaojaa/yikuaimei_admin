@@ -16,7 +16,7 @@
             <el-step title="编辑商品详情" v-if="good_type !== GOODTYPE['fictitiousList']"/>
           </el-steps>
           <FormlistItem 
-            @changeTabPre="$_changeTab"
+            @changeTab="$_changeTab"
             :goodType='good_type'
             :goodId='good_id'
             :active="active"
@@ -67,7 +67,9 @@ export default {
     /** *
      * 导航切换
      */
-    $_changeTab(num) {this.active = +(this.active + num)}
+    $_changeTab(num) {
+      this.active = num
+    }
   }
 }
 </script>

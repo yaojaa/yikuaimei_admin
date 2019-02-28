@@ -5,12 +5,12 @@
             <productCard 
                 @deleteTag="$_deleteTag(idx)" 
                 :closeble="true" 
-                v-for="(item,idx) in good_friendsDialog" 
-                :key="`${item.good_name}good_friendsDialog`" 
+                v-for="(item,idx) in good_friends" 
+                :key="`${item.good_name}good_friends`" 
                 :goodName="item.good_name" 
                 :price="item.price_low"
                 />
-            <span v-if="!good_friendsDialog.length">还没有选择任何耗材</span>
+            <span v-if="!good_friends.length">还没有选择任何耗材</span>
         </div>
         <el-row>
             <el-col :span="3"> 
@@ -53,20 +53,44 @@ export default {
     productCard
   },
 
+  props:{
+      goodFriList:{
+          type: Array,
+          default:()=>[]
+      }
+  },
+
   data() {
     return {
         goodFriend_show: false, // 选择弹框状态
         CATEGORYOPTIONS,
         defaultActive:'美容',
-        currentFormInfo:{},
         good_friends: [], // 已选耗材
         goodFriendsList:[], // 详情数据展示
-        good_friendsDialog:[]
     };
   },
 
   computed: {
     ...mapState('createdGoode',['formInfo','goodFriends']), // 可选标签数据
+  },
+
+  watch: {
+    goodFriList: {
+      handler: function (newVal, oldVal) {
+        if(this.goodFriList.length){
+          this.good_friends = _.cloneDeep(newVal)
+        }
+      },
+      deep: true
+    },
+
+    goodFriend_show:{
+      handler: function (newVal, oldVal) {
+        if(newVal && this.goodFriList.length){
+          this.good_friends = _.cloneDeep(this.goodFriList)
+        }
+      }
+    },
   },
 
   methods: {
@@ -75,7 +99,7 @@ export default {
       * 已选标签不可点选
      */
     isDisable(good_id){
-        let findObj = this.good_friendsDialog.filter(item => item.good_id === good_id)
+        let findObj = this.good_friends.filter(item => item.good_id === good_id)
         if(findObj.length > 0){
             return true
         }else{
@@ -90,15 +114,14 @@ export default {
         if(!this.isDisable(goodFriendsInfo.good_id)){
             let obj = {
                 good_id: goodFriendsInfo.good_id , //耗材id
+                sku_id:[],
                 sku_list: goodFriendsInfo.sku_list , // 耗材sku_id列表
                 good_name: goodFriendsInfo.good_name , // 耗材名字
                 good_ico: goodFriendsInfo.good_ico , //耗材图标
                 price_low: goodFriendsInfo.price_low , // 耗材价格区间低
-                price_high: goodFriendsInfo.price_high, // 耗材价格区间高
-                group_sku_id:[],
-                group_sku_str:[]
+                price_high: goodFriendsInfo.price_high // 耗材价格区间高
             }
-            this.good_friendsDialog.push(obj)
+            this.good_friends.push(obj)
         }
     },
 
@@ -106,7 +129,7 @@ export default {
      * 确定添加按钮
     */
     $_confirmAdd(){
-        this.good_friends = _.cloneDeep(this.good_friendsDialog)
+        this.$emit('addFriend', _.cloneDeep(this.good_friends))
         this.goodFriend_show = false
     },
 
@@ -114,7 +137,7 @@ export default {
      * 删除标签
     */
     $_deleteTag(idx){
-        this.good_friendsDialog.splice(idx,1)
+        this.good_friends.splice(idx,1)
     },
 
     /** 

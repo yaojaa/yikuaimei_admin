@@ -128,7 +128,7 @@
                                         :class="{table_upload__disabled:scope.row.canAdd}"
                                         :before-upload="$_beforeUpload_img"
                                         >
-                                        <img v-if="scope.row.url" :src="scope.row.url" class="avatar">
+                                        <img v-if="scope.row.ico_small__url" :src="scope.row.ico_small__url" class="avatar">
                                         <span class="table_icon_text" v-else><i class="el-icon-plus" />添加{{type}}图片</span>
                                     </el-upload>
                                 </template> 
@@ -136,6 +136,25 @@
                         </el-table>
                     </div>
                 </template>
+
+                <el-form-item :label="`${type}海报图：`" prop="poster_img">
+                    <div class="upload-title">
+                    <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
+                    </div>
+                    <el-upload
+                        action="/api/admin/fileupload/image"
+                        class="avatar-uploader"
+                        :show-file-list="false"
+                        :on-change="(res,file)=>{return $_change(res,file,'poster_img',1)}"
+                        :on-error="$_error"
+                        :before-upload="$_beforeUpload_img"
+                        >
+                        <img v-if="poster_img" :src="poster_img" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
+                            <p>添加图片</p><span>只能上传一张</span>
+                        </i>
+                    </el-upload>
+                </el-form-item>
                
                 <el-form-item :label="`${type}图片：`" prop="good_img_arr">
                     <div class="upload-title">
@@ -257,8 +276,8 @@
                         </el-table-column>
                         <el-table-column label="规格">
                             <template slot-scope="scope">
-                                <el-checkbox-group v-model="scope.row.group_sku_str">
-                                    <el-checkbox :label="item.sku_str" v-for="item in scope.row.sku_list" :key="`${item.sku_str}${scope.row.good_id}`" border></el-checkbox>
+                                <el-checkbox-group v-model="scope.row.sku_id">
+                                    <el-checkbox :label="item.sku_id" v-for="item in scope.row.sku_list" :key="`${item.sku_str}${scope.row.good_id}`" border>{{item.sku_str}}{{item.sku_id}}</el-checkbox>
                                 </el-checkbox-group>
                             </template>
                         </el-table-column>
@@ -317,7 +336,7 @@
         <!-- 添加规格弹框  End-->
 
         <!-- 添加耗材弹框 -->
-        <dialog-goodFriend ref="goodFriend" :goodFriends="createdData.good_friends"  @addFormat="$_addFormat" />
+        <dialog-goodFriend ref="goodFriend" :goodFriList="createdData.good_friends"  @addFriend="$_addFriend" />
         <!-- 添加规格弹框  End-->
     </div>
 </template>
@@ -389,6 +408,7 @@ export default {
             good_video: '', // 商品视频
             good_video_pic: '', // 商品视频封面图
             good_ico: '', // 商品展示图
+            poster_img: '', // 海报图
 
             good_img_arr: [], // 商品图片数组
             explain_img_arr: [], // 卖点图
@@ -431,6 +451,7 @@ export default {
         good_video:'' , // 上传视频链接
         good_video_pic: '' , // 视频首图链接
         good_ico: '' , // 商品展示图
+        poster_img:'', // 商品海报图
         singleButton: "无规格", 
         type:'',
         rules:{},
@@ -445,11 +466,12 @@ export default {
     if(this.goodId){
         let result = await this.$store.dispatch('createdGoode/fetchFormInfo', {id:this.goodId})
         let info = _.cloneDeep(result)
-        if (typeof info.sku_list == 'undefined') {
+        if (!info.sku_list) {
             alert('数据接口缺少 sku_list字段')
             return
         }
         let createdData = {...this.createdData, ...info}
+        createdData.id = createdData.good_id
         createdData.good_sku = createdData.sku_list.map(item => {
             item.ico_small__url = item.ico_small
             item.price_cost = (+item.price_cost) / 100
@@ -460,10 +482,11 @@ export default {
         });
 
         // 图片处理
-        let {good_video_pic,good_ico,good_video} = createdData  
+        let {good_video_pic,good_ico,good_video,poster_img} = createdData  
         this.good_video = good_video ,
         this.good_video_pic = good_video_pic, 
         this.good_ico = good_ico ,
+        this.poster_img = poster_img ,
         this.$_transformImgAry('good_img_arr')
         this.$_transformImgAry('show_img_arr')
         this.$_transformImgAry('explain_img_arr')
@@ -473,9 +496,9 @@ export default {
             this.singleButton = "添加规格"
             this.goodSkuInfo = [];
             let arr = [];
-            arr[0] = Array.from(new Set(sku_list.map((item) => item.sku_type_arr[0])));
-            arr[1] = Array.from(new Set(sku_list.map((item) => item.sku_type_arr[1])));
-            arr[2] = Array.from(new Set(sku_list.map((item) => item.sku_type_arr[2])));
+            arr[0] = Array.from(new Set(createdData.sku_list.map((item) => item.sku_type_arr[0])));
+            arr[1] = Array.from(new Set(createdData.sku_list.map((item) => item.sku_type_arr[1])));
+            arr[2] = Array.from(new Set(createdData.sku_list.map((item) => item.sku_type_arr[2])));
             for (var i = 0; i < createdData.sku_type_arr.length; i++) {
                 let goodSkuInfoitem = {
                     inputValue: '',
@@ -488,13 +511,8 @@ export default {
             this.singleButton = "无规格"
         }
         createdData.good_friends.forEach(good => {
-            let sku_id = good.group_sku_id || good.sku_id // 耗材sku_id列表
-            let sku_list = good.sku_list || []
-            good.group_sku_str = []
-            sku_id.forEach(id => {
-                let obj = sku_list.find(item => item.sku_id === id)
-                good.group_sku_str.push(obj.sku_str)
-            })
+            good.sku_id = good.group_sku_id || good.sku_id // 耗材sku_id列表
+            good.sku_list = good.group_sku_list || good.sku_list
         })
         this.createdData = createdData
     }
@@ -507,6 +525,12 @@ export default {
   },
 
   methods: {
+    /** 
+     * 添加耗材
+    */
+    $_addFriend(good_friends){
+      this.createdData.good_friends = good_friends 
+    },
     /** 
      * 转换图片数组
      */
@@ -578,7 +602,6 @@ export default {
     },
 
     $_beforeUpload_viedo(file){
-        // @TODO 限制视频的格式和大小
         const isVideo = file.type === 'video/mp4';
         const isLt2M = file.size / 1024 / 1024 < 20;
 
@@ -614,8 +637,8 @@ export default {
      * 打开耗材
      */
     $_showgoodFriend(){
-        // this.$ref.goodFriend.computedRightData(1,'美容')
-        // this.$ref.goodFriend.goodFriend_show = true
+        this.$refs.goodFriend.computedRightData(1,'美容')
+        this.$refs.goodFriend.goodFriend_show = true
     },
 
     /** *
@@ -642,49 +665,14 @@ export default {
      */
     $_changeTab(num) {
         this.currentActive = this.currentActive + num
-        this.$emit("changeTab",num);
-        //  && this.createdData.good_friends.length === 0
-    //   if(this.currentActive === 1){
-    //     this.$emit("changeTab",num);
-    //     return
-    //   }else{
-    //     this.$emit("changeTab",num);
-    //     return
-    //   }
-        //   let canNext = true
-        //   this.createdData.good_friends.forEach(good => {
-        //     let group_sku_str = good.group_sku_str
-        //     let sku_list = good.sku_list
-        //     good.group_sku_id = []
-        //     if(!group_sku_str.length){
-        //         canNext = false
-        //     }
-        //     group_sku_str.forEach(str => {
-        //         let obj = sku_list.find(item => item.sku_str === str)
-        //         good.group_sku_id.push(obj.sku_id)
-        //     })
-        //   })
-
-        //   if(!canNext){
-        //       this.$message({
-        //       message: '规格至少选一个',
-        //       type: 'warning'
-        //     });
-        //   }else{
-        //   }
-   
-        // this.$refs.createdData.validate((valid) => {
-        //     if (valid) {
-        //         this.$store.commit('createdGoode/setFormInfo',createdData)
-        //     }
-        // })
-        
+        this.$emit("changeTab",this.currentActive);
     },
 
     // 无规格选择有规格后，点击取消，依然显示无规格
     $_changeSingleButton(){
         this.singleButton  = "无规格"
     },
+    
     /** *
      * 展示标签
      */
@@ -717,7 +705,6 @@ export default {
     $_createProduct() {
         let params = _.cloneDeep(this.createdData)
         params.good_sku = params.good_sku.map(item => {
-            item.ico_small__url = item.ico_small
             item.price_cost = (+item.price_cost || 0) * 100
             item.price = (+item.price || 0) * 100
             item.price_sale = (+item.price_sale || 0) * 100
@@ -784,47 +771,43 @@ export default {
      * 添加规格
      */
     $_addFormat(goodSku) {
-      this.goodSkuInfo = goodSku
-      let sku_type_arr_key = goodSku[0].list  // 功能  list :[美白，保湿]
-      let sku_type_arr_val = goodSku[1].list  // 容量  list :[50ml,100ml,15ml]
-      let good_sku_arr = []
-    for(var i=0;i<sku_type_arr_key.length;i++){
-        let obj = {
-            sku_type_arr:[sku_type_arr_key[i]],
-            sku_code:'',
-            price_total:'',
-            price_cost: '',
-            price: '',
-            price_sale: '', 
-            price_plate: '',
-            ico_small: '',
-            canAdd: false , // 是否可添加商品图
-            limit: 1,
-            imgVisible : false ,
-            url : '',
-            over: 1
-        }
-        if(sku_type_arr_val.length){
-            for(var j=0;j<sku_type_arr_val.length;j++){
-                good_sku_arr.push({...obj,sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]]})
+        this.goodSkuInfo = goodSku
+        let sku_type_arr_key = goodSku[0].list  // 功能  list :[美白，保湿]
+        let sku_type_arr_val = goodSku[1].list  // 容量  list :[50ml,100ml,15ml]
+        let good_sku_arr = []
+        for(var i=0;i<sku_type_arr_key.length;i++){
+            let obj = {
+                sku_type_arr:[sku_type_arr_key[i]],
+                sku_code:'',
+                price_total:'',
+                price_cost: '',
+                price: '',
+                price_sale: '', 
+                price_plate: '',
+                ico_small: '',
+                canAdd: false , // 是否可添加商品图
+                limit: 1,
+                imgVisible : false ,
+                url : '',
+                over: 1
             }
-        }else{
-            good_sku_arr.push(obj)
+            if(sku_type_arr_val.length){
+                for(var j=0;j<sku_type_arr_val.length;j++){
+                    good_sku_arr.push({...obj,sku_type_arr:[sku_type_arr_key[i],sku_type_arr_val[j]]})
+                }
+            }else{
+                good_sku_arr.push(obj)
+            }
         }
-      }
-      let arr = []
-      goodSku.forEach(function(item){
-          if(item.name){
-              arr.push(item.name)
-          }
-      }) // 功能容量
-      this.createdData.sku_type_arr = arr
-      this.createdData.good_sku = good_sku_arr
-    },
-        // params.good_img_arr = params.good_img_arr.map(item => item.response.data.file_name)
-        // params.explain_img_arr = params.explain_img_arr.map(item => item.response.data.file_name)
-        // params.show_img_arr = params.show_img_arr.map(item => item.response.data.file_name)
-    
+        let arr = []
+        goodSku.forEach(function(item){
+            if(item.name){
+                arr.push(item.name)
+            }
+        }) // 功能容量
+        this.createdData.sku_type_arr = arr
+        this.createdData.good_sku = good_sku_arr
+    }
   }
 }
 </script>

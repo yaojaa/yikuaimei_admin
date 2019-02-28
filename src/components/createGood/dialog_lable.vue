@@ -93,8 +93,8 @@ export default {
     
     lable_show:{
       handler: function (newVal, oldVal) {
-        if(newVal){
-          this.tag_list = _.cloneDeep(this.tagList|| [])
+        if(newVal && this.tag_list,length){
+          this.tag_list = _.cloneDeep(this.tagList)
         }
       }
     },
