@@ -94,7 +94,6 @@ export default {
       let {good_id,good_type} = this.$route.query
       let formInfo = this.formInfo
       let that = this
-      // @TODO 先做校验，校验成功在请求接口
       this.$refs.currentFormInfo.validate((valid) => {
         if (valid) {
             if(good_id === '0'){

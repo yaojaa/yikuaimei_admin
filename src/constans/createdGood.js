@@ -100,6 +100,9 @@ export const UNIT = ['个', '箱', '盒', '瓶', '袋']
 
 
 export const CATEGORYOPTIONS = [{
+        category_id: 0,
+        category_name: "全部"
+    }, {
         category_id: 1,
         category_name: "美容"
     },
@@ -156,99 +159,4 @@ export const INITFORMINFO = {
             inputValue: ''
         }
     ]
-}
-
-export function Rules(type) {
-    return {
-        unit: [{
-            required: true,
-            message: "请选择单位",
-            trigger: "blur"
-        }],
-        country: [{
-            required: true,
-            message: "请选择产地",
-            trigger: "blur"
-        }],
-        good_name: [{
-                required: true,
-                message: "请输入活动名称",
-                trigger: "blur"
-            },
-            {
-                min: 2,
-                max: 30,
-                message: "长度在2-30个字符",
-                trigger: "blur"
-            }
-        ],
-        good_explain: [{
-                required: true,
-                message: `${type}在详情页标题下面展示卖点信息，建议50字以内`,
-                trigger: "blur"
-            },
-            {
-                min: 2,
-                max: 50,
-                message: `在${type}详情页标题下面展示卖点信息，建议50字以内`,
-                trigger: "blur"
-            }
-        ],
-        category_id: [{
-            required: true,
-            message: "请选择所属行业分类",
-            trigger: "blur"
-        }],
-        //@TODO
-        tag_list: [{
-            required: true,
-            message: "请添加标签",
-            trigger: "blur"
-        }],
-        format: [{
-            required: true,
-            message: "请选择规格",
-            trigger: "change"
-        }],
-        productCode: [{
-            required: true,
-            message: `请填写${type}编码`,
-            trigger: "blur"
-        }],
-        price_sale: [{
-            required: true,
-            message: "请填写售价",
-            trigger: "blur"
-        }],
-        sku_code: [{
-            required: true,
-            message: `请填写${type}编码`,
-            trigger: "blur"
-        }],
-        price: [{
-            required: true,
-            message: "请填写原价",
-            trigger: "blur"
-        }],
-        price_cost: [{
-            required: true,
-            message: "请填写成本",
-            trigger: "blur"
-        }],
-        price_total: [{
-            required: true,
-            message: "请填写总价",
-            trigger: "blur"
-        }],
-        show_img_arr: [{
-            required: true,
-            message: `请选择${type}展示图`,
-            trigger: "change"
-        }],
-        good_notes: [{
-            required: true,
-            message: "请填写购买须知",
-            trigger: "blur"
-        }],
-    }
 }

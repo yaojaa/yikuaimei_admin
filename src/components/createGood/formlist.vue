@@ -117,16 +117,16 @@
                             </el-table-column>
                             <el-table-column label="图片" prop="ico_small">
                                 <template slot-scope="scope">
-                                    <el-upload           
-                                        :on-preview="(res,file)=>{return $_onPreview(file,scope.row)}"
-                                        :on-change="(res,file)=>{return $_change(res,file,scope.row)}"
-                                        :on-error="$_error"
-                                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, 1)}"      
+                                    <el-upload          
                                         action="/api/admin/fileupload/image"
                                         class="table_upload"
-                                        :show-file-list="false"
-                                        :class="{table_upload__disabled:scope.row.canAdd}"
+                                        :on-preview="$_onPreview"
+                                        :on-change="(res,file)=>{return $_change(res,file,scope.row)}"
+                                        :on-remove="(res,file)=>{return $_change(res,file,scope.row)}"
+                                        :on-error="$_error"
                                         :before-upload="$_beforeUpload_img"
+                                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, 1)}"   
+                                        :class="{table_upload__disabled:scope.row.over === 0}"
                                         >
                                         <img v-if="scope.row.ico_small__url" :src="scope.row.ico_small__url" class="avatar">
                                         <span class="table_icon_text" v-else><i class="el-icon-plus" />添加{{type}}图片</span>
@@ -137,20 +137,24 @@
                     </div>
                 </template>
 
-                <el-form-item :label="`${type}海报图：`" prop="poster_img">
+                <el-form-item :label="`${type}海报图：`" prop="poster_img" v-if="goodType !== GOODTYPE['fictitiousList']">
                     <div class="upload-title">
                     <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
                     </div>
                     <el-upload
                         action="/api/admin/fileupload/image"
-                        class="avatar-uploader"
-                        :show-file-list="false"
+                        list-type="picture-card"
+                        :on-preview="$_onPreview"
                         :on-change="(res,file)=>{return $_change(res,file,'poster_img',1)}"
+                        :on-remove="(res,file)=>{return $_change(res,file,'poster_img',1)}"
                         :on-error="$_error"
                         :before-upload="$_beforeUpload_img"
+                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, 1)}"  
+                        :file-list="poster_img.url" 
+                        :limit="1"
+                        :class="{canAdd:!poster_img.over}"
                         >
-                        <img v-if="poster_img" :src="poster_img" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
+                        <i class="el-icon-plus upload-placeholder">
                             <p>添加图片</p><span>只能上传一张</span>
                         </i>
                     </el-upload>
@@ -164,46 +168,40 @@
                     <el-upload
                         action="/api/admin/fileupload/image"
                         list-type="picture-card"
-                        :on-preview="(res,file)=>{return $_onPreview(file,good_img_arr)}"
+                        :on-preview="$_onPreview"
                         :on-change="(res,file)=>{return $_change(res,file,'good_img_arr')}"
+                        :on-remove="(res,file)=>{return $_change(res,file,'good_img_arr')}"
                         :on-error="$_error"
                         :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
                         :before-upload="$_beforeUpload_img"
                         :file-list="good_img_arr.url"
                         :limit="good_img_arr.limit"
                         :multiple="true"
-                        :class="{canAdd:good_img_arr.canAdd}"
+                        :class="{canAdd:good_img_arr.over === 0}"
                         >
                         <i class="el-icon-plus upload-placeholder">
                             <p>添加图片</p><span>还可以添加{{good_img_arr.over}}张</span>
                         </i>
-
-                        <el-dialog :visible.sync="good_img_arr.imgVisible">
-                            <img width="100%" :src="good_img_arr.url" alt="">
-                        </el-dialog>
                     </el-upload>
                 </el-form-item>
                 <el-form-item :label="`${type}卖点图：`" prop="explain_img_arr">
                     <el-upload
                         action="/api/admin/fileupload/image"
                         list-type="picture-card"
-                        :on-preview="(res,file)=>{return $_onPreview(file,explain_img_arr)}"
+                        :on-preview="$_onPreview"
                         :on-change="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
+                        :on-remove="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
                         :on-error="$_error"
                         :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
                         :before-upload="$_beforeUpload_img"
                         :file-list="explain_img_arr.url"
                         :limit="explain_img_arr.limit"
                         :multiple="true"
-                        :class="{canAdd:explain_img_arr.canAdd}"
+                        :class="{canAdd:explain_img_arr.over === 0}"
                         >
                         <i class="el-icon-plus upload-placeholder">
                             <p>添加图片</p><span>还可以添加{{explain_img_arr.over}}张</span>
                         </i>
-
-                        <el-dialog :visible.sync="explain_img_arr.imgVisible">
-                            <img width="100%" :src="explain_img_arr.url" alt="">
-                        </el-dialog>
                     </el-upload>
                 </el-form-item>
                 <el-form-item label="" prop="uploadArray">
@@ -214,27 +212,46 @@
                     <div class="uploadArray_content">
                         <el-upload
                             action="/api/admin/fileupload/image"
-                            class="avatar-uploader"
                             :show-file-list="false"
+                            class="avatar-uploader"
+                            :on-preview="$_onPreview"
                             :on-change="(res,file)=>{return $_change(res,file,'good_video', 1)}"
+                            :on-remove="(res,file)=>{return $_change(res,file,'good_video', 1)}"
                             :on-error="$_error"
+                            :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
                             :before-upload="$_beforeUpload_viedo"
                             >
-                            <video v-if="good_video" :src="good_video" class="avatar" controls="controls">您的浏览器不支持视频播放</video>
-                            <i v-else class="el-icon-plus avatar-uploader-icon">
+                            <ul class="el-upload-list el-upload-list--picture-card el-upload--picture-card"  v-if="good_video" >
+                                <li tabindex="0" class="el-upload-list__item is-success">
+                                    <video :src="good_video" class="avatar" controls="controls" height="100%">您的浏览器不支持视频播放</video>
+                                    <a class="el-upload-list__item-name" >
+                                        <i class="el-icon-document" />
+                                        "Wiedergeburt 2019-01-01 03.09.22.mp4"
+                                    </a>
+                                    <label class="el-upload-list__item-status-label" @click.stop="ss">
+                                        <i class="el-icon-close" />
+                                    </label>
+                                </li>
+                            </ul>
+                            
+                            <i v-else class="el-icon-plus upload-placeholder">
                                 <p>添加视频</p>
                             </i>
                         </el-upload>
                         <el-upload
                             action="/api/admin/fileupload/image"
-                            class="avatar-uploader"
+                            list-type="picture-card"
+                            :on-preview="$_onPreview"
                             :on-change="(res,file)=>{return $_change(res,file,'good_video_pic', 1)}"
-                            :show-file-list="false"
+                            :on-remove="(res,file)=>{return $_change(res,file,'good_video_pic', 1)}"
                             :on-error="$_error"
+                            :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
                             :before-upload="$_beforeUpload_img"
+                            :file-list="good_video_pic.url"
+                            :limit="1"
+                            :class="{canAdd:good_video_pic.over === 0}"
                             >
-                            <img v-if="good_video_pic" :src="good_video_pic" class="avatar">
-                            <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
+                            <i class="el-icon-plus upload-placeholder">
                                 <p>添加视频首图</p>
                             </i>
                         </el-upload>
@@ -246,15 +263,18 @@
                     </div>
                     <el-upload
                         action="/api/admin/fileupload/image"
-                        class="avatar-uploader"
-                        :show-file-list="false"
-                        :on-change="(res,file)=>{return $_change(res,file,'good_ico',1)}"
+                        list-type="picture-card"
+                        :on-change="(res,file)=>{return $_change(res,file,'good_ico', 1)}"
+                        :on-remove="(res,file)=>{return $_change(res,file,'good_ico', 1)}"
                         :on-error="$_error"
+                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, 1)}"
                         :before-upload="$_beforeUpload_img"
+                        :file-list="good_ico.url"
+                        :limit="1"
+                        :class="{canAdd:good_ico.over === 0}"
                         >
-                        <img v-if="good_ico" :src="good_ico" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon upload-placeholder">
-                            <p>添加图片</p><span>只能上传一张</span>
+                        <i class="el-icon-plus upload-placeholder">
+                             <p>添加图片</p><span>只能上传一张</span>
                         </i>
                     </el-upload>
                 </el-form-item>
@@ -295,23 +315,20 @@
                     <el-upload
                         action="/api/admin/fileupload/image"
                         list-type="picture-card"
-                        :on-preview="(res,file)=>{return $_onPreview(file,show_img_arr)}"
+                        :on-preview="$_onPreview"
                         :on-change="(res,file)=>{return $_change(res,file,'show_img_arr')}"
+                        :on-remove="(res,file)=>{return $_change(res,file,'show_img_arr')}"
                         :on-error="$_error"
                         :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
                         :before-upload="$_beforeUpload_img"
                         :file-list="show_img_arr.url"
                         :limit="show_img_arr.limit"
                         :multiple="true"
-                        :class="{canAdd:show_img_arr.canAdd}"
+                        :class="{canAdd:show_img_arr.over === 0}"
                         >
                         <i class="el-icon-plus upload-placeholder">
                             <p>添加图片</p><span>还可以添加{{show_img_arr.over}}张</span>
                         </i>
-
-                        <el-dialog :visible.sync="show_img_arr.imgVisible">
-                            <img width="100%" :src="show_img_arr.url" alt="">
-                        </el-dialog>
                     </el-upload>
                 </el-form-item>
                 <el-form-item label="购买须知：" prop="good_notes">
@@ -326,6 +343,10 @@
             </el-form-item>
         </el-form>
         <!-- 表单list End -->
+
+        <el-dialog :visible.sync="imgVisible">
+            <img width="100%" :src="imgUrl" alt="">
+        </el-dialog>
 
         <!-- 添加标签弹框 -->
         <dialog-lable ref="lable" @addLable="$_addLable" :tagList = "createdData.tag_list"/>
@@ -392,6 +413,8 @@ export default {
         COUNTRY,
         UNIT,
         currentActive: 0,
+        imgVisible: false,
+        imgUrl: '',
         createdData:{
             good_type: 1, //商品类型：1服务 2实物 3采购品项 4虚拟商品
             good_name: '', // 商品名字
@@ -430,28 +453,35 @@ export default {
         good_img_arr: {
             canAdd: false , // 是否可添加商品图
             limit: 6,
-            imgVisible : false ,
             url : [],
             over: 6
         },
         explain_img_arr: {
-            canAdd: false , // 是否可添加商品图
             limit: 4,
-            imgVisible : false ,
             url : [],
             over: 4
         },
         show_img_arr: {
-            canAdd: false , // 是否可添加商品图
             limit: 6,
-            imgVisible : false ,
             url : [],
             over: 6
         },
-        good_video:'' , // 上传视频链接
-        good_video_pic: '' , // 视频首图链接
-        good_ico: '' , // 商品展示图
-        poster_img:'', // 商品海报图
+        poster_img: { // 商品海报图
+            limit: 1,
+            url : [],
+            over: 1
+        },
+        good_video:'', // 上传视频链接
+        good_video_pic: { // 视频首图链接
+            limit: 1,
+            url : [],
+            over: 1
+        },
+        good_ico: { // 商品展示图
+            limit: 1,
+            url : [],
+            over: 1
+        },
         singleButton: "无规格", 
         type:'',
         rules:{},
@@ -482,14 +512,14 @@ export default {
         });
 
         // 图片处理
-        let {good_video_pic,good_ico,good_video,poster_img} = createdData  
-        this.good_video = good_video ,
-        this.good_video_pic = good_video_pic, 
-        this.good_ico = good_ico ,
-        this.poster_img = poster_img ,
+        let {good_video_pic,good_ico,good_video,poster_img} = createdData 
         this.$_transformImgAry('good_img_arr')
         this.$_transformImgAry('show_img_arr')
         this.$_transformImgAry('explain_img_arr')
+        this.$_transformImgAry('good_video_pic',1)
+        this.$_transformImgAry('good_ico',1)
+        this.$_transformImgAry('poster_img',1)
+        this.good_video = good_video
 
         // 单规格，多规格处理 sku_type_arr 规格数组 多规格
         if(createdData.sku_type_arr && createdData.sku_type_arr.length ){
@@ -518,6 +548,102 @@ export default {
     }
     this.currentActive = this.active
     this.type = type[this.goodType]
+    this.rules = {
+        good_name: [{
+            required: true,
+            min: 2,
+            max: 30,
+            message: "请输入活动名称,长度在2-30个字符",
+            trigger: "blur"
+        }],
+        good_explain: [{
+            required: true,
+            min: 2,
+            max: 50,
+            message: `在${this.type}详情页标题下面展示卖点信息，建议50字以内`,
+            trigger: "blur"
+        }],
+        category_id: [{
+            required: true,
+            message: "请选择所属行业分类",
+            trigger: "change"
+        }],
+        tag_list: [{
+            required: true,
+            message: "请添加标签",
+            trigger: "blur"
+        }],
+        unit: [{
+            required: true,
+            message: "请选择单位",
+            trigger: "change"
+        }],
+        country: [{
+            required: true,
+            message: "请选择产地",
+            trigger: "change"
+        }],
+        format: [{
+            required: true,
+            message: "请选择规格",
+            trigger: "change"
+        }],
+        sku_code: [{
+            required: true,
+            message: `请填写${this.type}编码`,
+            trigger: "blur"
+        }],
+        price_sale: [{
+            required: true,
+            message: "请填写售价",
+            trigger: "blur"
+        }],
+        price: [{
+            required: true,
+            message: "请填写原价",
+            trigger: "blur"
+        }],
+        price_cost: [{
+            required: true,
+            message: "请填写成本",
+            trigger: "blur"
+        }],
+        price_total: [{
+            required: true,
+            message: "请填写总价",
+            trigger: "blur"
+        }],
+        poster_img: [{
+            required: true,
+            message: `请选择${this.type}海报图`,
+            trigger: "blur"
+        }],
+        good_img_arr: [{
+            required: true,
+            message: `请选择${this.type}图片`,
+            trigger: "change"
+        }],
+        explain_img_arr: [{
+            required: true,
+            message: `请选择${this.type}卖点图`,
+            trigger: "change"
+        }],
+        good_ico: [{
+            required: true,
+            message: `请选择${this.type}展示图`,
+            trigger: "change"
+        }],
+        show_img_arr: [{
+            required: true,
+            message: `请选择${this.type}展示图`,
+            trigger: "change"
+        }],
+        good_notes: [{
+            required: true,
+            message: "请填写购买须知",
+            trigger: "blur"
+        }],
+    }
   },
 
   computed: {
@@ -534,20 +660,27 @@ export default {
     /** 
      * 转换图片数组
      */
-    $_transformImgAry(name){
-        this[name].url = this.formInfo[name].map((item, idx) => {
-            let obj = {};
-            obj.name = 'name' + idx;
-            obj.url = item;
-            return obj;
-        });
-        this[name].over = this[name].limit - this.formInfo[name].length
+    $_transformImgAry(name,num){
+        if(num === 1){
+            let len = this.formInfo[name] ? 0 : 1
+            this[name].url = [{name,url:this.formInfo[name]}]
+            this[name].over = len
+        }else{
+            this[name].url = this.formInfo[name].map((item, idx) => {
+                let obj = {};
+                obj.name = 'name' + idx;
+                obj.url = item;
+                return obj;
+            });
+            this[name].over = this[name].limit - this.formInfo[name].length
+        }
+        
     },
 
     //上传成功后照片预览 
-    $_onPreview(file, target){
-        target.url = file.url;
-        target.imgVisible = true;
+    $_onPreview(file){
+        this.imgUrl = file.url;
+        this.imgVisible = true;
     },
 
     // 选择图片限制数量作出提示
@@ -555,22 +688,33 @@ export default {
         this.$message.warning(`当前限制选择 ${limit} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },
 
+
+    ss(file){
+        this.createdData.good_video = ''
+        this.good_video = ''
+    },
+
     // 上传文件，上传数组，目标对象,上传单张
     $_change(file, fileList, targeName, num){
         if(file.status === 'success'){
-            if(typeof(targeName) === 'string' && !num){
-                let len =  this[targeName].limit - fileList.length
+            if(targeName === 'good_video'){
+                this.createdData.good_video = file.response.data.file_name
+                this.good_video = file.url 
+                return  
+            } 
+            if(typeof(targeName) === 'string'){
+                let len = this[targeName].limit - fileList.length
                 this[targeName].over = len
-                this[targeName].canAdd = len >= this[targeName].limit
                 this[targeName].url = fileList
-                this.createdData[targeName] = fileList.map(item => {
-                    if(item.status === 'success'){
-                        return item.response.data.file_name   
-                    }
-                })
-            }else if(typeof(targeName) === 'string' && num === 1 ){
-                this[targeName] = file.response.data.url  // URL.createObjectURL(file.raw)
-                this.createdData[targeName] = file.response.data.file_name
+                if(num === 1){
+                    this.createdData[targeName] = fileList[0].response.data.file_name
+                }else{
+                    this.createdData[targeName] = fileList.map(item => {
+                        if(item.status === 'success'){
+                            return item.response.data.file_name   
+                        }
+                    })
+                }
             }else{
                 targeName.ico_small = file.response.data.file_name
                 targeName.ico_small__url = file.url
@@ -664,8 +808,20 @@ export default {
      * 切换tab
      */
     $_changeTab(num) {
-        this.currentActive = this.currentActive + num
-        this.$emit("changeTab",this.currentActive);
+        let that = this
+        if(num > 0){
+            this.$refs.createdData.validate((valid) => {
+                if(valid){
+                    that.currentActive = that.currentActive + num
+                    that.$emit("changeTab",that.currentActive);
+                }
+            })
+        }else{
+            that.currentActive = that.currentActive + num
+            that.$emit("changeTab",that.currentActive); 
+        }
+        
+        
     },
 
     // 无规格选择有规格后，点击取消，依然显示无规格
@@ -703,28 +859,32 @@ export default {
      * 创建，调用创建接口
      */
     $_createProduct() {
-        let params = _.cloneDeep(this.createdData)
-        params.good_sku = params.good_sku.map(item => {
-            item.price_cost = (+item.price_cost || 0) * 100
-            item.price = (+item.price || 0) * 100
-            item.price_sale = (+item.price_sale || 0) * 100
-            item.price_total = (+item.price_total || 0) * 100
-            return item
-        });
-        if(this.singleButton === '无规格' && params.sku_type_arr){
-            delete params.sku_type_arr
-        }
         let that = this
-        this.$refs.createdData.validate((valid) => {
-            let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
-            that.$store.dispatch(str,params).then((res)=>{
-                if(res.code === 0){
-                    that.$alert('操作成功');
-                    that.$_goOut(that.goodType)
-                }else{
-                    that.$message.error(res.msg);
+        that.$refs.createdData.validate((valid) => {
+            if(valid){
+                let params = _.cloneDeep(that.createdData)
+                params.good_sku = params.good_sku.map(item => {
+                    item.price_cost = (+item.price_cost || 0) * 100
+                    item.price = (+item.price || 0) * 100
+                    item.price_sale = (+item.price_sale || 0) * 100
+                    item.price_total = (+item.price_total || 0) * 100
+                    return item
+                });
+                if(that.singleButton === '无规格' && params.sku_type_arr){
+                    delete params.sku_type_arr
                 }
-            })
+        
+                let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
+                that.$store.dispatch(str,params).then((res)=>{
+                    if(res.code === 0){
+                        that.$alert('操作成功');
+                        that.$_goOut(that.goodType)
+                    }else{
+                        that.$message.error(res.msg);
+                    }
+                })
+            }
+            
         })                                      
     },
 
@@ -785,9 +945,7 @@ export default {
                 price_sale: '', 
                 price_plate: '',
                 ico_small: '',
-                canAdd: false , // 是否可添加商品图
                 limit: 1,
-                imgVisible : false ,
                 url : '',
                 over: 1
             }
@@ -821,10 +979,12 @@ export default {
   padding-right: 30px;
 }
 .avatar-uploader .el-upload--text{
-    width:180px;
-    height: 180px;
+    width:146px;
+    height: 146px;
     font-size: 28px;
     color: #8c939d;
+    background-color: #fbfdff;
+    border: 1px dashed #c0ccda
 }
 
 .avatar-uploader  .avatar-uploader-icon{
@@ -836,6 +996,9 @@ export default {
     justify-content: center;
     align-items: center;
 }
+.avatar-uploader  .el-icon-plus:before {
+    content: "\E62B";
+}
 
 .avatar-uploader  .avatar-uploader-icon p{
     color: rgba(102, 102, 102, 1);
@@ -846,9 +1009,6 @@ export default {
 
 #createGood .el-input--small{
     min-height:30px
-}
-.canAdd .el-upload--picture-card{
-    display: none
 }
 
 #createGood  .avatar{
@@ -906,12 +1066,28 @@ export default {
 .canAdd .el-upload--picture-card{
     display: none
 }
+
+.canAddVidio>ul{
+    display: none
+}
 #createGood .el-form-item--small .el-form-item__content .good_notes .el-textarea__inner{
     max-width: 400px;
     width: 310px
 }
 .hahah{
     padding:40px
+}
+.el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label .el-icon-close{
+    display: block;
+    color:#fff;
+    top: 2px;
+    left: 0;
+}
+.el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label{
+    display: block !important
+}
+.el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label .el-icon-close:before {
+    content: "\E60F";
 }
 </style>
 
