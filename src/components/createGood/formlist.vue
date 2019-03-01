@@ -204,58 +204,60 @@
                         </i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="" prop="uploadArray">
+                <el-form-item label="">
                     <div class="upload-title">
                     展示在{{type}}页顶部的视频，<a>最多可上传 1 个视频</a>，
                     支持MP4视频格式，<a>视频大小不能超过20M</a>
                     </div>
-                    <div class="uploadArray_content">
-                        <el-upload
-                            action="/api/admin/fileupload/image"
-                            :show-file-list="false"
-                            class="avatar-uploader"
-                            :on-preview="$_onPreview"
-                            :on-change="(res,file)=>{return $_change(res,file,'good_video', 1)}"
-                            :on-remove="(res,file)=>{return $_change(res,file,'good_video', 1)}"
-                            :on-error="$_error"
-                            :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
-                            :before-upload="$_beforeUpload_viedo"
-                            >
-                            <ul class="el-upload-list el-upload-list--picture-card el-upload--picture-card"  v-if="good_video" >
-                                <li tabindex="0" class="el-upload-list__item is-success">
-                                    <video :src="good_video" class="avatar" controls="controls" height="100%">您的浏览器不支持视频播放</video>
-                                    <a class="el-upload-list__item-name" >
-                                        <i class="el-icon-document" />
-                                        "Wiedergeburt 2019-01-01 03.09.22.mp4"
-                                    </a>
-                                    <label class="el-upload-list__item-status-label" @click.stop="ss">
-                                        <i class="el-icon-close" />
-                                    </label>
-                                </li>
-                            </ul>
-                            
-                            <i v-else class="el-icon-plus upload-placeholder">
-                                <p>添加视频</p>
-                            </i>
-                        </el-upload>
-                        <el-upload
-                            action="/api/admin/fileupload/image"
-                            list-type="picture-card"
-                            :on-preview="$_onPreview"
-                            :on-change="(res,file)=>{return $_change(res,file,'good_video_pic', 1)}"
-                            :on-remove="(res,file)=>{return $_change(res,file,'good_video_pic', 1)}"
-                            :on-error="$_error"
-                            :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
-                            :before-upload="$_beforeUpload_img"
-                            :file-list="good_video_pic.url"
-                            :limit="1"
-                            :class="{canAdd:good_video_pic.over === 0}"
-                            >
-                            <i class="el-icon-plus upload-placeholder">
-                                <p>添加视频首图</p>
-                            </i>
-                        </el-upload>
-                    </div>
+                </el-form-item>
+                <el-form-item label="" prop="good_video"  class="good_video">
+                    <el-upload
+                        action="/api/admin/fileupload/image"
+                        :show-file-list="false"
+                        class="avatar-uploader"
+                        :on-preview="$_onPreview"
+                        :on-change="(res,file)=>{return $_change(res,file,'good_video', 1)}"
+                        :on-remove="(res,file)=>{return $_change(res,file,'good_video', 1)}"
+                        :on-error="$_error"
+                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
+                        :before-upload="$_beforeUpload_viedo"
+                        >
+                        <ul class="el-upload-list el-upload-list--picture-card el-upload--picture-card"  v-if="good_video" >
+                            <li tabindex="0" class="el-upload-list__item is-success">
+                                <video :src="good_video" class="avatar" controls="controls" height="100%">您的浏览器不支持视频播放</video>
+                                <a class="el-upload-list__item-name" >
+                                    <i class="el-icon-document" />
+                                    "Wiedergeburt 2019-01-01 03.09.22.mp4"
+                                </a>
+                                <label class="el-upload-list__item-status-label" @click.stop="ss">
+                                    <i class="el-icon-close" />
+                                </label>
+                            </li>
+                        </ul>
+                        
+                        <i v-else class="el-icon-plus upload-placeholder">
+                            <p>添加视频</p>
+                        </i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="" prop="good_ico">
+                    <el-upload
+                        action="/api/admin/fileupload/image"
+                        list-type="picture-card"
+                        :on-preview="$_onPreview"
+                        :on-change="(res,file)=>{return $_change(res,file,'good_video_pic', 1)}"
+                        :on-remove="(res,file)=>{return $_change(res,file,'good_video_pic', 1)}"
+                        :on-error="$_error"
+                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
+                        :before-upload="$_beforeUpload_img"
+                        :file-list="good_video_pic.url"
+                        :limit="1"
+                        :class="{canAdd:good_video_pic.over === 0}"
+                        >
+                        <i class="el-icon-plus upload-placeholder">
+                            <p>添加视频首图</p>
+                        </i>
+                    </el-upload>
                 </el-form-item>
                 <el-form-item :label="`${type}展示图：`" prop="good_ico">
                     <div class="upload-title">
@@ -623,14 +625,14 @@ export default {
             message: `请选择${this.type}图片`,
             trigger: "change"
         }],
-        explain_img_arr: [{
+        good_video: [{
             required: true,
-            message: `请选择${this.type}卖点图`,
+            message: `请添加视频`,
             trigger: "change"
         }],
         good_ico: [{
             required: true,
-            message: `请选择${this.type}展示图`,
+            message: `请添加}视频首图图`,
             trigger: "change"
         }],
         show_img_arr: [{
@@ -1002,7 +1004,7 @@ export default {
 
 .avatar-uploader  .avatar-uploader-icon p{
     color: rgba(102, 102, 102, 1);
-    font-size: 15px;
+    font-size: 16px;
     text-align: left;
     margin-bottom: 10px;
 }
@@ -1088,6 +1090,10 @@ export default {
 }
 .el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label .el-icon-close:before {
     content: "\E60F";
+}
+.good_video{
+    float:left;
+    margin-right: 20px
 }
 </style>
 
