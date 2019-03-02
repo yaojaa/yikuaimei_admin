@@ -53,7 +53,7 @@ import { mapState } from "vuex";
 import _ from 'lodash'
 
 export default {
-  name: "createGood-lable",
+  name: "dialog-lable",
 
   props:['tagList'],
 
@@ -68,7 +68,7 @@ export default {
 
   computed:{
 
-    ...mapState('createdGoode',['lableList','formInfo']), // 可选标签数据
+    ...mapState('createdGoode',['lableList']), // 可选标签数据
     
     defaultActive(){
       let data = this.lableList[0] || {}
@@ -86,13 +86,15 @@ export default {
       },
       deep: true
     },
+
     lableList(val) {
       this.initSons()
     },
+    
     lable_show:{
       handler: function (newVal, oldVal) {
-        if(newVal){
-          this.tag_list = _.cloneDeep(this.tagList|| [])
+        if(newVal && this.tag_list,length){
+          this.tag_list = _.cloneDeep(this.tagList)
         }
       }
     },
