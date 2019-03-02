@@ -47,26 +47,28 @@
                     </el-radio-group> 
                 </el-form-item>
                  <!-- 单规格 -->
-                <template  v-if="singleButton === '无规格'" >
-                    <el-form-item :label="`${type}编码：`" prop="sku_code">
-                        <el-input  v-model="createdData.good_sku[0].sku_code" placeholder="支持14以内的数字+英文组合"  />                                                                              
-                    </el-form-item>
-                    <el-form-item label="售价：" prop="price_sale">
-                        <el-input  v-model="createdData.good_sku[0].price_sale" placeholder="请输入套餐在婚博会标价" />                                                                                                        
-                        <span class="outText">元</span>
-                    </el-form-item>
-                    <el-form-item label="原价：" prop="price">
-                        <el-input  v-model="createdData.good_sku[0].price" placeholder="¥5000" />                                                                                                        
-                        <span class="outText">元</span>
-                    </el-form-item>
-                    <el-form-item label="成本" prop="price_cost">
-                        <el-input  v-model="createdData.good_sku[0].price_cost" placeholder="¥5000" />                                                                                                        
-                        <span class="outText">元</span>
-                    </el-form-item>
-                    <el-form-item label="总价" prop="price_total"  v-if="goodType === GOODTYPE['serviceList']">
-                        <el-input  v-model="createdData.good_sku[0].price_total" placeholder="¥5000" />                                                                                                        
-                        <span class="outText">元</span>
-                    </el-form-item>
+                <template  v-if="singleButton === '无规格' && createdData.good_sku && createdData.good_sku.length" >
+                    <el-form ref="createdData_goodSku" :model="createdData.good_sku[0]" :rules="rules" label-width="120px">
+                        <el-form-item :label="`${type}编码：`" prop="sku_code">
+                            <el-input  v-model="createdData.good_sku[0].sku_code" placeholder="支持14以内的数字+英文组合"  />                                                                              
+                        </el-form-item>
+                        <el-form-item label="售价：" prop="price_sale">
+                            <el-input  v-model="createdData.good_sku[0].price_sale" placeholder="请输入套餐在婚博会标价" />                                                                                                        
+                            <span class="outText">元</span>
+                        </el-form-item>
+                        <el-form-item label="原价：" prop="price">
+                            <el-input  v-model="createdData.good_sku[0].price" placeholder="¥5000" />                                                                                                        
+                            <span class="outText">元</span>
+                        </el-form-item>
+                        <el-form-item label="成本" prop="price_cost">
+                            <el-input  v-model="createdData.good_sku[0].price_cost" placeholder="¥5000" />                                                                                                        
+                            <span class="outText">元</span>
+                        </el-form-item>
+                        <el-form-item label="总价" prop="price_total"  v-if="goodType === GOODTYPE['serviceList']">
+                            <el-input  v-model="createdData.good_sku[0].price_total" placeholder="¥5000" />                                                                                                        
+                            <span class="outText">元</span>
+                        </el-form-item>
+                    </el-form>
                 </template>
                 <!-- 单规格 END -->
                 <template v-else>
@@ -814,8 +816,12 @@ export default {
         if(num > 0){
             this.$refs.createdData.validate((valid) => {
                 if(valid){
-                    that.currentActive = that.currentActive + num
-                    that.$emit("changeTab",that.currentActive);
+                    this.$refs.createdData_goodSku.validate((valid) => {
+                        if(valid){
+                            that.currentActive = that.currentActive + num
+                            that.$emit("changeTab",that.currentActive);
+                        }
+                    })
                 }
             })
         }else{
@@ -863,29 +869,31 @@ export default {
     $_createProduct() {
         let that = this
         that.$refs.createdData.validate((valid) => {
-            if(valid){
-                let params = _.cloneDeep(that.createdData)
-                params.good_sku = params.good_sku.map(item => {
-                    item.price_cost = (+item.price_cost || 0) * 100
-                    item.price = (+item.price || 0) * 100
-                    item.price_sale = (+item.price_sale || 0) * 100
-                    item.price_total = (+item.price_total || 0) * 100
-                    return item
-                });
-                if(that.singleButton === '无规格' && params.sku_type_arr){
-                    delete params.sku_type_arr
-                }
-        
-                let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
-                that.$store.dispatch(str,params).then((res)=>{
-                    if(res.code === 0){
-                        that.$alert('操作成功');
-                        that.$_goOut(that.goodType)
-                    }else{
-                        that.$message.error(res.msg);
+            this.$refs.createdData_goodSku.validate((valid) => {
+                if(valid){
+                    let params = _.cloneDeep(that.createdData)
+                    params.good_sku = params.good_sku.map(item => {
+                        item.price_cost = (+item.price_cost || 0) * 100
+                        item.price = (+item.price || 0) * 100
+                        item.price_sale = (+item.price_sale || 0) * 100
+                        item.price_total = (+item.price_total || 0) * 100
+                        return item
+                    });
+                    if(that.singleButton === '无规格' && params.sku_type_arr){
+                        delete params.sku_type_arr
                     }
-                })
-            }
+            
+                    let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
+                    that.$store.dispatch(str,params).then((res)=>{
+                        if(res.code === 0){
+                            that.$alert('操作成功');
+                            that.$_goOut(that.goodType)
+                        }else{
+                            that.$message.error(res.msg);
+                        }
+                    })
+                }
+            })
             
         })                                      
     },
