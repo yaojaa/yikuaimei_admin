@@ -141,7 +141,7 @@
 
                 <el-form-item :label="`${type}海报图：`" prop="poster_img" v-if="goodType !== GOODTYPE['fictitiousList']">
                     <div class="upload-title">
-                    <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
+                    <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为343×500，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
                     </div>
                     <el-upload
                         action="/api/admin/fileupload/image"
@@ -845,11 +845,13 @@ export default {
             alert('请先选择行业id')
             return 
         }
-        let tag_group_type = 2 ;
+        let tag_group_type = 0
         if (this.goodType === 2) {
             tag_group_type = 1
-        } else if (this.goodType === 4) {
-            tag_group_type = 4
+        } else if (this.goodType === 1) {
+            tag_group_type = 2
+        } else {
+            tag_group_type = this.goodType
         }
         // tip: goodType, 1 服务 2 商品 3 评价 4 虚拟卡券 tag_group_type 1商品 2服务 3虚拟券 4评价 5用户 
         // 品相是暂时没有标签儿的，和服务统一
