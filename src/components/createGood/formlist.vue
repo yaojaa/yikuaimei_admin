@@ -141,7 +141,7 @@
 
                 <el-form-item :label="`${type}海报图：`" prop="poster_img" v-if="goodType !== GOODTYPE['fictitiousList']">
                     <div class="upload-title">
-                    <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为343×500，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
+                    <p>支持上传1张图片，图片宽高比为1020*1500，支持JPG、PNG等格式图片，单张图片大小不超过5M</p>
                     </div>
                     <el-upload
                         action="/api/admin/fileupload/image"
@@ -164,8 +164,7 @@
                
                 <el-form-item :label="`${type}图片：`" prop="good_img_arr">
                     <div class="upload-title">
-                        您可以上传3-6张图片及1个视频作为{{type}}展示图，<br />
-                        展示{{type}}页顶部的图片，支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1242*1242，支持JPG、PNG等大部分格式图片，单张图片大小不超过5M 
+                        支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1125*1125，支持JPG、PNG等格式图片，单张图片大小不超过5M
                     </div>
                     <el-upload
                         action="/api/admin/fileupload/image"
@@ -186,30 +185,11 @@
                         </i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item :label="`${type}卖点图：`" prop="explain_img_arr">
-                    <el-upload
-                        action="/api/admin/fileupload/image"
-                        list-type="picture-card"
-                        :on-preview="$_onPreview"
-                        :on-change="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
-                        :on-remove="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
-                        :on-error="$_error"
-                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
-                        :before-upload="$_beforeUpload_img"
-                        :file-list="explain_img_arr.url"
-                        :limit="explain_img_arr.limit"
-                        :multiple="true"
-                        :class="{canAdd:explain_img_arr.over === 0}"
-                        >
-                        <i class="el-icon-plus upload-placeholder">
-                            <p>添加图片</p><span>还可以添加{{explain_img_arr.over}}张</span>
-                        </i>
-                    </el-upload>
-                </el-form-item>
+                
                 <el-form-item label="">
                     <div class="upload-title">
-                    展示在{{type}}页顶部的视频，<a>最多可上传 1 个视频</a>，
-                    支持MP4视频格式，<a>视频大小不能超过20M</a>
+                        视频支持上传1个视频，高宽1:1，最好是大于等于800*800，大小不超过20M，支持MP4格式视频格式<br />
+                        封面图支持上传1张图片，图片宽高比为1125*1125，支持JPG、PNG等格式图片，单张图片大小不超过5M
                     </div>
                 </el-form-item>
                 <el-form-item label="" prop="good_video"  class="good_video">
@@ -264,7 +244,7 @@
                 <p  class="clearfix"></p>
                 <el-form-item :label="`${type}展示图：`" prop="good_ico" >
                     <div class="upload-title">
-                    <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
+                        <p>支持上传1张图片，图片宽高比为400*400，支持JPG、PNG等格式图片，单张图片大小不超过5M</p>
                     </div>
                     <el-upload
                         action="/api/admin/fileupload/image"
@@ -280,6 +260,29 @@
                         >
                         <i class="el-icon-plus upload-placeholder">
                              <p>添加图片</p><span>只能上传一张</span>
+                        </i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item :label="`${type}卖点图：`" prop="explain_img_arr">
+                    <div class="upload-title">
+                        支持上传2-4张图片，图片宽高比为450*540，支持JPG、PNG等格式图片，单张图片大小不超过5M
+                    </div>
+                    <el-upload
+                        action="/api/admin/fileupload/image"
+                        list-type="picture-card"
+                        :on-preview="$_onPreview"
+                        :on-change="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
+                        :on-remove="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
+                        :on-error="$_error"
+                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
+                        :before-upload="$_beforeUpload_img"
+                        :file-list="explain_img_arr.url"
+                        :limit="explain_img_arr.limit"
+                        :multiple="true"
+                        :class="{canAdd:explain_img_arr.over === 0}"
+                        >
+                        <i class="el-icon-plus upload-placeholder">
+                            <p>添加图片</p><span>还可以添加{{explain_img_arr.over}}张</span>
                         </i>
                     </el-upload>
                 </el-form-item>
