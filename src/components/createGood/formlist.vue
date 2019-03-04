@@ -368,13 +368,13 @@
 </template>
 
 <script>
-import _ from 'lodash'
-import { mapState } from "vuex";
-import { CATEGORYOPTIONS,type,GOODTYPE,COUNTRY, UNIT } from "../../constans/createdGood";
-import Lable from "./dialog_lable";
-import Formate from "./dialog_formate";
-import GoodFriend from "./dialog_goodFriend";
-import ProductCard from "./product_card";
+    import _ from 'lodash'
+    import { mapState } from "vuex";
+    import { CATEGORYOPTIONS,type,GOODTYPE,COUNTRY, UNIT } from "../../constans/createdGood";
+    import Lable from "./dialog_lable";
+    import Formate from "./dialog_formate";
+    import GoodFriend from "./dialog_goodFriend";
+    import ProductCard from "./product_card";
 
 export default {
   name: "createGood-formlist",
@@ -494,7 +494,6 @@ export default {
   },
 
   async created() {
-      debugger
     this.createdData.good_type = this.goodType
     /** 
      * good_id [0：添加，1:编辑] map不改变元数组，返回新数组
@@ -553,7 +552,6 @@ export default {
         this.createdData = createdData
     }
     this.currentActive = this.active
-    debugger
     this.type = type[this.goodType]
     this.rules = {
         good_name: [{
@@ -985,137 +983,7 @@ export default {
 }
 </script>
 
-<style>
-.div__input {
-  border: 1px solid #dcdfe6; /** 默认 */
-  border: 1px solid #67c23a; /** 失去焦点 */
-  border: 1px solid #f56c6c; /** 报错 */
-  border: 1px solid #7224d8; /** :focus 获得焦点 */
-  padding-right: 30px;
-}
-.avatar-uploader .el-upload--text{
-    width:146px;
-    height: 146px;
-    font-size: 28px;
-    color: #8c939d;
-    background-color: #fbfdff;
-    border: 1px dashed #c0ccda
-}
-
-.avatar-uploader  .avatar-uploader-icon{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.avatar-uploader  .el-icon-plus:before {
-    content: "\E62B";
-}
-
-.avatar-uploader  .avatar-uploader-icon p{
-    color: rgba(102, 102, 102, 1);
-    font-size: 16px;
-    text-align: left;
-    margin-bottom: 10px;
-}
-
-#createGood .el-input--small{
-    min-height:30px
-}
-
-#createGood  .avatar{
-    width: 100%
-}
-#createGood  .outText{
-    position: absolute;
-    top: 0;
-    left: 270px;
-}
-
-.goodSkuInfo_row{
-    margin:10px
-}
-
-#createGood .table .el-input{
-    width:80px;
-}
-#createGood .el-input input{
-    padding:5px
-}
-.table_icon_text{
-    color:#999999
-}
-.table_icon_text i{
-    margin-right: 5px
-}
-.table_upload div{
-    border: 0;
-    width:auto;
-    height: auto;
-}
-.table_upload__disabled .el-upload--picture{
-    display: none
-}
-.form-footer{
-    text-align: center
-}
-#createGood  .el-table__row .cell{
-    position: relative;
-}
-
-
-
-#createGood  .el-table__row .cell .outText1{
-    position: absolute;
-    top: 6px;
-    left: 95px;
-}
-
-#createGood .el-tag--small {
-    margin: 0 5px;
-}
-
-.canAdd .el-upload--picture-card{
-    display: none
-}
-
-.canAddVidio>ul{
-    display: none
-}
-#createGood .el-form-item--small .el-form-item__content .good_notes .el-textarea__inner{
-    max-width: 400px;
-    width: 310px
-}
-.hahah{
-    padding:40px
-}
-.el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label .el-icon-close{
-    display: block;
-    color:#fff;
-    top: 2px;
-    left: 0;
-}
-.el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label{
-    display: block !important
-}
-.el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label .el-icon-close:before {
-    content: "\E60F";
-}
-.good_video{
-    float:left;
-    margin-right: 20px
-}
-.clearfix{
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
-}
+<style lang="stylus">
 </style>
 
 
