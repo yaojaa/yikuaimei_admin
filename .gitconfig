@@ -1,7 +1,0 @@
-*.log
-*.temp
-/node_modules
-/dist
-package-lock.json
-[commit]
-template = ~/.gitmessage
