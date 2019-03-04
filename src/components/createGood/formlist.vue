@@ -242,7 +242,7 @@
                         </i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="" prop="good_ico">
+                <el-form-item label="" prop="good_ico"  class="good_video">
                     <el-upload
                         action="/api/admin/fileupload/image"
                         list-type="picture-card"
@@ -261,7 +261,8 @@
                         </i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item :label="`${type}展示图：`" prop="good_ico">
+                <p  class="clearfix"></p>
+                <el-form-item :label="`${type}展示图：`" prop="good_ico" >
                     <div class="upload-title">
                     <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
                     </div>
@@ -493,6 +494,7 @@ export default {
   },
 
   async created() {
+      debugger
     this.createdData.good_type = this.goodType
     /** 
      * good_id [0：添加，1:编辑] map不改变元数组，返回新数组
@@ -551,6 +553,7 @@ export default {
         this.createdData = createdData
     }
     this.currentActive = this.active
+    debugger
     this.type = type[this.goodType]
     this.rules = {
         good_name: [{
@@ -1102,6 +1105,14 @@ export default {
 .good_video{
     float:left;
     margin-right: 20px
+}
+.clearfix{
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 </style>
 
