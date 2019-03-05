@@ -28,13 +28,19 @@
   <el-form-item label="公司名称" prop="shop_name">
     <el-input v-model="ruleForm.shop_name"></el-input>
   </el-form-item>
-<el-form-item label="城市" >
+  <el-form-item label="城市" >
     <area-cascader v-model="ruleForm.address_code" :level='1' :data="pcaa"></area-cascader>
 
   </el-form-item>
-
-
-
+ <!-- 地图如下 -->
+  <el-form-item label="地图" >
+     <div id="atlas"></div>
+     <p style="margin:5px">
+      <input style="width:200px;padding:3px 4px;" type="text" id="place" />
+    </p>
+     
+  </el-form-item>
+  
     <el-form-item label="公司地址" prop="shop_address">
     <el-input v-model="ruleForm.shop_address"></el-input>
   </el-form-item>
@@ -148,7 +154,7 @@
 
      <el-form-item label="门店环境图">
 
-       <img width="120" v-for="(img,i) in ruleForm.shop_environment" :src="img" >
+       <img width="120" v-for="(img,i) in ruleForm.shop_environment" :src="img">
 
          <el-upload
           action="/api/admin/fileupload/image"
@@ -241,7 +247,7 @@ import BreadCrumb from "@/components/common/BreadCrumb";
 import formlist from "@/components/formlist";
 import { CATEGORYOPTIONS } from "../../constans/createdGood";
 import { pca, pcaa } from 'area-data'; // v5 or higher
-console.log(pcaa)
+import {TMap} from "../../../static/js/TMap"
 export default {
   name: "tabletest",
 
@@ -340,73 +346,128 @@ export default {
     resetForm(formName) {
         this.$refs[formName].resetFields();
       },
- shop_pic(res){
+    shop_pic(res){
       this.ruleForm.shop_pic = res.data.url
     },
-  shop_licence_pic(res){
-      this.ruleForm.shop_licence_pic = res.data.url
-    },
-    shop_environment(res){
-      this.ruleForm.shop_environment.push(res.data.url)
-    },
-     shop_sfz_pic_z(res){
-      this.ruleForm.shop_sfz_pic_z = res.data.url
-    },
-     shop_sfz_pic_f(res){
-      this.ruleForm.shop_sfz_pic_f = res.data.url
-    },
+    shop_licence_pic(res){
+        this.ruleForm.shop_licence_pic = res.data.url
+      },
+      shop_environment(res){
+        this.ruleForm.shop_environment.push(res.data.url)
+      },
+      shop_sfz_pic_z(res){
+        this.ruleForm.shop_sfz_pic_z = res.data.url
+      },
+      shop_sfz_pic_f(res){
+        this.ruleForm.shop_sfz_pic_f = res.data.url
+      },
 
-    getBusinessList(){
+      getBusinessList(){
 
-       this.$axios.get("/api/admin/select/businessList").then(res =>{
+        this.$axios.get("/api/admin/select/businessList").then(res =>{
 
-        console.log(res)
-        if(res.data.code ==0){
+          console.log(res)
+          if(res.data.code ==0){
 
-          this.business_list = res.data.data
-        }
+            this.business_list = res.data.data
+          }
 
 
-       })
+        })
 
-    } ,
-    
-    submit(){
+      } ,
+      
+      submit(){
 
-      this.ruleForm.address_code = this.ruleForm.address_code[2]
-          this.$axios.post("/api/admin/shop/create", this.ruleForm).then(res => {
+        this.ruleForm.address_code = this.ruleForm.address_code[2]
+            this.$axios.post("/api/admin/shop/create", this.ruleForm).then(res => {
 
-                    console.log(res)
+                      console.log(res)
 
-                    if(res.data.code == 0){
+                      if(res.data.code == 0){
 
-                        this.$alert('添加加盟商成功！')
+                          this.$alert('添加加盟商成功！')
 
-                        this.$router.push('/alliance')
+                          this.$router.push('/alliance')
 
-                    }else{
-                        this.$alert(res.data.msg)
+                      }else{
+                          this.$alert(res.data.msg)
+                      }
+
+
+                  }).catch((e)=>{
+
+                    this.$alert('操作失败'+e)
+
+                  })
+      },
+      mapTX() {
+        TMap().then(qq => {
+          var map = new qq.maps.Map(document.getElementById("atlas"),{
+            center: new qq.maps.LatLng(39.916527,116.397128),
+            zoom: 10
+          });
+            qq.maps.event.addListener(map, 'click', function(event) {
+              var marker=new qq.maps.Marker({
+                        position:event.latLng, 
+                        map:map
+              });    
+              qq.maps.event.addListener(map, 'click', function(event) {
+                marker.setMap(null);
+                info.close();
+              });
+              var info = new qq.maps.InfoWindow({
+                map: map
+              });
+              qq.maps.event.addListener(marker, 'click', function(event) {
+                info.open(); 
+                //info.setContent("<div style='text-align:center;white-space:nowrap;margin:10px;'>"+event.latLng+"</div>");
+                info.setPosition(event.latLng); 
+              });
+
+            });
+            //实例化自动完成
+            var ap = new qq.maps.place.Autocomplete(document.getElementById('place'), {
+              offset: new qq.maps.Size(0, 5),
+              location: '北京市'
+            });
+            var keyword = "";
+            //调用Poi检索类。用于进行本地检索、周边检索等服务。
+            var searchService = new qq.maps.SearchService({
+                complete : function(results){
+                  if(results.type === "CITY_LIST") {
+                        searchService.setLocation(results.detail.cities[0].cityName);
+                        searchService.search(keyword);
+                        return;
                     }
-
-
-                }).catch((e)=>{
-
-                  this.$alert('操作失败'+e)
-
-                })
-
-
-
-
-
-    }
+                    var pois = results.detail.pois;
+                    var latlngBounds = new qq.maps.LatLngBounds();
+                    for(var i = 0,l = pois.length;i < l; i++){
+                        var poi = pois[i];
+                        latlngBounds.extend(poi.latLng);  
+                    }
+                    map.fitBounds(latlngBounds);
+                }
+            });
+            //添加监听事件
+            qq.maps.event.addListener(ap, "confirm", function(res){
+                keyword = res.value;
+                searchService.search(keyword);
+            });
+          })
+        }
+      
+    },
+  mounted() {
+  
   },
   components: {
     BreadCrumb,
     formlist
   },
+
   created() {
-    this.getBusinessList()
+      this.mapTX()
   },
   computed: {}
 };
@@ -424,5 +485,9 @@ export default {
   width: 120px;
   height: 120px;
   display: inline-block;
+}
+#atlas {
+  width:100%;
+  height:300px;
 }
 </style>

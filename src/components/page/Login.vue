@@ -1,8 +1,9 @@
 <template>
     <div class="login-wrap">
-        <div class="ms-title">后台管理系统</div>
+        
         <div class="ms-login">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
+            <div class="ms-title">偷偷美管理中心登录</div>
+            <el-form :model="ruleForm" size="medium" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
                 <el-form-item prop="user_name">
                     <el-input v-model="ruleForm.user_name" placeholder="username"></el-input>
                 </el-form-item>
@@ -39,8 +40,6 @@
         },
         methods: {
             submitForm(formName) {
-
-
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         user.login.call(this, {
@@ -66,30 +65,38 @@
 <style scoped>
     .login-wrap{
         position: relative;
+        left: 0px;
+        top: 0px;
         width:100%;
         height:100%;
+        background-image: url('/static/img/login_wrap_bg.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
     }
     .ms-title{
-        position: absolute;
-        top:50%;
         width:100%;
-        margin-top: -230px;
+        height: 30px;
+        line-height: 30px;
         text-align: center;
-        font-size:30px;
+        font-size:20px;
         color: #fff;
-
+        margin-bottom: 25px;
     }
     .ms-login{
         position: absolute;
-        left:50%;
-        top:50%;
-        width:300px;
-        height:160px;
-        margin:-150px 0 0 -190px;
-        padding:40px;
+        right:11%;
+        top:37%;
+        width:280px;
+        height:250px;
+        padding:20px 60px;
         border-radius: 5px;
-        background: #fff;
+        background:rgba(34,26,61,0.5);
     }
+   /* .ms-input .el-input__inner{
+        background:rgba(61,53,86,0.5);
+        width: 100%;
+        height: 20px;
+    } */
     .login-btn{
         text-align: center;
     }
