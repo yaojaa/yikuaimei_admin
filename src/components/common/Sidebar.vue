@@ -159,6 +159,21 @@
                             }
                         ]
                     },
+                    {
+                        icon: 'iconfont icon-guanli',
+                        index: '/admin',
+                        title: '平台管理',
+                        subs: [
+                            {
+                                index: '/admin/staffList',
+                                title: '成员管理'
+                            },
+                            {
+                                index: '/admin/roleList',
+                                title: '角色管理'
+                            },
+                        ]
+                    },
                 //     {
                 //         icon: 'iconfont icon-yingxiaocopy',
                 //         index: 'index9',

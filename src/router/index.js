@@ -22,15 +22,7 @@ export default new Router({
                         title: '首页'
                     }
                 },
-                //  ==========
-                {
-                    path: '/aa',
-                    component: resolve => require(['../view/admin/addAndModifiyJS.vue'], resolve)
-                }, {
-                    path: '/bb',
-                    component: resolve => require(['../view/admin/createAndModifiyCY.vue'], resolve)
-                },
-                // =========
+                // 商品管理
                 {
                     path: '/goodList',
                     component: resolve => require(['../view/goods/goodList.vue'], resolve),
@@ -187,6 +179,7 @@ export default new Router({
                         permission: true
                     }
                 },
+
                 // 网站管理
                 {
                     // 案例页面
@@ -395,6 +388,33 @@ export default new Router({
                     component: resolve => require(['../view/user/userDetail.vue'], resolve),
                     meta: {
                         title: '用户详情'
+                    }
+                },
+
+                //  平台管理
+                {
+                    path: '/admin/staffList',
+                    component: resolve => require(['../view/admin/staffList.vue'], resolve),
+                    meta: {
+                        title: '成员管理'
+                    }
+                }, {
+                    path: '/admin/roleList',
+                    component: resolve => require(['../view/admin/roleList.vue'], resolve),
+                    meta: {
+                        title: '角色管理'
+                    }
+                }, {
+                    path: '/admin/addRole',
+                    component: resolve => require(['../view/admin/addAndModifiyRole.vue'], resolve),
+                    meta: {
+                        title: '添加角色'
+                    }
+                }, {
+                    path: '/admin/addStaff',
+                    component: resolve => require(['../view/admin/createAndModifiyStaff.vue'], resolve),
+                    meta: {
+                        title: '添加成员'
                     }
                 },
 

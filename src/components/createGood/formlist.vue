@@ -631,16 +631,16 @@ export default {
             message: `请选择${this.type}图片`,
             trigger: "change"
         }],
-        good_video: [{
-            required: true,
-            message: `请添加视频`,
-            trigger: "change"
-        }],
-        good_ico: [{
-            required: true,
-            message: `请添加}视频首图图`,
-            trigger: "change"
-        }],
+        // good_video: [{
+        //     required: true,
+        //     message: `请添加视频`,
+        //     trigger: "change"
+        // }],
+        // good_ico: [{
+        //     required: true,
+        //     message: `请添加}视频首图图`,
+        //     trigger: "change"
+        // }],
         show_img_arr: [{
             required: true,
             message: `请选择${this.type}展示图`,
@@ -817,15 +817,21 @@ export default {
      */
     $_changeTab(num) {
         let that = this
+        debugger
         if(num > 0){
             this.$refs.createdData.validate((valid) => {
                 if(valid){
-                    this.$refs.createdData_goodSku.validate((valid) => {
-                        if(valid){
-                            that.currentActive = that.currentActive + num
-                            that.$emit("changeTab",that.currentActive);
-                        }
-                    })
+                    if (this.singleButton === "无规格") {
+                        this.$refs.createdData_goodSku.validate((valid) => {
+                            if(valid){
+                                that.currentActive = that.currentActive + num
+                                that.$emit("changeTab",that.currentActive);
+                            }
+                        })
+                    } else {
+                        that.currentActive = that.currentActive + num
+                        that.$emit("changeTab",that.currentActive);
+                    }
                 }
             })
         }else{
@@ -875,32 +881,31 @@ export default {
     $_createProduct() {
         let that = this
         that.$refs.createdData.validate((valid) => {
-            this.$refs.createdData_goodSku.validate((valid) => {
-                if(valid){
-                    let params = _.cloneDeep(that.createdData)
-                    params.good_sku = params.good_sku.map(item => {
-                        item.price_cost = (+item.price_cost || 0) * 100
-                        item.price = (+item.price || 0) * 100
-                        item.price_sale = (+item.price_sale || 0) * 100
-                        item.price_total = (+item.price_total || 0) * 100
-                        return item
-                    });
-                    if(that.singleButton === '无规格' && params.sku_type_arr){
-                        delete params.sku_type_arr
-                    }
-            
-                    let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
-                    that.$store.dispatch(str,params).then((res)=>{
-                        if(res.code === 0){
-                            that.$alert('操作成功');
-                            that.$_goOut(that.goodType)
-                        }else{
-                            that.$message.error(res.msg);
-                        }
-                    })
+            let params = _.cloneDeep(that.createdData)
+            if (this.singleButton === "无规格") {
+                // console.log(this.$refs.createdData_goodSku)
+                // this.$refs.createdData_goodSku.validate((valid) => {
+                //     if(valid){
+                params.good_sku = params.good_sku.map(item => {
+                    item.price_cost = (+item.price_cost || 0) * 100
+                    item.price = (+item.price || 0) * 100
+                    item.price_sale = (+item.price_sale || 0) * 100
+                    item.price_total = (+item.price_total || 0) * 100
+                    return item
+                });
+                delete params.sku_type_arr
+                //     }
+                // })
+            }
+            let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
+            that.$store.dispatch(str,params).then((res)=>{
+                if(res.code === 0){
+                    that.$alert('操作成功');
+                    that.$_goOut(that.goodType)
+                }else{
+                    that.$message.error(res.msg);
                 }
             })
-            
         })                                      
     },
 
