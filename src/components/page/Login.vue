@@ -110,9 +110,6 @@
         border-radius: 8px;
         background:rgba(35,27,62,0.6);
     }
-    
-</style>
-<style>
     .el-icon-user{
         background: url('/static/img/login-user-icon.png') center no-repeat; 
         background-size: cover;
@@ -168,4 +165,5 @@
     .el-form-item{
         margin-bottom:30px;
     }
+    
 </style>
