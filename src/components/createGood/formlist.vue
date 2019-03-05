@@ -817,15 +817,21 @@ export default {
      */
     $_changeTab(num) {
         let that = this
+        debugger
         if(num > 0){
             this.$refs.createdData.validate((valid) => {
                 if(valid){
-                    this.$refs.createdData_goodSku.validate((valid) => {
-                        if(valid){
-                            that.currentActive = that.currentActive + num
-                            that.$emit("changeTab",that.currentActive);
-                        }
-                    })
+                    if (this.singleButton === "无规格") {
+                        this.$refs.createdData_goodSku.validate((valid) => {
+                            if(valid){
+                                that.currentActive = that.currentActive + num
+                                that.$emit("changeTab",that.currentActive);
+                            }
+                        })
+                    } else {
+                        that.currentActive = that.currentActive + num
+                        that.$emit("changeTab",that.currentActive);
+                    }
                 }
             })
         }else{
