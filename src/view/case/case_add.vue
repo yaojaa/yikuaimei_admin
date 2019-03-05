@@ -408,7 +408,7 @@ export default {
                     name: "添加案例" //名字
                 }
             ],
-            accountList: [],
+            accountList: ['张三','李四','王五'],
             mechanicList: [], //职务列表
             goodsList: [],
             serviceList: [],
@@ -756,6 +756,23 @@ h3.form_title_label {
     padding-left: 100px;
     padding-bottom: 50px
 }
+.inline-input{
+    width: 193px;
+}
+.el-checkbox+.el-checkbox{
+    margin-left:0px;
+}
+.el-checkbox{
+    width:176px;
+    height:24px;
+    line-height: 24px;
+    display: inline-block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+
+}
+
 
 /*.uploader_small {
     border: 1px dashed #d9d9d9;

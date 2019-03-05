@@ -110,6 +110,28 @@
         border-radius: 8px;
         background:rgba(35,27,62,0.6);
     }
+    .login-btn button{
+        width:166px;
+        height: 40px;
+        padding:0px;
+        text-align:center;
+        display:block;
+        margin:0 auto;
+        border-radius:20px;
+    }
+    .el-button--primary{
+        width:166px;
+        height: 40px;
+        line-height:40px;
+        font-size: 16px;
+        color:#fff;
+    }
+    .el-form-item{
+        margin-bottom:30px;
+    }
+    
+</style>
+<style >
     .el-icon-user{
         background: url('/static/img/login-user-icon.png') center no-repeat; 
         background-size: cover;
@@ -145,25 +167,6 @@
         background-color:rgba(61,54,86,0.4);
         border-radius:20px;
         color:#fff;
-    }
-    .login-btn button{
-        width:166px;
-        height: 40px;
-        padding:0px;
-        text-align:center;
-        display:block;
-        margin:0 auto;
-        border-radius:20px;
-    }
-    .el-button--primary{
-        width:166px;
-        height: 40px;
-        line-height:40px;
-        font-size: 16px;
-        color:#fff;
-    }
-    .el-form-item{
-        margin-bottom:30px;
     }
     
 </style>
