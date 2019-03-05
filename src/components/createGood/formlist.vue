@@ -883,7 +883,6 @@ export default {
         that.$refs.createdData.validate((valid) => {
             let params = _.cloneDeep(that.createdData)
             if (this.singleButton === "无规格") {
-                debugger
                 // console.log(this.$refs.createdData_goodSku)
                 // this.$refs.createdData_goodSku.validate((valid) => {
                 //     if(valid){
