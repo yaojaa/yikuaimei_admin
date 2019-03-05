@@ -1,0 +1,157 @@
+<template>
+    <div class="page">
+        <div class="page-header">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item>成员管理</el-breadcrumb-item>
+                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="page-content">
+            <nomal-table ref="table" :table-json="tableJson" url="/api/admin//index">
+                <table-search :searchs="searchs"></table-search>
+            </nomal-table>
+        </div>
+    </div>
+</template>
+
+<script>
+    import NomalTable from '@/components/common/NomalTable'
+    import TableSearch from '@/components/common/TableSearch'
+    
+    export default {
+        name: 'staffList',
+        components: {
+            NomalTable,
+            TableSearch
+        },
+        data() {
+            return {
+                status_filter: '',
+                searchs: {
+                    list: [{
+                            type: "input-text", //输入文本
+                            label: "成员姓名",
+                            name: "user_realname",
+                            value: "",
+                            placeholder: "例：张三",
+                        },
+                        {
+                            type: "input-text", //输入文本
+                            label: "角色名称",
+                            name: "role_name",
+                            value: "",
+                            placeholder: "例：客服",
+                        },
+                        {
+                            type: "input-text", //选择器
+                            label: "登陆账号",
+                            name: "user_name",
+                            value: "",
+                            placeholder: "例：18888888888",
+                        },
+                    ]
+                },
+                tableJson: {
+                    "column": [ //行
+                        {
+                            "type": "text",
+                            "align": "center",
+                            "label": "序号",
+                            "prop": "user_id",
+                            "width": "50"
+                        },
+                        {
+                            "type": "text",
+                            "align": "center",
+                            "label": "成员姓名",
+                            "prop": "user_realname",
+                            "width": "",
+                        },
+                        {
+                            "type": "text",
+                            "align": "center",
+                            "label": "角色名称",
+                            "prop": "role_name",
+                            "width": "",
+    
+                        },
+                        {
+                            "type": "text",
+                            "align": "center",
+                            "label": "登录账号",
+                            "prop": "user_name",
+                            "width": "",
+    
+                        },
+                        {
+                            "type": "text",
+                            "align": "center",
+                            "label": "创建时间",
+                            "prop": "",
+                            "width": "",
+                            formatter(row) {
+								return `<p style='text-align: center'>
+		                                    ${row.user_ctime || '--'}
+		                                </p>`;
+							}
+                        },
+                        {
+                            "type": "text",
+                            "align": "center",
+                            "label": "最后登录",
+                            "prop": "user_last_logintime",
+                            "width": "",
+                            formatter(row) {
+								return `<p style='text-align: center'>
+		                                    ${row.user_last_logintime || '--'}
+		                                </p>`;
+							}
+                        },
+                        {
+                            "type": "handle",
+                            "label": "操作",
+                            "align": "center",
+                            "width": "200",
+                            "list": [{
+                                "label": "编辑",
+                                "url": "/admin/addStaff",
+                                "query": "user_id"
+                            }, {
+                                "label": "删除",
+                                "url": "/admin/addStaff",
+                                "query": "user_id"
+                            }]
+                        }
+                    ],
+                }
+    
+    
+    
+            }
+        },
+        beforeRouteUpdate(to, from, next) {
+            console.log(to.query)
+            this.status_filter = Object.keys(to.query)[0] + Object.values(to.query)[0]
+            console.log(this.status_filter)
+            this.$refs.table.getData(to.query)
+            next()
+        },
+        created() {
+            console.log('created')
+        },
+        computed: {
+        },
+        methods: {
+            //调用子组件的gatData方法
+            getData(k, v) {
+                this.$refs.table.getData({
+                    [k]: v
+                })
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    
+</style>
