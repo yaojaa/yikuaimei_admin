@@ -378,7 +378,7 @@ export default {
       } ,
       
       submit(){
-
+  
         this.ruleForm.address_code = this.ruleForm.address_code[2]
             this.$axios.post("/api/admin/shop/create", this.ruleForm).then(res => {
 
@@ -402,6 +402,7 @@ export default {
                   })
       },
       mapTX() {
+        var that = this;
         TMap().then(qq => {
           var map = new qq.maps.Map(document.getElementById("atlas"),{
             center: new qq.maps.LatLng(39.916527,116.397128),
@@ -412,19 +413,26 @@ export default {
                         position:event.latLng, 
                         map:map
               });    
-              qq.maps.event.addListener(map, 'click', function(event) {
+              qq.maps.event.addListener(map, 'click', function(e) {
                 marker.setMap(null);
                 info.close();
               });
               var info = new qq.maps.InfoWindow({
                 map: map
               });
-              qq.maps.event.addListener(marker, 'click', function(event) {
-                info.open(); 
-                //info.setContent("<div style='text-align:center;white-space:nowrap;margin:10px;'>"+event.latLng+"</div>");
-                info.setPosition(event.latLng); 
-              });
-
+              // qq.maps.event.addListener(marker, 'click', function(event) {
+              //    console.log(event.latLng,'!!!!!!')
+              //   //info.open(); 
+              //   //info.setContent("<div style='text-align:center;white-space:nowrap;margin:10px;'>"+event.latLng+"</div>");
+              //   info.setPosition(event.latLng); 
+               
+              //   
+              // });
+              
+              //经度
+              that.ruleForm.shop_longitude = event.latLng.lng;
+              //维度
+              that.ruleForm.shop_latitude = event.latLng.lat; 
             });
             //实例化自动完成
             var ap = new qq.maps.place.Autocomplete(document.getElementById('place'), {
