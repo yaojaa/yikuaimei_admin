@@ -141,7 +141,7 @@
 
                 <el-form-item :label="`${type}海报图：`" prop="poster_img" v-if="goodType !== GOODTYPE['fictitiousList']">
                     <div class="upload-title">
-                    <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
+                    <p>支持上传1张图片，图片宽高比为1020*1500，支持JPG、PNG等格式图片，单张图片大小不超过5M</p>
                     </div>
                     <el-upload
                         action="/api/admin/fileupload/image"
@@ -164,8 +164,7 @@
                
                 <el-form-item :label="`${type}图片：`" prop="good_img_arr">
                     <div class="upload-title">
-                        您可以上传3-6张图片及1个视频作为{{type}}展示图，<br />
-                        展示{{type}}页顶部的图片，支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1242*1242，支持JPG、PNG等大部分格式图片，单张图片大小不超过5M 
+                        支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1125*1125，支持JPG、PNG等格式图片，单张图片大小不超过5M
                     </div>
                     <el-upload
                         action="/api/admin/fileupload/image"
@@ -186,30 +185,11 @@
                         </i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item :label="`${type}卖点图：`" prop="explain_img_arr">
-                    <el-upload
-                        action="/api/admin/fileupload/image"
-                        list-type="picture-card"
-                        :on-preview="$_onPreview"
-                        :on-change="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
-                        :on-remove="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
-                        :on-error="$_error"
-                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
-                        :before-upload="$_beforeUpload_img"
-                        :file-list="explain_img_arr.url"
-                        :limit="explain_img_arr.limit"
-                        :multiple="true"
-                        :class="{canAdd:explain_img_arr.over === 0}"
-                        >
-                        <i class="el-icon-plus upload-placeholder">
-                            <p>添加图片</p><span>还可以添加{{explain_img_arr.over}}张</span>
-                        </i>
-                    </el-upload>
-                </el-form-item>
+                
                 <el-form-item label="">
                     <div class="upload-title">
-                    展示在{{type}}页顶部的视频，<a>最多可上传 1 个视频</a>，
-                    支持MP4视频格式，<a>视频大小不能超过20M</a>
+                        视频支持上传1个视频，高宽1:1，最好是大于等于800*800，大小不超过20M，支持MP4格式视频格式<br />
+                        封面图支持上传1张图片，图片宽高比为1125*1125，支持JPG、PNG等格式图片，单张图片大小不超过5M
                     </div>
                 </el-form-item>
                 <el-form-item label="" prop="good_video"  class="good_video">
@@ -242,7 +222,7 @@
                         </i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="" prop="good_ico">
+                <el-form-item label="" prop="good_ico"  class="good_video">
                     <el-upload
                         action="/api/admin/fileupload/image"
                         list-type="picture-card"
@@ -261,9 +241,10 @@
                         </i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item :label="`${type}展示图：`" prop="good_ico">
+                <p  class="clearfix"></p>
+                <el-form-item :label="`${type}展示图：`" prop="good_ico" >
                     <div class="upload-title">
-                    <p>展示在{{type}}页顶部的图片，支持上传 1 张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为400*400，支持JPG、PNG等大部分格式图片，单张图片大小不超过2M</p>
+                        <p>支持上传1张图片，图片宽高比为400*400，支持JPG、PNG等格式图片，单张图片大小不超过5M</p>
                     </div>
                     <el-upload
                         action="/api/admin/fileupload/image"
@@ -279,6 +260,29 @@
                         >
                         <i class="el-icon-plus upload-placeholder">
                              <p>添加图片</p><span>只能上传一张</span>
+                        </i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item :label="`${type}卖点图：`" prop="explain_img_arr">
+                    <div class="upload-title">
+                        支持上传2-4张图片，图片宽高比为450*540，支持JPG、PNG等格式图片，单张图片大小不超过5M
+                    </div>
+                    <el-upload
+                        action="/api/admin/fileupload/image"
+                        list-type="picture-card"
+                        :on-preview="$_onPreview"
+                        :on-change="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
+                        :on-remove="(res,file)=>{return $_change(res,file,'explain_img_arr')}"
+                        :on-error="$_error"
+                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
+                        :before-upload="$_beforeUpload_img"
+                        :file-list="explain_img_arr.url"
+                        :limit="explain_img_arr.limit"
+                        :multiple="true"
+                        :class="{canAdd:explain_img_arr.over === 0}"
+                        >
+                        <i class="el-icon-plus upload-placeholder">
+                            <p>添加图片</p><span>还可以添加{{explain_img_arr.over}}张</span>
                         </i>
                     </el-upload>
                 </el-form-item>
@@ -367,13 +371,13 @@
 </template>
 
 <script>
-import _ from 'lodash'
-import { mapState } from "vuex";
-import { CATEGORYOPTIONS,type,GOODTYPE,COUNTRY, UNIT } from "../../constans/createdGood";
-import Lable from "./dialog_lable";
-import Formate from "./dialog_formate";
-import GoodFriend from "./dialog_goodFriend";
-import ProductCard from "./product_card";
+    import _ from 'lodash'
+    import { mapState } from "vuex";
+    import { CATEGORYOPTIONS,type,GOODTYPE,COUNTRY, UNIT } from "../../constans/createdGood";
+    import Lable from "./dialog_lable";
+    import Formate from "./dialog_formate";
+    import GoodFriend from "./dialog_goodFriend";
+    import ProductCard from "./product_card";
 
 export default {
   name: "createGood-formlist",
@@ -845,11 +849,13 @@ export default {
             alert('请先选择行业id')
             return 
         }
-        let tag_group_type = 2 ;
+        let tag_group_type = 0
         if (this.goodType === 2) {
             tag_group_type = 1
-        } else if (this.goodType === 4) {
-            tag_group_type = 4
+        } else if (this.goodType === 1) {
+            tag_group_type = 2
+        } else {
+            tag_group_type = this.goodType
         }
         // tip: goodType, 1 服务 2 商品 3 评价 4 虚拟卡券 tag_group_type 1商品 2服务 3虚拟券 4评价 5用户 
         // 品相是暂时没有标签儿的，和服务统一
@@ -980,129 +986,7 @@ export default {
 }
 </script>
 
-<style>
-.div__input {
-  border: 1px solid #dcdfe6; /** 默认 */
-  border: 1px solid #67c23a; /** 失去焦点 */
-  border: 1px solid #f56c6c; /** 报错 */
-  border: 1px solid #7224d8; /** :focus 获得焦点 */
-  padding-right: 30px;
-}
-.avatar-uploader .el-upload--text{
-    width:146px;
-    height: 146px;
-    font-size: 28px;
-    color: #8c939d;
-    background-color: #fbfdff;
-    border: 1px dashed #c0ccda
-}
-
-.avatar-uploader  .avatar-uploader-icon{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.avatar-uploader  .el-icon-plus:before {
-    content: "\E62B";
-}
-
-.avatar-uploader  .avatar-uploader-icon p{
-    color: rgba(102, 102, 102, 1);
-    font-size: 16px;
-    text-align: left;
-    margin-bottom: 10px;
-}
-
-#createGood .el-input--small{
-    min-height:30px
-}
-
-#createGood  .avatar{
-    width: 100%
-}
-#createGood  .outText{
-    position: absolute;
-    top: 0;
-    left: 270px;
-}
-
-.goodSkuInfo_row{
-    margin:10px
-}
-
-#createGood .table .el-input{
-    width:80px;
-}
-#createGood .el-input input{
-    padding:5px
-}
-.table_icon_text{
-    color:#999999
-}
-.table_icon_text i{
-    margin-right: 5px
-}
-.table_upload div{
-    border: 0;
-    width:auto;
-    height: auto;
-}
-.table_upload__disabled .el-upload--picture{
-    display: none
-}
-.form-footer{
-    text-align: center
-}
-#createGood  .el-table__row .cell{
-    position: relative;
-}
-
-
-
-#createGood  .el-table__row .cell .outText1{
-    position: absolute;
-    top: 6px;
-    left: 95px;
-}
-
-#createGood .el-tag--small {
-    margin: 0 5px;
-}
-
-.canAdd .el-upload--picture-card{
-    display: none
-}
-
-.canAddVidio>ul{
-    display: none
-}
-#createGood .el-form-item--small .el-form-item__content .good_notes .el-textarea__inner{
-    max-width: 400px;
-    width: 310px
-}
-.hahah{
-    padding:40px
-}
-.el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label .el-icon-close{
-    display: block;
-    color:#fff;
-    top: 2px;
-    left: 0;
-}
-.el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label{
-    display: block !important
-}
-.el-upload-list--picture-card .el-upload-list__item .el-upload-list__item-status-label .el-icon-close:before {
-    content: "\E60F";
-}
-.good_video{
-    float:left;
-    margin-right: 20px
-}
+<style lang="stylus">
 </style>
 
 
