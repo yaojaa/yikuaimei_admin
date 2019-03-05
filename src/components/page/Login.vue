@@ -2,7 +2,9 @@
     <div class="login-wrap">
         
         <div class="ms-login">
-            <div class="ms-title">偷偷美管理中心登录</div>
+            <div class="ms-title">
+                <p class="ms-login-title">偷偷美管理平台登陆</p>
+            </div>
             <el-form :model="ruleForm" size="medium" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
                 <el-form-item prop="user_name">
                     <el-input v-model="ruleForm.user_name" placeholder="username"></el-input>
@@ -76,11 +78,14 @@
     .ms-title{
         width:100%;
         height: 30px;
-        line-height: 30px;
+        
         text-align: center;
         font-size:20px;
         color: #fff;
         margin-bottom: 25px;
+    }
+    .ms-login-title{
+        line-height: 30px;
     }
     .ms-login{
         position: absolute;
