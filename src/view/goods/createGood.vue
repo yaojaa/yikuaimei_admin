@@ -140,11 +140,13 @@ export default {
 }
 
 #createGood #formItem .el-input__suffix {
+  
   right: 0;
   border-radius: 4px;
 }
 
 #createGood .el-input__suffix {
+  height:29px;
   right: 0;
   border-radius: 4px;
   background-color: rgba(114, 36, 216, 1);
