@@ -499,8 +499,8 @@ export default {
   height:300px;
 }
 .avatar-uploader .el-upload--text {
-  width: 146px;
-  height: 146px;
+  /* width: 146px;
+  height: 146px; */
   font-size: 12px;
 }
 </style>

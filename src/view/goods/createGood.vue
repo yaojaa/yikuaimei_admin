@@ -281,10 +281,9 @@ export default {
   border: 1px solid #7224d8; /** :focus 获得焦点 */
   padding-right: 30px;
 }
-.avatar-uploader .el-upload--text{
+.avatar-uploader .avatar-uploader .el-upload--text{
     width:146px;
     height: 146px;
-    font-size: 28px;
     color: #8c939d;
     background-color: #fbfdff;
     border: 1px dashed #c0ccda
