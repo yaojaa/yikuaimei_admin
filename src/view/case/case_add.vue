@@ -408,7 +408,7 @@ export default {
                     name: "添加案例" //名字
                 }
             ],
-            accountList: [],
+            accountList: ['张三','李四','王五'],
             mechanicList: [], //职务列表
             goodsList: [],
             serviceList: [],
@@ -527,20 +527,19 @@ export default {
     },
     created() {
 
-        let params = this.$route.params
+        let params = this.$route.params;
         //
         if (Object.keys(params).length) {
             this.isEdit = true
             this.params = params
             this.$axios.get("/api/admin/cases/detail", { params: params }).then(res => {
-                this.form1 = res.data.data
+                this.form1 = res.data.data;
                 this.form1.category_id = res.data.data.category_id
                 this.getshopAccout(this.form1.create_user.shop_id)
-                this.loadMechanic()
+                this.loadMechanic();
+
 
             })
-
-
         }
 
     },
@@ -640,26 +639,27 @@ export default {
             if (n == 5) {
 
                 if (this.isEdit) {
-                    var data = Object.assign(this.form1, this.params)
-                    this.$axios.post('/api/admin/cases/create', data)
+                    
+                     var data = Object.assign(this.form1, this.params)
+                    this.$axios.post('/api/admin/cases/modify', data)
                         .then(res => {
                             if (res.data.code == 0) {
-                                this.$router.push("/case")
-
-                                const h = this.$createElement;
-                                this.$message('编辑成功');
-
+                                this.$message('编辑成功')
+                                this.$router.push("/manage/case")
                             } else {
                                 this.$message(res.data.msg);
                             }
                         })
 
                 } else {
-                    this.$axios.post('/api/admin/cases/modify', this.form1)
+                    
+                    var data = Object.assign(this.form1, this.params)
+                    this.$axios.post('/api/admin/cases/create', data)
                         .then(res => {
                             if (res.data.code == 0) {
-                                this.$message('添加成功')
-                                this.$router.push("/case")
+                                this.$router.push("/manage/case")
+                                const h = this.$createElement;
+                                this.$message('添加成功');
                             } else {
                                 this.$message(res.data.msg);
                             }
@@ -756,6 +756,23 @@ h3.form_title_label {
     padding-left: 100px;
     padding-bottom: 50px
 }
+.inline-input{
+    width: 193px;
+}
+.el-checkbox+.el-checkbox{
+    margin-left:0px;
+}
+.el-checkbox{
+    width:176px;
+    height:24px;
+    line-height: 24px;
+    display: inline-block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+
+}
+
 
 /*.uploader_small {
     border: 1px dashed #d9d9d9;

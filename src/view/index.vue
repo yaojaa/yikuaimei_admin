@@ -4,36 +4,36 @@
             <img src="/static/img/banner@2x.png" width="100%">
             <div class="panel">
                 <div class="panel-body">
-                    <div class="sub-heading mt-sm">
+                    <!-- <div class="sub-heading mt-sm">
                         <h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">消息通知</span></h3>
-                      <!--   <div class="sub-actions"><a href="">更多</a></div> -->
-                    </div>
-                    <div class="panel">
+                        <div class="sub-actions"><a href="">更多</a></div>
+                    </div> -->
+                    <!-- <div class="panel">
                         <div class="panel-body chartbox">
                             <ul>
                                 <li>.....</li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- 常用功能部分 -->
                     <div class="sub-heading">
                         <h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">常用功能</span></h3>
                         <div class="sub-actions"></div>
                     </div>
                     <div class="commonusebtn">
-                        <div class="fn-col" style="background:#1660FD url('/static/img/copy1.png') no-repeat right bottom">
+                        <div class="fn-col" @click="orderClick" style="background:#1660FD url('/static/img/copy1.png') no-repeat right bottom">
                             <img src="/static/img/fn_icon1.png" width="52">
                             <span>{{'今日订单'}}</span>
                         </div>
-                        <div class="fn-col" style="background:#1660FD url('/static/img/copy1.png') no-repeat right bottom">
+                        <div class="fn-col" @click="goodsClick" style="background:#1660FD url('/static/img/copy1.png') no-repeat right bottom">
                             <img src="/static/img/fn_icon1.png" width="52">
-                            <span>{{'今日销售数据'}}</span>
+                            <span>{{'商品管理'}}</span>
                         </div>
-                        <div class="fn-col" style="background:#BD10E0 url('/static/img/copy2.png') no-repeat right bottom">
+                        <div class="fn-col" @click="userClick" style="background:#BD10E0 url('/static/img/copy2.png') no-repeat right bottom">
                             <img src="/static/img/fn_icon2.png" width="52">
-                            <span>{{'消费者管理'}}</span>
+                            <span>{{'用户管理'}}</span>
                         </div>
-                        <div class="fn-col" style="background:#FC507A url('/static/img/copy3.png') no-repeat right bottom">
+                        <div class="fn-col" @click="allianceClick" style="background:#FC507A url('/static/img/copy3.png') no-repeat right bottom">
                             <img src="/static/img/fn_icon3.png" width="52">
                             <span>{{'加盟商管理'}}</span>
                         </div>
@@ -90,8 +90,17 @@ export default {
     },
 
     methods: {
-        goto(v) {
-            this.$router.push(v)
+        orderClick(){
+            this.$router.push({path: '/order/list_goods'})
+        },
+        goodsClick(){
+            this.$router.push({path: '/goodList'})
+        },
+        userClick(){
+            this.$router.push({path: '/user/userList'})
+        },
+        allianceClick(){
+            this.$router.push({path: '/business/alliance'})
         }
 
     },
