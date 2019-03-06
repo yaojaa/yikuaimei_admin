@@ -1,12 +1,12 @@
 <template>
     <div class="login-wrap">
-        <!-- <div class="login-star-a"></div>
+        <div class="login-star-a"></div>
         <div class="login-star-b"></div>
         <div class="login-star-c"></div>
         <div class="login-star-d"></div>
         <div class="login-star-e"></div>
         <div class="login-star-f"></div>
-        <div class="login-star-g"></div> -->
+        <div class="login-star-g"></div>
         <div class="ms-login">
             <div class="ms-title">
                 <p class="ms-login-title">偷偷美&nbsp;管理平台登陆</p>
@@ -76,7 +76,7 @@
 </script>
 
 <style scoped>
-    /* @-webkit-keyframes fadeIn {
+    @-webkit-keyframes fadeIn {
         0% {
             opacity: 0; 
         }
@@ -86,7 +86,7 @@
         100% {
             opacity: 1; 
         }
-    } */
+    }
     .login-wrap{
         position: relative;
         left: 0px;
@@ -97,12 +97,12 @@
         background-repeat: no-repeat;
         background-size: 100% 100%;
     }
-    /* .login-star-a,.login-star-b,.login-star-c,.login-star-d,.login-star-e,.login-star-f,.login-star-g{
-        width:12px;
-        height: 12px;
+    .login-star-a,.login-star-b,.login-star-c,.login-star-d,.login-star-e,.login-star-f,.login-star-g{
+        width:8px;
+        height: 8px;
         border-radius:50%;
-        box-shadow:0px 0px 10px #2f2345;
-        background:#2d1c3a;
+        box-shadow:0px 0px 16px #270586;
+        background:#a6a6a6;
         -webkit-animation:fadeIn 2s infinite linear ;
     }
     .login-star-a{
@@ -117,8 +117,8 @@
     }
     .login-star-c{
         position: absolute;
-        right: 20%;
-        top: 22%;
+        left: 20%;
+        top: 32%;
     }
     .login-star-d{
         position: absolute;
@@ -127,19 +127,19 @@
     }
     .login-star-e{
         position: absolute;
-        right: 40%;
-        top: 40%;
+        right: 50%;
+        top: 18%;
     }
     .login-star-f{
         position: absolute;
-        right: 45%;
-        top: 37%;
+        right: 78%;
+        top: 57%;
     }
     .login-star-g{
         position: absolute;
         right: 52%;
-        top: 43%;
-    } */
+        top: 63%;
+    }
     .ms-title{
         width:100%;
         height: 30px;
