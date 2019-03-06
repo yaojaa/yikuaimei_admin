@@ -1,14 +1,20 @@
 <template>
     <div class="login-wrap">
-        
+        <!-- <div class="login-star-a"></div>
+        <div class="login-star-b"></div>
+        <div class="login-star-c"></div>
+        <div class="login-star-d"></div>
+        <div class="login-star-e"></div>
+        <div class="login-star-f"></div>
+        <div class="login-star-g"></div> -->
         <div class="ms-login">
             <div class="ms-title">
                 <p class="ms-login-title">偷偷美&nbsp;管理平台登陆</p>
                 <img src="/static/img/ms-title-icon.png" width="10" class="ms-title-icon">
             </div>
-            <el-form :model="ruleForm" size="medium" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
+            <el-form :model="ruleForm" size="medium" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm login-input-custom">
                 <el-form-item prop="user_name">
-                    <el-input v-model="ruleForm.user_name" placeholder="username">
+                    <el-input v-model="ruleForm.user_name" placeholder="username" >
                         <i slot="prefix" class="el-input__icon el-icon-user"></i>
                     </el-input>
                 </el-form-item>
@@ -70,6 +76,17 @@
 </script>
 
 <style scoped>
+    /* @-webkit-keyframes fadeIn {
+        0% {
+            opacity: 0; 
+        }
+        50% {
+            opacity: 0; 
+        }
+        100% {
+            opacity: 1; 
+        }
+    } */
     .login-wrap{
         position: relative;
         left: 0px;
@@ -80,6 +97,49 @@
         background-repeat: no-repeat;
         background-size: 100% 100%;
     }
+    /* .login-star-a,.login-star-b,.login-star-c,.login-star-d,.login-star-e,.login-star-f,.login-star-g{
+        width:12px;
+        height: 12px;
+        border-radius:50%;
+        box-shadow:0px 0px 10px #2f2345;
+        background:#2d1c3a;
+        -webkit-animation:fadeIn 2s infinite linear ;
+    }
+    .login-star-a{
+        position: absolute;
+        left: 10%;
+        top: 10%;
+    }
+    .login-star-b{
+        position: absolute;
+        right: 10%;
+        top: 10%;
+    }
+    .login-star-c{
+        position: absolute;
+        right: 20%;
+        top: 22%;
+    }
+    .login-star-d{
+        position: absolute;
+        right: 30%;
+        top: 27%;
+    }
+    .login-star-e{
+        position: absolute;
+        right: 40%;
+        top: 40%;
+    }
+    .login-star-f{
+        position: absolute;
+        right: 45%;
+        top: 37%;
+    }
+    .login-star-g{
+        position: absolute;
+        right: 52%;
+        top: 43%;
+    } */
     .ms-title{
         width:100%;
         height: 30px;
@@ -158,21 +218,10 @@
         font-size: 16px;
         visibility: hidden;
     }
-    /* .el-input--prefix .el-input__inner{
-        padding-left:40px;
-    }
-    .el-input__inner{
-        background-color:rgba(61,54,86,0.4);
-        border-radius:20px;
-        color:#fff;
-    } */
-    
 </style>
 <style >
-    .el-input--prefix .el-input__inner{
+    .login-input-custom .el-input__inner{
         padding-left:40px;
-    }
-    .el-input__inner{
         background-color:rgba(61,54,86,0.4);
         border-radius:20px;
         color:#fff;
