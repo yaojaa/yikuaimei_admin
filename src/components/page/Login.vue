@@ -76,7 +76,7 @@
         top: 0px;
         width:100%;
         height:100%;
-        background-image: url('/static/img/login_wrap_bg.png');
+        background-image: url('/static/img/login_wrap_bg.jpg');
         background-repeat: no-repeat;
         background-size: 100% 100%;
     }
