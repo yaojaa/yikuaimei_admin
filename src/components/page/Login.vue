@@ -1,12 +1,5 @@
 <template>
     <div class="login-wrap">
-        <div class="login-star-a"></div>
-        <div class="login-star-b"></div>
-        <div class="login-star-c"></div>
-        <div class="login-star-d"></div>
-        <div class="login-star-e"></div>
-        <div class="login-star-f"></div>
-        <div class="login-star-g"></div>
         <div class="ms-login">
             <div class="ms-title">
                 <p class="ms-login-title">偷偷美&nbsp;管理平台登陆</p>
@@ -76,17 +69,6 @@
 </script>
 
 <style scoped>
-    @-webkit-keyframes fadeIn {
-        0% {
-            opacity: 0; 
-        }
-        50% {
-            opacity: 0; 
-        }
-        100% {
-            opacity: 1; 
-        }
-    }
     .login-wrap{
         position: relative;
         left: 0px;
@@ -105,41 +87,7 @@
         background:#a6a6a6;
         -webkit-animation:fadeIn 2s infinite linear ;
     }
-    .login-star-a{
-        position: absolute;
-        left: 10%;
-        top: 10%;
-    }
-    .login-star-b{
-        position: absolute;
-        right: 10%;
-        top: 10%;
-    }
-    .login-star-c{
-        position: absolute;
-        left: 20%;
-        top: 32%;
-    }
-    .login-star-d{
-        position: absolute;
-        right: 30%;
-        top: 27%;
-    }
-    .login-star-e{
-        position: absolute;
-        right: 50%;
-        top: 18%;
-    }
-    .login-star-f{
-        position: absolute;
-        right: 78%;
-        top: 57%;
-    }
-    .login-star-g{
-        position: absolute;
-        right: 52%;
-        top: 63%;
-    }
+    
     .ms-title{
         width:100%;
         height: 30px;
