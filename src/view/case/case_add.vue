@@ -533,10 +533,11 @@ export default {
             this.isEdit = true
             this.params = params
             this.$axios.get("/api/admin/cases/detail", { params: params }).then(res => {
-                this.form1 = res.data.data
+                this.form1 = res.data.data;
                 this.form1.category_id = res.data.data.category_id
                 this.getshopAccout(this.form1.create_user.shop_id)
-                this.loadMechanic()
+                this.loadMechanic();
+
 
             })
         }
