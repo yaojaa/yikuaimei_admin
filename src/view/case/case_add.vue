@@ -527,7 +527,7 @@ export default {
     },
     created() {
 
-        let params = this.$route.params
+        let params = this.$route.params;
         //
         if (Object.keys(params).length) {
             this.isEdit = true
@@ -539,8 +539,6 @@ export default {
                 this.loadMechanic()
 
             })
-
-
         }
 
     },
@@ -640,26 +638,27 @@ export default {
             if (n == 5) {
 
                 if (this.isEdit) {
-                    var data = Object.assign(this.form1, this.params)
-                    this.$axios.post('/api/admin/cases/create', data)
+                    
+                     var data = Object.assign(this.form1, this.params)
+                    this.$axios.post('/api/admin/cases/modify', data)
                         .then(res => {
                             if (res.data.code == 0) {
-                                this.$router.push("/case")
-
-                                const h = this.$createElement;
-                                this.$message('编辑成功');
-
+                                this.$message('编辑成功')
+                                this.$router.push("/manage/case")
                             } else {
                                 this.$message(res.data.msg);
                             }
                         })
 
                 } else {
-                    this.$axios.post('/api/admin/cases/modify', this.form1)
+                    
+                    var data = Object.assign(this.form1, this.params)
+                    this.$axios.post('/api/admin/cases/create', data)
                         .then(res => {
                             if (res.data.code == 0) {
-                                this.$message('添加成功')
-                                this.$router.push("/case")
+                                this.$router.push("/manage/case")
+                                const h = this.$createElement;
+                                this.$message('添加成功');
                             } else {
                                 this.$message(res.data.msg);
                             }

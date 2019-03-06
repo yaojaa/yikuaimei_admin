@@ -130,8 +130,6 @@
         margin-bottom:30px;
     }
     
-</style>
-<style >
     .el-icon-user{
         background: url('/static/img/login-user-icon.png') center no-repeat; 
         background-size: cover;
@@ -160,6 +158,17 @@
         font-size: 16px;
         visibility: hidden;
     }
+    /* .el-input--prefix .el-input__inner{
+        padding-left:40px;
+    }
+    .el-input__inner{
+        background-color:rgba(61,54,86,0.4);
+        border-radius:20px;
+        color:#fff;
+    } */
+    
+</style>
+<style >
     .el-input--prefix .el-input__inner{
         padding-left:40px;
     }
@@ -168,5 +177,4 @@
         border-radius:20px;
         color:#fff;
     }
-    
 </style>
