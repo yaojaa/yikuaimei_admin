@@ -22,25 +22,25 @@
 
 <div class="form-panel p-xl"  v-if="step==1">
                    <!--form start-->
- <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm">
+ <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm" >
 
 
   <el-form-item label="公司名称" prop="shop_name">
     <el-input v-model="ruleForm.shop_name"></el-input>
   </el-form-item>
-  <el-form-item label="城市" >
-    <area-cascader v-model="ruleForm.address_code" :level='1' :data="pcaa"></area-cascader>
-
-  </el-form-item>
+  
  <!-- 地图如下 -->
   <el-form-item label="地图" >
      <div id="atlas"></div>
      <p style="margin:5px">
-      <input style="width:200px;padding:3px 4px;" type="text" id="place" />
+      <input style="width:200px;padding:3px 4px;" type="text" id="place" /> <span class='shop-add-city-message'>输入地址搜索回车确认</span>
     </p>
-     
   </el-form-item>
   
+  <el-form-item label="城市" class="shop-add-city">
+    <area-cascader v-model="ruleForm.address_code2" :level='1' :data="pcaa" @change="handleChange"></area-cascader>
+  </el-form-item>
+
     <el-form-item label="公司地址" prop="shop_address">
     <el-input v-model="ruleForm.shop_address"></el-input>
   </el-form-item>
@@ -154,14 +154,29 @@
 
      <el-form-item label="门店环境图">
 
-       <img width="120" v-for="(img,i) in ruleForm.shop_environment" :src="img">
+       <!-- <img width="120" v-for="(img,i) in ruleForm.shop_environment" :src="img"> -->
 
-         <el-upload
+          <el-upload
+            action="/api/admin/fileupload/image"
+            list-type="picture-card"
+            :on-success="shop_environment"
+            :on-remove="handleRemove">
+            <i class="el-icon-plus"></i>
+            <!-- <i class="el-icon-plus" style="font-size: 48px"></i> -->
+          </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="dialogImageUrl" alt="">
+        </el-dialog>
+
+
+
+         <!-- <el-upload
           action="/api/admin/fileupload/image"
           :show-file-list="false"
           list-type="picture-card"
 
-          :on-success="shop_environment"
+          
+          :on-remove="handleRemove"
            >
         
           
@@ -170,6 +185,9 @@
         </i>
 
        </el-upload>
+       <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="dialogImageUrl" alt="">
+      </el-dialog> -->
 
   </el-form-item>
 
@@ -208,11 +226,13 @@
                 </el-select>                   
             </el-form-item>
 
-    <el-form-item label="归属加盟商" prop="name" required>
+    <el-form-item label="归属加盟商">
 
     <el-select v-model="ruleForm.fid" placeholder="请选择">
     <el-option
       v-for="item in business_list"
+      list-type="picture-card"
+      :on-preview="handlePictureCardPreview"
       :key="item.business_id"
       :label="item.business_name"
       :value="item.business_id">
@@ -254,6 +274,8 @@ export default {
   data() {
     return {
       pcaa,
+      dialogImageUrl: '',
+      dialogVisible: false,
       step: 1,
       url: "",
       CATEGORYOPTIONS,
@@ -283,12 +305,13 @@ export default {
     "shop_licence_num" : "",//营业执照号
     "shop_licence_pic" : "",//营业执照照片
     "shop_phone" : "18668991178",//手机号
-    "address_code" : "110000",//地址编码
+    "address_code" : "",//地址编码
     "shop_longitude" : "",//门店经度
     "shop_latitude" : "",//门店纬度
     "shop_environment" : [],//门店环境图片数组
     "business_id" : 13,//加盟商审核信息的business_id
-    "shop_environment":[]
+    // "shop_environment":[],
+    "address_code2":""
   },
 
         rules: {
@@ -341,7 +364,23 @@ export default {
   methods:{
     handleFaceUploadSuccess(){},
      goNextStep(n){
-      this.step = n
+       if(n==1){
+         this.mapTX();
+       }
+       this.step = n;
+      
+    },
+    handleChange(event){
+      this.ruleForm.address_code = event[event.length-1];
+      console.log(this.ruleForm.address_code,'this.ruleForm.address_code')
+    },
+     handleRemove(file, fileList) {
+       this.ruleForm.shop_environment.splice(file.url,1)
+        console.log(this.ruleForm.shop_environment,'shop_environment')
+    },
+    handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
     },
     resetForm(formName) {
         this.$refs[formName].resetFields();
@@ -365,8 +404,6 @@ export default {
       getBusinessList(){
 
         this.$axios.get("/api/admin/select/businessList").then(res =>{
-
-          console.log(res)
           if(res.data.code ==0){
 
             this.business_list = res.data.data
@@ -378,17 +415,14 @@ export default {
       } ,
       
       submit(){
-  
-        this.ruleForm.address_code = this.ruleForm.address_code[2]
+        console.log(this.ruleForm,'this.ruleForm');
             this.$axios.post("/api/admin/shop/create", this.ruleForm).then(res => {
-
-                      console.log(res)
 
                       if(res.data.code == 0){
 
                           this.$alert('添加加盟商成功！')
 
-                          this.$router.push('/alliance')
+                          this.$router.push('/shop/list')
 
                       }else{
                           this.$alert(res.data.msg)
@@ -416,24 +450,19 @@ export default {
               qq.maps.event.addListener(map, 'click', function(e) {
                 marker.setMap(null);
                 info.close();
+                return
               });
+
               var info = new qq.maps.InfoWindow({
                 map: map
               });
-              // qq.maps.event.addListener(marker, 'click', function(event) {
-              //    console.log(event.latLng,'!!!!!!')
-              //   //info.open(); 
-              //   //info.setContent("<div style='text-align:center;white-space:nowrap;margin:10px;'>"+event.latLng+"</div>");
-              //   info.setPosition(event.latLng); 
-               
-              //   
-              // });
               
               //经度
               that.ruleForm.shop_longitude = event.latLng.lng;
               //维度
               that.ruleForm.shop_latitude = event.latLng.lat; 
             });
+           
             //实例化自动完成
             var ap = new qq.maps.place.Autocomplete(document.getElementById('place'), {
               offset: new qq.maps.Size(0, 5),
@@ -443,11 +472,13 @@ export default {
             //调用Poi检索类。用于进行本地检索、周边检索等服务。
             var searchService = new qq.maps.SearchService({
                 complete : function(results){
+                  console.log(results,'result')
                   if(results.type === "CITY_LIST") {
                         searchService.setLocation(results.detail.cities[0].cityName);
                         searchService.search(keyword);
                         return;
                     }
+                  
                     var pois = results.detail.pois;
                     var latlngBounds = new qq.maps.LatLngBounds();
                     for(var i = 0,l = pois.length;i < l; i++){
@@ -467,7 +498,7 @@ export default {
       
     },
   mounted() {
-  
+    
   },
   components: {
     BreadCrumb,
@@ -503,4 +534,15 @@ export default {
   height: 146px; */
   font-size: 12px;
 }
+.shop-add-city-message{
+  color:#606266;
+  font-size:12px;
+}
+
 </style>
+<style >
+  .shop-add-city .el-form-item__content .area-selected-trigger{
+   padding-top:2px;
+ }
+</style>
+

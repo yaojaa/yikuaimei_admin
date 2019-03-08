@@ -93,17 +93,6 @@
                     <!--form start-->
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                         <el-form-item label="上传检测报告">
-                            <!-- <el-upload
-  action="/api/admin/fileupload/image"
-  list-type="picture-card"
-  :on-success="handleReportUploadSuccess"
-   multiple
-  :on-remove="handleRemove">
-  <i class="el-icon-plus"></i>
-
-  <img width="100%" v-if="form1.report.length" :src="form1.report[0]" class="avatar">
-   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-</el-upload> -->
                             <el-upload accept="image/jpg" class="upload-demo" action="/api/admin/fileupload/image" :on-remove="handleRemove" :show-file-list=false list-type="picture" :on-success="handleReportUploadSuccess" multiple>
                                 <el-button size="small" type="primary">+点击上传</el-button>
                                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
