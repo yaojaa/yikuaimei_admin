@@ -292,27 +292,27 @@ export default {
       ],
 
       ruleForm:{
-    "shop_name" : "",//公司名称
-    "shop_brand_name" : "no",//品牌名称
-    "shop_pic" : "",//门店封面图
-    "shop_address" : "公司地址",//公司地址
-    "category_id" : [],//行业分类id数组
-    "shop_type" : 1,//商铺类型 0:母店 1:子店
-    "shop_corporation" : "",//法人
-    "shop_sfz_num" : "",//身份证号
-    "shop_sfz_pic_z" : "",//身份证正面照片
-    "shop_sfz_pic_f" : "",//身份证反面照片
-    "shop_licence_num" : "",//营业执照号
-    "shop_licence_pic" : "",//营业执照照片
-    "shop_phone" : "18668991178",//手机号
-    "address_code" : "",//地址编码
-    "shop_longitude" : "",//门店经度
-    "shop_latitude" : "",//门店纬度
-    "shop_environment" : [],//门店环境图片数组
-    "business_id" : 13,//加盟商审核信息的business_id
-    // "shop_environment":[],
-    "address_code2":""
-  },
+        "shop_name" : "",//公司名称
+        "shop_brand_name" : "no",//品牌名称
+        "shop_pic" : "",//门店封面图
+        "shop_address" : "公司地址",//公司地址
+        "category_id" : [],//行业分类id数组
+        "shop_type" : 1,//商铺类型 0:母店 1:子店
+        "shop_corporation" : "",//法人
+        "shop_sfz_num" : "",//身份证号
+        "shop_sfz_pic_z" : "",//身份证正面照片
+        "shop_sfz_pic_f" : "",//身份证反面照片
+        "shop_licence_num" : "",//营业执照号
+        "shop_licence_pic" : "",//营业执照照片
+        "shop_phone" : "18668991178",//手机号
+        "address_code" : "",//地址编码
+        "shop_longitude" : "",//门店经度
+        "shop_latitude" : "",//门店纬度
+        "shop_environment" : [],//门店环境图片数组
+        "business_id" : 13,//加盟商审核信息的business_id
+        // "shop_environment":[],
+        "address_code2":""
+      },
 
         rules: {
           name: [
@@ -405,8 +405,7 @@ export default {
 
         this.$axios.get("/api/admin/select/businessList").then(res =>{
           if(res.data.code ==0){
-
-            this.business_list = res.data.data
+            this.business_list = res.data.data;
           }
 
 
@@ -498,7 +497,7 @@ export default {
       
     },
   mounted() {
-    
+    this.getBusinessList();
   },
   components: {
     BreadCrumb,
