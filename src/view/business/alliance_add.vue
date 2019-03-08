@@ -29,17 +29,14 @@
   <el-form-item label="公司名称" prop="business_company_name">
     <el-input v-model="ruleForm.business_company_name"></el-input>
   </el-form-item>
-<el-form-item label="城市" class="shop-add-city">
-    <area-cascader v-model="ruleForm.address_code2" :level='1' :data="pcaa" @change="handleChange"></area-cascader>
-
-  </el-form-item>
-
-
-
     <el-form-item label="公司地址" prop="business_company_adress">
     <el-input v-model="ruleForm.business_company_adress"></el-input>
   </el-form-item>
 
+  <el-form-item label="城市" class="shop-add-city">
+    <area-cascader v-model="ruleForm.address_code2" :level='1' :data="pcaa" @change="handleChange"></area-cascader>
+
+  </el-form-item>
 
   <el-form-item label="法人姓名" prop="business_corporation">
     <el-input v-model="ruleForm.business_corporation"></el-input>
