@@ -538,10 +538,6 @@ export default {
   color:#606266;
   font-size:12px;
 }
-.shop-add-city .el-form-item__content .area-selected-trigger{
-   padding-top:2px;
- }
-
 </style>
 <style>
   .shop-add-city .el-form-item__content .area-selected-trigger{
