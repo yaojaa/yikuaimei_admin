@@ -7,7 +7,7 @@
             </div>
             <el-form :model="ruleForm" size="medium" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm login-input-custom">
                 <el-form-item prop="user_name">
-                    <el-input v-model="ruleForm.user_name" placeholder="username" >
+                    <el-input v-model="ruleForm.user_name" placeholder="username">
                         <i slot="prefix" class="el-input__icon el-icon-user"></i>
                     </el-input>
                 </el-form-item>
