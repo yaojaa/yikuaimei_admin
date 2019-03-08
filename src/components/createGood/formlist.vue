@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 表单list -->
-        <el-form ref="createdData" :model="createdData" :rules="rules" label-width="120px">
+        <el-form ref="createdData" :model="createdData" :rules="rules" label-width="120px" class="form-width-small">
             <template v-if="currentActive === 0">
                 <el-form-item label="名称：" prop="good_name">
                     <el-input  v-model="createdData.good_name" placeholder="名称为2-30个字" />                                                    
