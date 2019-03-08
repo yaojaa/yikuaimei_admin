@@ -226,7 +226,7 @@
                 </el-select>                   
             </el-form-item>
 
-    <el-form-item label="归属加盟商">
+    <el-form-item label="归属加盟商" prop="name" >
 
     <el-select v-model="ruleForm.fid" placeholder="请选择">
     <el-option
