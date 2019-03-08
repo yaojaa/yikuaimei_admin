@@ -161,7 +161,7 @@
             list-type="picture-card"
             :on-success="shop_environment"
             :on-remove="handleRemove">
-            <i class="el-icon-plus"></i>
+            <i class="el-icon-plus" style="font-size: 48px"></i>
             <!-- <i class="el-icon-plus" style="font-size: 48px"></i> -->
           </el-upload>
         <el-dialog :visible.sync="dialogVisible">
@@ -538,11 +538,9 @@ export default {
   color:#606266;
   font-size:12px;
 }
-
-</style>
-<style >
-  .shop-add-city .el-form-item__content .area-selected-trigger{
+.shop-add-city .el-form-item__content .area-selected-trigger{
    padding-top:2px;
  }
+
 </style>
 
