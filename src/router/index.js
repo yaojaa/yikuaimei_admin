@@ -384,7 +384,7 @@ export default new Router({
                 },
                 {
                     // 用户详情
-                    path: '/user/detail',
+                    path: '/user/detail/:id',
                     component: resolve => require(['../view/user/userDetail.vue'], resolve),
                     meta: {
                         title: '用户详情'
@@ -405,13 +405,13 @@ export default new Router({
                         title: '角色管理'
                     }
                 }, {
-                    path: '/admin/addRole',
+                    path: '/admin/addRole/:id',
                     component: resolve => require(['../view/admin/addAndModifiyRole.vue'], resolve),
                     meta: {
                         title: '添加角色'
                     }
                 }, {
-                    path: '/admin/addStaff',
+                    path: '/admin/addStaff/:id',
                     component: resolve => require(['../view/admin/createAndModifiyStaff.vue'], resolve),
                     meta: {
                         title: '添加成员'

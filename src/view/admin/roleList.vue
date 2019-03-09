@@ -65,7 +65,7 @@
                             "width": "200",
                             "list": [{
                                 "label": "权限设置",
-                                "url": "/addRole",
+                                "url": "/admin/addRole",
                                 "query": "role_id"
                             }]
                         }
