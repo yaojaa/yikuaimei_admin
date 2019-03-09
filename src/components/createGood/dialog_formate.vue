@@ -6,11 +6,11 @@
             <el-col :span="12">选项</el-col>
         </el-row>
         
-        <div v-for="(item,idx) in goodSkuInfo" :key="`${item.name}${idx}`">
+        <div v-for="(item,idx) in goodSkuInfo" :key="`goodSkuInfo_${idx}`">
             <el-row :gutter="20" v-if="idx===0">
                 <el-col :span="4">一组</el-col>
                 <el-col :span="4">   
-                    <el-input v-model="item.name" placeholder="请输入名称"/>                        
+                    <el-input v-model="item.name" placeholder="请输入名称" />                        
                 </el-col>
                 <el-col :span="12"> 
                     <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list && item.list.length > 1"/>
@@ -38,7 +38,7 @@
             <el-row :gutter="20" v-else>
                 <el-col :span="4">二组</el-col>
                 <el-col :span="4">   
-                    <el-input v-model="item.name" placeholder="请输入名称"/>                        
+                    <el-input v-model="item.name" placeholder="请输入名称" />                        
                 </el-col>
                 <el-col :span="12"> 
                     <el-input v-model="item.list[0]" placeholder="请输入选项" :disabled="item.list && item.list.length > 1"/>
@@ -174,8 +174,7 @@ export default {
     $_deletedTag(list, tag) {
       list.splice(list.indexOf(tag), 1);
     }
-  },
-  created() {}
+  }
 };
 </script>
 <style>
