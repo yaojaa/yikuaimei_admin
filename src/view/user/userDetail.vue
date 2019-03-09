@@ -12,10 +12,11 @@
 					<el-col :span="8">
 						<div class="grid-content bg-purple user-info-item user-pic">
 							<div class="head-pic center">
-								<img :src="info.user_info_head_img" alt="">
+								<img :src="info.user_info_head_img" alt="" class="user-head-pic">
 							</div>
 							<p class="user-name center">{{info.user_info_nick_name}}</p>
-							<p class="user-name center">{{Is_black[info.is_black] || '--'}}</p>
+							<p class="left">账号：{{info.user_bind_phone || '--'}}</p>
+							<p class="user-status left">{{Is_black[info.is_black] || '--'}}</p>
 							<el-tag type="primary" :key="index" v-for="(item,index) in info.my_tags">{{item.tag_name}}</el-tag>
 						</div>
 					</el-col>
@@ -121,6 +122,47 @@
 	
 	.user-info .user-info-item {
 		height: 365px;
+		padding: 25px;
 		background: #ffffff;
+		font-size: 14px;
+		color: #44465a;
+		line-height: 27px;
+	}
+	.user-info .center {
+		text-align: center;
+	}
+	.user-info .left {
+		text-align: left;
+	}
+	.user-info .user-status {
+		margin-bottom: 35px;
+	}
+	.user-info .user-head-pic {
+		width: 95px;
+		height: 95px;
+		border-radius: 95px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.user-info .el-tag {
+		display: inline-block;
+		font-size: 14px;
+		color: #ffffff;
+		height: 30px;
+		width: 64px;
+		line-height: 30px;
+		text-align: center;
+		background-color: #7224d8;
+	}
+	.user-basic-info h4 {
+		font-size: 20px;
+		margin-bottom: 13px;
+		color: #15151c;
+	}
+	.user-basic-info p {
+		color: #15151c;
+	}
+	.user-basic-info .span-label {
+		color: #60637e !important;
 	}
 </style>
