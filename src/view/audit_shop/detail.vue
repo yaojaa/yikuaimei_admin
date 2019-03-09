@@ -72,40 +72,37 @@
                             <div class="item-list f14 four-text">
                                 <div class="item">
                                     <div class="hd">法人代表：</div>
-                                    <div class="bd">{{info.business_corporation}}
-
-                                        拥有{{info.shop_total}}家门店
-                                    </div>
+                                    <div class="bd">{{info.shop_corporation}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">联系电话：</div>
-                                    <div class="bd">{{info.business_phone}}</div>
+                                    <div class="bd">{{info.shop_phone}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">公司名称：</div>
-                                    <div class="bd">{{info.business_name}}</div>
+                                    <div class="bd">{{info.shop_name}}</div>
                                 </div>
-                                    <div class="item">
-                                    <div class="hd">企业类型：</div>
+                                <!-- <div class="item">
+                                    <div class="hd">门店类别：</div>
                                     <div class="bd">{{info.business_type}}</div>
-                                </div>
-                                    <div class="item">
+                                </div> -->
+                                <!-- <div class="item">
                                     <div class="hd">行业：</div>
                                     <div class="bd">{{info.category_name}}</div>
-                                </div>
+                                </div> -->
 
-                                <div class="item">
+                                <!-- <div class="item">
                                     <div class="hd">推荐人：</div>
                                     <div class="bd">{{info.referee_phone}}</div>
-                                </div>
+                                </div> -->
 
                                    <div class="item">
                                     <div class="hd">法人身份证：</div>
                                     <div class="bd">
 
-                                        <img :src="info.business_sfz_pic_z" width="200">
+                                        <img :src="info.shop_sfz_pic_z" width="200">
 
-                                         <img :src="info.business_sfz_pic_f" width="200">
+                                         <img :src="info.shop_sfz_pic_f" width="200">
                                         
 
                                     </div>
@@ -121,37 +118,37 @@
                         </div>
                         <div class="panel-body">
                             <div class="item-list f14 four-text">
-                                <div class="item">
+                                <!-- <div class="item">
                                     <div class="hd">经营状态：</div>
                                     <div class="bd">在业
                                     </div>
+                                </div> -->
+
+                                <!-- <div class="item">
+                                    <div class="hd">加盟时间：</div>
+                                    <div class="bd">{{info.create_time}}</div>
                                 </div>
 
                                 <div class="item">
-                                    <div class="hd">加盟时间：</div>
-                                    <div class="bd">{{info.business_ctime}}</div>
-                                </div>
-
-                                           <div class="item">
                                     <div class="hd">加盟费：</div>
                                     <div class="bd">{{info.business_join_money}}</div>
-                                </div>
+                                </div> -->
 
-                                           <div class="item">
+                                <div class="item">
                                     <div class="hd">公司地址：</div>
-                                    <div class="bd">{{info.address_string}}</div>
+                                    <div class="bd">{{info.shop_address}}</div>
                                 </div>
 
 
            <div class="item">
                                     <div class="hd">营业执照号：</div>
-                                    <div class="bd">{{info.business_licence_num}}</div>
+                                    <div class="bd">{{info.shop_licence_num}}</div>
                                 </div>
 
                                            <div class="item">
                                     <div class="hd">营业执照：</div>
                                     <div class="bd">
-                                        <img :src="info.business_sfz_pic_z" width="200">
+                                        <img :src="info.shop_licence_pic" width="200">
 
                                     </div>
                                 </div>
@@ -299,10 +296,6 @@ export default {
         agree(){
 
           this.$router.push('/shop/add?review='+this.id)
-
-
-
-
 
         },
 

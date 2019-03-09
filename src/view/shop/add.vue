@@ -215,8 +215,8 @@
 
   <el-form-item label="门店类别">
       <el-radio-group v-model="ruleForm.shop_type">
-        <el-radio :label="1">加盟</el-radio>
-        <el-radio :label="2">非加盟</el-radio>
+        <el-radio :label="1">母店</el-radio>
+        <el-radio :label="2">子店</el-radio>
       </el-radio-group>
   </el-form-item>
 
@@ -518,7 +518,7 @@ export default {
 
   mounted() {
     this.getBusinessList();
-    
+
     //如果是从审核门店中过来
     if(this.$route.query.review){
       this.getReviewData(this.$route.query.review)

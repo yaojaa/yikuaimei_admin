@@ -11,7 +11,7 @@
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
-                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/aduit/business', query: {[tag.key]: tag.value }}">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/audit/business', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
                     </div>
                 </div>
@@ -170,19 +170,21 @@ export default {
                         "width": "",
                         formatter(row) {
                             return `<div style="color:red">
-                                ${row.business_is_use==0?'停用':'启用'}
+                                ${row.review_status==1?'审核中':''}
+                                ${row.review_status==2?'审核通过':''}
+                                ${row.review_status==3?'审核不通过':''}
                                 </div>`
                         }
 
                     },
-                    {
-                        "type": "switch_btn",
-                        "label": "操作",
-                        "align": "center",
-                        "width": "50",
-                        "prop": "business_is_use",
-                        "value": ['停用', '启用']
-                    },
+                    // {
+                    //     "type": "switch_btn",
+                    //     "label": "操作",
+                    //     "align": "center",
+                    //     "width": "50",
+                    //     "prop": "business_is_use",
+                    //     "value": ['停用', '启用']
+                    // },
 
                     {
                         "type": "handle",

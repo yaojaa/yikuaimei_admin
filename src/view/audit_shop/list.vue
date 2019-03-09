@@ -11,7 +11,7 @@
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
-                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/aduit/shop', query: {[tag.key]: tag.value }}">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/audit/shop', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
                     </div>
                 </div>
@@ -129,17 +129,6 @@ export default {
                         "label": "店长",
                         "prop": "shop_corporation",
                         "width": "200"
-
-                    },
-
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "类型",
-                        "width": "",
-                        formatter(row) {
-                            return row.shop_type == 1 ? '旗舰店' : '分店'
-                        }
 
                     },
                     {
