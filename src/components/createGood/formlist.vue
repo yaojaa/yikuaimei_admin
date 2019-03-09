@@ -128,8 +128,9 @@
                                         :on-remove="(res,file)=>{return $_change(res,file,scope.row)}"
                                         :on-error="$_error"
                                         :before-upload="$_beforeUpload_img"
-                                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, 1)}"   
-                                        :class="{table_upload__disabled:scope.row.over === 0}"
+                                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, 1)}" 
+                                        :class="{table_upload__disabled:scope.row.ico_small__url}"
+                                        :key="img_url__key"
                                         >
                                         <img v-if="scope.row.ico_small__url" :src="scope.row.ico_small__url" class="avatar">
                                         <span class="table_icon_text" v-else><i class="el-icon-plus" />添加{{type}}图片</span>
@@ -424,6 +425,7 @@ export default {
         currentActive: 0,
         imgVisible: false,
         imgUrl: '',
+        img_url__key: new Date(),
         createdData:{
             good_type: 1, //商品类型：1服务 2实物 3采购品项 4虚拟商品
             good_name: '', // 商品名字
@@ -727,6 +729,7 @@ export default {
             }else{
                 targeName.ico_small = file.response.data.file_name
                 targeName.ico_small__url = file.url
+                this.img_url__key = `img_url__key${new Date()}`
             }
             
         }
@@ -897,6 +900,20 @@ export default {
                 delete params.sku_type_arr
                 //     }
                 // })
+            } else {
+                let ico_small
+                let ico_small__url
+                params.good_sku = params.good_sku.map(item => {
+                    if (item.ico_small) {
+                        ico_small = item.ico_small
+                    }
+                    if (item.ico_small__url) {
+                        ico_small__url = item.ico_small__url
+                    }
+                    item.ico_small = ico_small
+                    item.ico_small__url = ico_small__url
+                    return item
+                });
             }
             let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
             that.$store.dispatch(str,params).then((res)=>{
@@ -967,9 +984,6 @@ export default {
                 price_sale: '', 
                 price_plate: '',
                 ico_small: '',
-                limit: 1,
-                url : '',
-                over: 1
             }
             if(sku_type_arr_val.length){
                 for(var j=0;j<sku_type_arr_val.length;j++){
