@@ -329,4 +329,10 @@
 		display: -webkit-box;
 		white-space: inherit;
 	}
+	
+</style>
+<style>
+	.goodlist-table-custem p{
+		font-size: 12px;
+	}
 </style>

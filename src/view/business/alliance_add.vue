@@ -29,17 +29,14 @@
   <el-form-item label="公司名称" prop="business_company_name">
     <el-input v-model="ruleForm.business_company_name"></el-input>
   </el-form-item>
-<el-form-item label="城市" >
-    <area-cascader v-model="ruleForm.address_code" :level='1' :data="pcaa"></area-cascader>
-
-  </el-form-item>
-
-
-
     <el-form-item label="公司地址" prop="business_company_adress">
     <el-input v-model="ruleForm.business_company_adress"></el-input>
   </el-form-item>
 
+  <el-form-item label="城市" class="shop-add-city">
+    <area-cascader v-model="ruleForm.address_code2" :level='1' :data="pcaa" @change="handleChange"></area-cascader>
+
+  </el-form-item>
 
   <el-form-item label="法人姓名" prop="business_corporation">
     <el-input v-model="ruleForm.business_corporation"></el-input>
@@ -178,7 +175,7 @@
 
    <el-form :model="ruleForm" :rules="rules" ref="ruleForm3" label-width="100px" class="demo-ruleForm">
 
-    <el-form-item label="推荐人平台账号" prop="name" required>
+    <el-form-item label="推荐人平台账号">
 
     <el-select v-model="ruleForm.fid" placeholder="请选择">
     <el-option
@@ -216,7 +213,7 @@
 
 
   <el-form-item>
-    <el-button size="large" type="primary" @click="submit()" >提交</el-button>
+    <el-button size="large" type="primary" @click="submitForm()" >提交</el-button>
   </el-form-item>
 </el-form>
 
@@ -267,6 +264,7 @@ export default {
     "business_type" : 1,//1加盟 2非加盟
     "business_corporation" : "",//法人
     "address_code" : "",//地址编码
+    "address_code2":"",
 
     "business_sfz_num" : "222",//身份证号
     "business_sfz_pic_z" : "",//身份证正面照片地址
@@ -339,6 +337,10 @@ export default {
      goNextStep(n){
       this.step = n
     },
+    handleChange(event){
+      this.ruleForm.address_code = event[event.length-1];
+      console.log(this.ruleForm.address_code,'this.ruleForm.address_code')
+    },
     resetForm(formName) {
         this.$refs[formName].resetFields();
       },
@@ -366,11 +368,9 @@ export default {
 
        })
 
-    } ,
-    
-    submit(){
-
-      this.ruleForm.address_code = this.ruleForm.address_code[2]
+    },
+    submitForm(){
+          //this.ruleForm.address_code = this.ruleForm.address_code[2]
           this.$axios.post("/api/admin/business/create", this.ruleForm).then(res => {
 
                     console.log(res)
@@ -379,7 +379,7 @@ export default {
 
                         this.$alert('添加加盟商成功！')
 
-                        this.$router.push('/alliance')
+                        this.$router.push('/business/alliance')
 
                     }else{
                         this.$alert(res.data.msg)
@@ -391,11 +391,6 @@ export default {
                   this.$alert('操作失败'+e)
 
                 })
-
-
-
-
-
     }
   },
   components: {

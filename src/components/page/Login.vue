@@ -1,12 +1,11 @@
 <template>
     <div class="login-wrap">
-        
         <div class="ms-login">
             <div class="ms-title">
                 <p class="ms-login-title">偷偷美&nbsp;管理平台登陆</p>
                 <img src="/static/img/ms-title-icon.png" width="10" class="ms-title-icon">
             </div>
-            <el-form :model="ruleForm" size="medium" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
+            <el-form :model="ruleForm" size="medium" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm login-input-custom">
                 <el-form-item prop="user_name">
                     <el-input v-model="ruleForm.user_name" placeholder="username">
                         <i slot="prefix" class="el-input__icon el-icon-user"></i>
@@ -76,10 +75,19 @@
         top: 0px;
         width:100%;
         height:100%;
-        background-image: url('/static/img/login_wrap_bg.png');
+        background-image: url('/static/img/login_wrap_bg.jpg');
         background-repeat: no-repeat;
         background-size: 100% 100%;
     }
+    .login-star-a,.login-star-b,.login-star-c,.login-star-d,.login-star-e,.login-star-f,.login-star-g{
+        width:8px;
+        height: 8px;
+        border-radius:50%;
+        box-shadow:0px 0px 16px #270586;
+        background:#a6a6a6;
+        -webkit-animation:fadeIn 2s infinite linear ;
+    }
+    
     .ms-title{
         width:100%;
         height: 30px;
@@ -110,9 +118,26 @@
         border-radius: 8px;
         background:rgba(35,27,62,0.6);
     }
+    .login-btn button{
+        width:166px;
+        height: 40px;
+        padding:0px;
+        text-align:center;
+        display:block;
+        margin:0 auto;
+        border-radius:20px;
+    }
+    .el-button--primary{
+        width:166px;
+        height: 40px;
+        line-height:40px;
+        font-size: 16px;
+        color:#fff;
+    }
+    .el-form-item{
+        margin-bottom:30px;
+    }
     
-</style>
-<style>
     .el-icon-user{
         background: url('/static/img/login-user-icon.png') center no-repeat; 
         background-size: cover;
@@ -141,31 +166,12 @@
         font-size: 16px;
         visibility: hidden;
     }
-    .el-input--prefix .el-input__inner{
+</style>
+<style >
+    .login-input-custom .el-input__inner{
         padding-left:40px;
-    }
-    .el-input__inner{
         background-color:rgba(61,54,86,0.4);
         border-radius:20px;
         color:#fff;
-    }
-    .login-btn button{
-        width:166px;
-        height: 40px;
-        padding:0px;
-        text-align:center;
-        display:block;
-        margin:0 auto;
-        border-radius:20px;
-    }
-    .el-button--primary{
-        width:166px;
-        height: 40px;
-        line-height:40px;
-        font-size: 16px;
-        color:#fff;
-    }
-    .el-form-item{
-        margin-bottom:30px;
     }
 </style>

@@ -5,7 +5,6 @@
 
 import Vue from 'vue';
 import App from './App';
-import router from './router';
 import axios from 'axios';
 import ElementUI from 'element-ui';
 import vali from '@/components/v-vali'
@@ -18,6 +17,7 @@ import '@/assets/css/common.css'
 import store from '@/store'
 // fade/zoom 等
 import 'element-ui/lib/theme-chalk/base.css';
+import router from './router';
 // collapse 展开折叠
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 Vue.component(CollapseTransition.name, CollapseTransition)

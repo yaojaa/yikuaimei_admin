@@ -24,7 +24,7 @@
         data(){
             return {
                 tagsList: []
-                 }
+                   }
         },
         components:{
             vHead, vSidebar, vTags

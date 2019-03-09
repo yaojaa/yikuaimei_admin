@@ -100,9 +100,6 @@ export const UNIT = ['个', '箱', '盒', '瓶', '袋']
 
 
 export const CATEGORYOPTIONS = [{
-        category_id: 0,
-        category_name: "全部"
-    }, {
         category_id: 1,
         category_name: "美容"
     },

@@ -71,22 +71,19 @@
                             <div class="item-list f14 four-text">
                                 <div class="item">
                                     <div class="hd">法人代表：</div>
-                                    <div class="bd">{{info.business_corporation}}
-
-                                        拥有{{info.shop_total}}家门店
-                                    </div>
+                                    <div class="bd">{{info.shop_corporation}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">联系电话：</div>
-                                    <div class="bd">{{info.business_phone}}</div>
+                                    <div class="bd">{{info.shop_phone}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">公司名称：</div>
-                                    <div class="bd">{{info.business_name}}</div>
+                                    <div class="bd">{{info.shop_name}}</div>
                                 </div>
                                     <div class="item">
                                     <div class="hd">企业类型：</div>
-                                    <div class="bd">{{info.business_type}}</div>
+                                    <div class="bd">{{info.shop_type===1?'母店':'子店'}}</div>
                                 </div>
                                     <div class="item">
                                     <div class="hd">行业：</div>
@@ -94,17 +91,17 @@
                                 </div>
 
                                 <div class="item">
-                                    <div class="hd">推荐人：</div>
-                                    <div class="bd">{{info.referee_phone}}</div>
+                                    <div class="hd">归属加盟商：</div>
+                                    <div class="bd">{{info.business_name}}</div>
                                 </div>
 
                                    <div class="item">
                                     <div class="hd">法人身份证：</div>
                                     <div class="bd">
 
-                                        <img :src="info.business_sfz_pic_z" width="200">
+                                        <img :src="info.shop_sfz_pic_z" width="200">
 
-                                         <img :src="info.business_sfz_pic_f" width="200">
+                                         <img :src="info.shop_sfz_pic_f" width="200">
                                         
 
                                     </div>
@@ -122,49 +119,37 @@
                             <div class="item-list f14 four-text">
                                 <div class="item">
                                     <div class="hd">经营状态：</div>
-                                    <div class="bd">在业
-                                    </div>
+                                    <div class="bd">{{info.shop_is_use===1?'启用':'不启用'}}</div>
                                 </div>
 
                                 <div class="item">
                                     <div class="hd">加盟时间：</div>
-                                    <div class="bd">{{info.business_ctime}}</div>
+                                    <div class="bd">{{info.shop_ctime}}</div>
                                 </div>
 
-                                           <div class="item">
-                                    <div class="hd">加盟费：</div>
-                                    <div class="bd">{{info.business_join_money}}</div>
-                                </div>
-
-                                           <div class="item">
+                                <div class="item">
                                     <div class="hd">公司地址：</div>
-                                    <div class="bd">{{info.address_string}}</div>
+                                    <div class="bd">{{info.shop_address}}</div>
                                 </div>
 
-
-           <div class="item">
+                                <div class="item">
                                     <div class="hd">营业执照号：</div>
-                                    <div class="bd">{{info.business_licence_num}}</div>
+                                    <div class="bd">{{info.shop_licence_num}}</div>
                                 </div>
 
-                                           <div class="item">
+                                <div class="item">
                                     <div class="hd">营业执照：</div>
                                     <div class="bd">
-                                        <img :src="info.business_sfz_pic_z" width="200">
-
+                                        <img :src="info.shop_licence_pic" width="200">
                                     </div>
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>
                   
                 </div>
 
-                                <div class="page-side">
+                <div class="page-side">
                     <div class="panel">
                         <div class="panel-heading">
                             <h3 class="panel-title bold">审核记录</h3>
@@ -172,20 +157,13 @@
                         <div class="panel-body">
                             <div class="item-list f14" >
                                   <div class="item">
-                                    <div class="bd bold">暂无记录</div>
+                                   <div class="hd">审核人：</div>
+                                    <div class="bd">{{info.admin_user_name}}</div>
                                   </div>
-                              <!--   <div class="item">
-                                    <div class="hd">处理人：</div>
-                                    <div class="bd">孙妮雅</div>
-                                </div>
-                                <div class="item">
-                                    <div class="hd">处理时间：</div>
-                                    <div class="bd">2018-11-12  12:27:53</div>
-                                </div>
-                                <div class="item">
-                                    <div class="hd">备注：</div>
-                                    <div class="bd">已和客户沟通，确定过敏。</div>
-                                </div> -->
+                                  <div class="item">
+                                   <div class="hd">审核时间：</div>
+                                    <div class="bd">{{info.shop_ctime}}</div>
+                                  </div>
                             </div>
                         </div>
                     </div>
@@ -241,12 +219,13 @@ export default {
 
             this.$axios({
                 method: 'get',
-                url: '/api/admin/business/getOneById',
+                url: '/api/admin/shop/detail',
                 params: params
             }).then((res) => {
 
                 if(res.data.code ==0){
-                    this.info = res.data.data
+                    this.info = res.data.data;
+                    //debugger;
                 }else{
                     this.$alert('接口返回错误')
                 }

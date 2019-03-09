@@ -140,11 +140,13 @@ export default {
 }
 
 #createGood #formItem .el-input__suffix {
+  
   right: 0;
   border-radius: 4px;
 }
 
 #createGood .el-input__suffix {
+  height:29px;
   right: 0;
   border-radius: 4px;
   background-color: rgba(114, 36, 216, 1);
@@ -281,7 +283,7 @@ export default {
   border: 1px solid #7224d8; /** :focus 获得焦点 */
   padding-right: 30px;
 }
-.avatar-uploader .el-upload--text{
+.form-width-small .avatar-uploader .el-upload--text{
     width:146px;
     height: 146px;
     font-size: 28px;

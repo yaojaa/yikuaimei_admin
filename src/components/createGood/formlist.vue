@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 表单list -->
-        <el-form ref="createdData" :model="createdData" :rules="rules" label-width="120px">
+        <el-form ref="createdData" :model="createdData" :rules="rules" label-width="120px" class="form-width-small">
             <template v-if="currentActive === 0">
                 <el-form-item label="名称：" prop="good_name">
                     <el-input  v-model="createdData.good_name" placeholder="名称为2-30个字" />                                                    
@@ -32,9 +32,10 @@
                     <el-input  v-model="createdData.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
                 </el-form-item> -->
                 <el-form-item label="单位：" prop="unit">
-                    <el-radio-group v-model="createdData.unit">
+                    <el-input  v-model="createdData.unit" placeholder="请填写单位" />
+                    <!-- <el-radio-group v-model="createdData.unit">
                         <el-radio v-for="item in UNIT" :label="item" :key="`${item}unit`" />
-                    </el-radio-group>                                                                       
+                    </el-radio-group>                                                                        -->
                 </el-form-item>
                 <el-form-item label="产地：" prop="country" v-if="goodType === GOODTYPE['goodList']">
                     <el-select v-model="createdData.country" placeholder="请选择活动区域">
@@ -53,19 +54,19 @@
                             <el-input  v-model="createdData.good_sku[0].sku_code" placeholder="支持14以内的数字+英文组合"  />                                                                              
                         </el-form-item>
                         <el-form-item label="售价：" prop="price_sale">
-                            <el-input  v-model="createdData.good_sku[0].price_sale" placeholder="请输入套餐在婚博会标价" />                                                                                                        
+                            <el-input  v-model="createdData.good_sku[0].price_sale" placeholder="请输入售价" />                                                                                                        
                             <span class="outText">元</span>
                         </el-form-item>
                         <el-form-item label="原价：" prop="price">
-                            <el-input  v-model="createdData.good_sku[0].price" placeholder="¥5000" />                                                                                                        
+                            <el-input  v-model="createdData.good_sku[0].price" placeholder="请输入原价" />                                                                                                        
                             <span class="outText">元</span>
                         </el-form-item>
                         <el-form-item label="成本" prop="price_cost">
-                            <el-input  v-model="createdData.good_sku[0].price_cost" placeholder="¥5000" />                                                                                                        
+                            <el-input  v-model="createdData.good_sku[0].price_cost" placeholder="请输入成本" />                                                                                                        
                             <span class="outText">元</span>
                         </el-form-item>
                         <el-form-item label="总价" prop="price_total"  v-if="goodType === GOODTYPE['serviceList']">
-                            <el-input  v-model="createdData.good_sku[0].price_total" placeholder="¥5000" />                                                                                                        
+                            <el-input  v-model="createdData.good_sku[0].price_total" placeholder="请输入总价" />                                                                                                        
                             <span class="outText">元</span>
                         </el-form-item>
                     </el-form>

@@ -3,7 +3,7 @@
 
         <slot></slot>
 
-        <div class="nomaltable" :class="{noborder: !border}">
+        <div class="nomaltable goodlist-table-custem" :class="{noborder: !border}">
             <div class="right-button table-button" :class="{tabletabs: tableJson.excelButton && tableJson.excelButton.tableTabs}">
                 <span v-for="(excel, excelIndex) in tableJson.excelButton" :key="excelIndex"> 
                     <el-upload
