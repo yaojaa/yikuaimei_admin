@@ -86,7 +86,7 @@
                                 </div>
                                     <div class="item">
                                     <div class="hd">企业类型：</div>
-                                    <div class="bd">{{info.business_type}}</div>
+                                    <div class="bd">{{info.business_type===1?'加盟':'非加盟'}}</div>
                                 </div>
                                     <div class="item">
                                     <div class="hd">行业：</div>
@@ -122,8 +122,7 @@
                             <div class="item-list f14 four-text">
                                 <div class="item">
                                     <div class="hd">经营状态：</div>
-                                    <div class="bd">在业
-                                    </div>
+                                    <div class="bd">{{info.business_is_use===1?'启用':'不启用'}}</div>
                                 </div>
 
                                 <div class="item">
@@ -131,40 +130,35 @@
                                     <div class="bd">{{info.business_ctime}}</div>
                                 </div>
 
-                                           <div class="item">
+                                <div class="item">
                                     <div class="hd">加盟费：</div>
                                     <div class="bd">{{info.business_join_money}}</div>
                                 </div>
 
-                                           <div class="item">
+                                <div class="item">
                                     <div class="hd">公司地址：</div>
-                                    <div class="bd">{{info.address_string}}</div>
+                                    <div class="bd">{{info.business_company_adress}}</div>
                                 </div>
 
 
-           <div class="item">
+                                <div class="item">
                                     <div class="hd">营业执照号：</div>
                                     <div class="bd">{{info.business_licence_num}}</div>
                                 </div>
 
-                                           <div class="item">
+                                <div class="item">
                                     <div class="hd">营业执照：</div>
                                     <div class="bd">
-                                        <img :src="info.business_sfz_pic_z" width="200">
-
+                                        <img :src="info.business_licence_pic" width="200">
                                     </div>
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>
                   
                 </div>
 
-                                <div class="page-side">
+                <div class="page-side">
                     <div class="panel">
                         <div class="panel-heading">
                             <h3 class="panel-title bold">审核记录</h3>
@@ -172,7 +166,12 @@
                         <div class="panel-body">
                             <div class="item-list f14" >
                                   <div class="item">
-                                    <div class="bd bold">暂无记录</div>
+                                   <div class="hd">审核人：</div>
+                                    <div class="bd">{{info.admin_user_name}}</div>
+                                  </div>
+                                  <div class="item">
+                                   <div class="hd">审核时间：</div>
+                                    <div class="bd">{{info.business_ctime}}</div>
                                   </div>
                               <!--   <div class="item">
                                     <div class="hd">处理人：</div>

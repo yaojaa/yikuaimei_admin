@@ -213,22 +213,22 @@
 
    
 
-    <el-form-item label="门店类别">
-    <el-radio-group v-model="ruleForm.shop_type">
-      <el-radio :label="1">加盟</el-radio>
-      <el-radio :label="2">非加盟</el-radio>
-    </el-radio-group>
+  <el-form-item label="门店类别">
+      <el-radio-group v-model="ruleForm.shop_type">
+        <el-radio :label="1">加盟</el-radio>
+        <el-radio :label="2">非加盟</el-radio>
+      </el-radio-group>
   </el-form-item>
 
-     <el-form-item label="行业" prop="category_id">
-                <el-select v-model="ruleForm.category_id" placeholder="请选择所属行业分类" >
-                    <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="`${item.category_id}category_id`" />
-                </el-select>                   
-            </el-form-item>
+  <el-form-item label="行业" prop="category_id">
+    <el-select v-model="ruleForm.category_id" placeholder="请选择所属行业分类" >
+        <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="`${item.category_id}category_id`" />
+    </el-select>                   
+  </el-form-item>
 
     <el-form-item label="归属加盟商" prop="name" >
 
-    <el-select v-model="ruleForm.fid" placeholder="请选择">
+    <el-select v-model="ruleForm.business_id" placeholder="请选择">
     <el-option
       v-for="item in business_list"
       list-type="picture-card"
