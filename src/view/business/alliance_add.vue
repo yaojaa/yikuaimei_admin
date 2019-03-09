@@ -333,8 +333,27 @@ export default {
     };
   },
   methods:{
-    handleFaceUploadSuccess(){},
-     goNextStep(n){
+    handleFaceUploadSuccess(){
+
+    },
+    getReviewData(id) {
+      this.$axios({
+          method: 'get',
+          url: '/api/admin/shop/reviewDetail?id='+id,
+          
+      }).then((res) => {
+
+          if(res.data.code ==0){
+              Object.assign(this.ruleForm,res.data.data) 
+          }else{
+              this.$alert('接口返回错误')
+          }
+          
+      }).catch((error) => {
+          this.$alert('接口返回错误'+error)
+      });
+    },
+    goNextStep(n){
       this.step = n
     },
     handleChange(event){
@@ -399,6 +418,13 @@ export default {
   },
   created() {
     this.getBusinessList()
+  },
+  mounted(){
+    //如果是从审核加盟商中过来
+    if(this.$route.query.review){
+      this.getReviewData(this.$route.query.review)
+    }
+
   },
   computed: {}
 };

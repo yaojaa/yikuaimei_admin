@@ -518,10 +518,12 @@ export default {
 
   mounted() {
     this.getBusinessList();
-
-    console.log(this.$route.query.review)
-
-    this.getReviewData(this.$route.query.review)
+    
+    //如果是从审核门店中过来
+    if(this.$route.query.review){
+      this.getReviewData(this.$route.query.review)
+    }
+    
 
   },
   components: {

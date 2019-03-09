@@ -205,6 +205,7 @@ export default {
     name: 'detail',
 
     components: {},
+    inject:['reload'],
 
     data() {
         return {
@@ -277,6 +278,7 @@ export default {
             }).then((res) => {
 
                 if(res.data.code ==0){
+                    this.reload();
                     this.shopList = res.data.data
                 }else{
                     this.$alert('接口返回错误')

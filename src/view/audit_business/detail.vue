@@ -206,6 +206,7 @@ export default {
     name: 'detail',
 
     components: {},
+    inject:['reload'],
 
     data() {
         return {
@@ -243,6 +244,10 @@ export default {
             console.log(this.tab)
         },
 
+        agree(){
+          this.$router.push('/business/alliance_add?review='+this.id)
+        },
+
         getData(params) {
 
             this.$axios({
@@ -252,6 +257,7 @@ export default {
             }).then((res) => {
 
                 if(res.data.code ==0){
+                    
                     this.info = res.data.data
                 }else{
                     this.$alert('接口返回错误')
@@ -306,6 +312,7 @@ export default {
             }).then((res) => {
 
                 if(res.data.code ==0){
+                    this.reload();
                     this.shopList = res.data.data
                 }else{
                     this.$alert('接口返回错误')
