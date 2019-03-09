@@ -265,7 +265,7 @@ export default {
           url:'alliance'
         },
         {
-          name: "添加加盟商" //名字
+          name: "添加门店" //名字
         }
       ],
 
@@ -497,5 +497,10 @@ export default {
 #atlas {
   width:100%;
   height:300px;
+}
+.avatar-uploader .el-upload--text {
+  width: 146px;
+  height: 146px;
+  font-size: 12px;
 }
 </style>
