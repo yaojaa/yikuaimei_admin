@@ -2,14 +2,13 @@
     <div class="page">
         <div class="page-header">
             <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>加盟商</el-breadcrumb-item>
+                <el-breadcrumb-item>门店</el-breadcrumb-item>
                 <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="page-content">
             <el-tabs v-model="tab" @tab-click="handleTabsClick" class="primary-tab">
                 <el-tab-pane label="基本信息" name="info"></el-tab-pane>
-                <el-tab-pane label="拥有门店" name="shop"></el-tab-pane>
             </el-tabs>
 
             <div class="page-column"  v-if="tab=='shop'">
@@ -53,15 +52,17 @@
             <div class="page-column"  v-if="tab=='info'">
                 <div class="page-main">
 
-                     <div class="panel-status text-justify">
+                  <div class="panel-status text-justify">
                 <div><span>状态：</span><span class="f18 bold">
-                    {{['删除','正常'][info.business_status]}}
+                    {{['','审核中','审核通过','审核不通过'][info.review_status]}}
+
                 </span></div>
-             <!--    <div>
-                    <el-button size="mini" plain @click="">拒绝退款</el-button>
-                    <el-button size="mini" type="primary" @click="">同意退款</el-button>
-                </div> -->
+                <div v-if="info.review_status == 1">
+                   <el-button @click="reject" size="mini" plain >拒绝</el-button>
+                    <el-button  @click="agree" size="mini" type="primary">同意</el-button>
+                </div>
             </div>
+
 
                     <div class="panel">
                         <div class="panel-heading">
@@ -170,22 +171,26 @@
                             <h3 class="panel-title bold">审核记录</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="item-list f14" >
-                                  <div class="item">
-                                    <div class="bd bold">暂无记录</div>
+                              <div class="item-list f14" >
+                                  <div class="item" v-if="info.review_status ==1">
+                                    <div class="bd bold">待审核</div>
                                   </div>
-                              <!--   <div class="item">
+
+                                  <div v-else>
+                                        <div class="item">
                                     <div class="hd">处理人：</div>
-                                    <div class="bd">孙妮雅</div>
+                                    <div class="bd">{{info.user_name}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">处理时间：</div>
-                                    <div class="bd">2018-11-12  12:27:53</div>
+                                    <div class="bd">{{info.review_time}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">备注：</div>
-                                    <div class="bd">已和客户沟通，确定过敏。</div>
-                                </div> -->
+                                    <div class="bd">{{info.reason}}</div>
+                                </div>
+                                  </div>
+                              
                             </div>
                         </div>
                     </div>
@@ -226,7 +231,6 @@ export default {
 
         this.getData(this.$route.params)
 
-        this.getShopList()
 
 
 
@@ -241,7 +245,7 @@ export default {
 
             this.$axios({
                 method: 'get',
-                url: '/api/admin/business/getOneById',
+                url: '/api/admin/shop/reviewDetail',
                 params: params
             }).then((res) => {
 
@@ -256,15 +260,19 @@ export default {
             });
         },
 
-        getShopList(){
+                reject(){
 
+        this.$prompt('请输入原因', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({ value }) => {
 
-            this.$axios({
-                method: 'get',
-                url: '/api/admin/business/getBusinessShop',
+             this.$axios({
+                method: 'post',
+                url: '/api/admin/shop/reviewFail',
                 params: {
                     id:this.id,
-                    page_size:100
+                    reason:value
                 }
             }).then((res) => {
 
@@ -277,7 +285,26 @@ export default {
             }).catch((error) => {
                 this.$alert('接口返回错误'+error)
             });
+
+
+
+          
+        }).catch(() => {
+         
+        })
         },
+
+        agree(){
+
+          this.$router.push('/shop/add?review='+this.id)
+
+
+
+
+
+        },
+
+
 
         formatPrice(price) {
             return (price / 100).toFixed(2);

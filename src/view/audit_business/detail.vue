@@ -55,12 +55,13 @@
 
                      <div class="panel-status text-justify">
                 <div><span>状态：</span><span class="f18 bold">
-                    {{['删除','正常'][info.business_status]}}
+                    {{['','审核中','审核通过','审核不通过'][info.review_status]}}
+
                 </span></div>
-             <!--    <div>
-                    <el-button size="mini" plain @click="">拒绝退款</el-button>
-                    <el-button size="mini" type="primary" @click="">同意退款</el-button>
-                </div> -->
+                <div v-if="info.review_status == 1">
+                   <el-button @click="reject" size="mini" plain >拒绝</el-button>
+                    <el-button  @click="agree" size="mini" type="primary">同意</el-button>
+                </div>
             </div>
 
                     <div class="panel">
@@ -164,28 +165,33 @@
                   
                 </div>
 
-                                <div class="page-side">
+                 <div class="page-side">
                     <div class="panel">
                         <div class="panel-heading">
                             <h3 class="panel-title bold">审核记录</h3>
                         </div>
+
                         <div class="panel-body">
                             <div class="item-list f14" >
-                                  <div class="item">
-                                    <div class="bd bold">暂无记录</div>
+                                  <div class="item" v-if="info.review_status ==1">
+                                    <div class="bd bold">待审核</div>
                                   </div>
-                              <!--   <div class="item">
+
+                                  <div v-else>
+                                        <div class="item">
                                     <div class="hd">处理人：</div>
-                                    <div class="bd">孙妮雅</div>
+                                    <div class="bd">{{info.user_name}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">处理时间：</div>
-                                    <div class="bd">2018-11-12  12:27:53</div>
+                                    <div class="bd">{{info.review_time}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">备注：</div>
-                                    <div class="bd">已和客户沟通，确定过敏。</div>
-                                </div> -->
+                                    <div class="bd">{{info.reason}}</div>
+                                </div>
+                                  </div>
+                              
                             </div>
                         </div>
                     </div>
@@ -241,7 +247,7 @@ export default {
 
             this.$axios({
                 method: 'get',
-                url: '/api/admin/business/getOneById',
+                url: '/api/admin/business/reviewDetail',
                 params: params
             }).then((res) => {
 
@@ -281,6 +287,45 @@ export default {
 
         formatPrice(price) {
             return (price / 100).toFixed(2);
+        },
+
+        reject(){
+
+        this.$prompt('请输入原因', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({ value }) => {
+
+             this.$axios({
+                method: 'post',
+                url: '/api/admin/business/reviewFail',
+                params: {
+                    id:this.id,
+                    reason:value
+                }
+            }).then((res) => {
+
+                if(res.data.code ==0){
+                    this.shopList = res.data.data
+                }else{
+                    this.$alert('接口返回错误')
+                }
+                
+            }).catch((error) => {
+                this.$alert('接口返回错误'+error)
+            });
+
+
+
+          
+        }).catch(() => {
+         
+        });
+
+
+             
+
+
         }
     }
 }

@@ -104,7 +104,7 @@ export default {
                     },
                 ]
             },
-            url: "/api/admin/shop/index",
+            url: "/api/admin/shop/reviewList",
 
             tableJson: {
                 "column": [ //行
@@ -112,14 +112,14 @@ export default {
                         "type": "text",
                         "align": "center",
                         "label": "创建时间",
-                        "prop": "shop_ctime",
+                        "prop": "create_time",
                         "width": ""
                     },
                     {
                         "type": "text",
                         "align": "center",
                         "label": "门店名称",
-                        "prop": "business_name",
+                        "prop": "shop_name",
                         "width": "",
 
                     },
@@ -127,7 +127,7 @@ export default {
                         "type": "text",
                         "align": "center",
                         "label": "店长",
-                        "prop": "shop_account_name",
+                        "prop": "shop_corporation",
                         "width": "200"
 
                     },
@@ -164,20 +164,13 @@ export default {
                         "width": "",
                         formatter(row) {
                             return `<div style="color:red">
-                                ${row.shop_is_use==0?'停用':'启用'}
+                                ${row.review_status==1?'审核中':''}
+                                ${row.review_status==2?'审核通过':''}
+                                ${row.review_status==3?'审核不通过':''}
                                 </div>`
                         }
 
                     },
-                    {
-                        "type": "switch_btn",
-                        "label": "操作",
-                        "align": "center",
-                        "width": "50",
-                        "prop": "shop_is_use",
-                        "value": ['停用', '启用']
-                    },
-
                     {
                         "type": "handle",
                         "label": "查看",
@@ -187,7 +180,7 @@ export default {
                             "label": "详情",
                             "type": "detail",
                             onClick(tablePage, self, row) {
-                                self.$router.push("/audit/shop/" + row.shop_id)
+                                self.$router.push("/audit/shop/" + row._id)
                             }
 
                         }]

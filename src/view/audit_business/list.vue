@@ -104,15 +104,15 @@ export default {
                     },
                 ]
             },
-            url: "/api/admin/business/index",
+            url: "/api/admin/business/reviewList",
 
             tableJson: {
                 "column": [ //行
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "加盟日期",
-                        "prop": "business_ctime",
+                        "label": "申请日期",
+                        "prop": "create_time",
                         "width": ""
                     },
                     {
@@ -160,7 +160,7 @@ export default {
                         "type": "text",
                         "align": "center",
                         "label": "推荐人账号",
-                        "prop": "p_name",
+                        "prop": "fid",
 
                     },
                     {
@@ -193,7 +193,7 @@ export default {
                             "label": "详情",
                             "type": "detail",
                             onClick(tablePage, self, row) {
-                                self.$router.push("/audit/business/" + row.business_id)
+                                self.$router.push("/audit/business/" + row._id)
                             }
 
                         }]
