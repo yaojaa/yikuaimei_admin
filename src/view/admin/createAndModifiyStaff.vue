@@ -88,6 +88,7 @@ export default {
             }).then((res) => {
                 if (res.code === 0) {
                     this.$alert('操作成功')
+                    this.$router.push('/admin/staffList')
                 }
             });
 
