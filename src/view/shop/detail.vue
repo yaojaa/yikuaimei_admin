@@ -95,15 +95,11 @@
                                     <div class="bd">{{info.business_name}}</div>
                                 </div>
 
-                                   <div class="item">
+                                <div class="item">
                                     <div class="hd">法人身份证：</div>
                                     <div class="bd">
-
                                         <img :src="info.shop_sfz_pic_z" width="200">
-
-                                         <img :src="info.shop_sfz_pic_f" width="200">
-                                        
-
+                                        <img :src="info.shop_sfz_pic_f" width="200">
                                     </div>
                                 </div>
 

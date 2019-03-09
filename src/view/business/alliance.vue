@@ -33,9 +33,9 @@
                     </el-input>
                 </p>
                 <span slot="footer" class="dialog-footer">
-                                      <el-button @click="dialog = false">取 消</el-button>
-                                      <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
-                                  </span>
+                    <el-button @click="dialog = false">取 消</el-button>
+                    <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
+                </span>
             </el-dialog>
         </div>
     </div>
@@ -224,10 +224,7 @@ export default {
     },
     methods: {
         //调用子组件的gatData方法
-        //
         listenSwitchChange(data) {
-
-
 
             const { business_id, business_is_use } = data.value
             console.log(business_is_use)

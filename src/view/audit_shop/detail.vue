@@ -162,7 +162,7 @@
                   
                 </div>
 
-                                <div class="page-side">
+                <div class="page-side">
                     <div class="panel">
                         <div class="panel-heading">
                             <h3 class="panel-title bold">审核记录</h3>
@@ -213,9 +213,7 @@ export default {
         }
     },
 
-    beforeRouteUpdate(to, from, next) {
-
-    },
+    beforeRouteUpdate(to, from, next) {},
     created() {},
     computed: {
 

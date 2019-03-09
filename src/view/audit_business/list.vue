@@ -28,9 +28,9 @@
                     </el-input>
                 </p>
                 <span slot="footer" class="dialog-footer">
-                                      <el-button @click="dialog = false">取 消</el-button>
-                                      <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
-                                  </span>
+                    <el-button @click="dialog = false">取 消</el-button>
+                    <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
+                </span>
             </el-dialog>
         </div>
     </div>
@@ -200,8 +200,6 @@ export default {
 
                         }]
                     }
-
-
                 ],
             }
 
@@ -213,9 +211,7 @@ export default {
         NomalTable,
         TableSearch
     },
-    created() {
-
-    },
+    created() {},
     computed: {
 
     },

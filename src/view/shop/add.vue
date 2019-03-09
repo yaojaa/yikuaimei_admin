@@ -16,19 +16,16 @@
 
 
 
-
 <div class="panel">
-
 
 <div class="form-panel p-xl"  v-if="step==1">
                    <!--form start-->
  <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm" >
 
-
   <el-form-item label="公司名称" prop="shop_name">
     <el-input v-model="ruleForm.shop_name"></el-input>
   </el-form-item>
-  
+
  <!-- 地图如下 -->
   <el-form-item label="地图" >
      <div id="atlas"></div>

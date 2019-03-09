@@ -178,9 +178,6 @@ export default {
 
                 ],
             }
-
-
-
         }
     },
     components: {
@@ -190,9 +187,7 @@ export default {
     created() {
 
     },
-    computed: {
-
-    },
+    computed: {},
     methods: {
         //调用子组件的gatData方法
         //

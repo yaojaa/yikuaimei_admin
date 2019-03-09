@@ -403,10 +403,7 @@ export default {
                     }else{
                         this.$alert(res.data.msg)
                     }
-
-
                 }).catch((e)=>{
-
                   this.$alert('操作失败'+e)
 
                 })
@@ -424,7 +421,6 @@ export default {
     if(this.$route.query.review){
       this.getReviewData(this.$route.query.review)
     }
-
   },
   computed: {}
 };

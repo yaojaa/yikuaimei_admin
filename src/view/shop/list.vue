@@ -233,17 +233,14 @@ export default {
             this.dialog = true
         },
         doUpdateIsUse() {
-
             const params = {
                 id: this.business_id,
                 is_use: this.is_use,
                 remark: this.remark
             }
 
-
             this.$axios.post("/api/admin/shop/isUse", params).then(res => {
                 this.dialog = false;
-
                 console.log(res)
 
                 if (res.data.code == 0) {

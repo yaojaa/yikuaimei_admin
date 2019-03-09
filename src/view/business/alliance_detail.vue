@@ -155,7 +155,6 @@
                             </div>
                         </div>
                     </div>
-                  
                 </div>
 
                 <div class="page-side">
@@ -209,9 +208,7 @@ export default {
         }
     },
 
-    beforeRouteUpdate(to, from, next) {
-
-    },
+    beforeRouteUpdate(to, from, next) {},
     created() {},
     computed: {
 
@@ -226,8 +223,6 @@ export default {
         this.getData(this.$route.params)
 
         this.getShopList()
-
-
 
     },
     methods: {

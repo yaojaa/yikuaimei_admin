@@ -319,16 +319,7 @@ export default {
                 this.$alert('接口返回错误'+error)
             });
 
-
-
-          
-        }).catch(() => {
-         
-        });
-
-
-             
-
+        }).catch(() => {});
 
         }
     }
