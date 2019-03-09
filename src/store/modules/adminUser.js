@@ -61,17 +61,29 @@ export default {
         fetchCreate({
             commit
         }, params) {
-            return axios
-                .post('/api/admin/adminUser/add', {
-                    ...params
-                })
-                .then((res) => {
-                    if (res.data.code) {
-                        alert(res.data.msg)
-                        return
-                    }
-                    return res.data.data;
-                });
+            // console.log('addParams', params)
+            this.$axios({
+                method: "post",
+                url: '/api/admin/adminUser/add',
+                params: { ...params }
+            }).then((res) => {
+                if (res.data.code) {
+                    alert(res.data.msg)
+                    return
+                }
+                return res.data.data;
+            });
+            // return axios
+            //     .post('/api/admin/adminUser/add', {
+            //         ...params
+            //     })
+            //     .then((res) => {
+            //         if (res.data.code) {
+            //             alert(res.data.msg)
+            //             return
+            //         }
+            //         return res.data.data;
+            //     });
         },
 
         /** 
@@ -82,17 +94,17 @@ export default {
         fetchModifiy({
             commit
         }, params) {
-            return axios
-                .post('/api/admin/adminUser/edit', {
-                    ...params
-                })
-                .then((res) => {
-                    if (res.data.code) {
-                        alert(res.data.msg)
-                        return
-                    }
-                    return res.data.data;
-                });
+            return this.$axios({
+                method: "post",
+                url: '/api/admin/adminUser/edit',
+                params: { ...params }
+            }).then((res) => {
+                if (res.data.code) {
+                    alert(res.data.msg)
+                    return
+                }
+                return res.data.data;
+            });     
         }
     },
 

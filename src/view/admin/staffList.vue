@@ -5,6 +5,9 @@
                 <el-breadcrumb-item>成员管理</el-breadcrumb-item>
                 <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
             </el-breadcrumb>
+            <div class="page-header-actions">
+				<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/admin/addStaff/0' })">添加成员</el-button>
+			</div>
         </div>
         <div class="page-content">
             <nomal-table ref="table" :table-json="tableJson" url="/api/admin//index">

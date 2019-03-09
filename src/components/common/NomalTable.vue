@@ -306,9 +306,7 @@
             //操作按钮
             handleButtons(handle, scope){
                 if(handle.url){
-
-                 this.$router.push({ path: handle.url+'/'+scope.row[handle.query] })
-
+                    this.$router.push({ path: handle.url+'/'+scope.row[handle.query] })
                 }else if(handle.onClick){
                     handle.onClick(this, this.$parent, scope.row);
                 }else{

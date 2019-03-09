@@ -5,6 +5,9 @@
                 <el-breadcrumb-item>角色管理</el-breadcrumb-item>
                 <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
             </el-breadcrumb>
+            <div class="page-header-actions">
+				<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/admin/addRole/0' })">添加角色</el-button>
+			</div>
         </div>
         <div class="page-content">
             <nomal-table ref="table" :table-json="tableJson" url="/api/admin/adminRole/list">
@@ -65,7 +68,7 @@
                             "width": "200",
                             "list": [{
                                 "label": "权限设置",
-                                "url": "/addRole",
+                                "url": "/admin/addRole",
                                 "query": "role_id"
                             }]
                         }
