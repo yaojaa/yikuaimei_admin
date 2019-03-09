@@ -419,7 +419,7 @@ export default {
 
                       if(res.data.code == 0){
 
-                          this.$alert('添加加盟商成功！')
+                          this.$alert('添加门店成功！')
 
                           this.$router.push('/shop/list')
 
