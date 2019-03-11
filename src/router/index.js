@@ -41,7 +41,7 @@ export default new Router({
                     path: '/serviceList',
                     component: resolve => require(['../view/goods/serviceList.vue'], resolve),
                     meta: {
-                        title: '门店服务'
+                        title: '平台服务'
                     }
                 },
                 {
@@ -139,7 +139,7 @@ export default new Router({
                     path: '/order/serviceOrderList',
                     component: resolve => require(['../view/order/serviceOrderList.vue'], resolve),
                     meta: {
-                        title: '门店服务',
+                        title: '平台服务',
                         permission: true
                     }
                 },
