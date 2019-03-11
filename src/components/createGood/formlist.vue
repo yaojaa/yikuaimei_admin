@@ -821,7 +821,7 @@ export default {
      */
     $_changeTab(num) {
         let that = this
-        debugger
+        // debugger
         if(num > 0){
             this.$refs.createdData.validate((valid) => {
                 if(valid){

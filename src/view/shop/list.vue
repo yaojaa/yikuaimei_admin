@@ -143,7 +143,7 @@ export default {
                         "label": "类型",
                         "width": "",
                         formatter(row) {
-                            return row.shop_type == 1 ? '旗舰店' : '分店'
+                            return row.shop_type == 1 ? '子店' : '母店'
                         }
 
                     },
