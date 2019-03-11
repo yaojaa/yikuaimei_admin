@@ -400,7 +400,8 @@ export default {
         console.log(res)
         if(res.data.code ==0){
 
-          this.business_list = res.data.data
+          this.business_list = res.data.data　;
+          console.log(this.business_list,'business_list')
         }
 
 
