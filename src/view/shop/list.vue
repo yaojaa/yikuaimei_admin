@@ -116,24 +116,31 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "创建时间",
+                        "label": "添加时间",
                         "prop": "shop_ctime",
                         "width": ""
                     },
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "门店名称",
-                        "prop": "business_name",
+                        "label": "公司名称",
+                        "prop": "shop_name",
                         "width": "",
 
                     },
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "店长",
-                        "prop": "shop_account_name",
-                        "width": "200"
+                        "label": "法人姓名/手机号",
+                        "prop": "shop_corporation",
+                        "width": "200",
+                        formatter(row) {
+                            return `<p style='text-align: center'>
+                                ${row.shop_corporation}<br/>
+                                ${row.shop_phone}
+                                                    </p>`;
+                        }
+
                     },
                     {
                         "type": "text",
@@ -147,8 +154,8 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "城市",
-                        "prop": "city_name",
+                        "label": "公司地址",
+                        "prop": "shop_address",
                         "width": "200",
 
                     },

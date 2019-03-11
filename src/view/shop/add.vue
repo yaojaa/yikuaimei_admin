@@ -30,7 +30,7 @@
   <el-form-item label="地图" >
      <div id="atlas"></div>
      <p style="margin:5px">
-      <input style="width:200px;padding:3px 4px;" type="text" id="place" /> <span class='shop-add-city-message'>输入地址搜索回车确认</span>
+      <input style="width:200px;padding:3px 4px;" type="text" id="place" /> <span class='shop-add-city-message'>输入地址，自动完成，回车确认</span>
     </p>
   </el-form-item>
   

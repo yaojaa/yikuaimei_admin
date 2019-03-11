@@ -123,7 +123,7 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "加盟商门店",
+                        "label": "公司名称",
                         "prop": "business_name",
                         "width": "",
 
@@ -164,7 +164,7 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "推荐人账号",
+                        "label": "推荐人平台账号",
                         "prop": "p_name",
 
                     },
@@ -178,7 +178,6 @@ export default {
                                 ${row.business_is_use==0?'停用':'启用'}
                                 </div>`
                         }
-
                     },
                     {
                         "type": "switch_btn",
