@@ -175,17 +175,22 @@
 
    <el-form :model="ruleForm" :rules="rules" ref="ruleForm3" label-width="100px" class="demo-ruleForm">
 
-    <el-form-item label="推荐人平台账号">
+    <el-form-item label="推荐人平台账号" v-model="ruleForm.fid">
 
-    <el-select v-model="ruleForm.fid" placeholder="请选择">
+    <!-- <el-select v-model="ruleForm.fid" placeholder="请选择">
     <el-option
       v-for="item in business_list"
       :key="item.business_id"
       :label="item.business_name"
       :value="item.business_id">
     </el-option>
-  </el-select>
-
+  </el-select> -->
+  <el-autocomplete
+      v-model="business_na_me"
+      :fetch-suggestions="querySearchAsync"
+      placeholder="请输入内容"
+      @select="handleSelect">
+  </el-autocomplete>
   </el-form-item>
 
       <el-form-item label="行业" prop="category_id">
@@ -246,6 +251,7 @@ export default {
       url: "",
       CATEGORYOPTIONS,
       business_list:[],
+      business_na_me:null,
       breadcrumb: [
         //面包屑
         {
@@ -336,6 +342,41 @@ export default {
     handleFaceUploadSuccess(){
 
     },
+    querySearchAsync(queryString, callback) {
+      var list = [{}];
+      //调用的后台接口
+      if(queryString==undefined){
+        var url = "/api/admin/select/businessList" ;
+      }else{
+        var url = "/api/admin/select/businessList?business_id=" + queryString;
+      }
+
+      this.$axios.get(url).then(res =>{
+          if(res.data.code ==0){
+            //this.business_list = res.data.data;
+            //在这里为这个数组中每一个对象加一个value字段, 因为autocomplete只识别value字段并在下拉列中显示
+            for(let i of res.data.data){
+                i.value = i.business_name;  //将想要展示的数据作为value
+                
+            }
+            list = res.data.data;
+            callback(list);
+          }
+        })
+      // //从后台获取到对象数组
+      // this.$axios.get(url).then((response)=>{
+        
+          
+      // }).catch((error)=>{
+      // console.log(error);
+      // });
+    },
+      handleSelect(event) {
+      console.log(event,'event');
+      this.ruleForm.fid = event.business_id;
+      //console.log(this.ruleForm.business_id,'this.ruleForm.business_id');
+      //debugger;
+    },
     // getBusinessVal(_val){
     //   var _this,_businessList;
     //       _this = this,
@@ -393,21 +434,21 @@ export default {
       this.ruleForm.business_sfz_pic_f = res.data.url
     },
 
-    getBusinessList(){
+    // getBusinessList(){
 
-       this.$axios.get("/api/admin/select/businessList").then(res =>{
+    //    this.$axios.get("/api/admin/select/businessList").then(res =>{
 
-        console.log(res)
-        if(res.data.code ==0){
+    //     console.log(res)
+    //     if(res.data.code ==0){
 
-          this.business_list = res.data.data　;
-          console.log(this.business_list,'business_list')
-        }
+    //       this.business_list = res.data.data　;
+    //       console.log(this.business_list,'business_list')
+    //     }
 
 
-       })
+    //    })
 
-    },
+    // },
     submitForm(){
           //this.ruleForm.address_code = this.ruleForm.address_code[2]
           this.$axios.post("/api/admin/business/create", this.ruleForm).then(res => {
@@ -434,7 +475,7 @@ export default {
     formlist
   },
   created() {
-    this.getBusinessList()
+    //this.getBusinessList()
   },
   mounted(){
     //如果是从审核加盟商中过来

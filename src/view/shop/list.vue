@@ -56,8 +56,8 @@ export default {
             tagsListGroup: {
                 '选择类型:': [
                     { title: '全部', key: 'business_type', value: '' },
-                    { title: '加盟', key: 'business_type', value: 1 },
-                    { title: '非加盟', key: 'business_type', value: 2 }
+                    { title: '母店', key: 'shop_type', value: 0 },
+                    { title: '子店', key: 'business_type', value: 1 }
                 ],
 
                 '选择状态:': [
