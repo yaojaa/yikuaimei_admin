@@ -30,7 +30,7 @@
   <el-form-item label="地图" >
      <div id="atlas"></div>
      <p style="margin:5px">
-      <input style="width:200px;padding:3px 4px;" type="text" id="place" /> <span class='shop-add-city-message'>输入地址，自动完成，回车确认</span>
+      <input style="width:200px;padding:3px 4px;" type="text" id="place" /> <span class='shop-add-city-message'>输入地址，回车确认</span>
     </p>
   </el-form-item>
   
@@ -223,9 +223,15 @@
     </el-select>                   
   </el-form-item>
 
-    <el-form-item label="归属加盟商" prop="name" >
+    <el-form-item label="归属加盟商" prop="name" v-model="ruleForm.business_id">
+    <el-autocomplete
+      v-model="business_name"
+      :fetch-suggestions="querySearchAsync"
+      placeholder="请输入内容"
+      @select="handleSelect">
 
-    <el-select v-model="ruleForm.business_id" placeholder="请选择">
+    </el-autocomplete>
+    <!-- <el-select v-model="ruleForm.business_id" placeholder="请选择">
     <el-option
       v-for="item in business_list"
       list-type="picture-card"
@@ -234,7 +240,7 @@
       :label="item.business_name"
       :value="item.business_id">
     </el-option>
-  </el-select>
+  </el-select> -->
 
   </el-form-item>
 
@@ -275,8 +281,8 @@ export default {
       dialogVisible: false,
       step: 1,
       url: "",
+      business_name:null,
       CATEGORYOPTIONS,
-      business_list:[],
       breadcrumb: [
         //面包屑
         {
@@ -306,7 +312,7 @@ export default {
         "shop_longitude" : "",//门店经度
         "shop_latitude" : "",//门店纬度
         "shop_environment" : [],//门店环境图片数组
-        "business_id" : 13,//加盟商审核信息的business_id
+        "business_id" : null,//加盟商审核信息的business_id
         // "shop_environment":[],
         "address_code2":""
       },
@@ -367,6 +373,41 @@ export default {
        this.step = n;
       
     },
+    querySearchAsync(queryString, callback) {
+      var list = [{}];
+      //调用的后台接口
+      if(queryString==undefined){
+        var url = "/api/admin/select/businessList" ;
+      }else{
+        var url = "/api/admin/select/businessList?business_id=" + queryString;
+      }
+
+      this.$axios.get(url).then(res =>{
+          if(res.data.code ==0){
+            //this.business_list = res.data.data;
+            //在这里为这个数组中每一个对象加一个value字段, 因为autocomplete只识别value字段并在下拉列中显示
+            for(let i of res.data.data){
+                i.value = i.business_name;  //将想要展示的数据作为value
+                
+            }
+            list = res.data.data;
+            callback(list);
+          }
+        })
+      // //从后台获取到对象数组
+      // this.$axios.get(url).then((response)=>{
+        
+          
+      // }).catch((error)=>{
+      // console.log(error);
+      // });
+    },
+    handleSelect(event) {
+      console.log(event,'event');
+      this.ruleForm.business_id = event.business_id;
+      //console.log(this.ruleForm.business_id,'this.ruleForm.business_id');
+      //debugger;
+    },
     handleChange(event){
       this.ruleForm.address_code = event[event.length-1];
       console.log(this.ruleForm.address_code,'this.ruleForm.address_code')
@@ -398,17 +439,17 @@ export default {
         this.ruleForm.shop_sfz_pic_f = res.data.url
       },
 
-      getBusinessList(){
+      // getBusinessList(){
 
-        this.$axios.get("/api/admin/select/businessList").then(res =>{
-          if(res.data.code ==0){
-            this.business_list = res.data.data;
-          }
+      //   this.$axios.get("/api/admin/select/businessList").then(res =>{
+      //     if(res.data.code ==0){
+      //       this.business_list = res.data.data;
+      //     }
 
 
-        })
+      //   })
 
-      } ,
+      // } ,
       
       submit(){
         console.log(this.ruleForm,'this.ruleForm');
@@ -514,7 +555,7 @@ export default {
 
 
   mounted() {
-    this.getBusinessList();
+    //this.getBusinessList();
 
     //如果是从审核门店中过来
     if(this.$route.query.review){
