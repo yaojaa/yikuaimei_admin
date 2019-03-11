@@ -114,10 +114,6 @@ export const CATEGORYOPTIONS = [{
     {
         category_id: 4,
         category_name: "美体"
-    },
-    {
-        category_id: 5,
-        category_name: "轻医美"
     }
 ]
 

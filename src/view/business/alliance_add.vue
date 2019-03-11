@@ -177,7 +177,7 @@
 
     <el-form-item label="推荐人平台账号">
 
-    <el-select v-model="ruleForm.fid" placeholder="请选择">
+    <el-select v-model="ruleForm.fid" placeholder="请选择" @change="getBusinessVal">
     <el-option
       v-for="item in business_list"
       :key="item.business_id"
@@ -335,6 +335,25 @@ export default {
   methods:{
     handleFaceUploadSuccess(){
 
+    },
+    getBusinessVal(_val){
+      var _this,_businessList;
+          _this = this,
+          _businessList = this.business_list;
+          console.log(_businessList,'_businessList')
+      _businessList.forEach(function(value,index,arr){
+        if(arr[index].business_id==_val){
+          _this.ruleForm.business_name = arr[index].business_name;
+        }
+      })
+      // for(var i=0; i<_businessList.length; i++){
+      //   if(_businessList[i].id==_val){
+      //     this.ruleForm.business_name = _businessList[i].name;
+      //   }
+      // }
+
+      
+     
     },
     getReviewData(id) {
       this.$axios({
