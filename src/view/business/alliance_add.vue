@@ -26,8 +26,8 @@
  <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm">
 
 
-  <el-form-item label="公司名称" prop="business_company_name">
-    <el-input v-model="ruleForm.business_company_name"></el-input>
+  <el-form-item label="公司名称" prop="business_name">
+    <el-input v-model="ruleForm.business_name"></el-input>
   </el-form-item>
     <el-form-item label="公司地址" prop="business_company_adress">
     <el-input v-model="ruleForm.business_company_adress"></el-input>
@@ -177,7 +177,7 @@
 
     <el-form-item label="推荐人平台账号">
 
-    <el-select v-model="ruleForm.fid" placeholder="请选择" @change="getBusinessVal">
+    <el-select v-model="ruleForm.fid" placeholder="请选择">
     <el-option
       v-for="item in business_list"
       :key="item.business_id"
@@ -259,7 +259,7 @@ export default {
 
       ruleForm:{
     "business_phone" : "",//加盟商手机号
-    "business_company_name" : "",//公司名称
+    "business_name" : "",//公司名称
     "category_id" : [1,2,8],//行业id 3或[3]或[3,5,7]
     "business_type" : 1,//1加盟 2非加盟
     "business_corporation" : "",//法人
@@ -336,25 +336,25 @@ export default {
     handleFaceUploadSuccess(){
 
     },
-    getBusinessVal(_val){
-      var _this,_businessList;
-          _this = this,
-          _businessList = this.business_list;
-          console.log(_businessList,'_businessList')
-      _businessList.forEach(function(value,index,arr){
-        if(arr[index].business_id==_val){
-          _this.ruleForm.business_name = arr[index].business_name;
-        }
-      })
-      // for(var i=0; i<_businessList.length; i++){
-      //   if(_businessList[i].id==_val){
-      //     this.ruleForm.business_name = _businessList[i].name;
-      //   }
-      // }
+    // getBusinessVal(_val){
+    //   var _this,_businessList;
+    //       _this = this,
+    //       _businessList = this.business_list;
+    //       console.log(_businessList,'_businessList')
+    //   _businessList.forEach(function(value,index,arr){
+    //     if(arr[index].business_id==_val){
+    //       _this.ruleForm.business_name = arr[index].business_name;
+    //     }
+    //   })
+    //   // for(var i=0; i<_businessList.length; i++){
+    //   //   if(_businessList[i].id==_val){
+    //   //     this.ruleForm.business_name = _businessList[i].name;
+    //   //   }
+    //   // }
 
       
      
-    },
+    // },
     getReviewData(id) {
       this.$axios({
           method: 'get',
