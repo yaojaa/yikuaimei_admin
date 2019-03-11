@@ -349,7 +349,8 @@
             <el-form-item class="form-footer">
                 <el-button type="primary" @click="$_changeTab(-1)" v-if="currentActive !== 0">上一步</el-button>
                 <el-button @click="$_createProduct" v-if="goodType === GOODTYPE['fictitiousList'] || ((goodType === GOODTYPE['serviceList'] && currentActive === 2)  || (goodType !== GOODTYPE['serviceList'] &&  currentActive === 1))">上架</el-button>
-                <el-button @click="$_changeTab(1)"  v-else>下一步</el-button>             
+                <el-button @click="$_changeTab(2)" v-if="((goodType === GOODTYPE['serviceList'] && currentActive === 1))">下一步</el-button>
+                <el-button @click="$_changeTab(1)"  v-if="goodType !== GOODTYPE['fictitiousList'] && currentActive === 0">下一步</el-button>             
             </el-form-item>
         </el-form>
         <!-- 表单list End -->
@@ -819,9 +820,8 @@ export default {
      * 切换tab
      */
     $_changeTab(num) {
-        let that = this;
-        // debugger
-        if(num > 0){
+        let that = this
+        if(num === 1){
             this.$refs.createdData.validate((valid) => {
                 if(valid){
                     if (this.singleButton === "无规格") {
@@ -837,6 +837,9 @@ export default {
                     }
                 }
             })
+        }else if(num === 2){
+            that.currentActive = that.currentActive + 1
+            that.$emit("changeTab",that.currentActive);
         }else{
             that.currentActive = that.currentActive + num
             that.$emit("changeTab",that.currentActive); 
