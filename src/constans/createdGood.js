@@ -116,6 +116,28 @@ export const CATEGORYOPTIONS = [{
         category_name: "美体"
     }
 ]
+export const Category = [
+    {
+        category_id: 0,
+        category_name: "全部"
+    },
+    {
+        category_id: 1,
+        category_name: "美甲"
+    },
+    {
+        category_id: 2,
+        category_name: "美发"
+    },
+    {
+        category_id: 3,
+        category_name: "轻体美"
+    },
+    {
+        category_id: 4,
+        category_name: "美肤"
+    }
+]
 
 export const GOODTYPE = {
     'serviceList': 1,

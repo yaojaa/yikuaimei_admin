@@ -45,7 +45,7 @@
                                 title: '平台商品'
                             },{
                                 index: '/serviceList',
-                                title: '门户服务'
+                                title: '平台服务'
                             },{
                                 index: '/purchaseList',
                                 title: '品项管理'

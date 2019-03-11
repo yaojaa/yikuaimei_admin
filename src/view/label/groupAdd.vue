@@ -23,11 +23,12 @@
   <el-form-item label="分类" prop="tag_group_type">
     <el-radio-group v-model="ruleForm.tag_group_type">
 
-       <el-radio label="1">商品</el-radio>
-              <el-radio label="2">服务</el-radio>
-       <el-radio label="3">虚拟券</el-radio>
-       <el-radio label="4">评价</el-radio>
-       <el-radio label="5">用户</el-radio>
+      <el-radio label="1">商品</el-radio>
+      <el-radio label="2">服务</el-radio>
+      <el-radio label="3">品项</el-radio>
+      <el-radio label="4">虚拟卡券</el-radio>
+      <el-radio label="5">评价</el-radio>
+      <el-radio label="6">用户</el-radio>
 
   </el-radio-group>
 </el-form-item>
