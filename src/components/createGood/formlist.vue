@@ -771,13 +771,13 @@ export default {
         return isVideo && isLt2M;
     },
 
-    $_goOut(goodType){
+    $_goOut(goodId, goodType){
         switch (goodType) {
             case 1:
-                this.$router.push('/serviceList')
+                this.$router.push('/goodPreview?good_id='+goodId+'&good_type='+goodType)
                 break;
             case 2:
-                this.$router.push('/goodList')
+                this.$router.push('/goodPreview?good_id='+goodId+'&good_type='+goodType)
                 break;
             case 3:
                 this.$router.push('/purchaseList')
@@ -914,6 +914,10 @@ export default {
                     }
                     item.ico_small = ico_small
                     item.ico_small__url = ico_small__url
+                    item.price_cost = (+item.price_cost || 0) * 100
+                    item.price = (+item.price || 0) * 100
+                    item.price_sale = (+item.price_sale || 0) * 100
+                    item.price_total = (+item.price_total || 0) * 100
                     return item
                 });
             }
@@ -921,7 +925,7 @@ export default {
             that.$store.dispatch(str,params).then((res)=>{
                 if(res.code === 0){
                     that.$alert('操作成功');
-                    that.$_goOut(that.goodType)
+                    that.$_goOut(res.data, that.goodType)
                 }else{
                     that.$message.error(res.msg);
                 }
