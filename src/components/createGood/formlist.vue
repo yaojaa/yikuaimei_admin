@@ -815,7 +815,6 @@ export default {
     showFormat() {
         this.$refs.formate.format_show = true
     },
-
      /** *
      * 切换tab
      */

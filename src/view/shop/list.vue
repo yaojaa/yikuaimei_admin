@@ -134,7 +134,6 @@ export default {
                         "label": "店长",
                         "prop": "shop_account_name",
                         "width": "200"
-
                     },
                     {
                         "type": "text",
