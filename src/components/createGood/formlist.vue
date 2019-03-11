@@ -820,7 +820,7 @@ export default {
      * 切换tab
      */
     $_changeTab(num) {
-        let that = this
+        let that = this;
         // debugger
         if(num > 0){
             this.$refs.createdData.validate((valid) => {

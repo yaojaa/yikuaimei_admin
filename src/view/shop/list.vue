@@ -136,7 +136,6 @@ export default {
                         "width": "200"
 
                     },
-
                     {
                         "type": "text",
                         "align": "center",
@@ -145,7 +144,6 @@ export default {
                         formatter(row) {
                             return row.shop_type == 1 ? '子店' : '母店'
                         }
-
                     },
                     {
                         "type": "text",
