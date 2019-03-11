@@ -213,7 +213,7 @@
                                     <i class="el-icon-document" />
                                     "Wiedergeburt 2019-01-01 03.09.22.mp4"
                                 </a>
-                                <label class="el-upload-list__item-status-label" @click.stop="ss">
+                                <label class="el-upload-list__item-status-label" @click.stop="$_closeVideo">
                                     <i class="el-icon-close" />
                                 </label>
                             </li>
@@ -304,10 +304,12 @@
                                 <product-card :goodName="scope.row.good_name" :price="scope.row.price_low"/>
                             </template>
                         </el-table-column>
+                        <!-- sku_list_modify 不需要传 选中耗材的table表格 -->
                         <el-table-column label="规格">
                             <template slot-scope="scope">
+                                <!-- {{scope.row}} -->
                                 <el-checkbox-group v-model="scope.row.sku_id">
-                                    <el-checkbox :label="item.sku_id" v-for="item in scope.row.sku_list" :key="`${item.sku_str}${scope.row.good_id}`" border>{{item.sku_str}}{{item.sku_id}}</el-checkbox>
+                                    <el-checkbox :label="item.sku_id" v-for="item in scope.row.sku_list_modify" :key="`${item.sku_str}${scope.row.good_id}`"  border>{{item.sku_str}}{{item.sku_id}}</el-checkbox>
                                 </el-checkbox-group>
                             </template>
                         </el-table-column>
@@ -501,9 +503,14 @@ export default {
   },
 
   async created() {
+    /** 
+     * 获取创建类型
+    */
     this.createdData.good_type = this.goodType
     /** 
      * good_id [0：添加，1:编辑] map不改变元数组，返回新数组
+     * 如果时编辑，将获取的相亲信息处理，并拷贝到data数据里呈现
+     * 如果创建直接使用data里的初始化数据
      */
     if(this.goodId){
         let result = await this.$store.dispatch('createdGoode/fetchFormInfo', {id:this.goodId})
@@ -554,7 +561,7 @@ export default {
         }
         createdData.good_friends.forEach(good => {
             good.sku_id = good.group_sku_id || good.sku_id // 耗材sku_id列表
-            good.sku_list = good.group_sku_list || good.sku_list
+            good.sku_list_modify = good.group_sku_list || good.sku_list_modify
         })
         this.createdData = createdData
     }
@@ -701,7 +708,7 @@ export default {
     },
 
 
-    ss(file){
+    $_closeVideo(file){
         this.createdData.good_video = ''
         this.good_video = ''
     },
@@ -771,6 +778,9 @@ export default {
         return isVideo && isLt2M;
     },
 
+    /** 
+     * 修改成功 & 创建成功跳转方法
+    */
     $_goOut(goodId, goodType){
         switch (goodType) {
             case 1:
@@ -800,12 +810,12 @@ export default {
 
     /** *
      * 展示规格
+     * 点击添加规格按钮 & 点击取消规格按钮 >>> 重置规格数据
      */
     $_showFormat() {
       if (this.singleButton === "添加规格") {
         this.showFormat()
       }else{
-        // @TOdO !this.goodType === GOODTYPE['serviceList'] 取消显示 单规格 初始化数据
         this.goodSkuInfo = []
         this.createdData.sku_type_arr = []
         this.createdData.good_sku = [{}]
@@ -813,15 +823,18 @@ export default {
       }
     },
     
+    // 展示规格方法
     showFormat() {
         this.$refs.formate.format_show = true
     },
+
      /** *
-     * 切换tab
+     * 切换tab 【上一步 & 下一步】
      */
     $_changeTab(num) {
         let that = this
         if(num === 1){
+            // 表单校验
             this.$refs.createdData.validate((valid) => {
                 if(valid){
                     if (this.singleButton === "无规格") {
@@ -889,7 +902,6 @@ export default {
         that.$refs.createdData.validate((valid) => {
             let params = _.cloneDeep(that.createdData)
             if (this.singleButton === "无规格") {
-                // console.log(this.$refs.createdData_goodSku)
                 // this.$refs.createdData_goodSku.validate((valid) => {
                 //     if(valid){
                 params.good_sku = params.good_sku.map(item => {
@@ -921,6 +933,14 @@ export default {
                     return item
                 });
             }
+            // 处理耗材
+            params.good_friends = params.good_friends.map(friendItem => {
+                const obj = {};
+                obj.good_id = friendItem.good_id
+                obj.sku_id = friendItem.sku_id
+                return obj
+            })
+            console.log(params)
             let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
             that.$store.dispatch(str,params).then((res)=>{
                 if(res.code === 0){

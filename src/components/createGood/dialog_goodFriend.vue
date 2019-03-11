@@ -111,11 +111,12 @@ export default {
      * 添加标签
     */
     $_addGoodFriend(goodFriendsInfo){
+        console.log(goodFriendsInfo)
         if(!this.isDisable(goodFriendsInfo.good_id)){
             let obj = {
                 good_id: goodFriendsInfo.good_id , //耗材id
                 sku_id:[],
-                sku_list: goodFriendsInfo.sku_list , // 耗材sku_id列表
+                sku_list_modify: goodFriendsInfo.sku_list, // 耗材sku_id列表
                 good_name: goodFriendsInfo.good_name , // 耗材名字
                 good_ico: goodFriendsInfo.good_ico , //耗材图标
                 price_low: goodFriendsInfo.price_low , // 耗材价格区间低
