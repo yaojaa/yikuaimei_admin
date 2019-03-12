@@ -113,7 +113,7 @@ export default {
         this.$store.dispatch(url,{
           id : this.goodId ,
           type_name : target.type_name,
-          img_url : file[0].response.data.file_name ,
+          img_url : file[0].response.data.img_url ,
         })
         // fetchCreateCard
       }
