@@ -26,20 +26,21 @@
                             <el-radio :label="5">偷偷美微掌柜</el-radio>
                         </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="培训内容:" prop="train_content">
-                        <el-input type="textarea" v-model="ruleForm.train_content" :rows="10"></el-input>
-                    </el-form-item>
-                    <el-form-item label="培训链接:" prop="train_url">
-                        <el-input type="textarea" v-model="ruleForm.train_url" :rows="3"></el-input>
-                    </el-form-item>
                     <el-form-item label="培训地址:" prop="train_address">
                         <el-input v-model="ruleForm.train_address"></el-input>
                     </el-form-item>
                     <el-form-item label="培训价格:" prop="train_price">
                         <el-input v-model="ruleForm.train_price"></el-input>
                     </el-form-item>
+                    <el-form-item label="培训内容:" prop="train_content">
+                        <el-input type="textarea" v-model="ruleForm.train_content" :rows="5"></el-input>
+                    </el-form-item>
+                    <el-form-item label="培训链接:" prop="train_url">
+                        <el-input type="textarea" v-model="ruleForm.train_url" :rows="3"></el-input>
+                    </el-form-item>
+                    
                     <el-form-item label="培训展示图:">
-                        <el-upload
+                        <!-- <el-upload
                         class="avatar-uploader"
                         action="/api/admin/fileupload/image"
                         :show-file-list="false"
@@ -50,7 +51,19 @@
                         <div  v-else style="padding-top: 10%">
                         <i class="el-icon-plus" style="font-size: 48px"></i>
                         </div>
+                    </el-upload> -->
+                    <el-upload
+                        action="/api/admin/fileupload/image"
+                        list-type="picture-card"
+                        :on-success="train_pic"
+                        :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove">
+                        <i class="el-icon-plus" style="font-size: 48px"></i>
+                    <!-- <i class="el-icon-plus" style="font-size: 48px"></i> -->
                     </el-upload>
+                    <el-dialog :visible.sync="dialogVisible">
+                    <img width="100%" :src="dialogImageUrl" alt="">
+                    </el-dialog>
                     </el-form-item>
 
                     <el-form-item label="加盟商是否接收:" prop="train_business_on">
@@ -65,6 +78,9 @@
                             <el-radio :label="1">接收</el-radio>
                         </el-radio-group>
                     </el-form-item>
+                    <el-form-item class="margin-auto">
+                        <el-button size="large" type="primary" @click="submit()" >提交</el-button>
+                    </el-form-item>
                </el-form>
             </div>
         </div>
@@ -76,51 +92,74 @@ export default {
   name: "training",
   data() {
     return {
-      ruleForm:{
-        "train_title" : "",//培训标题
-        "train_type" : 1,// 培训类型 1门店5S管理培训 2店务培训 3美容服务技巧 4店长班 5服务话术培训 6偷偷美微掌柜
-        "train_content" : "",//培训内容
-        "train_url" : "",//培训链接
-        "train_business_on" : "1",//加盟商是否接收
-        "train_shop_on" : "0",//门店是否接收
-        "train_pic":"",//培训展示图
-        "train_address":"",//培训地址
-        "train_price":""//培训价格
-      },
+        dialogVisible: false,
+        dialogImageUrl:"",
+        ruleForm:{
+            "train_title" : "",//培训标题
+            "train_type" : 1,// 培训类型 1门店5S管理培训 2店务培训 3美容服务技巧 4店长班 5服务话术培训 6偷偷美微掌柜
+            "train_content" : "",//培训内容
+            "train_url" : "",//培训链接
+            "train_business_on" : 1,//加盟商是否接收
+            "train_shop_on" : 0,//门店是否接收
+            "train_pic":[],//培训展示图
+            "train_address":"",//培训地址
+            "train_price":""//培训价格
+        },
 
         rules: {
-          name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-          ],
-          region: [
-            { required: true, message: '请选择活动区域', trigger: 'change' }
-          ],
-          date1: [
-            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-          ],
-          date2: [
-            { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-          ],
-          type: [
-            { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-          ],
-          resource: [
-            { required: true, message: '请选择活动资源', trigger: 'change' }
-          ],
-          desc: [
-            { required: true, message: '请填写活动形式', trigger: 'blur' }
-          ]
+            train_title: [
+            { required: true, message: '请输入培训标题', trigger: 'blur' },
+            ],
+            train_type: [
+            { required: true, message: '请选择培训类型', trigger: 'change' }
+            ],
+            train_content: [
+            { required: true, message: '请填写培训内容', trigger: 'blur' }
+            ],
+            train_url: [
+            { required: true, message: '请填写培训链接', trigger: 'blur' }
+            ],
+            train_business_on: [
+            {  required: true, message: '请至少选择一个标签', trigger: 'change' }
+            ],
+            train_shop_on: [
+            {  required: true, message: '请至少选择一个标签', trigger: 'change' }
+            ],
+            train_address: [
+            { required: true, message: '请输入培训地址', trigger: 'blur' }
+            ],
+            train_price: [
+            { required: true, message: '请填写培训价格', trigger: 'blur' }
+            ]
         }
     };
   },
   methods:{
       train_pic(res){
-      this.ruleForm.train_pic = res.data.url
+        this.ruleForm.train_pic.push(res.data.url)
     },
     handleRemove(file, fileList) {
-       this.ruleForm.shop_environment.splice(file.url,1)
-        console.log(this.ruleForm.shop_environment,'shop_environment')
-    }
+       this.ruleForm.train_pic.splice(file.url,1)
+    },
+    handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+    },
+    submit(){
+        console.log(this.ruleForm,'this.ruleForm');
+            this.$axios.post("/api/admin/train/create", this.ruleForm).then(res => {
+                if(res.data.code == 0){
+                    this.$alert('添加成功！')
+                    this.$router.push('/training/list')
+                }else{
+                    this.$alert(res.data.msg)
+                }
+            }).catch((e)=>{
+
+                this.$alert('操作失败'+e)
+
+            })
+      },
     
 
       // getBusinessList(){
@@ -145,7 +184,22 @@ export default {
     BreadCrumb
   },
 
-  created() {},
+    created() {
+        let params = this.$route.query;
+        if (Object.keys(params).length) {
+            this.params = params
+            this.$axios.get("/api/admin/train/detail?id="+params.id).then(res => {
+                this.ruleForm = res.data.data;
+                debugger;
+                //this.form1.category_id = res.data.data.category_id
+                // this.getshopAccout(this.form1.create_user.shop_id)
+                // this.loadMechanic();
+
+
+            })
+        }
+
+    },
   computed: {}
 };
 </script>
@@ -156,8 +210,9 @@ export default {
     padding:30px 40px;
     background-color: #fff;
 }
-.demo-ruleForm{
-    /* width: 524px; */
+.margin-auto{
+    margin-left: 25%;
+    margin-top: 25px;
 }
 </style>
 

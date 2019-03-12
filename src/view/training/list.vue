@@ -109,26 +109,26 @@ export default {
                         "prop": "train_url",
 
                     },
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "状态",
-                        "width": "",
-                        formatter(row) {
-                            return `<div style="color:red">
-                                ${row.train_status==0?'停用':'启用'}
-                                </div>`
-                        }
+                    // {
+                    //     "type": "text",
+                    //     "align": "center",
+                    //     "label": "状态",
+                    //     "width": "",
+                    //     formatter(row) {
+                    //         return `<div style="color:red">
+                    //             ${row.train_status==0?'停用':'启用'}
+                    //             </div>`
+                    //     }
 
-                    },
-                    {
-                        "type": "switch_btn",
-                        "label": "操作",
-                        "align": "center",
-                        "width": "50",
-                        "prop": "train_status",
-                        "value": ['停用', '启用']
-                    },
+                    // },
+                    // {
+                    //     "type": "switch_btn",
+                    //     "label": "操作",
+                    //     "align": "center",
+                    //     "width": "50",
+                    //     "prop": "train_status",
+                    //     "value": ['停用', '启用']
+                    // },
                     // {
 					// 		"type": "handle",
 					// 		"label": "操作",
@@ -172,7 +172,7 @@ export default {
                                     name: "id",
                                     data: "train_id"
                                 },
-                                axiosUrl: "/api/admin/train/remove ",
+                                axiosUrl: "/api/admin/train/remove",
                                 axiosType: "post",
                                 callback(tablePage, self, row) {
                                     console.log(row,'!!!!!!');
@@ -185,14 +185,24 @@ export default {
                                 label: "编辑",
                                 type: "edit",
                                 url: "", //优先执行url
-                                onClick(tablePage, self, row) {
-                                    self.$router.push({
-                                        name: "createCategory",
-                                        query: {
-                                            id: row.category_id
-                                        }
-                                    });
-                                }
+                                axiosUrl: "api/admin/train/detail",
+                                axiosType: "get",
+                                // onClick(tablePage, self, row){
+                                //     console.log(self,'self')
+                                //     console.log(row,'row')
+                                //     console.log(tablePage,'tablePage')
+                                //     self.$router.push("/training/add")
+                                // }
+                                onClick(tablePage, self, record) {
+                                    console.log(record,'record');
+                                    self.$router.push("/training/add?id=" + record.train_id)
+                                    // self.$router.push({
+                                    //     path: '/training/add',
+                                    //     query: {
+                                    //         id: record.train_id
+                                    //     }
+                                    // })
+								}
                             }
                         ]
                     }
