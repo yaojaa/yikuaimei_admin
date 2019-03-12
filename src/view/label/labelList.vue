@@ -176,12 +176,13 @@ export default {
                                 url: "", //优先执行url
                                 params: {
                                     name: "id",
-                                    data: "category_id"
+                                    data: "tag_id"
                                 },
-                                axiosUrl: "/api/admin/category/remove",
+                                axiosUrl: "/api/admin/tag/removeGroup",
                                 axiosType: "post",
                                 callback(tablePage, self, row) {
-                                    console.log(self, row);
+                                    console.log(row,'!!!!!!');
+                                    //console.log(params,'params')
                                     self.nomal = !self.nomal;
                                     tablePage.isShow = !tablePage.isShow;
                                 }
