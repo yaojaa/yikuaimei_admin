@@ -730,7 +730,11 @@ export default {
                 }else{
                     this.createdData[targeName] = fileList.map(item => {
                         if(item.status === 'success'){
-                            return item.response.data.file_name   
+                            if (item.response) {
+                                return item.response.data.file_name 
+                            } else {
+                                return item.url
+                            }   
                         }
                     })
                 }
