@@ -354,6 +354,22 @@ export default new Router({
                         title: '门店'
                     }
                 },
+                {
+                    // 培训列表
+                    path: '/training/list',
+                    component: resolve => require(['../view/training/list.vue'], resolve),
+                    meta: {
+                        title: '培训列表'
+                    }
+                },
+                {
+                    // 添加培训
+                    path: '/training/add',
+                    component: resolve => require(['../view/training/add.vue'], resolve),
+                    meta: {
+                        title: '添加干货培训'
+                    }
+                },
 
                 {
                     // 门店

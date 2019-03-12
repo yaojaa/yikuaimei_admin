@@ -52,6 +52,7 @@ export default {
             business_id: '',
             is_use: '',
             remark: '无',
+            	currentItem: {},
             status_filter: "",
             tagsListGroup: {
                 '选择类型:': [

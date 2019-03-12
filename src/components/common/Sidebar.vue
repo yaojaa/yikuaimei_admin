@@ -113,6 +113,10 @@
                             {
                                 index: '/shop/list',
                                 title: '门店'
+                            },
+                            {
+                                index: '/training/list',
+                                title: '培训'
                             }
                         ]
                     },

@@ -698,6 +698,7 @@ export default {
 
     //上传成功后照片预览 
     $_onPreview(file){
+        console.log(file,'111111')
         this.imgUrl = file.url;
         this.imgVisible = true;
     },
@@ -715,6 +716,7 @@ export default {
 
     // 上传文件，上传数组，目标对象,上传单张
     $_change(file, fileList, targeName, num){
+        debugger;
         if(file.status === 'success'){
             if(targeName === 'good_video'){
                 this.createdData.good_video = file.response.data.file_name
