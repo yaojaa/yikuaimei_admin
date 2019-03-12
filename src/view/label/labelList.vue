@@ -178,7 +178,7 @@ export default {
                                     name: "id",
                                     data: "tag_id"
                                 },
-                                axiosUrl: "/api/admin/tag/removeGroup",
+                                axiosUrl: "/api/admin/tag/removeTag",
                                 axiosType: "post",
                                 callback(tablePage, self, row) {
                                     console.log(row,'!!!!!!');
