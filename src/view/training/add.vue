@@ -40,30 +40,17 @@
                     </el-form-item>
                     
                     <el-form-item label="培训展示图:">
-                        <!-- <el-upload
+                        <el-upload
                         class="avatar-uploader"
                         action="/api/admin/fileupload/image"
                         :show-file-list="false"
-                        :on-success="train_pic"
-                        :on-remove="handleRemove"
-                        >
+                        :on-success="handleAvatarSuccess">
                         <img width="100%" v-if="ruleForm.train_pic" :src="ruleForm.train_pic" >
                         <div  v-else style="padding-top: 10%">
                         <i class="el-icon-plus" style="font-size: 48px"></i>
                         </div>
-                    </el-upload> -->
-                    <el-upload
-                        action="/api/admin/fileupload/image"
-                        list-type="picture-card"
-                        :on-success="train_pic"
-                        :on-preview="handlePictureCardPreview"
-                        :on-remove="handleRemove">
-                        <i class="el-icon-plus" style="font-size: 48px"></i>
-                    <!-- <i class="el-icon-plus" style="font-size: 48px"></i> -->
-                    </el-upload>
-                    <el-dialog :visible.sync="dialogVisible">
-                    <img width="100%" :src="dialogImageUrl" alt="">
-                    </el-dialog>
+                        </el-upload>
+                    
                     </el-form-item>
 
                     <el-form-item label="加盟商是否接收:" prop="train_business_on">
@@ -92,8 +79,6 @@ export default {
   name: "training",
   data() {
     return {
-        dialogVisible: false,
-        dialogImageUrl:"",
         ruleForm:{
             "train_title" : "",//培训标题
             "train_type" : 1,// 培训类型 1门店5S管理培训 2店务培训 3美容服务技巧 4店长班 5服务话术培训 6偷偷美微掌柜
@@ -101,7 +86,7 @@ export default {
             "train_url" : "",//培训链接
             "train_business_on" : 1,//加盟商是否接收
             "train_shop_on" : 0,//门店是否接收
-            "train_pic":[],//培训展示图
+            "train_pic":"",//培训展示图
             "train_address":"",//培训地址
             "train_price":""//培训价格
         },
@@ -135,19 +120,25 @@ export default {
     };
   },
   methods:{
-      train_pic(res){
-        this.ruleForm.train_pic.push(res.data.url)
-    },
-    handleRemove(file, fileList) {
-       this.ruleForm.train_pic.splice(file.url,1)
-    },
-    handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
+    handleAvatarSuccess(res, file) {
+        this.ruleForm.train_pic = res.data.url;
+      },
+    beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
     },
     submit(){
         console.log(this.ruleForm,'this.ruleForm');
-            this.$axios.post("/api/admin/train/create", this.ruleForm).then(res => {
+            var parms = this.ruleForm;
+            this.$axios.post("/api/admin/train/create", {parms}).then(res => {
                 if(res.data.code == 0){
                     this.$alert('添加成功！')
                     this.$router.push('/training/list')
