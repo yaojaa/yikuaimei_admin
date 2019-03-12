@@ -137,8 +137,8 @@ export default {
     },
     submit(){
         console.log(this.ruleForm,'this.ruleForm');
-            var parms = this.ruleForm;
-            this.$axios.post("/api/admin/train/create", {parms}).then(res => {
+            //var parms = this.ruleForm;
+            this.$axios.post("/api/admin/train/create", this.ruleForm).then(res => {
                 if(res.data.code == 0){
                     this.$alert('添加成功！')
                     this.$router.push('/training/list')
