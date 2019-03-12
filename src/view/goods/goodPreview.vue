@@ -28,7 +28,7 @@
 				good_type: this.$route.query.good_type, 
 				breadcrumb: [],
 				reqParams: {
-					scene: 'id='+this.$route.query.good_id+'$preview=true'
+					scene: 'id='+this.$route.query.good_id+'&preview=true'
 				},
 				qrCodeImg: ''
 			};
