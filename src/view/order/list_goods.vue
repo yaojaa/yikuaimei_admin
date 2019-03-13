@@ -38,17 +38,17 @@
                     '订单类型：': [{
                             title: '全部',
                             key: 'profit',
-                            value: ''
-                        },
-                        {
-                            title: '利润归门店',
-                            key: 'profit',
-                            value: 2
+                            value: 0
                         },
                         {
                             title: '利润归平台',
                             key: 'profit',
                             value: 1
+                        },
+                        {
+                            title: '利润归门店',
+                            key: 'profit',
+                            value: 2
                         }
                     ],
                     '订单状态：': [
@@ -64,7 +64,7 @@
                             value: 1
                         },
                         {
-                            title: '已付款',
+                            title: '已付款/待发货',
                             key: 'status',
                             value: 2
                         },
@@ -74,7 +74,7 @@
                             value: 3
                         },
                         {
-                            title: '待评价',
+                            title: '已发货/待评价',
                             key: 'status',
                             value: 4
                         },
@@ -187,7 +187,7 @@
                             "type": "text",
                             "align": "center",
                             "label": "实付金额",
-                            "prop": "order_price",
+                            "prop": "order_online_price",
                             "width": "",
     
                         },
@@ -195,7 +195,7 @@
                             "type": "text",
                             "align": "center",
                             "label": "订单状态",
-                            "prop": "order_status_name",
+                            "prop": "order_status",
                             "width": ""
     
                         },

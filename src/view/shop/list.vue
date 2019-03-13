@@ -228,10 +228,10 @@ export default {
 
 
 
-            const { business_id, shop_is_use } = data.value
-            console.log(shop_is_use)
+            const { shop_id, shop_is_use } = data.value
+            console.log(data.value,'data.value')
 
-            this.business_id = business_id
+            this.shop_id = shop_id
             this.is_use = shop_is_use == 1 ? 0 : 1
             console.log(this.is_use)
 
@@ -239,7 +239,7 @@ export default {
         },
         doUpdateIsUse() {
             const params = {
-                id: this.business_id,
+                id: this.shop_id,
                 is_use: this.is_use,
                 remark: this.remark
             }
