@@ -109,11 +109,12 @@ export default {
     $_change(res,file, target){
       let url = target.type_name === '分享卡片' ? 'share/fetchCreateCard' : 'share/fetchCreateShareList'
       if(res.status === 'success'){
+        debugger
         target.img_url = URL.createObjectURL(res.raw)
         this.$store.dispatch(url,{
           id : this.goodId ,
           type_name : target.type_name,
-          img_url : file[0].response.data.img_url ,
+          img_url : file[0].response.data.url ,
         })
         // fetchCreateCard
       }

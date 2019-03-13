@@ -35,7 +35,7 @@
                 status_filter: '',
     
                 tagsListGroup: {
-                    '订单类型：': [{
+                    '利润归属：': [{
                             title: '全部',
                             key: 'profit',
                             value: 0
@@ -97,26 +97,25 @@
                     "list": [{
                             "type": "input-text", //输入文本
                             "label": "用户名",
-                            "name": "order_user_name",
-    
+                            "name": "user_name",
                             "value": "",
                             "placeholder": "用户名",
                         },
                         {
                             "type": "input-text", //输入文本
                             "label": "手机号",
-                            "name": "order_user_phone",
+                            "name": "phone",
     
                             "value": "",
                             "placeholder": "",
                         },
-                        {
-                            "type": "input-text", //选择器
-                            "label": "订单号",
-                            "name": "order_code",
-                            "value": ""
+                        // {
+                        //     "type": "input-text", //选择器
+                        //     "label": "订单号",
+                        //     "name": "order_code",
+                        //     "value": ""
     
-                        },
+                        // },
                         {
                             "type": "input-text", //选择器
                             "label": "商品名称",
@@ -127,13 +126,13 @@
                         {
                             "type": "input-date", //输入日期
                             "label": "日期",
-                            "name": "date",
+                            "name": "data",
                             "value": "",
                         },
                         {
                             "type": "input-date", //输入日期
                             "label": "日期",
-                            "name": "date",
+                            "name": "data",
                             "value": "",
                         },
                     ]
@@ -195,8 +194,22 @@
                             "type": "text",
                             "align": "center",
                             "label": "订单状态",
-                            "prop": "order_status",
-                            "width": ""
+                            "prop": "order_name",
+                            "width": "",
+                            formatter(row) {
+                                let str = row.order_status
+                                if(str==1){
+                                    row.order_name = "创建";
+                                }
+                                if(str==2){
+                                    row.order_name = "完成"
+                                }
+                                if(str==3){
+                                    row.order_name = "取消"
+                                }
+
+                                return row.order_name
+                            }
     
                         },
                         {

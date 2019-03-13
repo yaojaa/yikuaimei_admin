@@ -22,24 +22,24 @@
             </div>
             <div class="panel">
                 <el-row :gutter="8">
-                    <el-col :span="5">
+                    <el-col :span="8">
                         <el-card class="box-card">
                             <div slot="header" class="clearfix">
                                 <span>待发货</span>
                             </div>
                             <div v-for="o in from_goods_list" :key="o.id" class="text clearfix flex_box">
                                 <div class="img">
-                                    <img src="http://192.168.2.178:8888/%E5%8E%9F%E5%9E%8B/%E5%B9%B3%E5%8F%B0%E5%8E%9F%E5%9E%8B-html/images/%E5%B9%B3%E5%8F%B0%E5%95%86%E5%93%81/u999.png" width="50" height="50">
-			</div>
+                                    <img :src="o.goods_img" width="50" height="50"/>
+			                    </div>
                                     <div class="con">
-                                        <p>{{o.goods_name}}</p>
-                                        <p>{{o.sku_type}}</p>
-                                        <p>{{o.goods_num}}</p>
+                                        <p>名称：{{o.goods_name}}</p>
+                                        <p>编码：{{o.goods_barcode}}</p>
+                                        <p>数量：{{o.goods_num}}</p>
                                     </div>
                                 </div>
                         </el-card>
                     </el-col>
-                    <el-col :span="13">
+                    <el-col :span="10">
                         <el-card class="box-card">
                             <div slot="header" class="clearfix">
                                 <span>操作区</span>
@@ -89,7 +89,49 @@
                                         <p>{{o.num}}</p>
                                     </div>
                                 </div>
-                                <el-button size="large" type="success">打印快递单</el-button>
+                                <el-button size="large" type="success" @click="printExpres">打印快递单</el-button>
+                                <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+                                    <el-form :model="form">
+                                        <el-form-item label="收件人姓名:" :label-width="formLabelWidth">
+                                            <el-input v-model="d.order_user_name" autocomplete="off" :disabled="true"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="收件人电话:" :label-width="formLabelWidth">
+                                            <el-input v-model="d.order_user_phone" autocomplete="off" :disabled="true"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="收件人地址:" :label-width="formLabelWidth">
+                                            <el-input v-model="d.order_user_address" autocomplete="off" :disabled="true"></el-input>
+                                        </el-form-item>
+                                       
+
+                                        <el-form-item label="发件仓库" :label-width="formLabelWidth">
+                                            <el-select v-model="form.address_id" placeholder="请选择">
+                                                <el-option 
+                                                    v-for="item in sendList" 
+                                                    :label="item.contacts_name" 
+                                                    :value="item.contacts_name" 
+                                                    :key="item.address_id">
+                                                </el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                        <el-form-item label="寄件人备注:" :label-width="formLabelWidth">
+                                            <el-input type="textarea" v-model="form.dis_send_remark"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="物流列表" :label-width="formLabelWidth">
+                                            <el-select v-model="form.code" placeholder="请选择">
+                                                <el-option 
+                                                    v-for="item in expressList" 
+                                                    :label="item.name" 
+                                                    :value="item.name" 
+                                                    :key="item.code">
+                                                </el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                    </el-form>
+                                    <div slot="footer" class="dialog-footer">
+                                        <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                        <el-button type="primary" @click="sendGoods">确 定</el-button>
+                                    </div>
+                                </el-dialog>
                         </el-card>
                     </el-col>
                 </el-row>
@@ -119,7 +161,16 @@ export default {
                 goods_name: '',
                 goods_ico: ''
             },
-            current_goods_need_num: 'xxx'
+            form:{
+                "dis_send_remark":"",
+                "address_id":"",
+                "code":""
+            },
+            current_goods_need_num: 'xxx',
+            dialogFormVisible:false,
+            sendList:[],
+            expressList:[],
+            formLabelWidth:'120px'
         }
     },
 
@@ -192,6 +243,46 @@ export default {
         this.getData(this.$route.params)
     },
     methods: {
+        printExpres(){
+            debugger
+            this.dialogFormVisible = true;
+            this.$axios({
+                method: 'get',
+                url: '/api/admin/select/address?contacts_send='+1,
+                
+            }).then((res) => {
+
+                if(res.data.code ==0){
+                    this.sendList = res.data.data;
+                    //Object.assign(this.ruleForm,res.data.data) 
+                }else{
+                    this.$alert('接口返回错误')
+                }
+                
+            }).catch((error) => {
+                this.$alert('接口返回错误'+error)
+            });
+            //物流列表
+            this.$axios({
+                method: 'get',
+                url: '/api/admin/select/expressCompany',
+                
+            }).then((res) => {
+
+                if(res.data.code ==0){
+                    this.expressList = res.data.data;
+                    //Object.assign(this.ruleForm,res.data.data) 
+                }else{
+                    this.$alert('接口返回错误')
+                }
+                
+            }).catch((error) => {
+                this.$alert('接口返回错误'+error)
+            });
+        },
+        sendGoods(){
+            
+        },
 
         checkScanGoods(it) {
 
@@ -288,7 +379,7 @@ export default {
             }).then((res) => {
                 if (res.data.code == 0) {
                     this.d = res.data.data
-                    this.from_goods_list = res.data.data.goods_list
+                    this.from_goods_list = res.data.data.goods_list;
 
                     // this.total_count = 
 

@@ -4,9 +4,6 @@
             <div class="panel-heading">
                 <h3 class="panel-title" style="line-height: 28px;background: #FBFBFF 100%;">
                     订单状态：{{ order_status[order.order_status_all]}}
-                    <el-button v-if="+order.order_status_all === 2" icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/categorylist' })" style="float:right">
-                        去发货
-                    </el-button>
                 </h3>
             </div>
             <!-- <div class="panel-body">
