@@ -61,7 +61,7 @@
 						name: "在线预览"
 					}
 				];
-				this.reqParams.page = '/pages/goods-detail/index'
+				this.reqParams.page = 'pages/goods-detail/index'
 			}
 		},
 		computed: {},
@@ -70,6 +70,7 @@
 		},
 		methods: {
 			getQrCode() {
+				console.log(this.reqParams,'this.reqParams')
 				this.$axios.post("/api/admin/shopgoods/getQrCode", this.reqParams).then(res => {
 					console.log('res',res)
 					if(res.data.code != 0){
