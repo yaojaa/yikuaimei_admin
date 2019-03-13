@@ -281,7 +281,27 @@ export default {
             });
         },
         sendGoods(){
-            
+            // var prams ={
+            //     "order_code":this.
+            // }
+            this.$axios.post("/api/admin/order/createDis", this.ruleForm).then(res => {
+
+                      if(res.data.code == 0){
+
+                          this.$alert('添加门店成功！')
+
+                          this.$router.push('/shop/list')
+
+                      }else{
+                          this.$alert(res.data.msg)
+                      }
+
+
+                  }).catch((e)=>{
+
+                    this.$alert('操作失败'+e)
+
+                  })
         },
 
         checkScanGoods(it) {
