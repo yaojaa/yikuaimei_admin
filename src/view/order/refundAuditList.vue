@@ -271,16 +271,24 @@ export default {
                         "type": "text",
                         "align": "center",
                         "label": "退款状态",
-                        "prop": "purchase_price",
+                        "prop": "refund_status_name",
                         "width": "",
-                        formatter(row) {
-                            let str = "<div>";
-                            str += "<p>" + Config.refundStatus[row.order_refund_status] + "</p>";
-                            str += "</div>";
-                            return str;
-                        }
 
                     },
+                    // {
+                    //     "type": "text",
+                    //     "align": "center",
+                    //     "label": "退款状态",
+                    //     "prop": "purchase_price",
+                    //     "width": "",
+                    //     formatter(row) {
+                    //         let str = "<div>";
+                    //         str += "<p>" + Config.refundStatus[row.order_refund_status] + "</p>";
+                    //         str += "</div>";
+                    //         return str;
+                    //     }
+
+                    // },
                     {
                         "type": "handle",
                         "label": "操作",
