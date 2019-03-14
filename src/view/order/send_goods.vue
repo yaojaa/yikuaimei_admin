@@ -62,7 +62,7 @@
 			    	</div>
                                         <div class="goods_conent">
                                             <p>{{current_goods.goods_name}}</p>
-                                            <p>{{current_goods.sku_type}}</p>
+                                            <!-- <p>{{current_goods.sku_type}}</p> -->
                                             <el-input-number v-model="current_goods.num" @change="numhandleChange" :min="1" label="数量"></el-input-number>
                                             <br> <br>
                                             <el-button size="large" @click="toSendArea" type="success">确定</el-button>
@@ -108,7 +108,7 @@
                                                 <el-option 
                                                     v-for="item in sendList" 
                                                     :label="item.contacts_name" 
-                                                    :value="item.contacts_name" 
+                                                    :value="item.address_id" 
                                                     :key="item.address_id">
                                                 </el-option>
                                             </el-select>
@@ -117,11 +117,11 @@
                                             <el-input type="textarea" v-model="form.dis_send_remark"></el-input>
                                         </el-form-item>
                                         <el-form-item label="物流列表" :label-width="formLabelWidth">
-                                            <el-select v-model="form.code" placeholder="请选择">
+                                            <el-select v-model="form.dis_identity" placeholder="请选择">
                                                 <el-option 
                                                     v-for="item in expressList" 
                                                     :label="item.name" 
-                                                    :value="item.name" 
+                                                    :value="item.code" 
                                                     :key="item.code">
                                                 </el-option>
                                             </el-select>
@@ -151,7 +151,7 @@ export default {
     data() {
         return {
 
-            d: '',
+            d: {},
             textarea: '', //条码区
             from_goods_list: [],
             to_goods_list: [],
@@ -159,12 +159,14 @@ export default {
             current_goods: {
                 num: 1,
                 goods_name: '',
-                goods_ico: ''
+                goods_ico: '',
+                goods_barcode:''
+
             },
             form:{
                 "dis_send_remark":"",
                 "address_id":"",
-                "code":""
+                "dis_identity":""
             },
             current_goods_need_num: 'xxx',
             dialogFormVisible:false,
@@ -244,7 +246,8 @@ export default {
     },
     methods: {
         printExpres(){
-            debugger
+            //debugger
+            console.log(this.to_goods_list,'to_goods_list')
             this.dialogFormVisible = true;
             this.$axios({
                 method: 'get',
@@ -281,16 +284,37 @@ export default {
             });
         },
         sendGoods(){
-            // var prams ={
-            //     "order_code":this.
+            console.log(this.to_goods_list,'this.to_goods_list')
+            //debugger
+            var prams ={
+                "order_code":this.d.order_code,
+                "dis_send_id":this.form.address_id,
+                "dis_send_remark":this.form.dis_send_remark,
+                "dis_identity":this.form.dis_identity,
+                "goods_list":[{
+                    "goods_barcode":this.to_goods_list[0].goods_barcode,
+                    "goods_num":this.to_goods_list[0].goods_num
+                }]
+            }
+            //             {
+            // "order_code" : "B000012T12000000003", // 订单编号
+            // "dis_send_id" : 1, // 发货人id
+            // "dis_send_remark" : "必须送上门", // 发货人备注
+            // "dis_identity" : "SF",  // 快递公司  'SF' =>'顺丰速运', 'STO' =>'申通快递' ....
+            // "goods_list" : [ // 发货的商品列表
+            //     {
+            //     "goods_barcode" : "2919875345167891",  // 订单的商品条形码
+            //     "goods_num" : 1 // 发货的商品数量
+            //     }
+            // ]
             // }
-            this.$axios.post("/api/admin/order/createDis", this.ruleForm).then(res => {
+            this.$axios.post("/api/admin/order/createDis", prams).then(res => {
 
                       if(res.data.code == 0){
 
-                          this.$alert('添加门店成功！')
+                          this.$alert('发货成功！')
 
-                          this.$router.push('/shop/list')
+                            this.$router.push('/order/list_goods')
 
                       }else{
                           this.$alert(res.data.msg)
@@ -310,10 +334,11 @@ export default {
 
             this.from_goods_list.forEach((item, index) => {
 
-                console.log('each', item.sku_code, it.sku_info.sku)
+                console.log('each', item, it)
 
-                if (item.sku_code == it.sku_info.sku_code) {
+                if (item.goods_barcode == it) {
                     this.current_goods_need_num = item.goods_num
+                    this.current_goods = item
                     return true
                 }
             })
@@ -329,23 +354,26 @@ export default {
                 num: 0,
                 goods_name: '',
                 goods_ico: ''
+
             }
         },
 
         getCurrentGoodsInfo(code) {
+            
+            //  var _businessList = this.d.goods_list;
+            // // debugger
+            // _businessList.forEach(function(item){
+            //     if(item.goods_barcode==code){
+            //         this.current_goods = item
 
-            this.$axios({
-                method: 'get',
-                url: 'https:\\image.countinsight.com/goods.json'
-            }).then((res) => {
-                if (res.status == 200) {
-
-                    const c_goods = res.data[code] || false
-
-                    if (c_goods) {
-
-                        if (this.checkScanGoods(c_goods)) {
-
+            //     }
+                
+            // // })
+            var c_goods = this.d.goods_list;
+            if (c_goods) {
+               
+                        if (this.checkScanGoods(code)) {
+                           
                             if (code == this.last_code) {
                                 this.current_goods.num = ++this.current_goods.num
                             }
@@ -353,9 +381,10 @@ export default {
                             this.last_code = code.trim()
 
 
-
-                            this.current_goods.goods_name = c_goods.good_name
-                            this.current_goods.goods_ico = c_goods.good_ico
+                           
+                            // this.current_goods.goods_name = c_goods.good_name
+                            // this.current_goods.goods_ico = c_goods.good_ico
+                            // this.current_goods.goods_barcode = c_goods.goods_barcode
 
                             console.log(this.current_goods)
 
@@ -373,13 +402,8 @@ export default {
 
 
                     }
-
-                } else {
-                    this.$message({ message: res.data.msg, type: 'warning' });
-                }
-            }).catch((error) => {
-                console.log(error);
-            })
+            
+            
 
         },
 
