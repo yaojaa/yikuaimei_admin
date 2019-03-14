@@ -34,50 +34,49 @@ export default {
 
             tagsListGroup: {
                 '订单类型：': [
-                    { title: '全部', key: 'business_type', value: '' },
-                    { title: '利润归门店', key: 'business_type', value: 1 },
-                    { title: '利润归平台', key: 'business_type', value: 2 }
+                    { title: '全部', key: 'profit', value: '' },
+                    { title: '利润归门店', key: 'profit', value: 1 },
+                    { title: '利润归平台', key: 'profit', value: 2 }
                 ],
                 '订单状态：': [
 
                     { title: '全部', key: 'status', value: 0 },
-                    { title: '待处理', key: 'status', value: 1 },
-                    { title: '已付款', key: 'status', value: 2 },
-                    { title: '已发货', key: 'status', value: 3 },
-                    { title: '待评价', key: 'status', value: 4 },
-                    { title: '已评价', key: 'status', value: 5 },
-                    { title: '已取消', key: 'status', value: 8 },
+                    { title: '待付款', key: 'status', value: 1 },
+                    { title: '未核销', key: 'status', value: 2 },
+                    { title: '已核销', key: 'status', value: 3 },
+                    { title: '已取消', key: 'status', value: 4 }
+                    
 
                 ]
             },
-            //状态 0全部 1待处理 2已付款/待发货 3已发货 4已发货/待评价 5已评价 8已取消
+            //状态 0全部 1待付款 2未核销 3已核销 4已取消
 
             searchs: {
                 "list": [{
                         "type": "input-text", //输入文本
                         "label": "用户名",
-                        "name": "order_user_name",
+                        "name": "user_name",
                         "value": "",
                         "placeholder": "用户名",
                     },
                     {
                         "type": "input-text", //输入文本
                         "label": "手机号",
-                        "name": "order_user_phone",
+                        "name": "phone",
                         "value": "",
                         "placeholder": "",
                     },
-                    {
-                        "type": "input-text", //选择器
-                        "label": "订单号",
-                        "name": "order_code",
-                        "value": ""
+                    // {
+                    //     "type": "input-text", //选择器
+                    //     "label": "订单号",
+                    //     "name": "order_code",
+                    //     "value": ""
 
-                    },
+                    // },
                     {
                         "type": "input-text", //选择器
                         "label": "商品名称",
-                        "name": "option",
+                        "name": "goods_name",
                         "value": ""
 
                     },
@@ -96,29 +95,44 @@ export default {
                         "type": "text",
                         "align": "center",
                         "label": "商品名称",
-                        "prop": "business_ctime",
+                        "prop": "goods_name",
                         "width": "300",
                         formatter(row) {
                             let str = '';
-                            row.goods_list.forEach(item => {
-                                str += '<div class="flex_box"><div class="flex_item">' +
-                                    '<img width="30" height="30" src="' + item.goods_img + '"/></div>' +
-                                    '<div class="flex_item">' + item.goods_name + '</div>' +
-                                    '<div class="flex_item">' +
-                                    '¥' + item.goods_price + '✖️ ' + item.goods_num +
-                                    '</div></div>'
-                            })
+                            if(row.goods_list){
+                                row.goods_list.forEach(item => {
+                                    str += '<div class="flex_box"><div class="flex_item">' +
+                                        '<img width="30" height="30" src="' + item.goods_img + '"/></div>' +
+                                        '<div class="flex_item">' + item.goods_name + '</div>' +
+                                        '<div class="flex_item">' +
+                                        '¥' + item.goods_price + '✖️ ' + item.goods_num +
+                                        '</div></div>'
+                                })
 
-                            str += "</div>";
-                            return str;
+                                str += "</div>";
+                                return str;
+                            }
+                            
                         }
                     },
                     {
                         "type": "text",
                         "align": "center",
                         "label": "创建时间",
-                        "prop": "order_ctime",
+                        "prop": "order_goods_ctime",
                         "width": "",
+                        formatter(row) {
+                            let str = '';
+                            if(row.goods_list){
+                                row.goods_list.forEach(item => {
+                                    str += '<div class="flex_box"><div class="flex_item">' + item.order_goods_ctime + '</div>' +'</div>'
+                                })
+
+                                str += "</div>";
+                                return str;
+                            }
+                            
+                        }
 
                     },
                     {
@@ -137,7 +151,7 @@ export default {
                         "type": "text",
                         "align": "center",
                         "label": "实付金额",
-                        "prop": "order_price",
+                        "prop": "order_online_price",
                         "width": "",
 
                     },
