@@ -39,13 +39,13 @@ export default {
             status_filter: '',
 
             tagsListGroup: {
-                '商品类型' : [{
-                        title: '商品',
+                '订单类型' : [{
+                        title: '商品订单',
                         key: 'order_type ',
                         value: 2
                     },
                     {
-                        title: '服务',
+                        title: '服务订单',
                         key: 'order_type',
                         value: 1
                     },
@@ -81,7 +81,7 @@ export default {
                         value: 5
                     },
                 ],
-                '审核类型：': [{
+                '退款类型：': [{
                         title: '全部',
                         key: 'order_refund_type',
                         value: 0
@@ -102,7 +102,7 @@ export default {
                         value: 3
                     },
                 ],
-                '采购状态：': [{
+                '退款状态：': [{
                         title: '全部',
                         key: 'status',
                         value: 0
@@ -137,31 +137,32 @@ export default {
             },
 
             searchs: {
-                "list": [{
-                        "type": "input-text", //输入文本
-                        "label": "用户名",
-                        "name": "user_name",
-                        "value": "",
-                        "placeholder": "用户名",
-                    },
+                "list": [
                     {
                         "type": "input-text", //输入文本
-                        "label": "手机号",
-                        "name": "phone",
+                        "label": "退款编号",
+                        "name": "order_refund_id",
                         "value": "",
                         "placeholder": "",
                     },
                     {
                         "type": "input-text", //选择器
-                        "label": "订单号",
-                        "name": "order_number",
+                        "label": "订单编号",
+                        "name": "order_code",
                         "value": ""
 
                     },
                     {
                         "type": "input-text", //选择器
-                        "label": "商品名称",
-                        "name": "goods_name",
+                        "label": "下单用户名",
+                        "name": "order_user_name",
+                        "value": ""
+
+                    },
+                    {
+                        "type": "input-text", //选择器
+                        "label": "下单用户手机",
+                        "name": "order_user_phone",
                         "value": ""
 
                     },
@@ -186,7 +187,7 @@ export default {
                         "align": "center",
                         "label": "退款编号",
                         "prop": "order_refund_id",
-                        "width": "",
+                        "width": "120px",
                     },
                     {
                         "type": "text",
@@ -221,7 +222,7 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "申请类型",
+                        "label": "退款类型",
                         "prop": "purchase_price",
                         "width": "",
                         formatter(row) {
@@ -235,7 +236,7 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "退款方式",
+                        "label": "支付方式",
                         "prop": "shop_user_name",
                         "width": "",
                         formatter(row) {
@@ -293,6 +294,7 @@ export default {
                         "type": "handle",
                         "label": "操作",
                         "align": "center",
+                        "width":"120px",
                         "list": [{
                             "label": "详情",
                             "url": "/order/refundDetail",

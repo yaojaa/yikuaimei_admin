@@ -19,8 +19,8 @@
             <div class="panel-body">
     
                 <div class="info_p">
-                    退货单号：{{refundInfo.order_refund_id}}<br/> 申请时间：{{refundInfo.order_refund_ctime}}
-                    <br/> 订单号：{{refundInfo.order_code}}
+                    退款编号：{{refundInfo.order_refund_id}}<br/> 申请时间：{{refundInfo.order_refund_ctime}}
+                    <br/> 订单编号：{{refundInfo.order_code}}
                 </div>
     
             </div>
