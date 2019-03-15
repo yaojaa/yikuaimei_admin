@@ -355,6 +355,14 @@ export default new Router({
                     }
                 },
                 {
+                    // 编辑门店
+                    path: '/shop/add/:id',
+                    component: resolve => require(['../view/shop/add.vue'], resolve),
+                    meta: {
+                        title: '编辑门店'
+                    }
+                },
+                {
                     // 培训列表
                     path: '/training/list',
                     component: resolve => require(['../view/training/list.vue'], resolve),

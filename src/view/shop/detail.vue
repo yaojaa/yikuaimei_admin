@@ -139,6 +139,12 @@
                                         <img :src="info.shop_licence_pic" width="200">
                                     </div>
                                 </div>
+                                <div class="item">
+                                    <div class="hd">门店环境图：</div>
+                                    <div class="bd">
+                                        <img v-for="item in info.shop_environment" :src="item" :key="item" width="200">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,6 +227,7 @@ export default {
 
                 if(res.data.code ==0){
                     this.info = res.data.data;
+                    console.log(this.info,'info')
                     //debugger;
                 }else{
                     this.$alert('接口返回错误')

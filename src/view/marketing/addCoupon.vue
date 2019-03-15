@@ -22,16 +22,78 @@
                         <el-input v-model="ruleForm.limits.limit_total_times"></el-input>
                     </el-form-item>
                     <el-form-item label="可使用频率:">
-                        <el-select v-model="form.limits.limit_cycle">
-                            每
-                            <el-option label="日" value="1" ></el-option>
-                            <el-option label="日" value="2" ></el-option>
-                            <el-option label="日" value="3" ></el-option>
-                            
+                        每
+                        <el-select v-model="ruleForm.limits.limit_cycle">
+                            <el-option label="日" value="1"></el-option>
+                            <el-option label="周" value="2" ></el-option>
+                            <el-option label="月" value="3" ></el-option>
                         </el-select>
-                        <el-input v-model="form.limits.limit_times"></el-input>
-                        次
                     </el-form-item>
+                    <el-form-item label="次数">
+                        <el-input v-model="ruleForm.limits.limit_times"></el-input>
+                    </el-form-item>
+                    <el-form-item label="使用范围" >
+                        <el-radio-group v-model="ruleForm.coupon_range_type" @change="handleChange">
+                            <el-radio label="1">全国</el-radio>
+                            <el-radio label="2">指定行业</el-radio>
+                            <el-radio label="3">指定商品</el-radio>
+                            <el-radio label="4">指定服务</el-radio>
+                            <el-radio label="5">指定虚拟商品</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <div>
+                        <div v-if="ruleForm.coupon_range_type==2">
+                            {{industry_id}}
+                        </div>
+                        <div v-if="ruleForm.coupon_range_type==3">
+                            {{}}
+                        </div>
+                    </div>
+
+                    <!-- 指定行业弹窗 -->
+                    <el-dialog title="行业列表" :visible.sync="industryVisible">
+                        <el-form-item label="行业" >
+                            <el-select v-model="industry_id" placeholder="请选择所属行业分类" >
+                                <el-option v-for="item in industryForm" :label="item.category_name" :value="item.category_id" :key="`${item.category_id}category_id`" />
+                            </el-select>                   
+                        </el-form-item>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="industrySure">确 定</el-button>
+                        </div>
+                    </el-dialog>
+
+                    <!-- 指定商品弹窗 -->
+                    <el-dialog title="选择指定商品" :visible.sync="goodsVisible">
+                        <el-form-item>
+                            <div v-if="goodShow" class="good_show">
+                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id">{{checkedGoods.good_name}}<img :src="checkedGoods.good_ico" width="30px" height="30px"></el-radio>
+                            </div>
+                            <el-col :span="12">
+                                <el-input v-model="goods_name" placeholder="搜索"></el-input>
+                            </el-col>
+                           
+                            <el-col :span="5">
+                                <el-button type="primary" @click="goodsSearch">查询</el-button>
+                            </el-col>
+                        </el-form-item>
+
+                        <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
+                            <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
+                                <el-radio v-model="radioGoodsId" :label="item.good_id" :key="item.good_id" v-for="item in goodsList">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio>
+                            </el-tab-pane>
+                        </el-tabs>
+                        
+                        <!-- <el-form-item label="行业" >
+                            <el-select v-model="industry_id" placeholder="请选择所属行业分类" >
+                                <el-option v-for="item in industryForm" :label="item.category_name" :value="item.category_id" :key="`${item.category_id}category_id`" />
+                            </el-select>                   
+                        </el-form-item>
+                        -->
+                        <div slot="footer" class="dialog-footer">
+                            <!-- <el-button @click="goodsCancal">取 消</el-button> -->
+                            <el-button type="primary" @click="goodsSure">确 定</el-button>
+                        </div> 
+                    </el-dialog>
 
                     <!-- <el-form-item label="活动专属:" prop="coupon_in_shop">
                         <el-radio-group v-model="ruleForm.coupon_in_shop">
@@ -63,58 +125,106 @@ export default {
                 "reduce_price" : 1000  // 减多少
             },
             "limits" : { // 参与限制
-                "limit_cycle" : 1, // 限制周期  1 日 2周 3月
+                "limit_cycle" : "", // 限制周期  1 日 2周 3月
                 "limit_times" : 10, // 周期内限制使用次数
                 "limit_total_times" : 0, // 次数限制 0 不限
             },
-            "coupon_in_shop":0
+            "coupon_range" : { //弹窗列表选择
+                "category_id" : 1,
+                "goods_id" :  0
+            },
+            
+            "coupon_in_shop":0,
+            "coupon_range_type":1// 1全国 2行业 3商品 4服务 5 虚拟商品
             
         },
-
         rules: {
-            train_title: [
-            { required: true, message: '请输入培训标题', trigger: 'blur' },
+            coupon_title: [
+            { required: true, message: '优惠券标题', trigger: 'blur' },
             ],
-            train_type: [
-            { required: true, message: '请选择培训类型', trigger: 'change' }
-            ],
-            train_content: [
-            { required: true, message: '请填写培训内容', trigger: 'blur' }
-            ],
-            train_url: [
-            { required: true, message: '请填写培训链接', trigger: 'blur' }
-            ],
-            train_business_on: [
-            {  required: true, message: '请至少选择一个标签', trigger: 'change' }
-            ],
-            train_shop_on: [
-            {  required: true, message: '请至少选择一个标签', trigger: 'change' }
-            ],
-            train_address: [
-            { required: true, message: '请输入培训地址', trigger: 'blur' }
-            ],
-            train_price: [
-            { required: true, message: '请填写培训价格', trigger: 'blur' }
+            coupon_range_type: [
+            { required: true, message: '请选择使用范围', trigger: 'change' }
             ]
-        }
+            
+        },
+        industryForm:{},
+        goodsList:[],
+        "formLabelWidth":"120px",
+        "industryVisible":false,//指定行业显示与否
+        "goodsVisible":false, //指定商品显示与否
+        "industry_id":"",
+        "goods_name":"",
+        "tabPosition":"left",
+        "activeId":"",
+        "radioGoodsId":"",
+        checkedGoods:{},//以选中商品
+        "checkedGoodsId":"",//已经选中的商品id
+        "goodShow":false //选中商品是否显示
+        
+        
+       
+
+
     };
   },
   methods:{
-    handleAvatarSuccess(res, file) {
-        this.ruleForm.train_pic = res.data.url;
-      },
-    beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+      handleChange(e){
+        console.log(e,'eeee')
+        //   var _this = this;
+        //   console.log(this,'this')
 
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          
+        switch (e)
+        {
+            case "2": //2行业  
+            console.log(11111)
+              this.industryVisible = true      //行业弹窗
+            break;
+            case "3": //3商品
+            console.log(11111)
+               this.goodsVisible = true  //
+            break;
+            case 4: //4服务
+                //服务弹窗
+            break;
+            case 5: //5 虚拟商品
+                //虚拟商品弹窗
+            
         }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+      },
+      industrySure(){
+        //行业弹窗确定
+        if(this.industry_id==""){
+            this.$alert('必须选择行业')
+        }else{
+            this.ruleForm.coupon_range.category_id = this.industry_id;
+            
+            this.industryVisible = false;
         }
-        return isJPG && isLt2M;
-    },
+        
+      },
+      goodsSure(){
+          //商品弹窗确定
+          if(this.checkedGoodsId==""){
+              this.$alert('必须选择商品')
+          }else{
+              this.ruleForm.coupon_range.goods_id = this.checkedGoodsId;
+              this.goodsVisible = false;
+          }
+      },
+      goodsSearch(){
+        //商品搜索
+        var goodName = this.goods_name;
+        this.$axios.get("/api/admin/select/goodsList?good_name="+goodName).then(res =>{
+                if(res.data.code ==0){
+                    this.goodsList = res.data.data;
+                    this.goods_name = "" //查询完毕清空input
+                }else{
+                    this.$message({ message: res.data.msg, type: 'warning' });
+                }
+            })
+
+      },
     submit(){
         console.log(this.ruleForm,'this.ruleForm');
             //var parms = this.ruleForm;
@@ -131,23 +241,46 @@ export default {
 
             })
       },
-    
+      getCategoryList(){
+          //获取行业列表
+        this.$axios.get("/api/admin/select/categoryList").then(res =>{
+          if(res.data.code ==0){
+            this.industryForm = res.data.data;
+            console.log(this.industryForm,'industryForm')
+          }
 
-      // getBusinessList(){
-
-      //   this.$axios.get("/api/admin/select/businessList").then(res =>{
-      //     if(res.data.code ==0){
-      //       this.business_list = res.data.data;
-      //     }
-
-
-      //   })
-
-      // } ,
-      
-      
-      
+        })
+          
+      }
     },
+    watch:{
+        "activeId":function(val){
+            console.log(this,'this')
+            // var parms ={
+            //     "good_type":2,
+            //     "category_id":this.industryForm[val].category_id
+            // }
+            // console.log(parms,'parms')
+            //观察tab选项卡改变调用接口
+            this.$axios.get("/api/admin/select/goodsList?good_type=2&category_id="+this.industryForm[val].category_id).then(res =>{
+                if(res.data.code ==0){
+                    this.goodsList = res.data.data;
+                    console.log(this.goodsList,'goodsList')
+                    
+
+                }
+            })
+        },
+        radioGoodsId:function(event){
+            this.goodsList.forEach((item) => {
+                if (item.good_id == event) {
+                    this.checkedGoods = item;
+                    console.log(this.checkedGoods,'this.checkedGoods')
+                    this.goodShow = true
+                }
+            })
+        }
+},
 
 
   mounted() {},
@@ -156,6 +289,7 @@ export default {
   },
 
     created() {
+        this.getCategoryList(); //获取行业列表
         // let params = this.$route.query;
         // if (Object.keys(params).length) {
         //     this.params = params
@@ -184,6 +318,9 @@ export default {
 .margin-auto{
     margin-left: 25%;
     margin-top: 25px;
+}
+.good_show{
+    margin-bottom:20px;
 }
 </style>
 

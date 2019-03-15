@@ -8,8 +8,10 @@
                 </el-breadcrumb>
             </div>
             <div class="page-header-actions">
+                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/audit/shop' })">门店审核</el-button>
                 <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/shop/add' })">添加门店</el-button>
             </div>
+            
         </div>
         <div class="page-content">
             <div class="filter-tag-box">
@@ -187,13 +189,25 @@ export default {
                         "prop": "shop_is_use",
                         "value": ['停用', '启用']
                     },
+                    
 
                     {
                         "type": "handle",
                         "label": "查看",
                         "align": "center",
-                        "width": "50",
-                        "list": [{
+                        "width": "150",
+                        "list": [
+                            {
+                                "label": "修改",
+                                "type": "edit",
+                                onClick(tablePage, self, row) {
+                                    console.log(row,'row')
+                                    self.$router.push("/shop/add/" + row.shop_id)
+                                }
+
+
+                            },
+                            {
                             "label": "详情",
                             "type": "detail",
                             onClick(tablePage, self, row) {

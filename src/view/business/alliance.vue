@@ -8,6 +8,7 @@
                 </el-breadcrumb>
             </div>
             <div class="page-header-actions">
+                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/audit/business' })">加盟商审核</el-button>
                 <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/business/alliance_add' })">添加加盟商</el-button>
             </div>
         </div>

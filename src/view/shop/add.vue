@@ -164,6 +164,11 @@
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
+        
+        <div v-if="edit">
+            <img width="148px" height="148px" :src="item" alt="" v-for="item in ruleForm.shop_environment" :key="item">
+        </div>
+        
 
 
 
@@ -283,6 +288,8 @@ export default {
       url: "",
       business_name:null,
       CATEGORYOPTIONS,
+      params:{},
+      edit:false,
       breadcrumb: [
         //面包屑
         {
@@ -472,11 +479,11 @@ export default {
 
                   })
       },
-      mapTX() {
+      mapTX(lat,lng) {
         var that = this;
         TMap().then(qq => {
           var map = new qq.maps.Map(document.getElementById("atlas"),{
-            center: new qq.maps.LatLng(39.916527,116.397128),
+            center: new qq.maps.LatLng(lat||39.916527,lng||116.397128),
             zoom: 10
           });
             qq.maps.event.addListener(map, 'click', function(event) {
@@ -570,7 +577,27 @@ export default {
   },
 
   created() {
+    let params = this.$route.params;
+    //如果是编辑门店
+    if (Object.keys(params).length) {
+        this.edit = true;
+        this.params = params;
+        console.log(params,'params')
+        this.$axios.get("/api/admin/shop/detail", { params: params }).then(res => {
+          console.log(res.data.data,'data----data')
+            this.ruleForm = res.data.data;
+            this.mapTX(this.ruleForm.position.latitude,this.ruleForm.position.longitude)
+            // this.form1.category_id = res.data.data.category_id
+            // this.getshopAccout(this.form1.create_user.shop_id)
+            // this.loadMechanic();
+
+
+        })
+    }else{
       this.mapTX()
+    }
+
+      
   },
   computed: {}
 };

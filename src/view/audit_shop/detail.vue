@@ -140,12 +140,12 @@
                                 </div>
 
 
-           <div class="item">
+                                <div class="item">
                                     <div class="hd">营业执照号：</div>
                                     <div class="bd">{{info.shop_licence_num}}</div>
                                 </div>
 
-                                           <div class="item">
+                                <div class="item">
                                     <div class="hd">营业执照：</div>
                                     <div class="bd">
                                         <img :src="info.shop_licence_pic" width="200">
@@ -310,3 +310,6 @@ export default {
     width: 6em
   }
 </style>
+
+
+
