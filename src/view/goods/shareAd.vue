@@ -10,8 +10,17 @@
 
         <!-- tab 内容 -->
         <div class="page-content">
+          <el-form   label-width="100px" class="small-form">
+              <el-form-item label="分享海报文字:">
+                <el-input v-model="shareGetInfo.share_model_content"></el-input>
+              </el-form-item>
+              <el-form-item label="分享海报标题:">
+                <el-input v-model="shareGetInfo.share_model_title"></el-input>
+              </el-form-item>
+              
+          </el-form>
           <el-row>
-            <el-col :span="8" v-for="item in cardList" :key="`${item.type_name}cardList`">
+            <!-- <el-col :span="8" v-for="item in cardList" :key="`${item.type_name}cardList`">
               <el-button type="success">{{item.type_name}}</el-button>
               <el-upload
                 class="avatar-uploader"
@@ -24,7 +33,7 @@
                 <i class="el-icon-error error_deleted " v-if="item.img_url" @click.stop="$_clearFiles(item)"/>
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
               </el-upload>
-            </el-col>
+            </el-col> -->
             <el-col :span="8">
               <el-button type="change">{{card.type_name}}</el-button>
               <el-upload
@@ -39,6 +48,11 @@
               </el-upload>
             </el-col>
           </el-row>
+        <el-form  label-width="80px" class="bottom-form">
+          <el-form-item>
+            <el-button type="primary" @click="shareSure">确定</el-button>
+          </el-form-item>
+        </el-form>
         </div>
     </div>
 </template>
@@ -55,6 +69,11 @@ export default {
 
   data() {
     return {
+      shareGetInfo:{
+        // "share_model_content":"", //分享海报文字
+        // "share_model_title":"", //分享海报标题
+      },
+      
       breadcrumb: [{
             name: "商品管理", //名字
             url:'./goodList'
@@ -62,21 +81,21 @@ export default {
         {
             name: "分享海报"
         }], //面包屑
-      cardList: [
-        {
-          type_name: '经典版',
-          img_url: ''
+      // cardList: [
+      //   {
+      //     type_name: '经典版',
+      //     img_url: ''
 
-        },
-        {
-          type_name: '定制版',
-          img_url: ''
-        },
-        {
-          type_name: '节日版',
-          img_url: ''
-        }
-      ],
+      //   },
+      //   {
+      //     type_name: '定制版',
+      //     img_url: ''
+      //   },
+      //   {
+      //     type_name: '节日版',
+      //     img_url: ''
+      //   }
+      // ],
       card: {
         type_name: '分享卡片',
         img_url: ''
@@ -91,24 +110,28 @@ export default {
   },
 
   async created() {
-    debugger;
-    let list = await this.$store.dispatch('share/fetchGetShareList',{
-        id: this.goodId,
-        type_name:'经典版',  // 分享卡片
-        img_url: '',
-      })
-    if(list && list.length){
-      this.cardList = list
-    }
+    console.log(this.goodId,'goodId')
+    // debugger;
+    // let list = await this.$store.dispatch('share/fetchGetShareList',{
+    //     id: this.goodId,
+    //     type_name:'经典版',  // 分享卡片
+    //     img_url: '',
+    //   })
+    // if(list && list.length){
+    //   this.cardList = list
+    // }
     let cardUrl = await this.$store.dispatch('share/fetchGetCard',{
       id: this.goodId
     })
-    this.card.img_url = cardUrl
+    this.card.img_url = cardUrl;
+
+    this.getShareSet();
+    
   },
 
   methods: {
     $_change(res,file, target){
-      let url = target.type_name === '分享卡片' ? 'share/fetchCreateCard' : 'share/fetchCreateShareList'
+      let url = 'share/fetchCreateCard'
       if(res.status === 'success'){
         //debugger
         target.img_url = URL.createObjectURL(res.raw)
@@ -119,6 +142,55 @@ export default {
         })
         // fetchCreateCard
       }
+    },
+    shareSure(){
+      //确定按钮
+      let parms = {
+        "id":this.goodId,
+        "share_model_content":this.shareGetInfo.share_model_content,
+        "share_model_title": this.shareGetInfo.share_model_title
+      }
+      this.$axios.post("/api/admin/shopgoods/createShareSet",parms).then(res => {
+        if (res.data.code == 0) {
+            
+            this.$alert('提交成功');
+            //this.shareGetInfo = {};
+            this.$router.push('/goodList')
+
+        } else {
+            this.$alert('操作失败' + res.data.msg)
+
+        }
+
+    }).catch((e) => {
+
+        this.$alert('操作失败' + e)
+
+    })
+      
+
+      
+    },
+    getShareSet(){
+      //获取分享内容和分享标题
+      let params = {
+        id:this.goodId
+      }
+      console.log(params,'params');
+        this.$axios.post("/api/admin/shopgoods/getShareSet", params).then(res => {
+                if (res.data.code == 0) {
+                    this.shareGetInfo = res.data.data;
+                    console.log(this.shareGetInfo,'share')
+                } else {
+                    this.$alert('操作失败' + res.data.msg)
+
+                }
+
+            }).catch((e) => {
+
+                this.$alert('操作失败' + e)
+
+            })
     },
 
     /** 
@@ -138,7 +210,7 @@ export default {
     },
 
     $_clearFiles(item){
-      let url = item.type_name === '分享卡片' ? 'share/fetchCreateCard' : 'share/fetchCreateShareList'      
+      let url =  'share/fetchCreateCard'  
       item.imageUrl = ''
       item.img_url = ''
       this.$store.dispatch(url ,{
@@ -158,4 +230,16 @@ export default {
     right: 0;
     TOP: 0;
 }
+
+.small-form .el-input__inner{
+  width:240px;
+}
+.bottom-form{
+  margin-top:50px;
+  margin-left: 40px;
+}
+/* .small-form .el-form-item__content{
+  margin-left:20px;
+  
+} */
 </style>
