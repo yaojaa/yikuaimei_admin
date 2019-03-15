@@ -153,6 +153,10 @@ export default {
                         "label": "实付金额",
                         "prop": "order_online_price",
                         "width": "",
+                        formatter(row) {
+                            let str = row.order_online_price/100;
+                            return str;
+                        }
 
                     },
                     {

@@ -165,6 +165,17 @@
                     },
                     {
                         icon: 'iconfont icon-guanli',
+                        index: '/marketing',
+                        title: '营销管理',
+                        subs: [
+                            {
+                                index: '/marketing/markList',
+                                title: '营销应用'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'iconfont icon-guanli',
                         index: '/admin',
                         title: '平台管理',
                         subs: [

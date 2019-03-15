@@ -406,6 +406,32 @@ export default new Router({
                         title: '用户详情'
                     }
                 },
+                //营销管理
+                {
+                    // 用户详情
+                    path: '/marketing/markList',
+                    component: resolve => require(['../view/marketing/markList.vue'], resolve),
+                    meta: {
+                        title: '营销应用'
+                    }
+                },
+                
+                {
+                    // 满减优惠劵列表
+                    path: '/marketing/fullReducionCouponList',
+                    component: resolve => require(['../view/marketing/fullReducionList.vue'], resolve),
+                    meta: {
+                        title: '满减／立减优惠券'
+                    }
+                },
+                {
+                    // 添加优惠券
+                    path: '/marketing/addCoupon',
+                    component: resolve => require(['../view/marketing/addCoupon.vue'], resolve),
+                    meta: {
+                        title: '添加优惠券'
+                    }
+                },
 
                 //  平台管理
                 {
