@@ -79,29 +79,16 @@ export default {
                     },
                     {
                         "type": "input-text", //输入文本
-                        "label": "店长",
-                        "name": "city",
+                        "label": "法人姓名",
+                        "name": "shop_corporation",
                         "value": "",
                         "placeholder": "",
                     },
                     {
                         "type": "input-text", //选择器
                         "label": "城市",
-                        "name": "option",
-                        "value": "all",
-                        "options": [{
-                                "name": "全部",
-                                "value": "all",
-                            },
-                            {
-                                "name": "option2",
-                                "value": "option2",
-                            },
-                            {
-                                "name": "option3",
-                                "value": "option3",
-                            },
-                        ],
+                        "name": "city_name",
+                        "value": ""
                     },
                     {
                         "type": "input-date", //输入日期
