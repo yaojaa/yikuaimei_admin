@@ -67,7 +67,7 @@
                                     v-model="dateArray"
                                     @change="dataArrChange"
                                     type="datetimerange"
-                                    value-format="yyyy 年 MM 月 dd 日 HH 小时 MM 分钟 SS秒"
+                                    value-format="yyyy-MM-dd hh:mm:ss"
                                     range-separator="至"
                                     start-placeholder="开始日期"
                                     end-placeholder="结束日期">
@@ -330,6 +330,8 @@ export default {
     //       //修改固定时间或固定日期
     //   },
       dataArrChange(e){
+          debugger
+
           this.ruleForm.coupon_expire.coupon_expire_start_time = this.dateArray[0];
           this.ruleForm.coupon_expire.coupon_expire_end_time = this.dateArray[1];
       },
