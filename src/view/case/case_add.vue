@@ -50,7 +50,12 @@
                             <el-input v-model="form1.user_info.user_phone" placeholder=""></el-input>
                         </el-form-item>
                         <el-form-item label="出生日期">
-                            <el-input v-model="form1.user_info.user_birth" placeholder=""></el-input>
+                            <el-col :span="10">
+                                <el-form-item >
+                                    <el-date-picker type="date" placeholder="选择日期" format="yyyy 年 MM 月 dd 日" v-model="form1.user_info.user_birth" style="width: 100%;"></el-date-picker>
+                                </el-form-item>
+                            </el-col>
+                            <!-- <el-input v-model="form1.user_info.user_birth" placeholder=""></el-input> -->
                         </el-form-item>
                         <el-form-item label="身高">
                             <el-input v-model="form1.user_info.user_height" placeholder=""></el-input>
@@ -64,10 +69,13 @@
                         <el-form-item label="皮肤现状">
                             <el-input type="textarea" v-model="form1.user_info.skin"></el-input>
                         </el-form-item>
-                        <el-form-item label="临床诊断" prop="desc">
+                        <el-form-item label="临床诊断" >
                             <el-input type="textarea" v-model="form1.user_info.diagnosis"></el-input>
                         </el-form-item>
                         <el-form-item label="上传图片">
+                            <div class="upload-title">
+                                <p>图片格式：png、jpg，尺寸1242*1242像素</p>
+                            </div>
                             <el-upload class="avatar-uploader" action="/api/admin/fileupload/image" :show-file-list="false" :on-success="handleFaceUploadSuccess">
                                 before
                                 <img width="100%" v-if="form1.user_info.pic_before" :src="form1.user_info.pic_before" class="avatar">
@@ -75,6 +83,9 @@
                             </el-upload>
                         </el-form-item>
                         <el-form-item label="上传图片" prop="pic_after">
+                             <div class="upload-title">
+                                <p>图片格式：png、jpg，尺寸1242*1242像素</p>
+                            </div>
                             <el-upload class="avatar-uploader" action="/api/admin/fileupload/image" :show-file-list="false" :on-success="handleFaceUploadSuccessAfter">
                                 after
                                 <img width="100%" v-if="form1.user_info.pic_after" :src="form1.user_info.pic_after" class="avatar">
