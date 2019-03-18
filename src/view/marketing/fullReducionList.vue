@@ -157,8 +157,8 @@ export default {
                         formatter(row) {
                             if(row.coupon_expire){
                                 return `<p style='text-align: center'>
-                                ${row.coupon_expire.coupon_expire_start_time}<br/>至
-                                ${row.coupon_expire.coupon_expire_end_time}</p>`;
+                                ${row.coupon_expire.coupon_expire_start_time||""}<br/>至
+                                ${row.coupon_expire.coupon_expire_end_time||""}</p>`;
                             }
                         }
 
@@ -171,7 +171,7 @@ export default {
                         "width": "",
                         "prop": "coupon_status",
                         formatter(row) {
-                            console.log(row,'row');
+                            // console.log(row,'row');
                             return row.coupon_status == 1 ? `<p style='text-align: center'>未开始</p>` : `<p style='text-align: center'>进行中</p>`
                         }
                             	
@@ -219,16 +219,20 @@ export default {
                                 {
 									"label": "编辑",
 									"type": "edit",
-									// "url": "", //优先执行url
-									onClick(tablePage, self, record) {
-										self.$router.push({
-											path: '/createGood',
-											query: {
-												good_id: record.good_id,
-												good_type: 2 // good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券
-											}
-										})
-									}
+                                    // "url": "", //优先执行url
+                                    onClick(tablePage, self, row) {
+                                    self.$router.push("/marketing/addCoupon/" + row.coupon_code)
+                                    }
+									// onClick(tablePage, self, record) {
+                                        
+                                    //     console.log(record,'record')
+									// 	self.$router.push({
+									// 		path: '/marketing/addCoupon',
+									// 		query: {
+                                    //             coupon_code:record.coupon_code
+                                    //             }
+									// 	})
+									// }
 								}
 								
 								
@@ -269,42 +273,7 @@ export default {
 
             this.dialog = true
         },
-        // doUpdateIsUse() {
-        //     const params = {
-        //         id: this.shop_id,
-        //         is_use: this.is_use,
-        //         remark: this.remark
-        //     }
-
-        //     this.$axios.post("/api/admin/shop/isUse", params).then(res => {
-        //         this.dialog = false;
-        //         console.log(res)
-
-        //         if (res.data.code == 0) {
-
-        //             this.$alert('操作成功' + res.data.data)
-
-        //             this.$refs.table.getData({
-        //                 is_page: 1,
-        //                 page: 1
-        //             });
-        //         } else {
-        //             this.$alert('操作失败' + res.data.msg)
-
-        //         }
-
-
-        //     }).catch((e) => {
-
-        //         this.$alert('操作失败' + e)
-
-        //     })
-
-        // },
-        // openModal() {
-
-        //     console.log('openModal')
-        // },
+      
         getData(k, v) {
             this.$refs.table.getData({
                 [k]: v

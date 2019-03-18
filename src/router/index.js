@@ -440,6 +440,15 @@ export default new Router({
                         title: '添加优惠券'
                     }
                 },
+                {
+                    // 优惠券编辑
+                    path: '/marketing/addCoupon/:id',
+                    component: resolve => require(['../view/marketing/addCoupon.vue'], resolve),
+                    meta: {
+                        title: '编辑优惠券',
+                        permission: true
+                    }
+                },
 
                 //  平台管理
                 {
