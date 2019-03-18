@@ -10,13 +10,14 @@
                     <el-input type="textarea" v-model="createdData.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" /> 
                 </el-form-item>
                 <el-form-item label="行业分类：" prop="category_id">
-                    <el-select v-model="createdData.category_id" placeholder="请选择所属行业分类" >
-                        <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="`${item.category_id}category_id`" />
-                    </el-select>                   
+                    <el-radio-group v-model="createdData.category_id" >
+                        <el-radio  :label="item.category_id" :key="item.category_id" v-for="item in industryForm">{{item.category_name}}</el-radio>
+                    </el-radio-group>
                 </el-form-item>
-                <el-form-item label="标签：" prop="tag_list">
+
+                <!-- <el-form-item label="标签：" prop="tag_list">
                     <div class="el-input el-input--small el-input--suffix div__input"  @click="$_showLable">
-                        <el-tag v-for="item in createdData.tag_list" :key="`${item.tag_name}`">
+                        <el-tag v-for="item in createdData.tag_list.tag_group_sons" :key="`${item.tag_name}`">
                             {{item.tag_name}}
                         </el-tag>
                         <span class="el-input__suffix">
@@ -26,7 +27,67 @@
                         </span>
                     </div>
                     <p class="input__tabs">可设置多个标签</p>
+                </el-form-item> -->
+                <el-form-item label="快买栏目：" >
+                    <el-select v-model="quickList" multiple placeholder="请选择" @change="quickChange" >
+                        <el-option
+                        v-for="item in quickBuyColumnList"
+                        :key="item.tag_id"
+                        :label="item.tag_name"
+                        :value="item.tag_id">
+                        </el-option>
+                    </el-select>
+                    <span class="input__tabs">可设置多个标签</span>
                 </el-form-item>
+
+                <el-form-item label="快买分类：" >
+                    <el-select v-model="sortList" multiple placeholder="请选择" @change="sortChange" >
+                        <el-option
+                        v-for="item in quickBuysortList"
+                        :key="item.tag_id"
+                        :label="item.tag_name"
+                        :value="item.tag_id">
+                        </el-option>
+                    </el-select>
+                    <span class="input__tabs">可设置多个标签</span>
+                </el-form-item>
+
+                <el-form-item label="详情页标签：" >
+                    <el-select v-model="detailList" multiple placeholder="请选择" @change="detailChange" >
+                        <el-option
+                        v-for="item in detailInfoList"
+                        :key="item.tag_id"
+                        :label="item.tag_name"
+                        :value="item.tag_id">
+                        </el-option>
+                    </el-select>
+                    <span class="input__tabs">可设置多个标签</span>
+                </el-form-item>
+
+                <el-form-item label="列表标签：" >
+                    <el-select v-model="listList" multiple placeholder="请选择" @change="listChange" >
+                        <el-option
+                        v-for="item in listInfoList"
+                        :key="item.tag_id"
+                        :label="item.tag_name"
+                        :value="item.tag_id">
+                        </el-option>
+                    </el-select>
+                    <span class="input__tabs">可设置多个标签</span>
+                </el-form-item>
+
+                <el-form-item label="愿望组：" >
+                    <el-select v-model="wishList" multiple placeholder="请选择" @change="wishChange" >
+                        <el-option
+                        v-for="item in wishInfoList"
+                        :key="item.tag_id"
+                        :label="item.tag_name"
+                        :value="item.tag_id">
+                        </el-option>
+                    </el-select>
+                    <span class="input__tabs">可设置多个标签</span>
+                </el-form-item>
+                
                 <!-- 一期不做 -->
                 <!-- <el-form-item label="库存：" prop="exist">
                     <el-input  v-model="createdData.exist" placeholder="10000" suffix-icon="el-icon-arrow-right" />                                                    
@@ -362,7 +423,7 @@
         </el-dialog>
 
         <!-- 添加标签弹框 -->
-        <dialog-lable ref="lable" @addLable="$_addLable" :tagList = "createdData.tag_list"/>
+        <!-- <dialog-lable ref="lable" @addLable="$_addLable" :tagList = "quickBuyColumnList"/> -->
         <!-- 添加标签弹框 End -->
 
         <!-- 添加规格弹框 -->
@@ -379,7 +440,7 @@
     import _ from 'lodash'
     import { mapState } from "vuex";
     import { CATEGORYOPTIONS,type,GOODTYPE,COUNTRY, UNIT } from "../../constans/createdGood";
-    import Lable from "./dialog_lable";
+    //import Lable from "./dialog_lable";
     import Formate from "./dialog_formate";
     import GoodFriend from "./dialog_goodFriend";
     import ProductCard from "./product_card";
@@ -389,7 +450,7 @@ export default {
 
   components: {
     'dialog-formate' : Formate,   // 添加规格弹框
-    'dialog-lable' : Lable,     // 添加标签弹框
+    // 'dialog-lable' : Lable,     // 添加标签弹框
     'dialog-goodFriend' : GoodFriend, // 添加服务弹框
     'product-card' : ProductCard  // 卡片组件
   },
@@ -421,7 +482,23 @@ export default {
 
   data() {
     return {
-        CATEGORYOPTIONS, // 所属行业分类
+        industryForm:{}, // 所属行业分类
+        quickBuyColumnList:[],//快买栏目后台数据
+        quickList:[], //快买栏目model
+        quickBuysortList:[],//快买分类后台数据
+        sortList:[],// 快买分类model
+        quickSelectedList:[], //快买栏目选中数组
+        sortSelectedList:[], //快买分类选中数组
+        detailList:[], //详情页model
+        detailSelectedList:[], //详情页标签选中数组
+        detailInfoList:[], //详情页后台数据
+        listInfoList:[], //列表标签后台数据
+        listList:[],// 列表标签model
+        listSelectedList:[], //列表标签选中数组
+        wishList:[],// 愿望model
+        wishSelectedList:[],
+        wishInfoList:[], //愿望组后台数据
+
         GOODTYPE,
         COUNTRY,
         UNIT,
@@ -435,8 +512,9 @@ export default {
             good_explain: '', // 商品卖点
             category_id: '', // 行业分类id
             
+            
             tag_id_arr: [], // [8,18,32]标签id数组
-            tag_list: [], // 已选标签展示数据
+            // tag_list: [], // 已选标签展示数据
             unit: '', // 单位 例如盒，箱
             country: '' , // 产地
 
@@ -587,11 +665,11 @@ export default {
             message: "请选择所属行业分类",
             trigger: "change"
         }],
-        tag_list: [{
-            required: true,
-            message: "请添加标签",
-            trigger: "blur"
-        }],
+        // tag_list: [{
+        //     required: true,
+        //     message: "请添加标签",
+        //     trigger: "blur"
+        // }],
         unit: [{
             required: true,
             message: "请选择单位",
@@ -663,13 +741,52 @@ export default {
             trigger: "blur"
         }],
     }
+    this.getCategoryList();
+    this.getQuickBuyColumnList()
   },
 
   computed: {
     ...mapState('createdGoode',['formInfo'])
+    
   },
 
   methods: {
+      getCategoryList(){
+          //获取行业列表
+        this.$axios.get("/api/admin/select/categoryList").then(res =>{
+          if(res.data.code ==0){
+            this.industryForm = res.data.data;
+            //console.log(this.industryForm,'industryForm')
+          }
+
+        })
+          
+      },
+      quickChange(e){
+          this.quickSelectedList = e;
+      },
+      sortChange(e){
+          this.sortSelectedList = e;
+      },
+      detailChange(e){
+          this.detailSelectedList = e;
+      },
+      listChange(e){
+          console.log(e);
+         
+          this.listSelectedList = e;
+           console.log(this.listSelectedList,'listSelectedList')
+      },
+      wishChange(e){
+          this.wishSelectedList = e;
+      },
+     
+      
+    //   categoryChange(e){
+    //       console.log(e);
+    //       console.log(this.createdData.category_id ,'createdData.category_id')
+    //       //行业分类切换
+    //   },
     /** 
      * 添加耗材
     */
@@ -716,7 +833,7 @@ export default {
 
     // 上传文件，上传数组，目标对象,上传单张
     $_change(file, fileList, targeName, num){
-        debugger;
+        
         if(file.status === 'success'){
             if(targeName === 'good_video'){
                 this.createdData.good_video = file.response.data.file_name
@@ -875,11 +992,11 @@ export default {
     /** *
      * 展示标签
      */
-    $_showLable() {
-        if(!this.createdData.category_id){
-            alert('请先选择行业id')
-            return 
-        }
+    getQuickBuyColumnList() {
+        // if(!this.createdData.category_id){
+        //     alert('请先选择行业id')
+        //     return 
+        // }
         let tag_group_type = 0
         if (this.goodType === 2) {
             tag_group_type = 1
@@ -890,14 +1007,76 @@ export default {
         }
         // tip: goodType, 1 服务 2 商品 3 评价 4 虚拟卡券 tag_group_type 1商品 2服务 3虚拟券 4评价 5用户 
         // 品相是暂时没有标签儿的，和服务统一
-        this.$store.dispatch('createdGoode/fetchLableList', {
-            tag_group_type: tag_group_type, 
-            category_id: this.createdData.category_id || 1,
-            get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
-        }).then(()=>{
-            this.$refs.lable.initSons()
-            this.$refs.lable.lable_show = true
-        })
+        // this.$store.dispatch('createdGoode/fetchLableList', {
+        //     tag_group_type: tag_group_type, 
+        //     category_id: this.createdData.category_id || 1,
+        //     get_tag_list: 1 // 是否获取标签列表 1获取 0不获取
+        // }).then(()=>{
+        //     this.$refs.lable.initSons()
+        //     this.$refs.lable.lable_show = true
+        // })
+            //快买栏目
+            this.$axios.get("/api/admin/select/groupTagList?tag_group_type="+tag_group_type+'&id=part').then(res =>{
+                if(res.data.code ==0){
+                    //快买栏目
+                    this.quickBuyColumnList = res.data.data
+                    //this.$refs.lable.initSons()
+                    //this.$refs.lable.lable_show = true
+                    
+                }else{
+                    this.$message({ message: res.data.msg, type: 'warning' });
+                }
+            })
+            //快买分类
+            this.$axios.get("/api/admin/select/groupTagList?tag_group_type="+tag_group_type+'&id=effect').then(res =>{
+                if(res.data.code ==0){
+                    //快买分类
+                    this.quickBuysortList = res.data.data
+                    //this.$refs.lable.initSons()
+                    //this.$refs.lable.lable_show = true
+                    
+                }else{
+                    this.$message({ message: res.data.msg, type: 'warning' });
+                }
+            })
+            //详情页标签
+            this.$axios.get("/api/admin/select/groupTagList?tag_group_type="+tag_group_type+'&id=activity').then(res =>{
+                if(res.data.code ==0){
+                    //详情页标签
+                    this.detailInfoList = res.data.data
+                    //this.$refs.lable.initSons()
+                    //this.$refs.lable.lable_show = true
+                    
+                }else{
+                    this.$message({ message: res.data.msg, type: 'warning' });
+                }
+            })
+            //列表标签
+            this.$axios.get("/api/admin/select/groupTagList?tag_group_type="+tag_group_type+'&id=ad').then(res =>{
+                if(res.data.code ==0){
+                    //列表标签
+                    this.listInfoList = res.data.data
+                    //this.$refs.lable.initSons()
+                    //this.$refs.lable.lable_show = true
+                    
+                }else{
+                    this.$message({ message: res.data.msg, type: 'warning' });
+                }
+            })
+            //愿望标签
+            this.$axios.get("/api/admin/select/groupTagList?tag_group_type="+tag_group_type+'&id=wish').then(res =>{
+                if(res.data.code ==0){
+                    //列表标签
+                    this.wishInfoList = res.data.data
+                    //this.$refs.lable.initSons()
+                    //this.$refs.lable.lable_show = true
+                    
+                }else{
+                    this.$message({ message: res.data.msg, type: 'warning' });
+                }
+            })
+            
+            
     },
 
     /** *
@@ -946,7 +1125,14 @@ export default {
                 obj.sku_id = friendItem.sku_id
                 return obj
             })
-            console.log(params)
+            params.tag_id_arr = params.tag_id_arr.concat(
+                this.listSelectedList,
+                this.wishSelectedList,
+                this.detailSelectedList,
+                this.sortSelectedList,
+                this.quickSelectedList
+                ) // 选中标签数组
+            console.log(params,'params')
             let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
             that.$store.dispatch(str,params).then((res)=>{
                 if(res.code === 0){
@@ -962,10 +1148,10 @@ export default {
     /** 
      * 添加标签
     */
-    $_addLable(tag_list){
-        this.createdData.tag_list = tag_list, // 已选标签展示数据
-        this.createdData.tag_id_arr = tag_list.map(item => item.tag_id)  // [8,18,32]标签id数组
-    },
+    // $_addLable(tag_list){
+    //     this.createdData.tag_list = tag_list, // 已选标签展示数据
+    //     this.createdData.tag_id_arr = tag_list.map(item => item.tag_id)  // [8,18,32]标签id数组
+    // },
       
     /** *
      * 合并列

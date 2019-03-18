@@ -171,6 +171,10 @@
                             {
                                 index: '/marketing/markList',
                                 title: '营销应用'
+                            },
+                            {
+                                index: '/marketing/ticketList',
+                                title: '验票列表'
                             }
                         ]
                     },

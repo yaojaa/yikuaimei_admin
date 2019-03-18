@@ -71,6 +71,7 @@ export default {
     ...mapState('createdGoode',['lableList']), // 可选标签数据
     
     defaultActive(){
+      console.log(this.lableList,'lableList1111')
       let data = this.lableList[0] || {}
       if(!data){
         return ''
@@ -152,6 +153,9 @@ export default {
     },
 
     initSons(){
+      debugger
+      // console.log(this.lableList,'lableList')
+
       let obj = this.lableList[0] || {}
       this.good_category_sons = obj.tag_group_sons ? obj.tag_group_sons[0].tag_list : obj.tag_list
     }
