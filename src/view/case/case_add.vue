@@ -50,7 +50,7 @@
                             <el-input v-model="form1.user_info.user_phone" placeholder=""></el-input>
                         </el-form-item>
                         <el-form-item label="出生日期">
-                            <el-col :span="10">
+                            <el-col :span="12">
                                 <el-form-item >
                                     <el-date-picker type="date" placeholder="选择日期" format="yyyy 年 MM 月 dd 日" v-model="form1.user_info.user_birth" style="width: 100%;"></el-date-picker>
                                 </el-form-item>
