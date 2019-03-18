@@ -60,7 +60,7 @@
                     </el-form-item>
     
                     <el-form-item label="使用有效期:">
-                        <el-radio-group v-model="ruleForm.date_expire_type" >
+                        <el-radio-group v-model="ruleForm.date_expire_type" @change="dataChange">
                             
                             <el-radio v-model="ruleForm.coupon_expire_type" label="1">固定日期
                                 <el-date-picker
@@ -75,7 +75,7 @@
                             </el-radio>
                             <div class="heigth20px"></div>
                             <el-radio label="2" v-model="ruleForm.coupon_expire_type">领取当日开始
-                                <el-input v-model="ruleForm.coupon_expire.coupon_expire_day"></el-input>
+                                <el-input v-model="ruleForm.coupon_expire.coupon_expire_day" @blur="dateDaysChange"></el-input>
                                 天内有效
                             </el-radio>
                             
@@ -317,23 +317,19 @@ export default {
             
         }
       },
-    //   dataChange(e){
-    //       this.ruleForm.coupon_expire_type = e;
-    //       if(e==1){
-    //           console.log(this,'this')
-    //           this.ruleForm.coupon_expire.coupon_expire_start_time = this.dateArray[0];
-    //           this.ruleForm.coupon_expire.coupon_expire_end_time = this.dateArray[1];
-    //           console.log(this.dateArray[0],'this.ruleForm.coupon_expire.coupon_expire_start_time')
-              
-    //       }
-    //       console.log(e,'1111111')
-    //       //修改固定时间或固定日期
-    //   },
+      dataChange(e){
+          this.ruleForm.coupon_expire_type = e;
+          
+      },
       dataArrChange(e){
-          debugger
-
+         
           this.ruleForm.coupon_expire.coupon_expire_start_time = this.dateArray[0];
           this.ruleForm.coupon_expire.coupon_expire_end_time = this.dateArray[1];
+      },
+      dateDaysChange(){
+         
+          this.ruleForm.coupon_expire.coupon_expire_start_time = "";
+          this.ruleForm.coupon_expire.coupon_expire_end_time = "";
       },
       industrySure(){
         //行业弹窗确定
