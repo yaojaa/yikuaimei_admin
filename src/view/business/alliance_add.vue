@@ -24,7 +24,28 @@
 <div class="form-panel p-xl"  v-if="step==1">
                    <!--form start-->
  <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm">
+<!-- business_logo -->
+<el-form-item label="加盟商logo">
 
+
+         <el-upload
+          class="avatar-uploader"
+          action="/api/admin/fileupload/image"
+          :show-file-list="false"
+          :on-success="business_logo"
+           >
+
+        <img width="100%" v-if="ruleForm.business_logo" :src="ruleForm.business_logo" >
+        
+        <div  v-else style="padding-top: 10%">
+          
+          <i class="el-icon-plus" style="font-size: 48px"></i>
+        </div> 
+
+    </el-upload>
+
+
+  </el-form-item>
 
   <el-form-item label="公司名称" prop="business_name">
     <el-input v-model="ruleForm.business_name"></el-input>
@@ -271,6 +292,8 @@ export default {
     "business_corporation" : "",//法人
     "address_code" : "",//地址编码
     "address_code2":"",
+    "business_logo":"", //加盟商logo
+
 
     "business_sfz_num" : "222",//身份证号
     "business_sfz_pic_z" : "",//身份证正面照片地址
@@ -429,6 +452,9 @@ export default {
     },
      business_sfz_pic_z(res){
       this.ruleForm.business_sfz_pic_z = res.data.url
+    },
+    business_logo(res){
+      this.ruleForm.business_logo = res.data.url
     },
      business_sfz_pic_f(res){
       this.ruleForm.business_sfz_pic_f = res.data.url
