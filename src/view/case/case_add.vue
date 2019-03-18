@@ -414,7 +414,7 @@ export default {
             serviceList: [],
             activeName: '1',
             form1: {
-                "category_id": 1, //行业id
+                "category_id": "", //行业id
                 "create_user": { //创建人信息
                     "user_name": '',
                     "shop_name": '',
