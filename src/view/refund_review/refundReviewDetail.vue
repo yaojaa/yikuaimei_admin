@@ -38,7 +38,6 @@ export default {
     },
     mounted() {
         this.getData(this.$route.params)
-        console.log(this.$route.params,'params')
     },
     methods: {
 
