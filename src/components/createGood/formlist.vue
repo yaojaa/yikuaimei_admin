@@ -482,6 +482,7 @@ export default {
 
   data() {
     return {
+        renderList:[],
         industryForm:{}, // 所属行业分类
         quickBuyColumnList:[],//快买栏目后台数据
         quickList:[], //快买栏目model
@@ -742,15 +743,79 @@ export default {
         }],
     }
     this.getCategoryList();
-    this.getQuickBuyColumnList()
+    this.getQuickBuyColumnList();
+    this.renderLabel()
+    
+    
   },
 
   computed: {
-    ...mapState('createdGoode',['formInfo'])
+      
+    ...mapState('createdGoode',['formInfo']) 
+    
+    
     
   },
 
   methods: {
+      renderLabel(){
+          var _this = this;
+          setTimeout(() => {
+                _this.renderList = _this.createdData.tag_id_arr;//这个是数组
+                //_this.quickBuyColumnList //这个是对象
+                //快买栏目
+                for(var i =0; i<_this.renderList.length; i++){
+                    for(var j =0; j<_this.quickBuyColumnList.length; j++){
+                        if(_this.quickBuyColumnList[j].tag_id==_this.renderList[i]){
+                            _this.quickList.push(_this.quickBuyColumnList[j].tag_name)
+                        }
+                    }
+                }
+                // 快买分类
+                for(var i =0; i<_this.renderList.length; i++){
+                    for(var j =0; j<_this.quickBuysortList.length; j++){
+                        if(_this.quickBuysortList[j].tag_id==_this.renderList[i]){
+                            _this.sortList.push(_this.quickBuysortList[j].tag_name)
+                        }
+                    }
+                }
+
+                // 详情页
+                for(var i =0; i<_this.renderList.length; i++){
+                    for(var j =0; j<_this.detailInfoList.length; j++){
+                        if(_this.detailInfoList[j].tag_id==_this.renderList[i]){
+                            _this.detailList.push(_this.detailInfoList[j].tag_name)
+                        }
+                    }
+                }
+
+                // 列表标签
+                for(var i =0; i<_this.renderList.length; i++){
+                    for(var j =0; j<_this.listInfoList.length; j++){
+                        if(_this.listInfoList[j].tag_id==_this.renderList[i]){
+                            _this.listList.push(_this.listInfoList[j].tag_name)
+                        }
+                    }
+                }
+                // 愿望组
+                for(var i =0; i<_this.renderList.length; i++){
+                    for(var j =0; j<_this.wishInfoList.length; j++){
+                        if(_this.wishInfoList[j].tag_id==_this.renderList[i]){
+                            _this.wishList.push(_this.wishInfoList[j].tag_name)
+                        }
+                    }
+                }
+
+                }, 2000)
+
+          
+
+          
+
+
+
+          //渲染分类
+      },
       getCategoryList(){
           //获取行业列表
         this.$axios.get("/api/admin/select/categoryList").then(res =>{
@@ -993,6 +1058,7 @@ export default {
      * 展示标签
      */
     getQuickBuyColumnList() {
+        
         // if(!this.createdData.category_id){
         //     alert('请先选择行业id')
         //     return 
@@ -1076,6 +1142,7 @@ export default {
                 }
             })
             
+        
             
     },
 

@@ -402,6 +402,7 @@ export default {
       },
     submit(){
         console.log(this.ruleForm,'this.ruleForm');
+        this.ruleForm.rules.reduce_price = this.ruleForm.rules.reduce_price*100;
             //var parms = this.ruleForm;
             this.$axios.post("/api/admin/coupon/addReduce", this.ruleForm).then(res => {
                 if(res.data.code == 0){

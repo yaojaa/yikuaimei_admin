@@ -124,17 +124,23 @@
     
                         },
                         {
-                            "type": "input-date", //输入日期
-                            "label": "日期",
-                            "name": "data",
+                            "type": "input-singal-date", //输入日期
+                            "label": "开始时间",
+                            "name": "start_time",
                             "value": "",
                         },
                         {
-                            "type": "input-date", //输入日期
-                            "label": "日期",
-                            "name": "data",
+                            "type": "input-singal-date", //输入日期
+                            "label": "结束时间",
+                            "name": "end_time",
                             "value": "",
                         },
+                        // {
+                        //     "type": "input-date", //输入日期
+                        //     "label": "日期",
+                        //     "name": "data",
+                        //     "value": "",
+                        // },
                     ]
                 },
                 tableJson: {

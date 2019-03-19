@@ -36,7 +36,7 @@
                         :align="search.align || 'center'"
                         unlink-panels
                         :placeholder="search.placeholder"
-                        :picker-options="pickerOptions"> 
+                        :picker-options="pickerOptions1"> 
                     </el-date-picker>
 
                     <!-- 单选框 -->
@@ -99,6 +99,31 @@
                         }
                     }]
                 },
+                pickerOptions1: {
+                    disabledDate(time) {
+                        return time.getTime() > Date.now();
+                    },
+                    shortcuts: [{
+                        text: '今天',
+                        onClick(picker) {
+                        picker.$emit('pick', new Date());
+                        }
+                    }, {
+                        text: '昨天',
+                        onClick(picker) {
+                        const date = new Date();
+                        date.setTime(date.getTime() - 3600 * 1000 * 24);
+                        picker.$emit('pick', date);
+                        }
+                    }, {
+                        text: '一周前',
+                        onClick(picker) {
+                        const date = new Date();
+                        date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                        picker.$emit('pick', date);
+                        }
+                    }]
+                },
                 searchVal:{},//搜索
                 loading: false,
             }
@@ -109,11 +134,13 @@
         methods: {
             search(search) { //搜索
 
+
                 search.list.forEach((e,i) => {
                     if(e.value!==''){
                       this.searchVal[e.name] = e.value;
                     }
                 })
+                
                 this.$parent.getData && this.$parent.getData(this.searchVal);
             },
             resetForm(search){ //重置
