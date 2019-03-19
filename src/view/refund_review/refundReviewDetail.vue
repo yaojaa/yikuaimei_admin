@@ -46,7 +46,7 @@ export default {
 
             this.$axios({
                 method: 'get',
-                url: 'api/admin/refundReview/info',
+                url: '/api/admin/refundReview/info',
                 params: params
             }).then((res) => {
                 this.refundInfo = res.data.data
