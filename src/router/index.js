@@ -315,6 +315,23 @@ export default new Router({
                     }
                 },
                 {
+                    // 退款复审
+                    path: '/refundReview/list',
+                    component: resolve => require(['../view/refund_review/list.vue'], resolve),
+                    meta: {
+                        title: '退款复审'
+                    }
+                },
+                {
+                    // -退款详情
+                    path: '/refundReview/refundReviewDetail/:refund_id',
+                    component: resolve => require(['../view/refund_review/refundReviewDetail.vue'], resolve),
+                    meta: {
+                        title: '退款详情',
+                        permission: true
+                    }
+                },
+                {
                     // 门店审核
                     path: '/audit/shop',
                     component: resolve => require(['../view/audit_shop/list.vue'], resolve),
@@ -346,6 +363,7 @@ export default new Router({
                         title: '加盟商审核详情'
                     }
                 },
+
                 {
                     // 门店
                     path: '/shop/list',
