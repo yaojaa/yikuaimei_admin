@@ -69,6 +69,16 @@
                         </div>
                         <div class="panel-body">
                             <div class="item-list f14 four-text">
+                                
+                                <div class="item">
+                                    <div class="hd">加盟商logo：</div>
+                                    <div class="bd" v-if="info.business_logo">
+                                        <img :src="info.business_logo" width="200">
+                                    </div>
+                                    <div class="bd" v-else>
+                                        暂无logo
+                                    </div>
+                                </div>
                                 <div class="item">
                                     <div class="hd">法人代表：</div>
                                     <div class="bd">{{info.business_corporation}}

@@ -63,14 +63,14 @@ export default {
                         "width": "",
 
                     },
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "内容",
-                        "prop": "expert_analysis_content",
-                        "width": "",
+                    // {
+                    //     "type": "text",
+                    //     "align": "center",
+                    //     "label": "内容",
+                    //     "prop": "expert_analysis_content",
+                    //     "width": "",
 
-                    },
+                    // },
                     {
                         "type": "text",
                         "align": "center",

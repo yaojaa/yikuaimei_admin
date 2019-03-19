@@ -167,8 +167,8 @@
                         </el-col>
                     </el-row>
                     <div class="text-center p-md">
-                        <el-button size="medium" @click="review(2)">通过</el-button>
-                        <el-button size="medium" type="primary" @click="review(3)">拒绝</el-button>
+                        <!-- <el-button size="medium" @click="review(2)">通过</el-button>
+                        <el-button size="medium" type="primary" @click="review(3)">拒绝</el-button> -->
                     </div>
                 </div>
             </div>
@@ -301,75 +301,75 @@ export default {
             })
         },
         //审核
-        review(status) {
-            var tiptxt = ""
-            if (status == 2) {
-                tiptxt = "确定要通过审核吗？"
-                const h = this.$createElement;
-                this.$msgbox({
-                    title: '案例审核',
-                    message: '确定要通过审核吗？',
-                    showCancelButton: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    beforeClose: (action, instance, done) => {
-                        if (action === 'confirm') {
-                            // instance.confirmButtonLoading = true;
-                            // instance.confirmButtonText = '执行中...';
-                            this.$axios.post('/api/admin/cases/review', {
-                                    "id": this.id, //案例id
-                                    "review_status": status, //审核状态 2审核通过 3审核不通过
-                                    "reason": "没有好好填写内容" //审核不通过时，填写的原因
-                                })
-                                .then(res => {
-                                    if (res.data.code == 0) {
-                                        this.$message({
-                                            type: 'success',
-                                            message: '操作成功'
-                                        })
-                                    } else {
-                                        this.$message({
-                                            type: 'error',
-                                            message: res.data.msg
-                                        })
-                                    }
-                                    done()
-                                })
-                        } else {
-                            done();
-                        }
-                    }
-                }).then(action => {})
-            } else if (status == 3) {
-                this.$prompt('输入拒绝理由', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then(({ value }) => {
-                    this.$axios.post('/api/admin/cases/review', {
-                        "id": this.id, //案例id
-                        "review_status": status, //审核状态 2审核通过 3审核不通过
-                        "reason": value //审核不通过时，填写的原因
-                    }).then((res) => {
-                        if (res.data.code == 0) {
-                            this.$message({
-                                type: 'success',
-                                message: '操作成功'
-                            })
-                        } else {
-                            this.$message({
-                                type: 'error',
-                                message: res.data.msg
-                            })
-                        }
-                    })
-                }).catch(() => {
-                    // this.$message({
-                    // type: 'info',
-                    // message: '取消输入'
-                    // })
-                })
-            }
-        },
+        // review(status) {
+        //     var tiptxt = ""
+        //     if (status == 2) {
+        //         tiptxt = "确定要通过审核吗？"
+        //         const h = this.$createElement;
+        //         this.$msgbox({
+        //             title: '案例审核',
+        //             message: '确定要通过审核吗？',
+        //             showCancelButton: true,
+        //             confirmButtonText: '确定',
+        //             cancelButtonText: '取消',
+        //             beforeClose: (action, instance, done) => {
+        //                 if (action === 'confirm') {
+        //                     // instance.confirmButtonLoading = true;
+        //                     // instance.confirmButtonText = '执行中...';
+        //                     this.$axios.post('/api/admin/cases/review', {
+        //                             "id": this.id, //案例id
+        //                             "review_status": status, //审核状态 2审核通过 3审核不通过
+        //                             "reason": "没有好好填写内容" //审核不通过时，填写的原因
+        //                         })
+        //                         .then(res => {
+        //                             if (res.data.code == 0) {
+        //                                 this.$message({
+        //                                     type: 'success',
+        //                                     message: '操作成功'
+        //                                 })
+        //                             } else {
+        //                                 this.$message({
+        //                                     type: 'error',
+        //                                     message: res.data.msg
+        //                                 })
+        //                             }
+        //                             done()
+        //                         })
+        //                 } else {
+        //                     done();
+        //                 }
+        //             }
+        //         }).then(action => {})
+        //     } else if (status == 3) {
+        //         this.$prompt('输入拒绝理由', '提示', {
+        //             confirmButtonText: '确定',
+        //             cancelButtonText: '取消',
+        //         }).then(({ value }) => {
+        //             this.$axios.post('/api/admin/cases/review', {
+        //                 "id": this.id, //案例id
+        //                 "review_status": status, //审核状态 2审核通过 3审核不通过
+        //                 "reason": value //审核不通过时，填写的原因
+        //             }).then((res) => {
+        //                 if (res.data.code == 0) {
+        //                     this.$message({
+        //                         type: 'success',
+        //                         message: '操作成功'
+        //                     })
+        //                 } else {
+        //                     this.$message({
+        //                         type: 'error',
+        //                         message: res.data.msg
+        //                     })
+        //                 }
+        //             })
+        //         }).catch(() => {
+        //             // this.$message({
+        //             // type: 'info',
+        //             // message: '取消输入'
+        //             // })
+        //         })
+        //     }
+        // },
         getDetailInfo(id) {
             this.$axios.get('/api/admin/cases/detail', { params: id })
                 .then(res => {

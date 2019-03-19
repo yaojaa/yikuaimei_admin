@@ -73,27 +73,29 @@
                             <el-input type="textarea" v-model="form1.user_info.diagnosis"></el-input>
                         </el-form-item>
                         <el-form-item label="上传图片">
-                            <div class="upload-title">
-                                <p>图片格式：png、jpg，尺寸1242*1242像素</p>
-                            </div>
+                            
                             <el-upload class="avatar-uploader" action="/api/admin/fileupload/image" :show-file-list="false" :on-success="handleFaceUploadSuccess">
                                 before
                                 <img width="100%" v-if="form1.user_info.pic_before" :src="form1.user_info.pic_before" class="avatar">
                                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
+                            <div class="upload-title">
+                                <p class="upload-title-red">图片格式：png、jpg，尺寸1242*1242像素</p>
+                            </div>
                         </el-form-item>
                         <el-form-item label="上传图片" prop="pic_after">
-                             <div class="upload-title">
-                                <p>图片格式：png、jpg，尺寸1242*1242像素</p>
-                            </div>
+                             
                             <el-upload class="avatar-uploader" action="/api/admin/fileupload/image" :show-file-list="false" :on-success="handleFaceUploadSuccessAfter">
                                 after
                                 <img width="100%" v-if="form1.user_info.pic_after" :src="form1.user_info.pic_after" class="avatar">
                                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
+                            <div class="upload-title">
+                                <p class="upload-title-red">图片格式：png、jpg，尺寸1242*1242像素</p>
+                            </div>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" @click="goNextStep(2)">下一步</el-button>
+                            <el-button type="primary" @click="goNextStep(2)">保存并下一步</el-button>
                         </el-form-item>
                     </el-form>
                     <!--form end-->
@@ -123,7 +125,7 @@
                             </ul>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" @click="goNextStep(3)">下一步</el-button>
+                            <el-button type="primary" @click="goNextStep(3)">保存并下一步</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -133,7 +135,7 @@
                     <!--form start-->
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                         <!--上传ITEM start-->
-                        <el-form-item label="专家建议">
+                        <el-form-item label="专家建议" label-width="130px">
                             <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form1.expert_suggest.content">
                             </el-input>
                         </el-form-item>
@@ -169,7 +171,7 @@
                         </div>
                         <!--上传ITEM end-->
                         <!--上传ITEM start-->
-                        <el-form-item label="产品或仪器介绍">
+                        <el-form-item label="产品或仪器介绍" label-width="130px">
                             <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form1.product_introduce.content">
                             </el-input>
                         </el-form-item>
@@ -194,8 +196,8 @@
                         </div>
                         <!--上传ITEM end-->
                         <!--上传ITEM start-->
-                        <el-form-item label="操作流程或视频">
-                            <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form1.product_introduce.content">
+                        <el-form-item label="操作流程或视频" label-width="130px">
+                            <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form1.operate_process.content">
                             </el-input>
                         </el-form-item>
                         <div class="up_area">
@@ -219,8 +221,8 @@
                         </div>
                         <!--上传ITEM end-->
                         <!--上传ITEM start-->
-                        <el-form-item label="操作记录">
-                            <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form1.product_introduce.content">
+                        <el-form-item label="操作记录" label-width="130px">
+                            <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form1.operate_record.content">
                             </el-input>
                         </el-form-item>
                         <div class="up_area">
@@ -245,7 +247,7 @@
                         </div>
                         <!--上传ITEM end-->
                         <!--上传ITEM start-->
-                        <el-form-item label="两次数据对比">
+                        <el-form-item label="两次数据对比" label-width="130px">
                             <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form1.data_contrast.content">
                             </el-input>
                         </el-form-item>
@@ -270,7 +272,7 @@
                         </div>
                         <!--上传ITEM end-->
                         <!--上传ITEM start-->
-                        <el-form-item label="专家解析">
+                        <el-form-item label="专家解析" label-width="130px">
                             <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form1.expert_analysis.content">
                             </el-input>
                         </el-form-item>
@@ -295,7 +297,7 @@
                         </div>
                         <!--上传ITEM end-->
                         <!--上传ITEM start-->
-                        <el-form-item label="点评师点评">
+                        <el-form-item label="点评师点评" label-width="130px">
                             <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form1.expert_review.content">
                             </el-input>
                         </el-form-item>
@@ -320,7 +322,7 @@
                         </div>
                         <!--上传ITEM end-->
                         <el-form-item>
-                            <el-button size="large" type="primary" @click="goNextStep(4)">下一步</el-button>
+                            <el-button size="large" type="primary" @click="goNextStep(4)">保存并下一步</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -753,7 +755,7 @@ h3.form_title_label {
 }
 
 .up_area {
-    padding-left: 100px;
+    padding-left: 130px;
     padding-bottom: 50px
 }
 .inline-input{
@@ -771,6 +773,10 @@ h3.form_title_label {
     text-overflow:ellipsis;
     white-space:nowrap;
 
+}
+.upload-title-red{
+    font-size: 12px;
+    color: red;
 }
 
 
