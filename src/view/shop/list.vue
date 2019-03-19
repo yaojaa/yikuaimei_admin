@@ -70,7 +70,15 @@ export default {
                 ]
             },
             searchs: {
-                "list": [{
+                "list": [
+                    {
+                        "type": "input-text", //输入文本
+                        "label": "公司名称",
+                        "name": "shop_name",
+                        "value": "",
+                        "placeholder": "公司名称",
+                    },
+                    {
                         "type": "input-text", //输入文本
                         "label": "加盟商名称",
                         "name": "business_name",

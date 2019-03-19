@@ -177,7 +177,7 @@
                                 title: '营销应用'
                             },
                             {
-                                index: '/marketing/ticketList',
+                                index: '/marketing/checkList',
                                 title: '验票列表'
                             }
                         ]

@@ -13,7 +13,7 @@
 </template>
 <script>
 import Config from "./config";
-import RefundInfo from "../order/components/refundInfo";
+import RefundInfo from "../order/components/refundReviewInfo";
 export default {
     name: 'RefundDetail',
 

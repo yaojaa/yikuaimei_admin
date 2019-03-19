@@ -502,6 +502,17 @@ export default {
   },
   created() {
     //this.getBusinessList()
+    //编辑加盟商
+        let params = this.$route.params;
+
+        if (Object.keys(params).length) {
+            
+            this.$axios.get("/api/admin/business/getOneById?id="+params.business_id).then(res => {
+                this.ruleForm = res.data.data;
+                console.log(this.ruleForm,'this.ruleForm')
+            
+            })
+        }
   },
   mounted(){
     //如果是从审核加盟商中过来

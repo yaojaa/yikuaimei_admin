@@ -308,6 +308,14 @@ export default new Router({
                 },
                 {
                     // 加盟商
+                    path: '/business/alliance_add/:business_id',
+                    component: resolve => require(['../view/business/alliance_add.vue'], resolve),
+                    meta: {
+                        title: '编辑加盟商'
+                    }
+                },
+                {
+                    // 加盟商
                     path: '/business/alliance_detail/:id',
                     component: resolve => require(['../view/business/alliance_detail.vue'], resolve),
                     meta: {
@@ -464,6 +472,15 @@ export default new Router({
                     component: resolve => require(['../view/marketing/addCoupon.vue'], resolve),
                     meta: {
                         title: '编辑优惠券',
+                        permission: true
+                    }
+                },
+                {
+                    // 平台验票
+                    path: '/marketing/checkList',
+                    component: resolve => require(['../view/marketing/checkList.vue'], resolve),
+                    meta: {
+                        title: '验票列表',
                         permission: true
                     }
                 },
