@@ -91,11 +91,16 @@ export default {
                         "value": ""
                     },
                     {
-                        "type": "input-date", //输入日期
-                        "label": "加盟日期",
-                        "name": "date",
+                        "type": "input-singal-date", //输入日期
+                        "label": "开始时间",
+                        "name": "start_time",
                         "value": "",
-
+                    },
+                    {
+                        "type": "input-singal-date", //输入日期
+                        "label": "结束时间",
+                        "name": "end_time",
+                        "value": "",
                     },
                 ]
             },
