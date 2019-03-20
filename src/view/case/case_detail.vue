@@ -195,7 +195,13 @@
                                     <div class="text-justify">
                                         <div class="f12 text-muted">{{cm.reply_account_reply_time}}</div>
                                         <div>
-                                            <el-button size="mini" type="" icon="el-icon-star-off">精选评论</el-button>
+                                            <span v-if="flag">
+                                                <el-button size="mini" type="0" icon="el-icon-star-off" @click="setChoice(cm.cases_comment_id)" >精选评论</el-button>
+                                            </span>
+                                            <span v-else>
+                                                <el-button size="mini" type="0" icon="el-icon-star-off" @click="cancelChoice(cm.cases_comment_id)" >取消精选</el-button>
+                                            </span>
+                                            
                                             <el-button type="primary" size="mini" icon="el-icon-edit-outline" @click="reply_content_show=index" :disabled="cm.reply_status==1?true:false">回复</el-button>
                                         </div>
                                     </div>
@@ -238,6 +244,7 @@ export default {
             loading: false,
             info: {},
             reply_content: '',
+            flag:true,
             reply_content_show: -1,
             commentList: []
         }
@@ -347,8 +354,53 @@ export default {
             this.$axios.get('/api/admin/casescomment/index', { params: id })
                 .then(res => {
                     this.commentList = res.data.data;
+                    console.log(this.commentList,'this.commentList')
                 })
         },
+        //设置精选
+        setChoice(cases_comment_id){
+                const params = {
+                "cases_comment_id": cases_comment_id,
+                "excellent": 1
+                }
+                this.$axios.post("/api/admin/casescomment/setExcellent", params).then(res => {
+            
+                    if (res.data.code == 0) {
+                        this.flag=false
+                        this.$alert(res.data.data)
+                    } else {
+                        this.$alert(res.data.msg)
+                    }
+
+                }).catch((e) => {
+                    this.$alert('操作失败' + e)
+                })
+            // if(!this.flag){
+            
+            // }else{
+            
+            // }
+
+        },
+        cancelChoice(cases_comment_id){
+                const params = {
+                "cases_comment_id": cases_comment_id,
+                "excellent": 0
+                }
+                this.$axios.post("/api/admin/casescomment/setExcellent", params).then(res => {
+
+                    if (res.data.code == 0) {
+                        this.flag = true
+                        this.$alert(res.data.data)
+                    } else {
+                        this.$alert(res.data.msg)
+
+                    }
+
+                }).catch((e) => {
+                    this.$alert('操作失败' + e)
+                })
+        }
     }
 }
 </script>
