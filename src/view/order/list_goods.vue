@@ -74,24 +74,19 @@
                             value: 3
                         },
                         {
-                            title: '已发货/待评价',
+                            title: '完成',
                             key: 'status',
                             value: 4
                         },
                         {
-                            title: '已评价',
-                            key: 'status',
-                            value: 5
-                        },
-                        {
                             title: '已取消',
                             key: 'status',
-                            value: 8
+                            value: 5
                         },
     
                     ]
                 },
-                //状态 0全部 1待处理 2已付款/待发货 3已发货 4已发货/待评价 5已评价 8已取消
+                //状态 0全部 1待处理 2已付款/待发货 3已发货 4完成 5已取消
     
                 searchs: {
                     "list": [{
@@ -116,13 +111,13 @@
                         //     "value": ""
     
                         // },
-                        {
-                            "type": "input-text", //选择器
-                            "label": "商品名称",
-                            "name": "goods_name",
-                            "value": ""
+                        // {
+                        //     "type": "input-text", //选择器
+                        //     "label": "商品名称",
+                        //     "name": "goods_name",
+                        //     "value": ""
     
-                        },
+                        // },
                         {
                             "type": "input-singal-date", //输入日期
                             "label": "开始时间",
@@ -203,15 +198,24 @@
                             "prop": "order_name",
                             "width": "",
                             formatter(row) {
-                                let str = row.order_status
+                                let str = row.order_status_all
                                 if(str==1){
                                     row.order_name = "创建";
                                 }
                                 if(str==2){
-                                    row.order_name = "完成"
+                                    row.order_name = "已支付"
                                 }
                                 if(str==3){
-                                    row.order_name = "取消"
+                                    row.order_name = "已发货"
+                                }
+                                if(str==4){
+                                    row.order_name = "已完成"
+                                }
+                                if(str==5){
+                                    row.order_name = "已评价"
+                                }
+                                if(str==8){
+                                    row.order_name = "已取消"
                                 }
 
                                 return row.order_name
@@ -225,7 +229,7 @@
                             "width": "200",
                             formatter: function(row) {
                                 var str = '<div style="text-align:right">'
-                                if (row.order_status == 1) {
+                                if (row.order_status_all == 2) {
                                     str += '<a href="/order/send_goods/' + row.order_code + '" class="el-button reset el-button--default el-button--small" >去发货</a>'
                                 }
                                 str += '<a href="/order/order_detail/' + row.order_code + '" class="el-button reset el-button--default el-button--small is-plain" >详情</a>'
