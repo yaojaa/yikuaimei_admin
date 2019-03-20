@@ -33,12 +33,12 @@ export default {
             status_filter: '',
 
             tagsListGroup: {
-                '订单类型：': [
+                '订单类型:': [
                     { title: '全部', key: 'profit', value: '' },
                     { title: '利润归门店', key: 'profit', value: 1 },
                     { title: '利润归平台', key: 'profit', value: 2 }
                 ],
-                '订单状态：': [
+                '订单状态:': [
 
                     { title: '全部', key: 'status', value: 0 },
                     { title: '待付款', key: 'status', value: 1 },

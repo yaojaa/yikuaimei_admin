@@ -35,7 +35,7 @@
                 status_filter: '',
     
                 tagsListGroup: {
-                    '利润归属：': [{
+                    '利润归属:': [{
                             title: '全部',
                             key: 'profit',
                             value: 0
@@ -51,7 +51,7 @@
                             value: 2
                         }
                     ],
-                    '订单状态：': [
+                    '订单状态:': [
     
                         {
                             title: '全部',

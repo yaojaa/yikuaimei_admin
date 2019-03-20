@@ -35,7 +35,7 @@ export default {
 
             tagsListGroup: {
 
-                '采购状态：': [
+                '采购状态:': [
 
                     { title: '全部', key: 'status', value: 0 },
                     { title: '待审核', key: 'status', value: 1 },

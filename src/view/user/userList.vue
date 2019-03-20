@@ -38,7 +38,7 @@
             return {
                 status_filter: '',
                 tagsListGroup: {
-                    '注册渠道': [
+                    '注册渠道:': [
                         {
 							title: "安卓平台",
 							key: "channel",
@@ -80,7 +80,7 @@
 							value: 7
 						},
                     ],
-                    "选择状态": [
+                    "选择状态:": [
                         {
 							title: "未拉黑",
 							key: "is_black",

@@ -52,7 +52,7 @@ export default {
             visible: false,
             currentItem: {},
             tagsListGroup: {
-                "选择状态": [{
+                "选择状态:": [{
                         title: "全部",
                         key: "is_use",
                         value: 0
@@ -68,7 +68,7 @@ export default {
                         value: 1
                     }
                 ],
-                "行业分类": [{
+                "行业分类:": [{
                         title: "美容",
                         key: "category_id",
                         value: 1

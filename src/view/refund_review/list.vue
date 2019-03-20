@@ -39,7 +39,7 @@ export default {
             status_filter: '',
 
             tagsListGroup: {
-                '订单类型' : [{
+                '订单类型:' : [{
                         title: '商品订单',
                         key: 'order_type ',
                         value: 2
@@ -50,7 +50,7 @@ export default {
                         value: 1
                     },
                 ],
-                '退款方式：': [{
+                '退款方式:': [{
                         title: '全部',
                         key: 'pay_type',
                         value: 0
@@ -81,7 +81,7 @@ export default {
                         value: 5
                     },
                 ],
-                '退款类型：': [{
+                '退款类型:': [{
                         title: '全部',
                         key: 'order_refund_type',
                         value: 0
@@ -102,7 +102,7 @@ export default {
                         value: 3
                     },
                 ],
-                '退款状态：': [{
+                '退款状态:': [{
                         title: '全部',
                         key: 'status',
                         value: 0

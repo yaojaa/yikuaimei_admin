@@ -53,7 +53,7 @@
                 visible: false,
                 currentItem: {},
                 tagsListGroup: {
-                    "选择状态": [{
+                    "选择状态:": [{
                             title: "全部",
                             key: "is_use",
                             value: 0
@@ -69,7 +69,7 @@
                             value: 1
                         }
                     ],
-                    "行业分类": [
+                    "行业分类:": [
                         {
 							title: "全部",
 							key: "category_id",

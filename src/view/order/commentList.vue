@@ -34,7 +34,7 @@ export default {
             status_filter: '',
 
             tagsListGroup: {
-                '评价类型：': [{
+                '评价类型:': [{
                         title: '订单评价',
                         key: 'comment_type',
                         value: 1
@@ -45,7 +45,7 @@ export default {
                         value: 2
                     },
                 ],
-                '商品类型：': [{
+                '商品类型:': [{
                         title: '商品',
                         key: 'good_type',
                         value: 2
@@ -56,7 +56,7 @@ export default {
                         value: 1
                     },
                 ],
-                '评分：': [{
+                '评分:': [{
                         title: '全部',
                         key: 'goods_score',
                         value: 0
