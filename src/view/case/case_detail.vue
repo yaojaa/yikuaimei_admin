@@ -177,42 +177,7 @@
                     <div class="panel-title bold">顾客评论:</div>
                 </div>
                 <div class="panel-body comment-panel">
-                    <div class="comment-item">
-                        <div class="comment-box">
-                            <div class="hd mr-sm">
-                                <img src="https://fakeimg.pl/200x200/" width="40"  height="40" />
-                            </div>
-                            <div class="bd">
-                                <div class="title f14"><span class="text-info">天天：</span><span></span>第一条为示例内容，后期注释</div>
-                                <div class="photo mt-sm">
-                                    <el-row :gutter=15>
-                                        <el-col :span=3 v-for="(item,index) in 3" :key="index">
-                                            <div class="mb-sm">
-                                                <img src="https://fakeimg.pl/200x200/"  class="w-full" />
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                </div>
-                                <div class="text-justify">
-                                    <div class="f12 text-muted">2018</div>
-                                    <div>
-                                        <el-button size="mini" type="" icon="el-icon-star-off">精选评论</el-button>
-                                        <el-button type="primary" size="mini" icon="el-icon-edit-outline">回复</el-button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="reply-box">
-                            <div class="title text-info f14">专家回复：</div>
-                            <div class="reply flex mt-sm">
-                                <div class="avatar mr-sm"><img src="https://fakeimg.pl/200x200/" width="30" height="30" /></div>
-                                    <div class="body flex-sub">
-                                        <div class="name f14">国医大师</div>
-                                        <div class="info f14 mt-xs text-info">是的，用起来的感觉其实还是蛮好的，推荐给大家。</div>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
+                    
                     <div class="comment-item" v-for="(cm,index) in commentList" :key="cm._id">
                         <div class="comment-box">
                             <div class="hd mr-sm"><img :src="cm.user_info_user_img" width="40"  height="40" /></div>

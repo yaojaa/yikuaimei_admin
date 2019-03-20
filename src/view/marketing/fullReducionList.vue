@@ -138,8 +138,8 @@ export default {
                         formatter(row) {
                             if(row.rules){
                                 return `<p style='text-align: center'>
-                                满${row.rules.price}</br>
-                                减${row.rules.reduce_price}</p>`;
+                                满${row.rules.price/100}</br>
+                                减${row.rules.reduce_price/100}</p>`;
                             }
                         }
 

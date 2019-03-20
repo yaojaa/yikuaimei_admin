@@ -31,7 +31,7 @@
                     <el-form-item label="可使用频率:">
                        <el-col :span="6">
                         <!-- 如果选择不限制 那么 limit_times 就是0  -->
-                        <el-radio-group @change="limitsChange" v-model="limitsStatus">
+                        <el-radio-group  v-model="limitsStatus">
                             <el-radio label="0">不限</el-radio> 
                             <el-radio label="1">限制</el-radio>
                         </el-radio-group>
@@ -47,6 +47,21 @@
                        <el-col :span="6">
                            <el-input v-model="ruleForm.limits.limit_times" style="width:100px"></el-input><span>次</span>
                        </el-col>
+                    </el-form-item>
+
+                    <el-form-item label="最低消费:">
+                       <el-col :span="6">
+                        <!-- 如果选择不限制 那么 limit_times 就是0  -->
+                        <el-radio-group @change="limitsChange" v-model="ruleForm.rules.is_full">
+                            <el-radio label="0">无门槛</el-radio> 
+                            <el-radio label="1">满</el-radio>
+                        </el-radio-group>
+                       </el-col>
+                       
+                       <el-col :span="6">
+                           <el-input v-model="ruleForm.rules.price" style="width:100px"></el-input><span>元可用</span>
+                       </el-col>
+                       
                     </el-form-item>
 
                     <el-form-item label="使用范围:" >
@@ -214,9 +229,9 @@ export default {
         ruleForm:{
             "coupon_title" : "",//优惠券标题
             "rules" : {  // 规则
-                "is_full" : 1, // 是否满减  1满减 2立减
-                "price" : 1000,  // 满多少
-                "reduce_price" : 100  // 减多少
+                "is_full" : "1", // 是否满减  
+                "price" : "",  // 满多少
+                "reduce_price" : "100"  // 减多少
             },
             "limits" : { // 参与限制
                 "limit_cycle" : "1", // 限制周期  1 日 2周 3月
@@ -403,6 +418,7 @@ export default {
     submit(){
         console.log(this.ruleForm,'this.ruleForm');
         this.ruleForm.rules.reduce_price = this.ruleForm.rules.reduce_price*100;
+        this.ruleForm.rules.price = this.ruleForm.rules.price*100;
             //var parms = this.ruleForm;
             this.$axios.post("/api/admin/coupon/addReduce", this.ruleForm).then(res => {
                 if(res.data.code == 0){
