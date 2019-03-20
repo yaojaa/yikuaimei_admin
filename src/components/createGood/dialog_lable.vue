@@ -153,7 +153,7 @@ export default {
     },
 
     initSons(){
-      debugger
+      // debugger
       // console.log(this.lableList,'lableList')
 
       let obj = this.lableList[0] || {}

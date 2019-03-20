@@ -6,7 +6,7 @@
             </div>
             <div class="page-header-actions">
                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label' })">管理标签</el-button>
-                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createGood?good_id=0&good_type=4' })">添加虚拟卡券</el-button>
+                    <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/createPhase?good_id=0&good_type=4' })">添加虚拟卡券</el-button>
             </div>
         </div>
         <div class="page-content">
@@ -238,7 +238,7 @@ export default {
                                 "type": "edit",
                                 onClick(tablePage, self, record) {
                                     self.$router.push({
-                                        path: '/createGood',
+                                        path: '/createPhase',
                                         query: {
                                             good_id: record.good_id,
                                             good_type: 4 // good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券

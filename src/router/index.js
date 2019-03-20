@@ -38,6 +38,13 @@ export default new Router({
                     }
                 },
                 {
+                    path: '/createPhase',
+                    component: resolve => require(['../view/goods/createPhase.vue'], resolve),
+                    meta: {
+                        title: '添加商品'
+                    }
+                },
+                {
                     path: '/serviceList',
                     component: resolve => require(['../view/goods/serviceList.vue'], resolve),
                     meta: {
