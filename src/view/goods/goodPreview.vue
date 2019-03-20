@@ -47,7 +47,7 @@
 						name: "在线预览"
 					}
 				];
-				this.reqParams.page = '/pages/service-detail/index'
+				this.reqParams.page = 'pages/service-detail/index'
 			} else if (+this.$route.query.good_type === 2) {
 				this.breadcrumb = [
 					{

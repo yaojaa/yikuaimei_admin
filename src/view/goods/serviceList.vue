@@ -69,7 +69,13 @@
                             value: 1
                         }
                     ],
-                    "行业分类": [{
+                    "行业分类": [
+                        {
+							title: "全部",
+							key: "category_id",
+							value: 0
+						},
+                        {
                             title: "美容",
                             key: "category_id",
                             value: 1
