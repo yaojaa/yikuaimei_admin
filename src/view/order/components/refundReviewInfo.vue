@@ -174,7 +174,7 @@
                 this.doRefundType = 0;
             },
             doRefund() {
-                const url = this.doRefundType ? '/api/admin/refund/pass' : '/api/admin/refund/reject'
+                const url = this.doRefundType ? '/api/admin/refundReview/pass' : '/api/admin/refundReview/reject'
                 const params = {
                     refund_id: this.refundInfo.order_refund_id,
                     remark: this.refundRemark
