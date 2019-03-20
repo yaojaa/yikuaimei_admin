@@ -59,12 +59,12 @@
 						{
 							title: "已上架",
 							key: "is_use",
-							value: 1
+							value: 2
 						},
 						{
 							title: "未上架",
 							key: "is_use",
-							value: 2
+							value: 1
 						}
 					],
 					"行业分类": [{

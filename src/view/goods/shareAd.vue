@@ -155,7 +155,9 @@ export default {
             
             this.$alert('提交成功');
             //this.shareGetInfo = {};
-            this.$router.push('/goodList')
+            // console.log(this,'this');
+            this.$router.go(-1);
+            //this.$router.push('/goodList')
 
         } else {
             this.$alert('操作失败' + res.data.msg)
