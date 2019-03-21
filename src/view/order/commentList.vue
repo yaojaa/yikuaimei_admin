@@ -87,6 +87,7 @@ export default {
                         value: 1
                     },
                 ],
+                
 
 
                 // '采购状态：':[
@@ -104,22 +105,16 @@ export default {
             searchs: {
                 "list": [{
                         "type": "input-text", //输入文本
-                        "label": "用户名",
-                        "name": "user_name",
+                        "label": "门店名字",
+                        "name": "shop_name",
                         "value": "",
-                        "placeholder": "用户名",
+                        "placeholder": "门店名字",
                     },
-                    {
-                        "type": "input-text", //输入文本
-                        "label": "手机号",
-                        "name": "phone",
-                        "value": "",
-                        "placeholder": "",
-                    },
+                   
                     {
                         "type": "input-text", //选择器
-                        "label": "订单号",
-                        "name": "order_number",
+                        "label": "手机号",
+                        "name": "user_phone",
                         "value": ""
 
                     },
@@ -132,10 +127,10 @@ export default {
                     },
                     {
                         "type": "input-text", //标签名称筛选
-                        "label": "标签",
-                        "name": "tag_name",
+                        "label": "标签id",
+                        "name": "tag_id",
                         "value": "",
-                        "placeholder": "请输入标签名称"
+                        "placeholder": "请输入标签id"
                     },
                     {
                         "type": "input-singal-date", //输入日期

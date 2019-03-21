@@ -164,6 +164,10 @@
                             {
                                 index: '/user/userList?is_black=0',
                                 title: '用户管理'
+                            },
+                            {
+                                index: '/user/beautifulList',
+                                title: '美丽档案'
                             }
                         ]
                     },

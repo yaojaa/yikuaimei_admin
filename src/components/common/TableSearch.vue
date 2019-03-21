@@ -33,6 +33,7 @@
                         v-else-if="search.type == 'input-singal-date'"
                         v-model="search.value"
                         type="date"
+                        format="yyyy 年 MM 月 dd 日"
                         :align="search.align || 'center'"
                         unlink-panels
                         :placeholder="search.placeholder"

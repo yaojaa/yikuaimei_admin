@@ -48,34 +48,35 @@ export default {
             //状态 0全部 1待处理 2已付款/待发货 3已发货 4已发货/待评价 5已评价 8已取消
 
             searchs: {
-                "list": [{
-                        "type": "input-text", //输入文本
-                        "label": "用户名",
-                        "name": "user_name",
-                        "value": "",
-                        "placeholder": "用户名",
-                    },
-                    {
-                        "type": "input-text", //输入文本
-                        "label": "手机号",
-                        "name": "phone",
-                        "value": "",
-                        "placeholder": "",
-                    },
-                    {
-                        "type": "input-text", //选择器
-                        "label": "订单号",
-                        "name": "order_number",
-                        "value": ""
+                "list": [
+                    // {
+                    //     "type": "input-text", //输入文本
+                    //     "label": "用户名",
+                    //     "name": "user_name",
+                    //     "value": "",
+                    //     "placeholder": "用户名",
+                    // },
+                    // {
+                    //     "type": "input-text", //输入文本
+                    //     "label": "手机号",
+                    //     "name": "phone",
+                    //     "value": "",
+                    //     "placeholder": "",
+                    // },
+                    // {
+                    //     "type": "input-text", //选择器
+                    //     "label": "订单号",
+                    //     "name": "order_number",
+                    //     "value": ""
 
-                    },
-                    {
-                        "type": "input-text", //选择器
-                        "label": "商品名称",
-                        "name": "goods_name",
-                        "value": ""
+                    // },
+                    // {
+                    //     "type": "input-text", //选择器
+                    //     "label": "商品名称",
+                    //     "name": "goods_name",
+                    //     "value": ""
 
-                    },
+                    // },
                     {
                         "type": "input-singal-date", //输入日期
                         "label": "开始时间",

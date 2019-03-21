@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <nomal-table ref="table" :table-json="tableJson" url="/api/admin/user/index">
+            <nomal-table v-on:listenSwitchChange="listenSwitchChange" ref="table" :table-json="tableJson" url="/api/admin/beautydiary/index">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
         </div>
@@ -26,7 +26,7 @@
 <script>
     import NomalTable from '@/components/common/NomalTable'
     import TableSearch from '@/components/common/TableSearch'
-    import Config from "./config";
+
     
     export default {
         name: 'userList',
@@ -37,58 +37,19 @@
         data() {
             return {
                 status_filter: '',
+                freeze:"",
                 tagsListGroup: {
-                    '注册渠道:': [
-                        {
-							title: "安卓平台",
-							key: "channel",
-							value: 1
-						},
-                        {
-							title: "ios平台",
-							key: "channel",
-							value: 2
-						},
-                        {
-							title: "微信小程序",
-							key: "channel",
-							value: 3
-						},
-                        {
-							title: "微信服务号",
-							key: "channel",
-							value: 4
-						},
-                        {
-							title: "PC网页",
-							key: "channel",
-							value: 5
-						},
-                        {
-							title: "移动平台网页",
-							key: "channel",
-							value: 6
-						},
-                        {
-							title: "未知注册渠道",
-							key: "channel",
-							value: 0
-                        },
-                        {
-							title: "其他",
-							key: "channel",
-							value: 7
-						},
-                    ],
+                    
                     "选择状态:": [
+                        
                         {
-							title: "未拉黑",
-							key: "is_black",
+							title: "已冻结",
+							key: "freeze",
 							value: 0
                         },
                         {
-							title: "已拉黑",
-							key: "is_black",
+							title: "未冻结",
+							key: "freeze",
 							value: 1
 						},
                     ]
@@ -98,23 +59,23 @@
                     list: [{
                             type: "input-text", //输入文本
                             label: "用户名",
-                            name: "real_name",
+                            name: "user_name",
                             value: "",
                             placeholder: "用户名",
                         },
                         {
                             type: "input-text", //输入文本
                             label: "手机号",
-                            name: "bind_phone",
+                            name: "user_phone",
                             value: "",
                             placeholder: "手机号",
                         },
                         {
                             type: "input-text", //选择器
-                            label: "推荐人/门店",
-                            name: "recommend_name",
+                            label: "档案ID",
+                            name: "id",
                             value: "",
-                            placeholder: "推荐人/门店",
+                            placeholder: "档案ID",
                         },
                         {
                         "type": "input-singal-date", //输入日期
@@ -127,7 +88,7 @@
                             "label": "结束时间",
                             "name": "end_time",
                             "value": "",
-                        },
+                        }
                     ]
                 },
                 tableJson: {
@@ -135,54 +96,41 @@
                         {
                             "type": "text",
                             "align": "center",
-                            "label": "用户/手机号",
-                            "width": "250",
-                            formatter(row) {
-                                let str = "<div style='background-color#fff;padding:8px;'>";
-                                str += "<div style='float:left;width:80px;height:80px;margin-right:8px;'><img style='width:100%; height:100%;' src='" +row.user_info_head_img + "'></div>";
-                                str += "<p class='list-good-name'>" + row.user_info_nick_name + "</p>";
-                                str += "<p class='list-good-price' style='margin-top:10px;'>" + row.user_bind_phone + "</p>";
-                                str += "</div>";
-                                return str;
+                            "label": "档案ID",
+                            "prop":"_id",
+                            "width": "",
+                            
+                        },
+                        {
+                            "type": "text",
+                            "align": "center",
+                            "label": "创建时间",
+                            "prop": "create_time",
+                            "width": "",
+                            
+                        },
+                        {
+                            "type": "text",
+                            "align": "center",
+                            "label": "内容",
+                            "prop": "content",
+                            "width": "",
+                           
+    
+                        },
+                        {
+                        "type": "text",
+                        "align": "center",
+                        "label": "用户/手机号",
+                        "width": "",
+                        formatter(row) {
+                            let str = "<div>";
+                            str += "<p>" + row.order_detail_order_user_name + "</p>";
+                            str += "<p>" + row.order_detail_order_user_phone + "</p>";
+                            str += "</div>";
+                            return str;
                             }
-                        },
-                        {
-                            "type": "text",
-                            "align": "center",
-                            "label": "注册时间",
-                            "prop": "user_info_ctime",
-                            "width": "",
-                            formatter(row) {
-								return `<p style='text-align: center'>
-		                                    ${row.user_info_ctime || '--'}
-		                                </p>`;
-							}
-                        },
-                        {
-                            "type": "text",
-                            "align": "center",
-                            "label": "注册渠道",
-                            "prop": "",
-                            "width": "",
-                            formatter(row) {
-								return `<p style='text-align: center'>
-		                                    ${Config.user_from[row.user_from] || '--'}
-		                                </p>`;
-							}
-    
-                        },
-                        {
-                            "type": "text",
-                            "align": "center",
-                            "label": "推荐人门店",
-                            "prop": "my_superior",
-                            "width": "",
-                            formatter(row) {
-								return `<p style='text-align: center'>
-		                                    ${row.my_superior || '--'}
-		                                </p>`;
-							}
-    
+
                         },
                         {
                             "type": "text",
@@ -191,21 +139,30 @@
                             "prop": "",
                             "width": "",
                             formatter(row) {
-								return `<p style='text-align: center'>
-		                                    ${Config.is_black[row.is_black] || '--'}
-		                                </p>`;
-							}
+                                return row.freeze==1?"未冻结":"已冻结"
+                            }
                         },
                         {
-                            "type": "handle",
+                            "type": "switch_btn",
                             "label": "操作",
                             "align": "center",
+                            "width": "50",
+                            "prop": "freeze",
+                            "value": ['冻结', '解冻']
+                        },
+
+                        {
+                            "type": "handle",
+                            "label": "查看",
+                            "align": "center",
                             "width": "200",
-                            "list": [{
-                                "label": "查看详情",
-                                "url": "/user/detail",
-                                "query": "user_id"
-                            }]
+                            "list": [
+                                {
+                                    "label": "查看详情",
+                                    "url": "/user/detail",
+                                    "query": "user_id"
+                                }
+                            ]
                         }
                     ],
                 }
@@ -228,6 +185,40 @@
         },
         methods: {
             //调用子组件的gatData方法
+            listenSwitchChange(data) {
+
+            const { _id, freeze } = data.value
+            const params ={
+                id:_id,
+                freeze:freeze
+            }
+           
+            this.$axios.post("/api/admin/beautydiary/freeze", params).then(res => {
+                
+                console.log(res)
+
+                if (res.data.code == 0) {
+                    this.freeze = 0
+
+                    this.$alert(res.data.data)
+
+                } else {
+                    this.$alert(res.data.msg)
+
+                }
+
+
+            }).catch((e) => {
+
+                this.$alert('操作失败' + e)
+
+            })
+            // this.id = id
+            // this.freeze = freeze == 1 ? 0 : 1
+            // console.log(this.is_use)
+
+            // this.dialog = true
+        },
             getData(k, v) {
                 this.$refs.table.getData({
                     [k]: v

@@ -423,6 +423,7 @@ export default {
             this.$axios.post("/api/admin/coupon/addReduce", this.ruleForm).then(res => {
                 if(res.data.code == 0){
                     this.$alert('添加成功！')
+                    
                     this.$router.push('/marketing/fullReducionCouponList')
                 }else{
                     this.$alert(res.data.msg)
