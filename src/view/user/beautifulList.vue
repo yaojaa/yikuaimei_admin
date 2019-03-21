@@ -19,6 +19,14 @@
             <nomal-table v-on:listenSwitchChange="listenSwitchChange" ref="table" :table-json="tableJson" url="/api/admin/beautydiary/index">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
+            <el-dialog :title="freeze==2?'冻结':'解冻'" :visible.sync="dialog" width="30%">
+                <p style="color:red">此操作会{{freeze==2?'冻结':'解冻'}}门店</p>
+                
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialog = false">取 消</el-button>
+                    <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
+                </span>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -37,7 +45,9 @@
         data() {
             return {
                 status_filter: '',
-                freeze:"",
+                freeze:null,
+                dialog:false,
+                beauty_id:"",
                 tagsListGroup: {
                     
                     "选择状态:": [
@@ -138,8 +148,13 @@
                             "label": "状态",
                             "prop": "",
                             "width": "",
+                            // formatter(row) {
+                            //     return row.freeze==1?"未冻结":"已冻结"
+                            // }
                             formatter(row) {
-                                return row.freeze==1?"未冻结":"已冻结"
+                            return `<div style="color:red">
+                                ${row.freeze==1?'未冻结':'已冻结'}
+                                </div>`
                             }
                         },
                         {
@@ -148,7 +163,7 @@
                             "align": "center",
                             "width": "50",
                             "prop": "freeze",
-                            "value": ['冻结', '解冻']
+                            "value": ['冻结','解冻']
                         },
 
                         {
@@ -159,8 +174,8 @@
                             "list": [
                                 {
                                     "label": "查看详情",
-                                    "url": "/user/detail",
-                                    "query": "user_id"
+                                    "url": "/user/beautifulDetail",
+                                    "query": "beauty_id"
                                 }
                             ]
                         }
@@ -188,21 +203,32 @@
             listenSwitchChange(data) {
              
 
-            const { _id, freeze } = data.value
+            const { beauty_id, freeze } = data.value
 
             this.freeze = freeze == 1 ? 2 : 1
+             this.dialog = true
+             this.beauty_id = beauty_id
 
+            
+            
+        },
+        doUpdateIsUse() {
             const params ={
-                id:_id,
+                id:this.beauty_id,
                 freeze:this.freeze
             }
            
             this.$axios.post("/api/admin/beautydiary/freeze", params).then(res => {
+                this.dialog = false;
                 
                 console.log(res)
 
                 if (res.data.code == 0) {
                     //this.freeze = 0
+                    this.$refs.table.getData({
+                        is_page: 1,
+                        page: 1
+                    });
 
                     this.$alert(res.data.data)
 
@@ -217,11 +243,7 @@
                 this.$alert('操作失败' + e)
 
             })
-            // this.id = id
-            // this.freeze = freeze == 1 ? 0 : 1
-            // console.log(this.is_use)
 
-            // this.dialog = true
         },
             getData(k, v) {
                 this.$refs.table.getData({

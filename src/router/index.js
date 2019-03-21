@@ -440,11 +440,19 @@ export default new Router({
                     }
                 },
                 {
-                    // 用户列表
+                    // 档案列表
                     path: '/user/beautifulList',
                     component: resolve => require(['../view/user/beautifulList.vue'], resolve),
                     meta: {
                         title: '美丽档案'
+                    }
+                },
+                {
+                    // 档案详情
+                    path: '/user/beautifulDetail/:id',
+                    component: resolve => require(['../view/user/beautifulDetail.vue'], resolve),
+                    meta: {
+                        title: '档案详情'
                     }
                 },
                 {

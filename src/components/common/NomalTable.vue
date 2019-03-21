@@ -298,6 +298,8 @@
                 console.log(selection)
             },
             handleSwitch(scope,column){
+                console.log(scope,'scope')
+                console.log(column,'column')
                 console.log('$emit listenSwitchChange data is',column.prop,scope.row[column.prop])
 
                 this.$emit('listenSwitchChange',{key:column.prop,value:scope.row})
