@@ -158,7 +158,7 @@
                             }
                         },
                         {
-                            "type": "switch_btn",
+                            "type": "switch_button",
                             "label": "操作",
                             "align": "center",
                             "width": "50",

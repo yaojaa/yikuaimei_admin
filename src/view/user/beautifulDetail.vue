@@ -2,12 +2,34 @@
     <div class="page">
         <div class="page-header">
             <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>加盟商</el-breadcrumb-item>
+                <el-breadcrumb-item>美丽档案</el-breadcrumb-item>
                 <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="page-content">
-           
+           <div class="info">
+               <div class="info-left">
+                    <img :src="info.user_info_user_img"   class="info-user-img">
+               </div>
+               <div class="info-right">
+                    <div class="info-right-title">
+                        <p>{{info.user_info_user_name}}</p>
+                        <p>{{info.create_time}}</p>
+                        
+                    </div>
+                    <div class="info-right-content">
+                        <p>{{info.content}}</p>
+                    </div>
+                    <div class="info-right-img">
+                        <img :src="item" alt="" v-for="item in info.beauty_img" :key="item" class="img-inline">
+                    </div>
+                    <div class="info-right-reply">
+                        <p>商家回复:{{info.reply_info_reply}}</p>
+                    </div>
+               </div>
+              
+               
+           </div>
 
         </div>
     </div>
@@ -70,5 +92,31 @@ export default {
 <style scoped>
   .item-list.four-text .hd{
     width: 6em
+  }
+  .info{
+      padding:20px;
+      background-color: #fff;
+      display: flex;
+  }
+  .info-left{
+      width:70px;
+
+  }
+  .info-right{
+      flex: 1;
+      margin-left: 20px;
+      margin-top: 15px;
+  }
+  .info-user-img{
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+  }
+  .img-inline{
+      width:200px;
+      height: 200px;
+  }
+  .info-right-img{
+      margin-top: 20px;
   }
 </style>
