@@ -75,27 +75,29 @@
                     </el-form-item>
     
                     <el-form-item label="使用有效期:">
-                        <el-radio-group v-model="ruleForm.date_expire_type" @change="dataChange">
-                            
-                            <el-radio v-model="ruleForm.coupon_expire_type" label="1">固定日期
-                                <el-date-picker
-                                    v-model="dateArray"
-                                    @change="dataArrChange"
-                                    type="datetimerange"
-                                    value-format="yyyy-MM-dd hh:mm:ss"
-                                    range-separator="至"
-                                    start-placeholder="开始日期"
-                                    end-placeholder="结束日期">
-                                </el-date-picker>
-                            </el-radio>
-                            <div class="heigth20px"></div>
-                            <el-radio label="2" v-model="ruleForm.coupon_expire_type">领取当日开始
-                                <el-input v-model="ruleForm.coupon_expire.coupon_expire_day" @blur="dateDaysChange"></el-input>
-                                天内有效
-                            </el-radio>
-                            
-                            
-                    </el-radio-group>
+                        <el-col :span="18">
+                            <el-radio-group v-model="ruleForm.date_expire_type" @change="dataChange">
+                                
+                                <el-radio v-model="ruleForm.coupon_expire_type" label="1">固定日期
+                                    <el-date-picker
+                                        v-model="dateArray"
+                                        @change="dataArrChange"
+                                        type="datetimerange"
+                                        value-format="yyyy-MM-dd hh:mm:ss"
+                                        range-separator="至"
+                                        start-placeholder="开始日期"
+                                        end-placeholder="结束日期">
+                                    </el-date-picker>
+                                </el-radio>
+                                <div class="heigth20px"></div>
+                                <el-radio label="2" v-model="ruleForm.coupon_expire_type">领取当日开始
+                                    <el-input v-model="ruleForm.coupon_expire.coupon_expire_day" @blur="dateDaysChange"></el-input>
+                                    天内有效
+                                </el-radio>
+                                
+                                
+                        </el-radio-group>
+                    </el-col>
                     </el-form-item>
                     <div>
                         <div v-if="ruleForm.coupon_range_type==2" class="pd-left">
