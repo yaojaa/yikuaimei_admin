@@ -11,7 +11,7 @@
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
-                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/user/userList', query: {[tag.key]: tag.value }}">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag) in item" :key="tag.value" :to="{ path: '/user/beautifulLIst', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
                     </div>
                 </div>
@@ -43,14 +43,14 @@
                     "选择状态:": [
                         
                         {
-							title: "已冻结",
-							key: "freeze",
-							value: 0
-                        },
-                        {
 							title: "未冻结",
 							key: "freeze",
 							value: 1
+                        },
+                        {
+							title: "已冻结",
+							key: "freeze",
+							value: 2
 						},
                     ]
                 },
@@ -186,11 +186,15 @@
         methods: {
             //调用子组件的gatData方法
             listenSwitchChange(data) {
+             
 
             const { _id, freeze } = data.value
+
+            this.freeze = freeze == 1 ? 2 : 1
+
             const params ={
                 id:_id,
-                freeze:freeze
+                freeze:this.freeze
             }
            
             this.$axios.post("/api/admin/beautydiary/freeze", params).then(res => {
@@ -198,7 +202,7 @@
                 console.log(res)
 
                 if (res.data.code == 0) {
-                    this.freeze = 0
+                    //this.freeze = 0
 
                     this.$alert(res.data.data)
 
