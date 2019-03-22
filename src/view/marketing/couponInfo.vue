@@ -54,24 +54,24 @@
                                     <div class="bd" v-if="info.coupon_range_type==2"><span>{{ category_name }}</span></div>
                                     <div class="bd" v-if="info.coupon_range_type==3">
                                         <p>商品</p>
-                                        <div>
-                                            <img :src="goodsInfo.good_ico" alt="" width="60px" height="60px">
-                                            <span style="margin-left:20px">{{ goodsInfo.good_name}}</span>
+                                        <div v-for="item in goodsInfo" :key="item.good_id">
+                                            <img :src="item.good_ico" alt="" width="60px" height="60px">
+                                            <span style="margin-left:20px">{{ item.good_name}}</span>
                                         </div>
                                     </div>
                                     <div class="bd" v-if="info.coupon_range_type==4">
                                         <p>服务</p>
-                                        <div>
-                                            <img :src="goodsInfo.good_ico" alt="" width="60px" height="60px">
-                                            <span style="margin-left:20px">{{ goodsInfo.good_name}}</span>
+                                        <div v-for="item in goodsInfo" :key="item.good_id">
+                                            <img :src="item.good_ico" alt="" width="60px" height="60px">
+                                            <span style="margin-left:20px">{{ item.good_name}}</span>
                                         </div>
                                     
                                     </div>
-                                    <div class="bd" v-if="info.coupon_range_type==4">
+                                    <div class="bd" v-if="info.coupon_range_type==5">
                                         <p>虚拟卡券</p>
-                                        <div>
-                                            <img :src="goodsInfo.good_ico" alt="" width="60px" height="60px">
-                                            <span style="margin-left:20px">{{ goodsInfo.good_name}}</span>
+                                        <div v-for="item in goodsInfo" :key="item.good_id">
+                                            <img :src="item.good_ico" alt="" width="60px" height="60px">
+                                            <span style="margin-left:20px">{{ item.good_name}}</span>
                                         </div>
                                     </div>
                                 </div>
