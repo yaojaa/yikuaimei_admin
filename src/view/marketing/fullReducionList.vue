@@ -68,6 +68,7 @@ export default {
                         "name": "coupon_code",
                         "value": "",
                         "placeholder": "",
+
                     },
                     
                     {
@@ -93,7 +94,8 @@ export default {
                         "align": "center",
                         "label": "优惠券ID",
                         "prop": "coupon_code",
-                        "width": "120px"
+                        "width": "120px",
+                       
                     },
                     {
                         "type": "text",
@@ -238,7 +240,16 @@ export default {
                                     //             }
 									// 	})
 									// }
-								}
+                                },
+                                {
+                                    "label": "详情",
+                                    "type": "detail",
+                                    onClick(tablePage, self, row) {
+                                        self.$router.push("/marketing/couponInfo/" + row.coupon_code)
+                                    }
+
+                                }
+                                
 								
 								
 							]

@@ -491,10 +491,19 @@ export default new Router({
                 },
                 {
                     // 优惠券编辑
-                    path: '/marketing/addCoupon/:id',
+                    path: '/marketing/addCoupon/:coupon_code',
                     component: resolve => require(['../view/marketing/addCoupon.vue'], resolve),
                     meta: {
                         title: '编辑优惠券',
+                        permission: true
+                    }
+                },
+                {
+                    // 优惠券详情
+                    path: '/marketing/couponInfo/:coupon_code',
+                    component: resolve => require(['../view/marketing/couponInfo.vue'], resolve),
+                    meta: {
+                        title: '优惠券详情',
                         permission: true
                     }
                 },

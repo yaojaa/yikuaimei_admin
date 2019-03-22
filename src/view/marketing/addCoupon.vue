@@ -66,7 +66,7 @@
 
                     <el-form-item label="使用范围:" >
                         <el-radio-group v-model="ruleForm.coupon_range_type" @change="handleChange">
-                            <el-radio label="1">全国</el-radio>
+                            <el-radio label="1">通用</el-radio>
                             <el-radio label="2">指定行业</el-radio>
                             <el-radio label="3">指定商品</el-radio>
                             <el-radio label="4">指定服务</el-radio>
@@ -516,7 +516,7 @@ export default {
         //编辑优惠券
         let params = this.$route.params;
         if (Object.keys(params).length) {
-            this.$axios.get("/api/admin/coupon/info?coupon_code="+this.$route.params.id).then(res => {
+            this.$axios.get("/api/admin/coupon/info",{params:params}).then(res => {
                 if(res.data.code ==0){
                     this.ruleForm = res.data.data;
                     this.dateArray[0] = this.ruleForm.coupon_expire.coupon_expire_start_time 
