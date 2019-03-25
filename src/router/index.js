@@ -508,6 +508,16 @@ export default new Router({
                     }
                 },
                 {
+                    // 已用门店
+                    path: '/marketing/usedShop/:coupon_code',
+                    component: resolve => require(['../view/marketing/usedShop.vue'], resolve),
+                    meta: {
+                        title: '已用门店',
+                        permission: true
+                    }
+                },
+                
+                {
                     // 平台验票
                     path: '/marketing/checkList',
                     component: resolve => require(['../view/marketing/checkList.vue'], resolve),

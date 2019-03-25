@@ -24,6 +24,45 @@
             <nomal-table v-on:listenSwitchChange="listenSwitchChange" ref="table" :table-json="tableJson" :url="url">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
+            <el-dialog title="兑换码生成" :visible.sync="dialogCode" width=40% center>
+                <el-form>
+                    <el-form-item label="标题:" label-width=140px>
+                        <el-input v-model="exchange_coupon_title" autocomplete="off" style="width:220px"></el-input>
+                    </el-form-item>
+                     <el-form-item label="开始时间:" label-width=140px>
+                        <el-date-picker
+                            v-model="codeStartTime"
+                            type="date"
+                            placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="结束时间:" label-width=140px>
+                        <el-date-picker
+                            v-model="codeEndTime"
+                            type="date"
+                            placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="兑换数量:" label-width=140px>
+                        <el-input v-model="codeTotalNumber" placeholder="请输入数字" style="width:220px"></el-input>
+                    </el-form-item>
+                    <el-form-item label="每人兑换数量限制:" label-width=140px>
+                        <el-input v-model="codeUserLimit" placeholder="请输入数字" style="width:220px"></el-input><span> 次</span>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogCodeClose">取 消</el-button>
+                    <el-button type="primary" @click="dialogCodeSure">确 定</el-button>
+                </div>
+            </el-dialog>
+            <el-dialog :title="coupon_status==2?'上架':'下架'" :visible.sync="dialog" width="30%">
+                <p style="color:red">此操作会{{coupon_status==2?'上架':'下架'}}{{coupon_title}}优惠券</p>
+                
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialog = false">取 消</el-button>
+                    <el-button type="primary" @click="upperShelf">确 定</el-button>
+                </span>
+            </el-dialog>
             <!-- <el-dialog :title="is_use==0?'停用':'启用'" :visible.sync="dialog" width="30%">
                 <p style="color:red">此操作会{{is_use==0?'停用':'启用'}}门店</p>
                 <p>操作人:{{user.data.user_realname}}</p>
@@ -48,7 +87,16 @@ export default {
     data() {
         return {
             user: JSON.parse(localStorage.user),
-            dialog: false,
+            dialogCode: false,
+            coupon_code:"",
+            coupon_title:"",
+            coupon_status:null,
+            dialog:false,
+            exchange_coupon_title:"", //兑换码标题
+            codeStartTime:"",// 开始时间
+            codeEndTime:"",
+            codeTotalNumber:"",
+            codeUserLimit:"",
             business_id: '',
             is_use: '',
             remark: '无',
@@ -182,7 +230,15 @@ export default {
                             return row.coupon_status == 1 ? `<p style='text-align: center'>未开始</p>` : `<p style='text-align: center'>进行中</p>`
                         }
                             	
-					},
+                    },
+                    {
+                        "type": "switch_button",
+                        "label": "上架/下架",
+                        "align": "center",
+                        "width": "100",
+                        "prop": "coupon_status",
+                        "value": ['上架','下架']
+                    },
                     
                     {
 							"type": "handle",
@@ -195,34 +251,21 @@ export default {
 									"type": "edit",
 									// "url": "", //优先执行url
 									onClick(tablePage, self, record) {
-										// console.log(record);
-										//self.openModal(record)
+										
+										self.creatCode(record)
 									}
                                 },
+                                
+
                                 {
 									"label": "已用门店",
 									"type": "edit",
 									// "url": "", //优先执行url
-									onClick(tablePage, self, record) {
-										self.$router.push({
-											path: '/createGood',
-											query: {
-												good_id: record.good_id,
-												good_type: 2 // good_tpye: 1门店服务 2平台商品 3品项管理 4虚拟卡券
-											}
-										})
+									onClick(tablePage, self, row) {
+                                        self.$router.push("/marketing/usedShop/" + row.coupon_code)
 									}
 								},
                                 
-                                {
-									"label": "下线",
-									"type": "edit",
-									// "url": "", //优先执行url
-									onClick(tablePage, self, record) {
-										// console.log(record);
-										//self.openModal(record)
-									}
-                                },
                                 {
 									"label": "编辑",
 									"type": "edit",
@@ -274,20 +317,101 @@ export default {
 
     },
     methods: {
+        upperShelf(){
+            const params ={
+                coupon_code:this.coupon_code
+            }
+            if(this.coupon_status==1){
+                //下架
+                this.$axios.post("/api/admin/coupon/close", params).then(res => {
+                    if(res.data.code == 0){
+                        this.$alert('操作成功')
+                        this.dialog = false
+                        this.$refs.table.getData({
+                            is_page: 1,
+                            page: 1
+                        });
+                    }else{
+                        this.$alert(res.data.msg)
+                    }
+                }).catch((e)=>{
+
+                    this.$alert('操作失败'+e)
+
+                })
+                
+            }
+            if(this.coupon_status==2){
+                //上架
+                this.$axios.post("/api/admin/coupon/publish", params).then(res => {
+                    if(res.data.code == 0){
+                        this.$alert('操作成功')
+                        this.dialog = false
+                        this.$refs.table.getData({
+                            is_page: 1,
+                            page: 1
+                        });
+                    }else{
+                        this.$alert(res.data.msg)
+                    }
+                }).catch((e)=>{
+
+                    this.$alert('操作失败'+e)
+
+                })
+                
+             }
+            
+        },
+        dialogCodeClose(){
+            this.dialogCode = false
+        },
+        dialogCodeSure(){
+            // console.log(this.)
+            const params = {
+                "coupon_code":this.coupon_code,
+                "exchange_coupon_title":this.exchange_coupon_title,
+                "exchange_coupon_total":this.codeTotalNumber,
+                "exchange_coupon_user_limit":this.codeUserLimit,
+                "exchange_coupon_start_time":this.codeStartTime,
+                "exchange_coupon_end_time":this.codeEndTime
+            }
+            this.$axios.post("/api/admin/couponExchange/add", params).then(res => {
+                if(res.data.code == 0){
+                    this.$alert('操作成功')
+                    this.dialogCode = false
+                }else{
+                    this.$alert(res.data.msg)
+                }
+            }).catch((e)=>{
+
+                this.$alert('操作失败'+e)
+
+            })
+        },
+        //生成兑换码
+        creatCode(params){
+            this.dialogCode = true
+            this.coupon_code = params.coupon_code
+            this.coupon_status = params.coupon_status
+            console.log(params,'params-------')
+            
+
+        },
         //调用子组件的gatData方法
         //
         listenSwitchChange(data) {
-            console.log(data,'data')
+           
 
 
-            const { shop_id, shop_is_use } = data.value
-            console.log(data.value,'data.value')
+            const { coupon_title, coupon_status,coupon_code } = data.value
 
-            this.shop_id = shop_id
-            this.is_use = shop_is_use == 1 ? 0 : 1
-            console.log(this.is_use)
-
-            this.dialog = true
+            this.coupon_status = coupon_status == 2 ? 1 : 2
+            this.coupon_title = coupon_title
+            this.coupon_code = coupon_code
+            console.log(this.coupon_status,'freeze')
+            console.log(this.coupon_title,'coupon_title')
+             this.dialog = true
         },
       
         getData(k, v) {
