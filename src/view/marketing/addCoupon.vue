@@ -73,6 +73,17 @@
                             <el-radio label="5">指定虚拟商品</el-radio>
                         </el-radio-group>
                     </el-form-item>
+                    <el-form-item label="活动专属:">
+                       <el-col :span="6">
+                        <el-radio-group  v-model="ruleForm.coupon_in_shop">
+                            <el-radio label="1">否</el-radio> 
+                            <el-radio label="2">是</el-radio>
+                        </el-radio-group>
+                       </el-col>
+                       
+                       
+                       
+                    </el-form-item>
     
                     <el-form-item label="使用有效期:">
                         <el-col :span="18">
@@ -99,6 +110,8 @@
                         </el-radio-group>
                     </el-col>
                     </el-form-item>
+                    <!-- coupon_in_shop -->
+                    
                     <div>
                         <div v-if="ruleForm.coupon_range_type==2" class="pd-left">
                             <span>已选:{{industry_name}}</span>
@@ -235,6 +248,9 @@ export default {
                 "price" : "",  // 满多少
                 "reduce_price" : "100"  // 减多少
             },
+            
+            "coupon_in_shop" : "1",
+
             "limits" : { // 参与限制
                 "limit_cycle" : "1", // 限制周期  1 日 2周 3月
                 "limit_times" : "", // 周期内限制使用次数

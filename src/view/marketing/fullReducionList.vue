@@ -16,7 +16,7 @@
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
-                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/marketing/fullReducionList', query: {[tag.key]: tag.value }}">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/marketing/fullReducionCouponList', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
                     </div>
                 </div>
@@ -106,6 +106,10 @@ export default {
                 '优惠券类型:': [
                     { title: '满减', key: 'coupon_rule_type', value: 1 },
                     { title: '立减', key: 'coupon_rule_type', value: 2 }
+                ],
+                 '活动专属:': [
+                    { title: '是', key: 'coupon_in_shop', value: 2 },
+                    { title: '否', key: 'coupon_in_shop', value: 1 }
                 ]
             },
             searchs: {
