@@ -156,6 +156,8 @@
         created() {
             let page = JSON.parse(sessionStorage.getItem('page'));
             let path = this.$route.path;
+
+
             if(page){
                 if(page[path]){
                     this.page.currentPage = page[path].currentPage;
