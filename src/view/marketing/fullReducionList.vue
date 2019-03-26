@@ -16,7 +16,7 @@
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
-                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/marketing/fullReducionList', query: {[tag.key]: tag.value }}">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/marketing/fullReducionCouponList', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
                     </div>
                 </div>
@@ -83,6 +83,7 @@
 import NomalTable from '@/components/common/NomalTable'
 import TableSearch from '@/components/common/TableSearch'
 
+
 export default {
     data() {
         return {
@@ -106,6 +107,10 @@ export default {
                 '优惠券类型:': [
                     { title: '满减', key: 'coupon_rule_type', value: 1 },
                     { title: '立减', key: 'coupon_rule_type', value: 2 }
+                ],
+                 '活动专属:': [
+                    { title: '是', key: 'coupon_in_shop', value: 2 },
+                    { title: '否', key: 'coupon_in_shop', value: 1 }
                 ]
             },
             searchs: {
@@ -133,7 +138,7 @@ export default {
                     },
                 ]
             },
-            url: "/api/admin/coupon/index?coupon_rule_type="+"1",
+            url: "/api/admin/coupon/index",
 
             tableJson: {
                 "column": [ //行
@@ -310,6 +315,15 @@ export default {
         NomalTable,
         TableSearch
     },
+    beforeRouteUpdate(to, from, next) {
+			console.log(to.query);
+	
+			this.status_filter = Object.keys(to.query)[0] + Object.values(to.query)[0];
+	
+			// console.log(this.status_filter);
+			this.$refs.table.getData(to.query);
+			next();
+		},
     created() {
 
     },

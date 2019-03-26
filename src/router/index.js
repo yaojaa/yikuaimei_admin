@@ -516,6 +516,15 @@ export default new Router({
                         permission: true
                     }
                 },
+                {
+                    // 摇一摇列表
+                    path: '/marketing/shake/list',
+                    component: resolve => require(['../view//marketing/shake/list.vue'], resolve),
+                    meta: {
+                        title: '摇一摇',
+                        permission: true
+                    }
+                },
                 
                 {
                     // 平台验票

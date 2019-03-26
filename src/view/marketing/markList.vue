@@ -20,7 +20,7 @@
         </div>
         <div style="width: 100%;overflow: hidden;">
             <div class="coupon-box">
-                <div class="coupon-item-b">
+                <div class="coupon-item-b" @click="shakeClick">
                     <span class="type">摇一摇</span>
                     <div class="body">
                         <p class="title">即刻下单</p>
@@ -50,6 +50,9 @@ export default {
     methods: {
         couponClick(){
             this.$router.push('/marketing/fullReducionCouponList')
+        },
+        shakeClick(){
+            this.$router.push('/marketing/shake/list')
         }
     },
     mounted() {
