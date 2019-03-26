@@ -83,6 +83,7 @@
 import NomalTable from '@/components/common/NomalTable'
 import TableSearch from '@/components/common/TableSearch'
 
+
 export default {
     data() {
         return {
@@ -137,7 +138,7 @@ export default {
                     },
                 ]
             },
-            url: "/api/admin/coupon/index?coupon_rule_type="+"1",
+            url: "/api/admin/coupon/index",
 
             tableJson: {
                 "column": [ //行
@@ -314,6 +315,15 @@ export default {
         NomalTable,
         TableSearch
     },
+    beforeRouteUpdate(to, from, next) {
+			console.log(to.query);
+	
+			this.status_filter = Object.keys(to.query)[0] + Object.values(to.query)[0];
+	
+			// console.log(this.status_filter);
+			this.$refs.table.getData(to.query);
+			next();
+		},
     created() {
 
     },
