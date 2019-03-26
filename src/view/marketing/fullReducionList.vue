@@ -138,7 +138,7 @@ export default {
                     },
                 ]
             },
-            url: "/api/admin/coupon/index",
+            url: "/api/admin/coupon/index?coupon_rule_type=1",
 
             tableJson: {
                 "column": [ //行

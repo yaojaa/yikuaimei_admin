@@ -178,7 +178,7 @@
                             </el-col> 
                            
                             <el-col :span="5">
-                                <el-button type="primary" @click="goodsSearch">查询</el-button>
+                                <el-button type="primary" @click="serviceSearch">查询</el-button>
                             </el-col>
                         </el-form-item>
 
@@ -206,7 +206,7 @@
                             </el-col> 
                            
                             <el-col :span="5">
-                                <el-button type="primary" @click="goodsSearch">查询</el-button>
+                                <el-button type="primary" @click="virGoodsSearch">查询</el-button>
                             </el-col>
                         </el-form-item>
 
@@ -337,13 +337,18 @@ export default {
               this.industryVisible = true 
             break;
             case "3": //商品
-               this.goodsVisible = true  //商品弹窗
+                this.serviceVisible = true  //服务弹窗
+                this.serviceSearch()
             break;
             case "4": //服务
-                this.serviceVisible = true  //服务弹窗
+                
+                this.goodsVisible = true  //商品弹窗
+                this.goodsSearch()
+
             break;
             case "5": //虚拟商品
                 this.inventedVisible = true
+                this.virGoodsSearch()
             break;
             
                 //虚拟商品弹窗
@@ -400,14 +405,15 @@ export default {
           }
       },
       inventedSure(){
+          console.log(this.checkedGoodsId,'222222222222')
           //虚拟商品确定
           if(this.checkedGoodsId==""){
-              console.log(this.checkedGoodsId,'checkedGoodsId')
+              console.log(this.checkedGoodsId,'checkedGoodsId1')
               this.$alert('必须选择虚拟商品')
           }else{
-              console.log(this.checkedGoodsId,'checkedGoodsId');
+              console.log(this.checkedGoodsId,'checkedGoodsId2');
               this.ruleForm.coupon_range.goods_id = this.checkedGoodsId;
-              this.industryVisible = false;
+              this.inventedVisible = false;
           }
       },
       serviceSure(){
@@ -421,9 +427,38 @@ export default {
           }
       },
       goodsSearch(){
+          console.log('商品搜索--------')
         //商品搜索
         var goodName = this.goods_name;
-        this.$axios.get("/api/admin/select/goodsList?good_name="+goodName).then(res =>{
+        this.$axios.get("/api/admin/select/goodsList?good_type=1&good_name="+goodName).then(res =>{
+                if(res.data.code ==0){
+                    this.goodsList = res.data.data;
+                    this.goods_name = "" //查询完毕清空input
+                }else{
+                    this.$message({ message: res.data.msg, type: 'warning' });
+                }
+            })
+
+      },
+        serviceSearch(){
+            console.log('服务搜索----------')
+        //服务搜索
+        var goodName = this.goods_name;
+        this.$axios.get("/api/admin/select/goodsList?good_type=1&good_name="+goodName).then(res =>{
+                if(res.data.code ==0){
+                    this.goodsList = res.data.data;
+                    this.goods_name = "" //查询完毕清空input
+                }else{
+                    this.$message({ message: res.data.msg, type: 'warning' });
+                }
+            })
+
+      },
+        virGoodsSearch(){
+            console.log('虚拟商品搜索---------')
+        //虚拟商品
+        var goodName = this.goods_name;
+        this.$axios.get("/api/admin/select/goodsList?good_type=4&good_name="+goodName).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
                     this.goods_name = "" //查询完毕清空input
@@ -477,6 +512,7 @@ export default {
     },
     watch:{
         "activeId":function(val){
+           
             console.log(this,'this')
             // var parms ={
             //     "good_type":2,

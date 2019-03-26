@@ -525,6 +525,15 @@ export default new Router({
                         permission: true
                     }
                 },
+                {
+                    // 增加摇一摇活动
+                    path: '/marketing/shake/shakeAdd',
+                    component: resolve => require(['../view//marketing/shake/shakeAdd.vue'], resolve),
+                    meta: {
+                        title: '摇一摇',
+                        permission: true
+                    }
+                },
                 
                 {
                     // 平台验票
