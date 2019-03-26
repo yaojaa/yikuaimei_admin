@@ -27,7 +27,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { breadcrumb, breadcrumbEdit,GOODTYPE } from "../../constans/createdGood";
+import { breadcrumb, breadcrumbEdit,GOODTYPE } from "@/constans/createdGood";
 import BreadCrumb from "@/components/common/BreadCrumb";
 import FormlistItem from "@/components/createGood/formlist";
 
