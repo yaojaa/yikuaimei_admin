@@ -10,9 +10,9 @@ import adminRole from './modules/adminRole'
 
 Vue.use(Vuex)
 
-
+console.log('strict: process.env.NODE_ENV !',process.env.NODE_ENV)
 export default new Vuex.Store({
-    strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
+    // strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
     modules: {
         user,
         createdGoode,

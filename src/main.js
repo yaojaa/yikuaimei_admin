@@ -1,11 +1,15 @@
 
- console.log(location.host)
-
-
-
 import Vue from 'vue';
 import App from './App';
 import axios from 'axios';
+
+
+// if(process.env.NODE_ENV =='production'){
+//     axios.defaults.baseURL='http://.countinsight.com'
+// }
+
+
+
 import ElementUI from 'element-ui';
 import vali from '@/components/v-vali'
 //import 'element-ui/lib/theme-chalk/index.css';    // 默认主题
