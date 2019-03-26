@@ -82,14 +82,19 @@
                             <div slot="header" class="clearfix">
                                 <span>待确认发货</span>
                             </div>
-                            <div v-for="o in to_goods_list" :key="o.id" class="text clearfix flex_box">
-                                <div class="img">
-                                    <img :src="o.goods_img" width="50" height="50">
+                                <div v-if="to_goods_list" class="to-p">
+                                    <p>请扫描商品</p>
                                 </div>
-                                    <div class="con">
-                                        <p>商品名：{{o.goods_name}}</p>
-                                        <!-- <p>{{o.sku_type}}</p> -->
-                                        <p>商品数量：{{o.num}}</p>
+                                <div v-else>
+                                    <div v-for="o in to_goods_list" :key="o.id" class="text clearfix flex_box">
+                                        <div class="img">
+                                            <img :src="o.goods_img" width="50" height="50">
+                                        </div>
+                                            <div class="con">
+                                                <p>商品名：{{o.goods_name}}</p>
+                                                <!-- <p>{{o.sku_type}}</p> -->
+                                                <p>商品数量：{{o.num}}</p>
+                                            </div>
                                     </div>
                                 </div>
                                 <el-button size="large" type="success" @click="printExpres">打印快递单</el-button>
@@ -535,5 +540,13 @@ export default {
 .con{
     margin-left:14px;
     font-size:13px;
+}
+.to-p{
+    font-size: 13px;
+    color:#d3382a
+}
+.to-p p{
+    margin-bottom:8px;
+    text-indent: 20px;
 }
 </style>
