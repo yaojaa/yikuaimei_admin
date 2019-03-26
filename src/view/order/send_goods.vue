@@ -63,11 +63,11 @@
                             <el-card shadow="always" v-if="current_goods.goods_name">
                                 <!--当前扫描的商品-->
                                 <div class="flex_box">
-                                    <div class="img">
-                                        <img src="https://file.iviewui.com/weapp/dist/e5da9fdc97a0b3fb16c115d379820583.jpg" width="50" height="50" />
-                    </div>
+                                    <div class="current-img">
+                                        <img  :src="current_goods.goods_img" width="50" height="50" />
+                                    </div>
                                         <div class="goods_conent">
-                                            <p>{{current_goods.goods_name}}</p>
+                                            <p class="current-p">商品名：{{current_goods.goods_name}}</p>
                                             <!-- <p>{{current_goods.sku_type}}</p> -->
                                             <el-input-number v-model="current_goods.num" @change="numhandleChange" :min="1" label="数量"></el-input-number>
                                             <br> <br>
@@ -84,12 +84,12 @@
                             </div>
                             <div v-for="o in to_goods_list" :key="o.id" class="text clearfix flex_box">
                                 <div class="img">
-                                    <img :src="o.good_ico" width="50" height="50">
-            </div>
+                                    <img :src="o.goods_img" width="50" height="50">
+                                </div>
                                     <div class="con">
-                                        <p>{{o.goods_name}}</p>
-                                        <p>{{o.sku_type}}</p>
-                                        <p>{{o.num}}</p>
+                                        <p>商品名：{{o.goods_name}}</p>
+                                        <!-- <p>{{o.sku_type}}</p> -->
+                                        <p>商品数量：{{o.num}}</p>
                                     </div>
                                 </div>
                                 <el-button size="large" type="success" @click="printExpres">打印快递单</el-button>
@@ -339,8 +339,9 @@ export default {
 
 
                     this.current_goods = Object.assign({}, this.current_goods, item)
+                    // console.log(item,'item')
                     this.current_goods.num = 1
-                    console.log(this.current_goods)
+                    // console.log(this.current_goods,'this.current_goods')
                     isSame = true
                 }
 
@@ -515,4 +516,24 @@ export default {
 }
 </script>
 <style scoped>
+.current-img{
+    width:50px;
+    height: 50px;
+    position: relative;
+    left:0px;
+    top: 12px;
+    margin-right:10px;
+}
+.img{
+    margin-bottom:10px;
+}
+.current-p{
+    font-size: 13px;
+    margin-bottom:4px;
+    margin-top: 8px;
+}
+.con{
+    margin-left:14px;
+    font-size:13px;
+}
 </style>
