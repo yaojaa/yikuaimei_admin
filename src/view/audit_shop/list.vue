@@ -189,6 +189,15 @@ export default {
         NomalTable,
         TableSearch
     },
+    beforeRouteUpdate(to, from, next) {
+        console.log(to.query);
+
+        this.status_filter = Object.keys(to.query)[0] + Object.values(to.query)[0];
+
+        // console.log(this.status_filter);
+        this.$refs.table.getData(to.query);
+        next();
+	},
     created() {
 
     },
