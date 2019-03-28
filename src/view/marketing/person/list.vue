@@ -8,7 +8,7 @@
                 </el-breadcrumb>
             </div>
             <div class="page-header-actions">
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/marketing/shake/shakeAdd' })">添加</el-button>
+                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/marketing/person/personAdd' })">添加</el-button>
             </div>
         </div>
         <div class="page-content">
@@ -16,7 +16,7 @@
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
-                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/marketing/shake/list', query: {[tag.key]: tag.value }}">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/marketing/person/list', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ export default {
                 ]
             },
 
-            url: "/api/admin/activity/index?activity_rule_type=21",
+            url: "/api/admin/activity/index?activity_rule_type=12",
 
             tableJson: {
                 "column": [ //行
@@ -94,24 +94,17 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "每人每天可参与",
+                        "label": "次数限制",
                         "prop": "",
                         "width": "",
                         formatter(row) {
-                            return row.limits.limit_times
+                            if(row.limits.limit_total_times==0){
+                                return `<p style='text-align: center'>不限</p>`
+                            }else{
+                                 return `<p style='text-align: center'>每人${row.limits.limit_times}次</p>`;
+                            }
+                            
                         }
-
-                    },
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "活动期间可参与",
-                        "prop": "activity_title",
-                        "width": "200px",
-                        formatter(row) {
-                            return row.limits.limit_total_times
-                        }
-                        
 
                     },
                     
@@ -166,6 +159,14 @@ export default {
 							"align": "center",
 							"width": "",
 							"list": [
+                                {
+									"label": "已用门店",
+									"type": "edit",
+									// "url": "", //优先执行url
+									onClick(tablePage, self, row) {
+                                        self.$router.push("/marketing/usedShop/" + row.activity_code)
+									}
+								},
                                 
                                 {
 									"label": "编辑",

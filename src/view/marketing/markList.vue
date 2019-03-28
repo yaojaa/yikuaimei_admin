@@ -28,10 +28,10 @@
                     </div>
                     <img src="/static/img/coupon_bg2.png" width="100%">
                 </div>
-                <div class="coupon-item-b">
-                    <span class="type">平台验票</span>
+                <div class="coupon-item-b" @click="personClick">
+                    <span class="type">多人同行</span>
                     <div class="body">
-                        <p class="title">即刻下单</p>
+                        <p class="title">拉闺蜜一起参加活动</p>
                         <p class="date f12 mt-xs">领取优美礼品一份</p>
                     </div>
                     <img src="/static/img/coupon_bg2.png" width="100%">
@@ -48,12 +48,18 @@ export default {
         }
     },
     methods: {
+        //跳转满减优惠券
         couponClick(){
             this.$router.push('/marketing/fullReducionCouponList')
         },
+        //跳转摇一摇
         shakeClick(){
             this.$router.push('/marketing/shake/list')
-        }
+        },
+        //跳转多人同行
+        personClick(){
+            this.$router.push('/marketing/person/list')
+        },
     },
     mounted() {
 

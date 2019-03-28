@@ -516,10 +516,20 @@ export default new Router({
                         permission: true
                     }
                 },
+                
                 {
                     // 摇一摇列表
                     path: '/marketing/shake/list',
-                    component: resolve => require(['../view//marketing/shake/list.vue'], resolve),
+                    component: resolve => require(['../view/marketing/shake/list.vue'], resolve),
+                    meta: {
+                        title: '摇一摇',
+                        permission: true
+                    }
+                },
+                {
+                    // 摇一摇编辑
+                    path: '/marketing/shake/shakeAdd/:activity_code',
+                    component: resolve => require(['../view/marketing/shake/shakeAdd.vue'], resolve),
                     meta: {
                         title: '摇一摇',
                         permission: true
@@ -528,9 +538,27 @@ export default new Router({
                 {
                     // 增加摇一摇活动
                     path: '/marketing/shake/shakeAdd',
-                    component: resolve => require(['../view//marketing/shake/shakeAdd.vue'], resolve),
+                    component: resolve => require(['../view/marketing/shake/shakeAdd.vue'], resolve),
                     meta: {
                         title: '摇一摇',
+                        permission: true
+                    }
+                },
+                {
+                    // 摇一摇详情
+                    path: '/marketing/shake/shakeInfo/:activity_code',
+                    component: resolve => require(['../view/marketing/shake/shakeInfo.vue'], resolve),
+                    meta: {
+                        title: '摇一摇详情',
+                        permission: true
+                    }
+                },
+                {
+                    // 多人同行列表
+                    path: '/marketing/person/list',
+                    component: resolve => require(['../view/marketing/person/list.vue'], resolve),
+                    meta: {
+                        title: '多人同行',
                         permission: true
                     }
                 },
