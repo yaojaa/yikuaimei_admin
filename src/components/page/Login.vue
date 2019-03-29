@@ -31,8 +31,8 @@
         data: function(){
             return {
                 ruleForm: {
-                    user_name: '13521089284',
-                    user_pwd: '123456'
+                    user_name: '',
+                    user_pwd: ''
                 },
                 rules: {
                     user_name: [

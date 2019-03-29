@@ -562,6 +562,15 @@ export default new Router({
                         permission: true
                     }
                 },
+                {
+                    // 多人同行列表
+                    path: '/marketing/person/personAdd',
+                    component: resolve => require(['../view/marketing/person/personAdd.vue'], resolve),
+                    meta: {
+                        title: '多人同行添加',
+                        permission: true
+                    }
+                },
                 
                 {
                     // 平台验票

@@ -289,8 +289,6 @@ export default {
             this.activity_status = activity_status == 2 ? 1 : 2
             this.activity_title = activity_title
             this.activity_code = activity_code
-            console.log(this.activity_status,'freeze')
-            console.log(this.activity_title,'activity_title')
              this.dialog = true
         },
       
