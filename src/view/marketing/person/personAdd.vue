@@ -116,6 +116,7 @@
                       <div class="table-th">
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>
+
                      <div class="table-body" v-for="item in goodsData" :key="item.sku_code">
                        <div class="person-item person-width clearfix">
                          <div class="person-item-left">
@@ -126,8 +127,11 @@
                            <p v-if="item.price">{{item.price}}</p>
                          </div>
                        </div>
-                       <div class="person-item" v-for="item in details" :key="item.users">
-                         <el-input v-model="item.offer_price" type="number"></el-input>
+                       <div class="person-item" v-for="skuItem in item.details" :key="skuItem.sku">
+                         <!-- {{skuItem}} -->
+                            <el-input v-model="skuItem.offer_price" placeholder="请输入内容"></el-input>
+                        
+                           
                        </div>
                        
                       
@@ -226,6 +230,7 @@ export default {
       walking:[],
       details: [
             {
+              
               "users" : 2, // 满几人
               "offer_price" : "" // 金额
             },{
@@ -709,6 +714,11 @@ export default {
 .gift-person{
   top:0px;
   margin-bottom:20px;
+}
+.price-input{
+  width:80px;
+  height: 30px;
+  border:1px solid #666;
 }
 
 </style>

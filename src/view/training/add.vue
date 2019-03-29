@@ -10,7 +10,7 @@
         </div>
         <div class="page-content">
             <div class="panel">
-                <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="120px" class="demo-ruleForm">
+                <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="140px" class="demo-ruleForm">
 
                     <el-form-item label="培训标题:" prop="train_title">
                         <el-input v-model="ruleForm.train_title"></el-input>
@@ -23,7 +23,7 @@
                             <el-radio :label="3">美容服务技巧</el-radio>
                             <el-radio :label="4">店长班</el-radio>
                             <el-radio :label="5">服务话术培训</el-radio>
-                            <el-radio :label="5">偷偷美微掌柜</el-radio>
+                            <el-radio :label="6">偷偷美微掌柜</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="培训地址:" prop="train_address">

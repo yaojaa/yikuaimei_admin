@@ -82,25 +82,7 @@ export default {
                         "value": "",
                         "placeholder": "",
                     },
-                    {
-                        "type": "input-text", //选择器
-                        "label": "城市",
-                        "name": "option",
-                        "value": "all",
-                        "options": [{
-                                "name": "全部",
-                                "value": "all",
-                            },
-                            {
-                                "name": "option2",
-                                "value": "option2",
-                            },
-                            {
-                                "name": "option3",
-                                "value": "option3",
-                            },
-                        ],
-                    },
+                   
                     {
                         "type": "input-singal-date", //输入日期
                         "label": "开始时间",

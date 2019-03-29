@@ -32,7 +32,7 @@
                     <span class="type">多人同行</span>
                     <div class="body">
                         <p class="title">拉闺蜜一起参加活动</p>
-                        <p class="date f12 mt-xs">领取优美礼品一份</p>
+                        <p class="date f12 mt-xs"></p>
                     </div>
                     <img src="/static/img/coupon_bg2.png" width="100%">
                 </div>
@@ -82,6 +82,7 @@ export default {
     float: left;
     margin-bottom: 30px;
     margin-right: 60px;
+    cursor: pointer;
     .type {
         position: absolute;
         width: 45px;
@@ -100,6 +101,7 @@ export default {
 }
 
 .coupon-item-b {
+    cursor: pointer;
     width: 212px;
     position: relative;
     text-align: center;
