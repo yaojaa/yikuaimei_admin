@@ -6,11 +6,11 @@
                 <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
             </el-breadcrumb>
             <div class="page-header-actions">
-				<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/admin/addStaff/0' })">添加成员</el-button>
+				<el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/admin/addStaff' })">添加成员</el-button>
 			</div>
         </div>
         <div class="page-content">
-            <nomal-table ref="table" :table-json="tableJson" url="/api/admin//index">
+            <nomal-table ref="table" :table-json="tableJson" url="/api/admin/adminUser/list">
                 <table-search :searchs="searchs"></table-search>
             </nomal-table>
         </div>
@@ -33,25 +33,19 @@
                 searchs: {
                     list: [{
                             type: "input-text", //输入文本
-                            label: "成员姓名",
-                            name: "user_realname",
+                            label: "用户名",
+                            name: "user_name",
                             value: "",
                             placeholder: "例：张三",
                         },
                         {
                             type: "input-text", //输入文本
-                            label: "角色名称",
-                            name: "role_name",
+                            label: "真实姓名",
+                            name: "user_realname",
                             value: "",
                             placeholder: "例：客服",
-                        },
-                        {
-                            type: "input-text", //选择器
-                            label: "登陆账号",
-                            name: "user_name",
-                            value: "",
-                            placeholder: "例：18888888888",
-                        },
+                        }
+                        
                     ]
                 },
                 tableJson: {
@@ -117,13 +111,20 @@
                             "width": "200",
                             "list": [{
                                 "label": "编辑",
-                                "url": "/admin/addStaff",
-                                "query": "user_id"
+                                onClick(tablePage, self, row) {
+                                   
+                                    self.$router.push("/admin/addStaff/" + row.user_id)
+                                }
                             }, {
                                 "label": "删除",
-                                "url": "/admin/addStaff",
-                                "query": "user_id"
-                            }]
+                                 onClick(tablePage, self, row) {
+                                     self.removeUser(row.user_id)
+                                }
+                                
+                            },
+
+
+                            ]
                         }
                     ],
                 }
@@ -145,6 +146,25 @@
         computed: {
         },
         methods: {
+            removeUser(data){
+                const params = {
+                    "user_id":data
+                }
+                this.$axios.post("/api/admin/adminUser/delete", params).then(res => {
+                if (res.data.code == 0) {
+                    this.$alert('操作成功')
+                    this.$refs.table.getData({
+                        is_page: 1,
+                        page: 1
+                    });
+                } else {
+                    this.$alert('操作失败' + res.data.msg)
+                }
+
+                }).catch((e) => {
+                    this.$alert('操作失败' + e)
+                })
+            },
             //调用子组件的gatData方法
             getData(k, v) {
                 this.$refs.table.getData({

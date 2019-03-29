@@ -57,20 +57,25 @@ export default {
     },
     computed:{
         ...mapState('adminUser',['roleList','userInfo'])
+        
     },
 
     created(){
+        
         this.user_id = this.$route.params.id
         if(+this.user_id) {
             this.modifiy = true
         } else {
             this.modifiy = false
         }
-        if(this.modifiy){this.$store.dispatch('adminUser/fetchGetUserInfo',{user_id:0})}
+        //判断当前页面 是否有参数 有参数那就调用info接口 
+        if(this.modifiy){this.$store.dispatch('adminUser/fetchGetUserInfo',{"user_id":this.user_id})}
+
         if(!this.roleList.length){
             this.$store.dispatch('adminUser/fetchGetRoleList')     
         }
         this.form = {...this.form, ...this.userInfo}
+        
     },
 
     methods:{
@@ -86,9 +91,12 @@ export default {
                 url,
                 params: { ...this.form }
             }).then((res) => {
-                if (res.code === 0) {
+                console.log(res,'res')
+                if (res.data.code === 0) {
                     this.$alert('操作成功')
                     this.$router.push('/admin/staffList')
+                }else{
+                    this.$alert(res.data.msg)
                 }
             });
 

@@ -602,10 +602,17 @@ export default new Router({
                         title: '添加角色'
                     }
                 }, {
-                    path: '/admin/addStaff/:id',
+                    path: '/admin/addStaff/',
                     component: resolve => require(['../view/admin/createAndModifiyStaff.vue'], resolve),
                     meta: {
                         title: '添加成员'
+                    }
+                },
+                {
+                    path: '/admin/addStaff/:id',
+                    component: resolve => require(['../view/admin/createAndModifiyStaff.vue'], resolve),
+                    meta: {
+                        title: '编辑成员'
                     }
                 },
 

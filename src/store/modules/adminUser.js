@@ -25,6 +25,7 @@ export default {
                         return
                     }
                     commit('setRoleList', res.data.data)
+                    
                     return res.data.data;
 
                 });
@@ -39,15 +40,14 @@ export default {
             commit
         }, params) {
             return axios
-                .get('/api/admin/adminUser/info', {
-                    ...params
-                })
+                .get('/api/admin/adminUser/info?user_id='+params.user_id)
                 .then((res) => {
                     if (res.data.code) {
                         alert(res.data.msg)
                         return
                     }
                     commit('setUserInfo', res.data.data)
+                    //console.log(res.data,'data')
                     return res.data.data;
                 });
         },
