@@ -11,7 +11,7 @@
                         <p class="title">满10000减1000</p>
                         <!-- <p class="date f12 mt-xs">2018.05.27-2018.05.30</p> -->
                     </div>
-                    <img src="/static/img/coupon_bg1.png" width="100%">
+                    <img src="/static/img/full_reduction.png" width="100%">
                 </div>
             </div>
         </div>
@@ -27,15 +27,15 @@
                         <p class="title">拉闺蜜一起参加活动</p>
                         <p class="date f12 mt-xs">和闺蜜一起“偷偷美”</p>
                     </div>
-                    <img src="/static/img/coupon_bg3.png" width="100%">
+                    <img src="/static/img/muilt_person.png" width="100%">
                 </div>
-                <div class="coupon-item-b" @click="personClick">
+                <div class="coupon-item-b" @click="helpClick">
                     <span class="type">帮砍</span>
                     <div class="body">
                         <p class="title">给门店引流</p>
                         <p class="date f12 mt-xs">来一起“砍一刀”</p>
                     </div>
-                    <img src="/static/img/coupon_bg4.png" width="100%">
+                    <img src="/static/img/help_cut.png" width="100%">
                 </div>
                 <div class="coupon-item-b" @click="shakeClick">
                     <span class="type">摇一摇</span>
@@ -43,7 +43,7 @@
                         <p class="title">即刻下单</p>
                         <p class="date f12 mt-xs">领取优美礼品一份</p>
                     </div>
-                    <img src="/static/img/coupon_bg2.png" width="100%">
+                    <img src="/static/img/shake.png" width="100%">
                 </div>
                 <div class="coupon-item-b" @click="newPersonClick">
                     <span class="type">新人红包</span>
@@ -51,7 +51,7 @@
                         <p class="title">注册有礼</p>
                         <p class="date f12 mt-xs">领取优美礼品一份</p>
                     </div>
-                    <img src="/static/img/coupon_bg2.png" width="100%">
+                    <img src="/static/img/newcomer.png" width="100%">
                 </div>
                 <div class="coupon-item-b" @click="inviteClick">
                     <span class="type">邀请好友</span>
@@ -59,7 +59,16 @@
                         <p class="title">即刻下单</p>
                         <p class="date f12 mt-xs">领取优美礼品一份</p>
                     </div>
-                    <img src="/static/img/coupon_bg2.png" width="100%">
+                    <img src="/static/img/invite_friend.png" width="100%">
+                </div>
+
+                <div class="coupon-item-b" @click="fullClick">
+                    <span class="type">满赠活动</span>
+                    <div class="body">
+                        <p class="title">即刻下单</p>
+                        <p class="date f12 mt-xs">领取优美礼品一份</p>
+                    </div>
+                    <img src="/static/img/full_gift.png" width="100%">
                 </div>
             </div>
         </div>
@@ -92,7 +101,15 @@ export default {
         // 邀请好友
         inviteClick(){
             this.$router.push('/marketing/invite/list')
-        }
+        },
+        //满赠活动
+        fullClick(){
+            this.$router.push('/marketing/full/list')
+        },
+        //帮砍
+        helpClick(){
+            this.$router.push('/marketing/helpCut/list')
+        },
     },
     mounted() {
 

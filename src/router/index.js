@@ -670,11 +670,84 @@ export default new Router({
                     }
                 },
                 {
+                    // 满赠活动列表
+                    path: '/marketing/full/list',
+                    component: resolve => require(['../view/marketing/full/list.vue'], resolve),
+                    meta: {
+                        title: '满赠活动',
+                        permission: true
+                    }
+                },
+                {
+                    // 满赠活动添加
+                    path: '/marketing/full/fullAdd',
+                    component: resolve => require(['../view/marketing/full/fullAdd.vue'], resolve),
+                    meta: {
+                        title: '满赠活动/添加',
+                        permission: true
+                    }
+                },
+                {
+                    // 满赠活动编辑
+                    path: '/marketing/full/fullAdd/:activity_code',
+                    component: resolve => require(['../view/marketing/full/fullAdd.vue'], resolve),
+                    meta: {
+                        title: '编辑满赠活动',
+                        permission: true
+                    }
+                },
+                {
+                    // 满赠活动详情
+                    path: '/marketing/full/fuInfo/:activity_code',
+                    component: resolve => require(['../view/marketing/full/fuInfo.vue'], resolve),
+                    meta: {
+                        title: '满赠活动/详情',
+                        permission: true
+                    }
+                },
+                
+                {
                     // 邀请好友详情
                     path: '/marketing/invite/inviteInfo/:activity_code',
                     component: resolve => require(['../view/marketing/invite/inviteInfo.vue'], resolve),
                     meta: {
                         title: '邀请好友详情',
+                        permission: true
+                    }
+                },
+                {
+                    // 帮砍
+                    path: '/marketing/helpCut/list',
+                    component: resolve => require(['../view/marketing/helpCut/list.vue'], resolve),
+                    meta: {
+                        title: '帮砍',
+                        permission: true
+                    }
+                },
+                {
+                    // 帮砍添加
+                    path: '/marketing/helpCut/helpCutAdd',
+                    component: resolve => require(['../view/marketing/helpCut/helpCutAdd.vue'], resolve),
+                    meta: {
+                        title: '帮砍/添加',
+                        permission: true
+                    }
+                },
+                {
+                    // 帮砍编辑
+                    path: '/marketing/helpCut/helpCutAdd/:activity_code',
+                    component: resolve => require(['../view/marketing/helpCut/helpCutAdd.vue'], resolve),
+                    meta: {
+                        title: '帮砍/添加',
+                        permission: true
+                    }
+                },
+                {
+                    // 帮砍详情
+                    path: '/marketing/helpCut/helpCutInfo/:activity_code',
+                    component: resolve => require(['../view/marketing/helpCut/helpCutInfo.vue'], resolve),
+                    meta: {
+                        title: '帮砍/详情',
                         permission: true
                     }
                 },

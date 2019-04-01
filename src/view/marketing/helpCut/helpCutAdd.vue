@@ -73,26 +73,21 @@
                         </el-col>
                     </el-form-item>
 
-                    <el-form-item label="参与人数：">
-                      <el-col :span="12">
-                        <el-input v-model="ruleForm.rules.walking_default_users" placeholder="请输入人数"></el-input><span></span>
-                      </el-col>
+                    <el-form-item label="有效时间：">
+                        <el-col :span="5">
+                            领取后
+                        </el-col>
+                        <el-col :span="6" style="margin-right:10px">
+                            <el-input v-model="days" ></el-input>
+                        </el-col>
+                        <el-col :span="6" >
+                            天内有效
+                        </el-col>
+                        
+                      
                     </el-form-item>
 
-                    <el-form-item label="参与次数限制：">
-                        <el-radio-group v-model="limitsStatus"   @change="limitsChange">
-                            <el-col :span="8" >
-                              <div class="limit-no">
-                                <el-radio :label="0">不限</el-radio>
-                              </div>
-                            </el-col>
-                         
-                            <el-col :span="8">
-                              <el-radio :label="1">限制 一人<el-input v-model="ruleForm.limits.limit_total_times"></el-input>次</el-radio>
-                            </el-col>
-                           
-                        </el-radio-group>
-                    </el-form-item>
+                    
 
                     <el-form-item label="状态：">
                       <el-radio-group v-model="ruleForm.activity_status">
@@ -102,7 +97,7 @@
                     </el-form-item>
 
                     <el-form-item label="类型：">
-                      <el-radio-group v-model="ruleForm.rules.walking_type">
+                      <el-radio-group v-model="ruleForm.rules.bargain_type">
                         <el-radio  :label="1">服务</el-radio>
                         <el-radio  :label="2">商品</el-radio>
                         <el-radio  :label="4">虚拟商品</el-radio>
@@ -117,21 +112,35 @@
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>
 
-                     <div class="table-body"  v-for="item in ruleForm.rules.walking" :key="item.sku">
-                       <div class="person-item person-width clearfix">
-                         <div class="person-item-left">
+                     <div class="table-body table-full clearfix"   v-for="(item,index) in ruleForm.rules" >
+                       <div class="full-item  clearfix" v-if="ruleForm.rules[index].bargain">
+                         <div class="full-item-left">
                            <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="50px" height="50px">
                          </div>
-                         <div class="person-item-right">
+                         <div class="full-item-right">
                            <p v-if="item.good_name">{{item.good_name}}</p>
                            <p v-if="item.price">¥{{item.price}}</p>
                          </div>
                        </div>
-                       <div class="person-item"  v-for="skuItem in item.details" :key="skuItem.users">
-                         <!-- {{skuItem.offer_price}} -->
+                       <div class="full-item"  v-for="skuItem in item.bargain" >
+                            <input type="text" v-model="skuItem.max_price"  class="input-val">
+                       </div>
+                       <div class="full-item"  v-for="skuItem in item.bargain" >
+                            <input type="text" v-model="skuItem.reduce_solid_price"  class="input-val">
+                       </div>
+                       <div class="full-item"  v-for="skuItem in item.bargain" >
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：</span><input type="text" v-model="skuItem.reduce_max_price"  class="max-input-val"></p>
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：</span><input type="text" v-model="skuItem.reduce_min_price"  class="max-input-val"></p>
                         
-                           
-                            <input type="text" v-model="skuItem.offer_price"  class="input-val">
+                       </div>
+                       <div class="full-item"  v-for="skuItem in item.bargain" >
+                            <input type="text" v-model="skuItem.first_solid_price"  class="input-val">
+                       </div>
+                       <div class="full-item"  v-for="skuItem in item.bargain" >
+                          <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：</span><input type="text" v-model="skuItem.first_max_price"  class="max-input-val"></p>
+                               
+                            <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：</span><input type="text" v-model="skuItem.first_min_price"  class="max-input-val"></p>   
+ 
                        </div>
                        
                       
@@ -227,6 +236,7 @@ export default {
 
   data() {
     return {
+        days:"",
       dataList:[],
       goodShow:false,
       index:"1",
@@ -270,20 +280,24 @@ export default {
           index:1
         },
         {
-          name:"2人",
+          name:"最高优惠",
           index:2
         },
         {
-          name:"3人",
+          name:"新用户砍价",
           index:3
         },
         {
-          name:"4人",
+          name:"老用户砍价",
           index:4
         },
         {
-          name:"5人",
+          name:"新用户奖励",
           index:5
+        },
+        {
+          name:"老用户奖励",
+          index:6
         }
       ],
       
@@ -306,19 +320,8 @@ export default {
         "activity_status":2, //状态  1 下架 2上架
         "activity_start_time": "", //活动开始时间
         "activity_end_time": "", //活动结束时间
-        
-        "limits":{
-          "limit_total_times":"", //次数限制 0 不限
-         
-        },
-        "rules":{
-          "walking_type":1,
-          "walking_default_users":"",
-          "walking":[
-              
-            
-          ]
-          
+        "rules" : {  // 帮砍规则
+           "bargain_type":1
         }
         
       },
@@ -357,33 +360,29 @@ export default {
      
 
       this.goodsVisible = false;
-      
+      //debugger
       
       for(var i = 0; i<this.goodsData.length; i++){
        
-        this.goodsData[i].details = [
+        this.goodsData[i].bargain = [
                 {
-                
-                "users" : 2, // 满几人
-                "offer_price" : "" // 金额
-                },{
-                  "users" : 3,
-                  "offer_price" : ""
-                },{
-                  "users" : 4,
-                  "offer_price" : ""
-                },{
-                  "users" : 5,
-                  "offer_price" : ""
+                    "goods_id" : 1,  // 商品id
+                    "max_price" : "", // 最高优惠金额
+                    "reduce_solid_price" : "", // 新用户固定金额 -- 帮砍
+                    "reduce_min_price" : "", // 老用户随机最小金额
+                    "reduce_max_price" : "", // 老用户随机最大金额
+                    "first_solid_price" : "", // 新用户固定金额 -- 自己第一刀
+                    "first_min_price" : "", // 老用户随机最小金额
+                    "first_max_price" : "" // 老用户随机最大金额
                 }
-
               ]
        
       }
       
-      this.ruleForm.rules.walking = this.goodsData
-      console.log(this.ruleForm.rules.walking,'this.ruleForm.rules.walking')
-      
+      this.ruleForm.rules = this.goodsData
+    //   this.ruleForm.rules.days = this.days
+        debugger
+     
           
       },
     goodsCancal(){
@@ -397,19 +396,7 @@ export default {
       
     },
    
-    limitsChange(e){
-      if(e==0){
-          this.ruleForm.limits.limit_total_times = 0
-        console.log('00000')
-      }else{
-        
-        this.ruleForm.limits.limit_total_times = this.limit_total_times
-        console.log('11111')
-      }
-     
-
-    },
-
+    
     handleFaceUploadSuccess(){},
      goNextStep(n){
     //    if(n==1){
@@ -430,13 +417,17 @@ export default {
       },
       submit(){
         let params = this.$route.params;
+        const obj = {
+            "days":this.days
+        }
+        this.ruleForm.rules.days = Object.assign({},obj)
         
         if (Object.keys(params).length) {
             this.ruleForm.activity_code = params.activity_code
             this.$axios.post("/api/admin/activity/edit",this.ruleForm).then(res => {
                 if(res.data.code ==0){
                     this.$alert('编辑成功')
-                    this.$router.push('/marketing/person/list')
+                    this.$router.push('/marketing/helpCut/list')
                 }else{
                     this.$alert('接口返回错误')
                 }
@@ -444,11 +435,13 @@ export default {
             })
         }else{
             //var parms = this.ruleForm;
-            this.$axios.post("/api/admin/activity/addWalking", this.ruleForm).then(res => {
+            
+            debugger
+            this.$axios.post("/api/admin/activity/addBargain", this.ruleForm).then(res => {
                 if(res.data.code == 0){
                     this.$alert('添加成功！')
                     
-                   this.$router.push('/marketing/person/list')
+                   this.$router.push('/marketing/helpCut/list')
                 }else{
                     this.$alert(res.data.msg)
                 }
@@ -460,28 +453,8 @@ export default {
         }
 
 
-      },
-      // submit(){
-       
-      //       this.$axios.post("/api/admin/activity/addWalking", this.ruleForm).then(res => {
-
-      //                 if(res.data.code == 0){
-
-      //                     this.$alert(res.data.msg)
-      //                     this.$router.push('/marketing/person/list')
-                          
-
-      //                 }else{
-      //                     this.$alert(res.data.msg)
-      //                 }
-
-
-      //             }).catch((e)=>{
-
-      //               this.$alert('操作失败'+e)
-
-      //             })
-      // },
+      }
+     
       
     },
     watch:{
@@ -489,7 +462,7 @@ export default {
             val = Number(val)+1
             this.index= val 
 
-            this.$axios.get("/api/admin/select/goodsList?type=1&good_type="+this.ruleForm.rules.walking_type+"&category_id="+val).then(res =>{
+            this.$axios.get("/api/admin/select/goodsList?type=1&good_type="+this.ruleForm.rules.bargain_type+"&category_id="+val).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
                     //console.log(this.goodsList,'goodsList')
@@ -586,7 +559,7 @@ export default {
   text-align: center
 }
 .gift-table{
-  width:720px;
+  width:740px;
   margin:0 auto;
   position: relative;
   left: -120px;
@@ -610,43 +583,35 @@ export default {
 }
 .table-body{
   width:100%;
-  display: flex;
+  display: flex
+  
 }
+.table-full{
+   width:740px;
+}
+
 
 .body-item{
   flex:1;
   
 }
-.person-item{
-  width:100%;
-  height: 100px;
-  border-left:1px solid #ccc;
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.person-width{
-  width:140px;
-  height: 100px;
-}
-.person-width p{
-  font-size: 13px;
-  margin-top: 10px;
-}
-.person-item-left{
+
+
+.full-item-left{
   float: left;
   width:50px;
   height: 50px;
-  margin-left:8px;
+  margin-top:30px;
+  
 }
-.person-item-right{
+.full-item-right{
   float: left;
   margin-left: 10px;
-  width:80px;
+  width:60px;
   height: 50px;
+  margin-top: 40px;
+  font-size: 14px;
 }
 
   .goods-div{
@@ -693,7 +658,12 @@ export default {
     font-size: 14px;
     text-align: center;
   }
- 
+ .full-item{
+     width:120px;
+     height: 120px;
+     float: left;
+    border:1px solid #ccc;
+ }
 
 /* .tab-overflow .el-tabs{
     overflow-y: scroll;
@@ -732,8 +702,8 @@ export default {
   height: 30px;
   border:1px solid #666;
 }
-.input-val{
-  width:80%;
+.full-item .input-val{
+  width:70%;
   margin: 0 auto;
   height: 30px;
   line-height: 30px;
@@ -742,8 +712,16 @@ export default {
   border-radius:4px;
   border:none;
   border:1px solid #ccc;
-  padding:0px 8px
+  padding:0px 8px;
+  margin-top: 44px;
+  margin-left: 10px;
 
+}
+.max-input-val{
+    width:40px;
+    height: 24px;
+    font-size: 13px;
+    color: #444;
 }
 </style>
 

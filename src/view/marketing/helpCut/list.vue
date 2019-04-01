@@ -8,7 +8,7 @@
                 </el-breadcrumb>
             </div>
             <div class="page-header-actions">
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/marketing/invite/inviteAdd' })">添加</el-button>
+                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/marketing/helpCut/helpCutAdd' })">添加</el-button>
             </div>
         </div>
         <div class="page-content">
@@ -16,7 +16,7 @@
                 <div class="filter-tag-item" v-for="(item,key,index) in tagsListGroup" :key="index">
                     <div class="tag-hd">{{key}}</div>
                     <div class="tag-bd">
-                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/marketing/invite/list', query: {[tag.key]: tag.value }}">
+                        <router-link class="tag" :class="tag.key+tag.value == status_filter?'active':''" v-for="(tag,i) in item" :key="tag.value" :to="{ path: '/marketing/helpCut/list', query: {[tag.key]: tag.value }}">
                             {{tag.title}}</router-link>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ export default {
                 ]
             },
 
-            url: "/api/admin/activity/index?activity_rule_type=23",
+            url: "/api/admin/activity/index?activity_rule_type=13",
 
             tableJson: {
                 "column": [ //行
@@ -86,7 +86,7 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "活动标题",
+                        "label": "标题",
                         "prop": "activity_title",
                         "width": "",
 
@@ -160,7 +160,7 @@ export default {
                                     onClick(tablePage, self, row) {
                                         console.log(self,'self')
                                          console.log(row,'row')
-                                        self.$router.push("/marketing/invite/inviteAdd/" + row.activity_code)
+                                        self.$router.push("/marketing/helpCut/helpCutAdd/" + row.activity_code)
                                     }
 									// onClick(tablePage, self, record) {
                                         
@@ -177,7 +177,7 @@ export default {
                                     "label": "详情",
                                     "type": "detail",
                                     onClick(tablePage, self, row) {
-                                        self.$router.push("/marketing/invite/inviteInfo/" + row.activity_code)
+                                        self.$router.push("/marketing/helpCut/helpCutInfo/" + row.activity_code)
                                     }
 
                                 }

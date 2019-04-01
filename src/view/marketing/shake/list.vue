@@ -166,6 +166,14 @@ export default {
 							"align": "center",
 							"width": "",
 							"list": [
+                                 {
+									"label": "已用门店",
+									"type": "edit",
+									// "url": "", //优先执行url
+									onClick(tablePage, self, row) {
+                                        self.$router.push("/marketing/person/usedShop/" + row.activity_code)
+									}
+								},
                                 
                                 {
 									"label": "编辑",

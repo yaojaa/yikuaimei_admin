@@ -179,11 +179,11 @@
                             {
                                 index: '/marketing/markList',
                                 title: '营销应用'
-                            },
-                            {
-                                index: '/marketing/checkList',
-                                title: '验票列表'
                             }
+                            // {
+                            //     index: '/marketing/checkList',
+                            //     title: '验票列表'
+                            // }
                         ]
                     },
                     {
