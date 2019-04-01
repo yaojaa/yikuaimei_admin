@@ -267,7 +267,7 @@
                 </div>
             </div>
         </div>
-    </div>
+   
 </template>
 
 <script>
@@ -302,6 +302,7 @@ export default {
       ],
 
       ruleForm:{
+        "id":"",
         "shop_name" : "",//公司名称
         "shop_brand_name" : "no",//品牌名称
         "shop_pic" : "",//门店封面图
@@ -459,7 +460,29 @@ export default {
       // } ,
       
       submit(){
-        console.log(this.ruleForm,'this.ruleForm');
+        let params = this.$route.params;
+        this.ruleForm.id = params.id
+        if (Object.keys(params).length) {
+                      this.$axios.post("/api/admin/shop/modify", this.ruleForm).then(res => {
+
+                      if(res.data.code == 0){
+
+                          this.$alert('编辑门店成功！')
+
+                          this.$router.push('/shop/list')
+
+                      }else{
+                          this.$alert(res.data.msg)
+                      }
+
+
+                  }).catch((e)=>{
+
+                    this.$alert('操作失败'+e)
+
+                  })
+        }else{
+            console.log(this.ruleForm,'this.ruleForm');
             this.$axios.post("/api/admin/shop/create", this.ruleForm).then(res => {
 
                       if(res.data.code == 0){
@@ -478,6 +501,8 @@ export default {
                     this.$alert('操作失败'+e)
 
                   })
+        }
+        
       },
       mapTX(lat,lng) {
         var that = this;

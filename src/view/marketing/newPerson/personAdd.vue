@@ -35,7 +35,7 @@
                         :show-file-list="false"
                         :on-success="uploadActivityImg"
                         >
-                       <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
                   <div class="upload-title">
@@ -63,39 +63,6 @@
                 <div class="form-panel p-xl width720" v-if="step==2">
                   <el-form :model="ruleForm" :rules="rules" ref="ruleForm2" label-width="160px" class="demo-ruleForm" >
                     
-                    <el-form-item label="开始时间：">
-                        <el-col :span="10">
-                          <el-date-picker type="date" style="width:100%" placeholder="选择日期" v-model="ruleForm.activity_start_time" value-format="yyyy-MM-dd"></el-date-picker>
-                        </el-col>
-                        <el-col class="line-center" :span="4">至</el-col>
-                        <el-col :span="10">
-                          <el-date-picker type="date" style="width:100%" placeholder="选择日期" v-model="ruleForm.activity_end_time"  value-format="yyyy-MM-dd"></el-date-picker>
-                        </el-col>
-                    </el-form-item>
-
-                    <el-form-item label="每人每天可参与：">
-                      <el-col :span="12">
-                        <el-input v-model="ruleForm.limits.limit_times" placeholder="请输入"></el-input><span></span>
-                      </el-col>
-                      <el-col :span="4" class="line-center">
-                        <span>次</span>
-                      </el-col>
-                    </el-form-item>
-
-                    <el-form-item label="活动期间一共可参与：">
-                        <el-radio-group v-model="limitsStatus"   @change="limitsChange">
-                            <el-col :span="8" >
-                              <div class="limit-no">
-                                <el-radio :label="0">不限</el-radio>
-                              </div>
-                            </el-col>
-                         
-                            <el-col :span="8">
-                              <el-radio :label="1">限制<el-input v-model="ruleForm.limits.limit_total_times"></el-input>次</el-radio>
-                            </el-col>
-                           
-                        </el-radio-group>
-                    </el-form-item>
                    
                    
                   </el-form>
@@ -105,12 +72,12 @@
                      <div class="table-th">
                        <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                      </div>
-                     <div class="table-body" v-for="item in ruleForm.rules.shakes" :key="item.index">
+                     <div class="table-body" v-for="(skuItem,idx) in ruleForm.rules.new_users" :key="idx">
                        <div class="body-gift-choice body-item">
                          <div class="item-choice" >
                           
-                            <div class="choiced" v-if="item.coupon_code">以选中优惠券编号为{{item.coupon_code}}的优惠券</div>
-                            <div class="choice-button" v-else  @click="choiceClick(item.index)">请选择</div>
+                            <div class="choiced" v-if="skuItem.coupon_code">以选中优惠券编号为{{skuItem.coupon_code}}的优惠券</div>
+                            <div class="choice-button" v-else  @click="choiceClick(skuItem.index)">请选择</div>
                          </div>
                        </div>
                        <div class="body-gift-img body-item">
@@ -120,9 +87,9 @@
                               class="avatar-uploader"
                               action="/api/admin/fileupload/image"
                               :show-file-list="false"
-                              :on-success="show_img.bind(null, {'data':item})" :data="item"
+                              :on-success="show_img.bind(null, {'data':skuItem})" :data="skuItem"
                               >
-                            <img width="178px" v-if="item.gifts_img" :src="item.gifts_img" >
+                            <img width="178px" v-if="skuItem.gifts_img" :src="skuItem.gifts_img" >
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       
@@ -131,45 +98,18 @@
                        </div>
                        <div class="body-gift-number body-item">
                          <div class="item-number" >
-                           <input type="text" v-model="item.gifts_num" class="number-input"/>
+                           <input type="text" v-model="skuItem.gifts_name" class="number-input"/>
                          </div>
                        </div>
                        <div class="body-gift-text body-item">
                          <div class="item-text" >
-                           <input type="text" v-model="item.gifts_probability" class="text-input"/>
+                           <input type="text" v-model="skuItem.gifts_desc" class="text-input"/>
                          </div>
                        </div>
                      </div>
                   </div>
-                  <p class="gift-title"> ---------------设置安慰奖---------------</p>
-                  <p class="gift-title">安慰奖必须选择，否则无法上架</p>
-                  <div class="gift-table left0" >
-                    <div class="table-th">
-                       <div class="th-item">奖品</div>
-                       <div class="th-item">奖品图</div>
-                        
-                     </div>
-                     <div class="table-body">
-                          <div class="comfort-left comfort-item">
-                            <div class="choiced" v-if="ruleForm.rules.shake_default.coupon_code">以选中优惠券编号为{{ruleForm.rules.shake_default.coupon_code}}的优惠券</div>
-                            
-                            <div class="comfort-button" v-else @click="defaultChoice()">请选择</div>
-                          </div>
-                          <div class="comfort-right comfort-item">
-                            <el-upload
-                              class="avatar-uploader"
-                              action="/api/admin/fileupload/image"
-                              :show-file-list="false"
-                              :on-success="show_default_img"
-                              >
-                            <img width="360px" v-if="ruleForm.rules.shake_default.gifts_img" :src="ruleForm.rules.shake_default.gifts_img" >
-                              <div v-else  class="upload-img-icon"> 
-                                <i class="el-icon-plus position-icon" style="font-size:48px"></i>
-                              </div>       
-                            </el-upload>
-                          </div>
-                        </div>
-                  </div>
+                 
+                  
                   <el-form :model="ruleForm"  ref="ruleForm3" class="bottom-form">
                     
                     <el-form-item label="状态：">
@@ -189,48 +129,23 @@
                     <el-dialog title="选择指定商品" :visible.sync="goodsVisible">
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
-                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.coupon_code">
-                                  <div class="goods-div clearfix">
-                                    <div class="goods-div-left">
-                                      <p class="margin-top10"><span class="price">¥{{checkedGoods.rules.reduce_price}}</span><span>{{checkedGoods.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{checkedGoods.rules.price}}元可用</p>
-                                    </div>
-                                    <div class="goods-div-right">
-                                     <img v-if="checkedGoods.coupon_img" :src="checkedGoods.coupon_img" width="70px" height="70px">
-                                     <p v-else class="no-img">暂无图片</p>
-                                    </div>
-                                  </div>
-                                </el-radio>
-                                </div>
-                       
+                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id">{{checkedGoods.good_name}}<img :src="checkedGoods.good_ico" width="30px" height="30px"></el-radio>
+                            </div>
+                            <el-col :span="12">
+                                <el-input v-model="goods_name" placeholder="搜索"></el-input>
+                            </el-col>
                            
-                                <!-- <el-col :span="12">
-                                  <el-input v-model="goods_name" placeholder="搜索"></el-input>
-                                </el-col>
-                           
-                                <el-col :span="5">
-                                    <el-button type="primary" @click="goodsSearch">查询</el-button>
-                                </el-col> -->
+                            <el-col :span="5">
+                                <el-button type="primary" @click="goodsSearch">查询</el-button>
+                            </el-col>
                             </el-form-item>
                            
                             
                         
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
-                            <el-tab-pane v-for="item in industryForm" :label="item.name"  :value="item.type" :key="`${item.type}type`">
-                                <el-radio v-model="radioGoodsId" :label="item.coupon_code" :key="item.coupon_code" v-for="item in goodsList">
-                                  <div class="goods-div clearfix">
-                                    <div class="goods-div-left">
-                                      <p class="margin-top10"><span class="price">¥{{item.rules.reduce_price}}</span><span>{{item.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{item.rules.price}}元可用</p>
-                                    </div>
-                                    <div class="goods-div-right">
-                                     <img v-if="item.coupon_img" :src="item.coupon_img" width="70px" height="70px">
-                                     <p v-else class="no-img">暂无图片</p>
-                                    </div>
-                                  </div>
-                                  
-                                  </el-radio>
+                            <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
+                                <el-radio v-model="radioGoodsId" :label="item.good_id" :key="item.good_id" v-for="item in goodsList">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio>
                             </el-tab-pane>
                         </el-tabs>
                         
@@ -241,62 +156,7 @@
                         </div> 
                     </el-dialog>
 
-                    <!-- 安慰奖设置 -->
-                    <el-dialog title="选择指定商品" :visible.sync="goodsDefaultVisible">
-                       <el-form-item>
-                            <div v-if="goodShow" class="good_show">
-                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.coupon_code">
-                                  <div class="goods-div clearfix">
-                                    <div class="goods-div-left">
-                                      <p class="margin-top10"><span class="price">¥{{checkedGoods.rules.reduce_price}}</span><span>{{checkedGoods.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{checkedGoods.rules.price}}元可用</p>
-                                    </div>
-                                    <div class="goods-div-right">
-                                     <img v-if="checkedGoods.coupon_img" :src="checkedGoods.coupon_img" width="70px" height="70px">
-                                     <p v-else class="no-img">暂无图片</p>
-                                    </div>
-                                  </div>
-                                </el-radio>
-                                </div>
-                       
-                           
-                                <!-- <el-col :span="12">
-                                  <el-input v-model="goods_name" placeholder="搜索"></el-input>
-                                </el-col>
-                           
-                                <el-col :span="5">
-                                    <el-button type="primary" @click="goodsSearch">查询</el-button>
-                                </el-col> -->
-                            </el-form-item>
-                           
-                            
-                        
-
-                        <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
-                            <el-tab-pane v-for="item in industryForm" :label="item.name"  :value="item.type" :key="`${item.type}type`">
-                                <el-radio v-model="radioGoodsId" :label="item.coupon_code" :key="item.coupon_code" v-for="item in goodsList">
-                                  <div class="goods-div clearfix">
-                                    <div class="goods-div-left">
-                                      <p class="margin-top10"><span class="price">¥{{item.rules.reduce_price}}</span><span>{{item.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{item.rules.price}}元可用</p>
-                                    </div>
-                                    <div class="goods-div-right">
-                                     <img v-if="item.coupon_img" :src="item.coupon_img" width="70px" height="70px">
-                                     <p v-else class="no-img">暂无图片</p>
-                                    </div>
-                                  </div>
-                                  
-                                  </el-radio>
-                            </el-tab-pane>
-                        </el-tabs>
-                        
-                        
-                        <div slot="footer" class="dialog-footer">
-                            <el-button @click="goodsCancal">取 消</el-button>
-                            <el-button type="primary" @click="goodsDefaultSure">确 定</el-button>
-                        </div> 
-                    </el-dialog>
-                    <!-- 安慰奖单独设置 -->
+                    
 
                   </div>
                   </el-form>
@@ -325,7 +185,9 @@ export default {
 
   data() {
     return {
-      // goods_name:"", //商品名字
+      // 
+      
+      goods_name:"", //商品名字
       index:'',
       gitfNumber:"",
       radioGoodsId:"",
@@ -333,12 +195,9 @@ export default {
       goodsVisible:false,
       goodsDefaultVisible:false,
       imageUrl:"",
-      dialogImageUrl:"",
-      limitsStatus:"",
-      radioGoodsId:"",
       date:"",
       activeId:"",
-      goodsList:{},
+      goodsList:[],
       checkedGoods:{},//以选中商品
       "checkedGoodsId":"",//已经选中的商品id
       "tabPosition":"left",
@@ -346,29 +205,7 @@ export default {
      
       limit_total_times:"",
       step: 1,
-      industryForm:[
-        {
-          name:"通用券",
-          type:1
-        },
-        {
-          name:"行业券",
-          type:2
-        },
-        {
-          name:"服务券",
-          type:3
-        },
-        {
-          name:"商品券",
-          type:4
-        },
-        {
-          name:"虚拟商品券",
-          type:5
-        }
-
-      ],
+      industryForm:[],
       
       itemLIst:[
         {
@@ -380,11 +217,11 @@ export default {
           index:2
         },
         {
-          name:"奖品数量",
+          name:"名称",
           index:3
         },
         {
-          name:"中奖率",
+          name:"备注",
           index:4
         }
       ],
@@ -401,7 +238,7 @@ export default {
           url:'alliance'
         },
         {
-          name: "摇一摇" //名字
+          name: "新人红包" //名字
         }
       ],
       
@@ -414,77 +251,66 @@ export default {
         "activity_desc" : "", //活动规则
         "activity_img" : "",//封面图
         "activity_status":2, //状态  1 下架 2上架
-        "activity_start_time": "", //活动开始时间
-        "activity_end_time": "", //活动结束时间
-        
-        "limits":{
-          "limit_total_times":"", //总次数限制 0 不限
-          "limit_times": "" // 每人每天次数限制 0 不限
-        },
-        "rules":{
-          "shake_default" : { // 安慰奖
-          "coupon_code" :"", // 优惠券编号
-          "gifts_img" : "" // 图片
-          },
-          "shakes":[
+        "rules" : {  // 规则
+          "new_users" : [
             {
-              "index":0,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
             },
             {
-              index:1,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            },
-          {
-              index:2,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
             },
             {
-              index:3,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
             },
             {
-              index:4,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
             },
             {
-              index:5,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
             },
             {
-              index:6,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
             },
             {
-              index:7,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            }
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
+            {
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
           ]
-        }
+      }
         
         
 
@@ -509,23 +335,20 @@ export default {
     };
   },
   methods:{
-    defaultChoice(){
-      this.goodsDefaultVisible = true
-    },
-    // goodsSearch(){
+   goodsSearch(){
+          console.log('商品搜索--------')
+        //商品搜索
+        var goodName = this.goods_name;
+        this.$axios.get("/api/admin/select/goodsList?good_type=1&good_name="+goodName).then(res =>{
+                if(res.data.code ==0){
+                    this.goodsList = res.data.data;
+                    this.goods_name = "" //查询完毕清空input
+                }else{
+                    this.$message({ message: res.data.msg, type: 'warning' });
+                }
+            })
 
-    // },
-    goodsDefaultSure(){
-      if(this.checkedGoodsId==""){
-              console.log(this.checkedGoodsId,'checkedGoodsId')
-              this.$alert('必须选择商品')
-          }else{
-                this.ruleForm.rules.shake_default.coupon_code = this.checkedGoodsId
-                this.goodsDefaultVisible = false;
-             
-          }
-      
-    },
+      },
     goodsSure(){
       // debugger;
 
@@ -534,8 +357,11 @@ export default {
               console.log(this.checkedGoodsId,'checkedGoodsId')
               this.$alert('必须选择商品')
           }else{
-                this.ruleForm.rules.shakes[this.index].coupon_code = this.checkedGoodsId 
-                this.goodsVisible = false;
+                console.log(this.checkedGoodsId ,'this.checkedGoodsId')
+                debugger
+                //console.log(this.ruleForm.rules.,'index')
+                //this.ruleForm.rules.new_users[this.index].coupon_code = this.checkedGoodsId 
+                //this.goodsVisible = false;
              
           }
           
@@ -544,34 +370,21 @@ export default {
       this.goodsVisible = false
     },
     choiceClick(_index){
+      
       this.index = _index;
+      debugger
       this.goodsVisible = true
     },
     show_img(obj,res,f){
-       this.ruleForm.rules.shakes[obj.data.index].gifts_img = res.data.url
-        // this.dialogImageUrl = res.data.url
+       this.ruleForm.rules.new_users[obj.data.index].gifts_img = res.data.url
+        
       },
-      show_default_img(res){
-       this.ruleForm.rules.shake_default.gifts_img = res.data.url
-
-      },
+      
     uploadActivityImg(res){
       this.imageUrl = res.data.url
       
     },
    
-    limitsChange(e){
-      if(e==0){
-        this.ruleForm.limits.limit_total_times = this.limit_total_times
-        
-        console.log('00000')
-      }else{
-        this.ruleForm.limits.limit_total_times = 0
-        console.log('11111')
-      }
-     
-
-    },
 
     handleFaceUploadSuccess(){},
      goNextStep(n){
@@ -581,6 +394,17 @@ export default {
        this.step = n;
       
     },
+     getCategoryList(){
+          //获取行业列表
+        this.$axios.get("/api/admin/select/categoryList").then(res =>{
+          if(res.data.code ==0){
+            this.industryForm = res.data.data;
+            console.log(this.industryForm,'industryForm')
+          }
+
+        })
+          
+      },
     getGoodsList(){
           //获取通用券数据
         this.$axios.get("/api/admin/select/coupon?type=1").then(res =>{
@@ -591,83 +415,7 @@ export default {
         })
           
       },
-    // querySearchAsync(queryString, callback) {
-    //   var list = [{}];
-    //   //调用的后台接口
-    //   if(queryString==undefined){
-    //     var url = "/api/admin/select/businessList" ;
-    //   }else{
-    //     var url = "/api/admin/select/businessList?business_id=" + queryString;
-    //   }
-
-    //   this.$axios.get(url).then(res =>{
-    //       if(res.data.code ==0){
-    //         //this.business_list = res.data.data;
-    //         //在这里为这个数组中每一个对象加一个value字段, 因为autocomplete只识别value字段并在下拉列中显示
-    //         for(let i of res.data.data){
-    //             i.value = i.business_name;  //将想要展示的数据作为value
-                
-    //         }
-    //         list = res.data.data;
-    //         callback(list);
-    //       }
-    //     })
-    //   // //从后台获取到对象数组
-    //   // this.$axios.get(url).then((response)=>{
-        
-          
-    //   // }).catch((error)=>{
-    //   // console.log(error);
-    //   // });
-    // },
-    // handleSelect(event) {
-    //   console.log(event,'event');
-    //   this.ruleForm.business_id = event.business_id;
-    //   //console.log(this.ruleForm.business_id,'this.ruleForm.business_id');
-    //   //debugger;
-    // },
-    // handleChange(event){
-    //   this.ruleForm.address_code = event[event.length-1];
-    //   console.log(this.ruleForm.address_code,'this.ruleForm.address_code')
-    // },
-    //  handleRemove(file, fileList) {
-    //    this.ruleForm.shop_environment.splice(file.url,1)
-    //     console.log(this.ruleForm.shop_environment,'shop_environment')
-    // },
-    // handlePictureCardPreview(file) {
-    //     this.dialogImageUrl = file.url;
-    //     this.dialogVisible = true;
-    // },
-    // resetForm(formName) {
-    //     this.$refs[formName].resetFields();
-    //   },
-    // shop_pic(res){
-    //   this.ruleForm.shop_pic = res.data.url
-    // },
-    // shop_licence_pic(res){
-    //     this.ruleForm.shop_licence_pic = res.data.url
-    //   },
-    //   shop_environment(res){
-    //     this.ruleForm.shop_environment.push(res.data.url)
-    //   },
-    //   shop_sfz_pic_z(res){
-    //     this.ruleForm.shop_sfz_pic_z = res.data.url
-    //   },
-    //   shop_sfz_pic_f(res){
-    //     this.ruleForm.shop_sfz_pic_f = res.data.url
-    //   },
-
-      // getBusinessList(){
-
-      //   this.$axios.get("/api/admin/select/businessList").then(res =>{
-      //     if(res.data.code ==0){
-      //       this.business_list = res.data.data;
-      //     }
-
-
-      //   })
-
-      // } ,
+    
       
       submit(){
         let params = this.$route.params;
@@ -739,20 +487,18 @@ export default {
     },
     watch:{
         "activeId":function(val){
-            val = Number(val)+1
            
-           
-            console.log(val,'val')
+            console.log(this,'this')
             // var parms ={
             //     "good_type":2,
             //     "category_id":this.industryForm[val].category_id
             // }
             // console.log(parms,'parms')
             //观察tab选项卡改变调用接口
-            this.$axios.get("/api/admin/select/coupon?type="+val).then(res =>{
+            this.$axios.get("/api/admin/select/goodsList?category_id="+this.industryForm[val].category_id+"&good_type"+this.selectRadioId).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
-                    //console.log(this.goodsList,'goodsList')
+                    console.log(this.goodsList,'goodsList')
                     
 
                 }
@@ -761,19 +507,20 @@ export default {
         radioGoodsId:function(event){
             //指定商品
             this.goodsList.forEach((item) => {
-                if (item.coupon_code == event) {
+                if (item.good_id == event) {
                     this.checkedGoods = item;
-                    this.checkedGoodsId = item.coupon_code
+                    this.checkedGoodsId = item.good_id
                     console.log(this.checkedGoods,'checkedGoods')
                     
                     this.goodShow = true
                 }
             })
         }
-    },
+},
 
 
   mounted() {
+    this.getCategoryList()
     //this.getBusinessList();
 
     //如果是从审核门店中过来
@@ -800,12 +547,8 @@ export default {
         this.$axios.post("/api/admin/activity/info",params).then(res => {
           if(res.data.code==0){
               this.ruleForm = res.data.data;
-              //判断当前是限制还是不限制
-              if(res.data.data.limits.limit_total_times==0){
-                this.limitsStatus = 0
-              }else{
-                this.limitsStatus =1
-              }
+             
+              
           }
           
         })

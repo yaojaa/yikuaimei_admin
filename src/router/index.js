@@ -411,6 +411,14 @@ export default new Router({
                         title: '添加干货培训'
                     }
                 },
+                {
+                    // 编辑培训
+                    path: '/training/add/:id',
+                    component: resolve => require(['../view/training/add.vue'], resolve),
+                    meta: {
+                        title: '编辑干货培训'
+                    }
+                },
 
                 {
                     // 门店
@@ -554,6 +562,24 @@ export default new Router({
                     }
                 },
                 {
+                    // 新人红包列表
+                    path: '/marketing/newPerson/list',
+                    component: resolve => require(['../view/marketing/newPerson/list.vue'], resolve),
+                    meta: {
+                        title: '新人红包',
+                        permission: true
+                    }
+                },
+                {
+                    // 新人红包添加
+                    path: '/marketing/newPerson/personAdd',
+                    component: resolve => require(['../view/marketing/newPerson/personAdd.vue'], resolve),
+                    meta: {
+                        title: '添加新人红包',
+                        permission: true
+                    }
+                },
+                {
                     // 多人同行列表
                     path: '/marketing/person/list',
                     component: resolve => require(['../view/marketing/person/list.vue'], resolve),
@@ -563,11 +589,65 @@ export default new Router({
                     }
                 },
                 {
-                    // 多人同行列表
+                    // 多人同行详情
+                    path: '/marketing/person/personInfo/:activity_code',
+                    component: resolve => require(['../view/marketing/person/personInfo.vue'], resolve),
+                    meta: {
+                        title: '多人同行',
+                        permission: true
+                    }
+                },
+                {
+                    // 多人同行添加
                     path: '/marketing/person/personAdd',
                     component: resolve => require(['../view/marketing/person/personAdd.vue'], resolve),
                     meta: {
-                        title: '多人同行添加',
+                        title: '添加多人同行',
+                        permission: true
+                    }
+                },
+                {
+                    // 多人同行编辑
+                    path: '/marketing/person/personAdd/:activity_code',
+                    component: resolve => require(['../view/marketing/person/personAdd.vue'], resolve),
+                    meta: {
+                        title: '编辑多人同行',
+                        permission: true
+                    }
+                },
+                {
+                    // 多人同行已用门店
+                    path: '/marketing/person/usedShop/:activity_code',
+                    component: resolve => require(['../view/marketing/person/usedShop.vue'], resolve),
+                    meta: {
+                        title: '已用门店',
+                        permission: true
+                    }
+                },
+                {
+                    // 邀请好友列表
+                    path: '/marketing/invite/list',
+                    component: resolve => require(['../view/marketing/invite/list.vue'], resolve),
+                    meta: {
+                        title: '邀请好友列表',
+                        permission: true
+                    }
+                },
+                {
+                    // 邀请好友添加
+                    path: '/marketing/invite/inviteAdd',
+                    component: resolve => require(['../view/marketing/invite/inviteAdd.vue'], resolve),
+                    meta: {
+                        title: '邀请好友添加',
+                        permission: true
+                    }
+                },
+                {
+                    // 邀请好友添加
+                    path: '/marketing/invite/inviteInfo/:activity_code',
+                    component: resolve => require(['../view/marketing/invite/inviteInfo.vue'], resolve),
+                    meta: {
+                        title: '邀请好友添加',
                         permission: true
                     }
                 },

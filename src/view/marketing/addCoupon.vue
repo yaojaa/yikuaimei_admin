@@ -242,6 +242,7 @@ export default {
   data() {
     return {
         ruleForm:{
+            "coupon_code":"",
             "coupon_title" : "",//优惠券标题
             "rules" : {  // 规则
                 "is_full" : "1", // 是否满减  
@@ -469,9 +470,21 @@ export default {
 
       },
     submit(){
-        console.log(this.ruleForm,'this.ruleForm');
+        let params = this.$route.params;
         this.ruleForm.rules.reduce_price = this.ruleForm.rules.reduce_price*100;
         this.ruleForm.rules.price = this.ruleForm.rules.price*100;
+        if (Object.keys(params).length) {
+            this.ruleForm.coupon_code = params.coupon_code
+            this.$axios.post("/api/admin/coupon/edit",this.ruleForm).then(res => {
+                if(res.data.code ==0){
+                    this.$alert('编辑成功')
+                    this.$router.push('/marketing/fullReducionCouponList')
+                }else{
+                    this.$alert('接口返回错误')
+                }
+                
+            })
+        }else{
             //var parms = this.ruleForm;
             this.$axios.post("/api/admin/coupon/addReduce", this.ruleForm).then(res => {
                 if(res.data.code == 0){
@@ -486,6 +499,9 @@ export default {
                 this.$alert('操作失败'+e)
 
             })
+        }
+
+
       },
       getCategoryList(){
           //获取行业列表

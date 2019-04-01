@@ -27,7 +27,7 @@
                             {{ruleForm.activity_desc}}
                         </el-form-item>
 
-                         <el-form-item label="开始时间：">
+                         <el-form-item label="活动时间：">
                             {{ruleForm.activity_start_time}}-{{ruleForm.activity_end_time}}
                         </el-form-item>
 
@@ -229,23 +229,23 @@ export default {
   },
 
   created() {
-    console.log(this.$route.params,'this.$route.params')
+    
     let params = this.$route.params;
     //如果是编辑
     if (Object.keys(params).length) {
        
-        this.params = params;
-        console.log(params,'params')
+       
         this.$axios.post("/api/admin/activity/info",params).then(res => {
-          console.log(res.data.data,'data----data')
-          //this.ruleForm.activity_status = res.data.data.activity_status
-            this.ruleForm = res.data.data;
-            //判断当前是限制还是不限制
-            if(res.data.data.limits.limit_total_times==0){
-              this.limitsStatus = 0
-            }else{
-              this.limitsStatus =1
-            }
+          if(res.data.code==0){
+              this.ruleForm = res.data.data;
+              //判断当前是限制还是不限制
+              if(res.data.data.limits.limit_total_times==0){
+                this.limitsStatus = 0
+              }else{
+                this.limitsStatus =1
+              }
+          }
+          
         })
     }
      

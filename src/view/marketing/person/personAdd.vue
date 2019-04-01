@@ -36,7 +36,7 @@
                         :on-success="uploadActivityImg"
                         >
                         <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
                   <div class="upload-title">
                       <p class="upload-title-red">支持上传一张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
@@ -117,7 +117,7 @@
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>
 
-                     <div class="table-body" v-for="item in goodsData" :key="item.sku_code">
+                     <div class="table-body"  v-for="item in ruleForm.rules.walking" :key="item.sku">
                        <div class="person-item person-width clearfix">
                          <div class="person-item-left">
                            <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="50px" height="50px">
@@ -127,11 +127,11 @@
                            <p v-if="item.price">{{item.price}}</p>
                          </div>
                        </div>
-                       <div class="person-item" v-for="skuItem in item.details" :key="skuItem.sku">
-                         <!-- {{skuItem}} -->
-                            <el-input v-model="skuItem.offer_price" placeholder="请输入内容"></el-input>
+                       <div class="person-item"  v-for="skuItem in item.details" :key="skuItem.users">
+                         <!-- {{skuItem.offer_price}} -->
                         
                            
+                            <input type="text" v-model="skuItem.offer_price"  class="input-val">
                        </div>
                        
                       
@@ -227,41 +227,17 @@ export default {
 
   data() {
     return {
-      walking:[],
-      details: [
-            {
-              
-              "users" : 2, // 满几人
-              "offer_price" : "" // 金额
-            },{
-              "users" : 3,
-              "offer_price" : ""
-            },{
-              "users" : 4,
-              "offer_price" : ""
-            },{
-              "users" : 5,
-              "offer_price" : ""
-            }
-          ],
-      
+      dataList:[],
       goodShow:false,
       index:"1",
       goodsVisible:false,
       imageUrl:"",
       checkedList:[], //选中数据数组
-    //   dialogImageUrl:"",
       limitsStatus:"",
       goodsData:[],
-      //skuList:[],
-      
       activeId:"",
       goodsList:{},
-    //   checkedGoods:{},//以选中商品
-      "checkedGoodsId":"",//已经选中的商品id
       "tabPosition":"left",
-      // shakes:{},// 奖品编码  奖品数量 奖品图片 中奖率集合
-     
       limit_total_times:"",
       step: 1,
       industryForm:[
@@ -338,7 +314,10 @@ export default {
         "rules":{
           "walking_type":1,
           "walking_default_users":"",
-          "walking":[]
+          "walking":[
+              
+            
+          ]
           
         }
         
@@ -360,6 +339,7 @@ export default {
     };
   },
   methods:{
+    
       choiceGoodsClick(){
           this.goodsVisible = true
           this.goodsData = []
@@ -367,24 +347,43 @@ export default {
           this.$axios.get("/api/admin/select/goodsList?type=1&category_id="+this.index+"&good_type="+this.ruleForm.rules.walking_type).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
-                    //console.log(this.goodsList,'goodsList')
+                    console.log(this.goodsList,'goodsList')
+                   
                 }
             })
       },
     
     goodsSure(){
+     
 
-      // this.ruleForm.rules.shakes[this.index].coupon_code = this.checkedGoodsId 
       this.goodsVisible = false;
-      this.walking = this.goodsData 
-      for(var i = 0; i<this.walking.length; i++){
-        this.walking[i].sku_code = this.walking[i].sku
-        this.walking[i].details = this.details
-      }
-      console.log(this.walking,'this.walking')
       
-             
-          
+      
+      for(var i = 0; i<this.goodsData.length; i++){
+       
+        this.goodsData[i].details = [
+                {
+                
+                "users" : 2, // 满几人
+                "offer_price" : "" // 金额
+                },{
+                  "users" : 3,
+                  "offer_price" : ""
+                },{
+                  "users" : 4,
+                  "offer_price" : ""
+                },{
+                  "users" : 5,
+                  "offer_price" : ""
+                }
+
+              ]
+       
+      }
+      
+      this.ruleForm.rules.walking = this.goodsData
+      console.log(this.ruleForm.rules.walking,'this.ruleForm.rules.walking')
+      
           
       },
     goodsCancal(){
@@ -429,41 +428,60 @@ export default {
 
         })
       },
-      //默认弹窗初始化数据
-    //   getGoodsList(){
-    //         this.$axios.get("/api/admin/select/goodsList?good_type=1&category_id=1").then(res =>{
-    //             if(res.data.code ==0){
-    //                 this.goodsList = res.data.data;
-    //                 console.log(this.goodsList,'goodsList')
-    //             }
-    //         })
-    //   },
-    
-   
-
       submit(){
+        let params = this.$route.params;
         
-        console.log(this.ruleForm,'choiceLIst')
-        // console.log(this.ruleForm,'this.ruleForm');
-            this.$axios.post("/api/admin/activity/addShake", this.ruleForm).then(res => {
+        if (Object.keys(params).length) {
+            this.ruleForm.activity_code = params.activity_code
+            this.$axios.post("/api/admin/activity/edit",this.ruleForm).then(res => {
+                if(res.data.code ==0){
+                    this.$alert('编辑成功')
+                    this.$router.push('/marketing/person/list')
+                }else{
+                    this.$alert('接口返回错误')
+                }
+                
+            })
+        }else{
+            //var parms = this.ruleForm;
+            this.$axios.post("/api/admin/activity/addWalking", this.ruleForm).then(res => {
+                if(res.data.code == 0){
+                    this.$alert('添加成功！')
+                    
+                   this.$router.push('/marketing/person/list')
+                }else{
+                    this.$alert(res.data.msg)
+                }
+            }).catch((e)=>{
 
-                      if(res.data.code == 0){
+                this.$alert('操作失败'+e)
 
-                          this.$alert(res.data.msg)
-                          this.$router.push('/marketing/shake/list')
+            })
+        }
+
+
+      },
+      // submit(){
+       
+      //       this.$axios.post("/api/admin/activity/addWalking", this.ruleForm).then(res => {
+
+      //                 if(res.data.code == 0){
+
+      //                     this.$alert(res.data.msg)
+      //                     this.$router.push('/marketing/person/list')
                           
 
-                      }else{
-                          this.$alert(res.data.msg)
-                      }
+      //                 }else{
+      //                     this.$alert(res.data.msg)
+      //                 }
 
 
-                  }).catch((e)=>{
+      //             }).catch((e)=>{
 
-                    this.$alert('操作失败'+e)
+      //               this.$alert('操作失败'+e)
 
-                  })
-      },
+      //             })
+      // },
       
     },
     watch:{
@@ -480,33 +498,25 @@ export default {
             
         },
         "checkedList":function(e){
+          console.log(e,'eee');
           this.goodsData = []
           for(var i = 0; i<this.goodsList.length; i++){
             for(var j = 0; j<e.length; j++){
               if(this.goodsList[i].sku==e[j]){
+                this.goodsList[i].sku_code = e[j]
                 this.goodsData.push(this.goodsList[i])
               }
             }
-          }
+          } 
+          console.log(this.goodsData,'this.goodsData')
           this.goodShow = true
-          
-          console.log(this.goodsData,'data')
-            
+                
         }
         
     },
 
 
-  mounted() {
-    //this.getBusinessList();
-
-    //如果是从审核门店中过来
-    // if(this.$route.query.review){
-    //   this.getReviewData(this.$route.query.review)
-    // }
-    
-
-  },
+  mounted() {},
   components: {
     BreadCrumb
     // formlist
@@ -514,24 +524,25 @@ export default {
 
   created() {
     // console.log(this.$route.params,'this.$route.params')
-    // let params = this.$route.params;
-    // //如果是编辑
-    // if (Object.keys(params).length) {
+    let params = this.$route.params;
+    console.log(params,'3333')
+    //如果是编辑
+    if (Object.keys(params).length) {
        
-    //     this.params = params;
-    //     console.log(params,'params')
-    //     this.$axios.post("/api/admin/activity/info",params).then(res => {
-    //       console.log(res.data.data,'data----data')
-    //       //this.ruleForm.activity_status = res.data.data.activity_status
-    //         this.ruleForm = res.data.data;
-    //         //判断当前是限制还是不限制
-    //         if(res.data.data.limits.limit_total_times==0){
-    //           this.limitsStatus = 0
-    //         }else{
-    //           this.limitsStatus =1
-    //         }
-    //     })
-    // }
+        //this.params = params;
+        console.log(params,'params')
+        this.$axios.post("/api/admin/activity/info",params).then(res => {
+          console.log(res.data.data,'data----data')
+          //this.ruleForm.activity_status = res.data.data.activity_status
+            this.ruleForm = res.data.data;
+            //判断当前是限制还是不限制
+            if(res.data.data.limits.limit_total_times==0){
+              this.limitsStatus = 0
+            }else{
+              this.limitsStatus =1
+            }
+        })
+    }
      //this.getGoodsList(); //弹窗初始化接口
      this.getCategoryList(); //获取行业列表  
   },
@@ -720,7 +731,19 @@ export default {
   height: 30px;
   border:1px solid #666;
 }
+.input-val{
+  width:80%;
+  margin: 0 auto;
+  height: 30px;
+  line-height: 30px;
+  font-size: 13px;
+  color: #444;
+  border-radius:4px;
+  border:none;
+  border:1px solid #ccc;
+  padding:0px 8px
 
+}
 </style>
 
 

@@ -80,6 +80,7 @@ export default {
   data() {
     return {
         ruleForm:{
+            "id":"",
             "train_title" : "",//培训标题
             "train_type" : 1,// 培训类型 1门店5S管理培训 2店务培训 3美容服务技巧 4店长班 5服务话术培训 6偷偷美微掌柜
             "train_content" : "",//培训内容
@@ -136,8 +137,25 @@ export default {
         return isJPG && isLt2M;
     },
     submit(){
-        console.log(this.ruleForm,'this.ruleForm');
-            //var parms = this.ruleForm;
+        let params = this.$route.params;
+        this.ruleForm.id = params.id
+
+        if (Object.keys(params).length) {
+                 
+            this.$axios.post("/api/admin/train/modify", this.ruleForm).then(res => {
+                if(res.data.code == 0){
+                    this.$alert('编辑成功！')
+                    this.$router.push('/training/list')
+                }else{
+                    this.$alert(res.data.msg)
+                }
+            }).catch((e)=>{
+
+                this.$alert('操作失败'+e)
+
+            })
+        }else{
+
             this.$axios.post("/api/admin/train/create", this.ruleForm).then(res => {
                 if(res.data.code == 0){
                     this.$alert('添加成功！')
@@ -150,6 +168,8 @@ export default {
                 this.$alert('操作失败'+e)
 
             })
+        }
+
       },
     
 
@@ -176,12 +196,11 @@ export default {
   },
 
     created() {
-        let params = this.$route.query;
+        let params = this.$route.params;
         if (Object.keys(params).length) {
-            this.params = params
-            this.$axios.get("/api/admin/train/detail?id="+params.id).then(res => {
+            this.$axios.get("/api/admin/train/detail",{ params: params }).then(res => {
                 this.ruleForm = res.data.data;
-                debugger;
+               
                 //this.form1.category_id = res.data.data.category_id
                 // this.getshopAccout(this.form1.create_user.shop_id)
                 // this.loadMechanic();

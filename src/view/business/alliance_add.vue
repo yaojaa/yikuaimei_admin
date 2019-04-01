@@ -285,6 +285,7 @@ export default {
       ],
 
       ruleForm:{
+        "id":"",
     "business_phone" : "",//加盟商手机号
     "business_name" : "",//公司名称
     "category_id" : [1,2,8],//行业id 3或[3]或[3,5,7]
@@ -476,24 +477,48 @@ export default {
 
     // },
     submitForm(){
+        let params = this.$route.params;
+        this.ruleForm.id = params.business_id
+        if (Object.keys(params).length) {
+            
+            this.$axios.post("/api/admin/business/modify", this.ruleForm).then(res => {
+
+
+
+                  if(res.data.code == 0){
+
+                      this.$alert('编辑加盟商成功！')
+
+                      this.$router.push('/business/alliance')
+
+                  }else{
+                      this.$alert(res.data.msg)
+                  }
+              }).catch((e)=>{
+                this.$alert('操作失败'+e)
+
+              })
+        }else{
+                this.$axios.post("/api/admin/business/create", this.ruleForm).then(res => {
+
+                  console.log(res)
+
+                  if(res.data.code == 0){
+
+                      this.$alert('添加加盟商成功！')
+
+                      this.$router.push('/business/alliance')
+
+                  }else{
+                      this.$alert(res.data.msg)
+                  }
+              }).catch((e)=>{
+                this.$alert('操作失败'+e)
+
+              })
+        }
           //this.ruleForm.address_code = this.ruleForm.address_code[2]
-          this.$axios.post("/api/admin/business/create", this.ruleForm).then(res => {
 
-                    console.log(res)
-
-                    if(res.data.code == 0){
-
-                        this.$alert('添加加盟商成功！')
-
-                        this.$router.push('/business/alliance')
-
-                    }else{
-                        this.$alert(res.data.msg)
-                    }
-                }).catch((e)=>{
-                  this.$alert('操作失败'+e)
-
-                })
     }
   },
   components: {

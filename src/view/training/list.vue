@@ -184,25 +184,29 @@ export default {
                             {
                                 label: "编辑",
                                 type: "edit",
-                                url: "", //优先执行url
-                                axiosUrl: "api/admin/train/detail",
-                                axiosType: "get",
-                                // onClick(tablePage, self, row){
-                                //     console.log(self,'self')
-                                //     console.log(row,'row')
-                                //     console.log(tablePage,'tablePage')
-                                //     self.$router.push("/training/add")
-                                // }
-                                onClick(tablePage, self, record) {
-                                    console.log(record,'record');
-                                    self.$router.push("/training/add?id=" + record.train_id)
-                                    // self.$router.push({
-                                    //     path: '/training/add',
-                                    //     query: {
-                                    //         id: record.train_id
-                                    //     }
-                                    // })
-								}
+                                onClick(tablePage, self, row) {
+                                    console.log(row,'row')
+                                    self.$router.push("/training/add/" + row.train_id)
+                                }
+                                // url: "", //优先执行url
+                                // axiosUrl: "api/admin/train/detail",
+                                // axiosType: "get",
+                                // // onClick(tablePage, self, row){
+                                // //     console.log(self,'self')
+                                // //     console.log(row,'row')
+                                // //     console.log(tablePage,'tablePage')
+                                // //     self.$router.push("/training/add")
+                                // // }
+                                // onClick(tablePage, self, record) {
+                                //     console.log(record,'record');
+                                //     self.$router.push("/training/add?id=" + record.train_id)
+                                //     // self.$router.push({
+                                //     //     path: '/training/add',
+                                //     //     query: {
+                                //     //         id: record.train_id
+                                //     //     }
+                                //     // })
+								// }
                             }
                         ]
                     }

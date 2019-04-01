@@ -35,8 +35,8 @@
                         :show-file-list="false"
                         :on-success="uploadActivityImg"
                         >
-                       <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                       </el-upload>
                   <div class="upload-title">
                       <p class="upload-title-red">支持上传一张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
@@ -73,29 +73,9 @@
                         </el-col>
                     </el-form-item>
 
-                    <el-form-item label="每人每天可参与：">
-                      <el-col :span="12">
-                        <el-input v-model="ruleForm.limits.limit_times" placeholder="请输入"></el-input><span></span>
-                      </el-col>
-                      <el-col :span="4" class="line-center">
-                        <span>次</span>
-                      </el-col>
-                    </el-form-item>
+                    
 
-                    <el-form-item label="活动期间一共可参与：">
-                        <el-radio-group v-model="limitsStatus"   @change="limitsChange">
-                            <el-col :span="8" >
-                              <div class="limit-no">
-                                <el-radio :label="0">不限</el-radio>
-                              </div>
-                            </el-col>
-                         
-                            <el-col :span="8">
-                              <el-radio :label="1">限制<el-input v-model="ruleForm.limits.limit_total_times"></el-input>次</el-radio>
-                            </el-col>
-                           
-                        </el-radio-group>
-                    </el-form-item>
+                    
                    
                    
                   </el-form>
@@ -141,7 +121,8 @@
                        </div>
                      </div>
                   </div>
-                  <p class="gift-title"> ---------------设置安慰奖---------------</p>
+                  <p class="color-red">新客注册奖励： 详见新人红包</p>
+                  <p class="gift-title"> -------------邀请人奖励设置-------------</p>
                   <p class="gift-title">安慰奖必须选择，否则无法上架</p>
                   <div class="gift-table left0" >
                     <div class="table-th">
@@ -334,7 +315,6 @@ export default {
       goodsDefaultVisible:false,
       imageUrl:"",
       dialogImageUrl:"",
-      limitsStatus:"",
       radioGoodsId:"",
       date:"",
       activeId:"",
@@ -372,20 +352,16 @@ export default {
       
       itemLIst:[
         {
-          name:"奖品",
+          name:"邀请人数",
           index:1
         },
         {
-          name:"奖品图",
+          name:"奖励",
           index:2
         },
         {
-          name:"奖品数量",
+          name:"奖品图",
           index:3
-        },
-        {
-          name:"中奖率",
-          index:4
         }
       ],
       
@@ -401,7 +377,7 @@ export default {
           url:'alliance'
         },
         {
-          name: "摇一摇" //名字
+          name: "邀请好友" //名字
         }
       ],
       
@@ -417,10 +393,6 @@ export default {
         "activity_start_time": "", //活动开始时间
         "activity_end_time": "", //活动结束时间
         
-        "limits":{
-          "limit_total_times":"", //总次数限制 0 不限
-          "limit_times": "" // 每人每天次数限制 0 不限
-        },
         "rules":{
           "shake_default" : { // 安慰奖
           "coupon_code" :"", // 优惠券编号
@@ -560,18 +532,7 @@ export default {
       
     },
    
-    limitsChange(e){
-      if(e==0){
-        this.ruleForm.limits.limit_total_times = this.limit_total_times
-        
-        console.log('00000')
-      }else{
-        this.ruleForm.limits.limit_total_times = 0
-        console.log('11111')
-      }
-     
 
-    },
 
     handleFaceUploadSuccess(){},
      goNextStep(n){
@@ -798,16 +759,10 @@ export default {
         this.params = params;
         console.log(params,'params')
         this.$axios.post("/api/admin/activity/info",params).then(res => {
-          if(res.data.code==0){
-              this.ruleForm = res.data.data;
-              //判断当前是限制还是不限制
-              if(res.data.data.limits.limit_total_times==0){
-                this.limitsStatus = 0
-              }else{
-                this.limitsStatus =1
-              }
-          }
-          
+          console.log(res.data.data,'data----data')
+          //this.ruleForm.activity_status = res.data.data.activity_status
+            this.ruleForm = res.data.data;
+            
         })
     }
      this.getGoodsList(); //获取优惠券列表  
@@ -1104,6 +1059,10 @@ export default {
 }
 .width720{
   width:600px;
+}
+.color-red{
+    color:#ff0000;
+    text-indent:156px;
 }
 </style>
 
