@@ -14,17 +14,17 @@
 
 
 
-            <div class="panel">
+            <div class="panel invite-box">
 
                 <div class="form-panel p-xl "  v-if="step==1">
                     <!--form start-->
-                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm" >
+                    <el-form :model="ruleForm"  ref="ruleForm1" label-width="100px" class="demo-ruleForm" >
 
-                    <el-form-item label="活动名称：" prop="activity_title">
+                    <el-form-item label="活动名称：" >
                         <el-input v-model="ruleForm.activity_title"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="活动卖点：" prop="activity_subject">
+                    <el-form-item label="活动卖点：" >
                         <el-input v-model="ruleForm.activity_subject"></el-input>
                     </el-form-item>
                     <el-form-item label="封面图：" >
@@ -35,17 +35,16 @@
                         :show-file-list="false"
                         :on-success="uploadActivityImg"
                         >
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar">
+                       <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
-                  <div class="upload-title">
-                      <p class="upload-title-red">支持上传一张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
-                  </div>
-
+                      <div class="upload-title">
+                          <p class="upload-title-red">支持上传一张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
+                      </div>
 
                     </el-form-item>
 
-                    <el-form-item label="活动规则：" prop="activity_desc">
+                    <el-form-item label="活动规则：" >
                         <el-input type="textarea" v-model="ruleForm.activity_desc" rows="7"></el-input>
                     </el-form-item>
                     
@@ -61,7 +60,7 @@
                 <!--步骤2-->
 
                 <div class="form-panel p-xl width720" v-if="step==2">
-                  <el-form :model="ruleForm" :rules="rules" ref="ruleForm2" label-width="160px" class="demo-ruleForm" >
+                  <el-form :model="ruleForm"  ref="ruleForm2" label-width="160px" class="demo-ruleForm" >
                     
                     <el-form-item label="开始时间：">
                         <el-col :span="10">
@@ -72,25 +71,26 @@
                           <el-date-picker type="date" style="width:100%" placeholder="选择日期" v-model="ruleForm.activity_end_time"  value-format="yyyy-MM-dd"></el-date-picker>
                         </el-col>
                     </el-form-item>
+                    <p class="color-red">新客注册奖励： 详见新人红包</p>
 
-                    
-
-                    
-                   
-                   
                   </el-form>
-                  <p class="gift-title"> ---------------设置奖品---------------</p>
-                  <p class="gift-title">以下奖品必须全部选择，否则无法上架</p>
+                  <p class="gift-title"> ------------邀请人奖励设置------------</p>
+                  <el-button type="primary"  @click="buttonAdd()">增加</el-button>
                   <div class="gift-table left0" >
                      <div class="table-th">
                        <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                      </div>
-                     <div class="table-body" v-for="item in ruleForm.rules.shakes" :key="item.index">
+                     <div class="table-body" v-for="(skuItem,index) in ruleForm.rules.old_users" :key="skuItem.idx">
+                       <div class="body-gift-number body-item">
+                         <div class="item-number" >
+                           <input type="text" v-model="skuItem.users" class="number-input"/>
+                         </div>
+                       </div>
                        <div class="body-gift-choice body-item">
                          <div class="item-choice" >
                           
-                            <div class="choiced" v-if="item.coupon_code">以选中优惠券编号为{{item.coupon_code}}的优惠券</div>
-                            <div class="choice-button" v-else  @click="choiceClick(item.index)">请选择</div>
+                            <div class="choiced" v-if="skuItem.coupon_code">以选中优惠券编号为{{skuItem.coupon_code}}的优惠券</div>
+                            <div class="choice-button" v-else  @click="choiceClick(index)">请选择</div>
                          </div>
                        </div>
                        <div class="body-gift-img body-item">
@@ -100,57 +100,26 @@
                               class="avatar-uploader"
                               action="/api/admin/fileupload/image"
                               :show-file-list="false"
-                              :on-success="show_img.bind(null, {'data':item})" :data="item"
+                              :on-success="show_img.bind(null, {'index':index})" :data="skuItem"
                               >
-                            <img width="178px" v-if="item.gifts_img" :src="item.gifts_img" >
+                            <img width="238px" v-if="skuItem.gifts_img" :src="skuItem.gifts_img" >
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       
                             </el-upload>
                          </div>
                        </div>
-                       <div class="body-gift-number body-item">
-                         <div class="item-number" >
-                           <input type="text" v-model="item.gifts_num" class="number-input"/>
+                       <div class="body-gift-choice body-item">
+                         <div class="item-choice">
+                            <el-button type="primary" @click="deletedClick(index)">删除</el-button>
                          </div>
                        </div>
-                       <div class="body-gift-text body-item">
-                         <div class="item-text" >
-                           <input type="text" v-model="item.gifts_probability" class="text-input"/>
-                         </div>
-                       </div>
+                       
                      </div>
                   </div>
-                  <p class="color-red">新客注册奖励： 详见新人红包</p>
-                  <p class="gift-title"> -------------邀请人奖励设置-------------</p>
-                  <p class="gift-title">安慰奖必须选择，否则无法上架</p>
-                  <div class="gift-table left0" >
-                    <div class="table-th">
-                       <div class="th-item">奖品</div>
-                       <div class="th-item">奖品图</div>
-                        
-                     </div>
-                     <div class="table-body">
-                          <div class="comfort-left comfort-item">
-                            <div class="choiced" v-if="ruleForm.rules.shake_default.coupon_code">以选中优惠券编号为{{ruleForm.rules.shake_default.coupon_code}}的优惠券</div>
-                            
-                            <div class="comfort-button" v-else @click="defaultChoice()">请选择</div>
-                          </div>
-                          <div class="comfort-right comfort-item">
-                            <el-upload
-                              class="avatar-uploader"
-                              action="/api/admin/fileupload/image"
-                              :show-file-list="false"
-                              :on-success="show_default_img"
-                              >
-                            <img width="360px" v-if="ruleForm.rules.shake_default.gifts_img" :src="ruleForm.rules.shake_default.gifts_img" >
-                              <div v-else  class="upload-img-icon"> 
-                                <i class="el-icon-plus position-icon" style="font-size:48px"></i>
-                              </div>       
-                            </el-upload>
-                          </div>
-                        </div>
-                  </div>
+                 
+                  
+                  
                   <el-form :model="ruleForm"  ref="ruleForm3" class="bottom-form">
                     
                     <el-form-item label="状态：">
@@ -222,62 +191,7 @@
                         </div> 
                     </el-dialog>
 
-                    <!-- 安慰奖设置 -->
-                    <el-dialog title="选择指定商品" :visible.sync="goodsDefaultVisible">
-                       <el-form-item>
-                            <div v-if="goodShow" class="good_show">
-                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.coupon_code">
-                                  <div class="goods-div clearfix">
-                                    <div class="goods-div-left">
-                                      <p class="margin-top10"><span class="price">¥{{checkedGoods.rules.reduce_price}}</span><span>{{checkedGoods.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{checkedGoods.rules.price}}元可用</p>
-                                    </div>
-                                    <div class="goods-div-right">
-                                     <img v-if="checkedGoods.coupon_img" :src="checkedGoods.coupon_img" width="70px" height="70px">
-                                     <p v-else class="no-img">暂无图片</p>
-                                    </div>
-                                  </div>
-                                </el-radio>
-                                </div>
-                       
-                           
-                                <!-- <el-col :span="12">
-                                  <el-input v-model="goods_name" placeholder="搜索"></el-input>
-                                </el-col>
-                           
-                                <el-col :span="5">
-                                    <el-button type="primary" @click="goodsSearch">查询</el-button>
-                                </el-col> -->
-                            </el-form-item>
-                           
-                            
-                        
-
-                        <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
-                            <el-tab-pane v-for="item in industryForm" :label="item.name"  :value="item.type" :key="`${item.type}type`">
-                                <el-radio v-model="radioGoodsId" :label="item.coupon_code" :key="item.coupon_code" v-for="item in goodsList">
-                                  <div class="goods-div clearfix">
-                                    <div class="goods-div-left">
-                                      <p class="margin-top10"><span class="price">¥{{item.rules.reduce_price}}</span><span>{{item.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{item.rules.price}}元可用</p>
-                                    </div>
-                                    <div class="goods-div-right">
-                                     <img v-if="item.coupon_img" :src="item.coupon_img" width="70px" height="70px">
-                                     <p v-else class="no-img">暂无图片</p>
-                                    </div>
-                                  </div>
-                                  
-                                  </el-radio>
-                            </el-tab-pane>
-                        </el-tabs>
-                        
-                        
-                        <div slot="footer" class="dialog-footer">
-                            <el-button @click="goodsCancal">取 消</el-button>
-                            <el-button type="primary" @click="goodsDefaultSure">确 定</el-button>
-                        </div> 
-                    </el-dialog>
-                    <!-- 安慰奖单独设置 -->
+                   
 
                   </div>
                   </el-form>
@@ -306,6 +220,7 @@ export default {
 
   data() {
     return {
+      buttonIndex:"1",
       // goods_name:"", //商品名字
       index:'',
       gitfNumber:"",
@@ -362,6 +277,10 @@ export default {
         {
           name:"奖品图",
           index:3
+        },
+        {
+          name:"操作",
+          index:4
         }
       ],
       
@@ -392,112 +311,53 @@ export default {
         "activity_status":2, //状态  1 下架 2上架
         "activity_start_time": "", //活动开始时间
         "activity_end_time": "", //活动结束时间
-        
-        "rules":{
-          "shake_default" : { // 安慰奖
-          "coupon_code" :"", // 优惠券编号
-          "gifts_img" : "" // 图片
-          },
-          "shakes":[
-            {
-              "index":0,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            },
-            {
-              index:1,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            },
+        "rules" : {  // 规则
+        "old_user_type" : 1, // 红包发放类型 1 优惠券 2基金 3 储值卡抵扣券
+        "old_users" : [
           {
-              index:2,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            },
-            {
-              index:3,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            },
-            {
-              index:4,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            },
-            {
-              index:5,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            },
-            {
-              index:6,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            },
-            {
-              index:7,
-              "coupon_code" : "", // 优惠券编号
-              "gifts_img" : "",  // 奖品图片
-              "gifts_num" : null, // 总数量
-              "gifts_probability" : null  // 中奖几率
-            }
-          ]
-        }
-        
-        
-
-        
-        
-      },
-
-        rules: {
-          activity_title: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-          ],
-          activity_subject: [
-            { required: true, message: '请输入活动描述', trigger: 'blur' },
-          ],
-          activity_desc: [
-            { required: true, message: '请输入活动卖点', trigger: 'blur' },
-          ]
-
-          
-        }
+            "users" : "", // 邀请人数
+            "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+            "coupon_code" : "",  // 优惠券编号
+            "gifts_name" : "",  // 奖品名称
+            "gifts_img" : "",    // 奖品图片
+            "gifts_desc" : ""     // 奖品描述
+          }
+        ]
+      }
+      }
 
     };
   },
   methods:{
-    defaultChoice(){
-      this.goodsDefaultVisible = true
+    buttonAdd(){
+      
+      this.ruleForm.rules.old_users.push({
+        "users" : "", // 邀请人数
+        "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+        "coupon_code" : "",  // 优惠券编号
+        "gifts_name" : "",  // 奖品名称
+        "gifts_img" : "",    // 奖品图片
+        "gifts_desc" : ""     // 奖品描述
+      })
+      
+      console.log(this.ruleForm.rules.old_users,'~~~~~~')
     },
-    // goodsSearch(){
+    deletedClick(_index){
+      console.log(_index,'index')
 
-    // },
-    goodsDefaultSure(){
-      if(this.checkedGoodsId==""){
-              console.log(this.checkedGoodsId,'checkedGoodsId')
-              this.$alert('必须选择商品')
-          }else{
-                this.ruleForm.rules.shake_default.coupon_code = this.checkedGoodsId
-                this.goodsDefaultVisible = false;
-             
-          }
+      if(this.ruleForm.rules.old_users.length==1){
+        this.$alert('必须保留一项')
+      }else{
+       
+        this.ruleForm.rules.old_users.splice(_index, 1)
+        console.log(this.ruleForm.rules.old_users,'@@@@@@@@@@')
+        
+       
+      }
       
     },
+
+
     goodsSure(){
       // debugger;
 
@@ -506,7 +366,7 @@ export default {
               console.log(this.checkedGoodsId,'checkedGoodsId')
               this.$alert('必须选择商品')
           }else{
-                this.ruleForm.rules.shakes[this.index].coupon_code = this.checkedGoodsId 
+                this.ruleForm.rules.old_users[this.index].coupon_code = this.checkedGoodsId 
                 this.goodsVisible = false;
              
           }
@@ -520,7 +380,9 @@ export default {
       this.goodsVisible = true
     },
     show_img(obj,res,f){
-       this.ruleForm.rules.shakes[obj.data.index].gifts_img = res.data.url
+    
+      
+       this.ruleForm.rules.old_users[obj.index].gifts_img = res.data.url
         // this.dialogImageUrl = res.data.url
       },
       show_default_img(res){
@@ -528,7 +390,7 @@ export default {
 
       },
     uploadActivityImg(res){
-      this.imageUrl = res.data.url
+      this.ruleForm.activity_img = res.data.url
       
     },
    
@@ -552,83 +414,7 @@ export default {
         })
           
       },
-    // querySearchAsync(queryString, callback) {
-    //   var list = [{}];
-    //   //调用的后台接口
-    //   if(queryString==undefined){
-    //     var url = "/api/admin/select/businessList" ;
-    //   }else{
-    //     var url = "/api/admin/select/businessList?business_id=" + queryString;
-    //   }
-
-    //   this.$axios.get(url).then(res =>{
-    //       if(res.data.code ==0){
-    //         //this.business_list = res.data.data;
-    //         //在这里为这个数组中每一个对象加一个value字段, 因为autocomplete只识别value字段并在下拉列中显示
-    //         for(let i of res.data.data){
-    //             i.value = i.business_name;  //将想要展示的数据作为value
-                
-    //         }
-    //         list = res.data.data;
-    //         callback(list);
-    //       }
-    //     })
-    //   // //从后台获取到对象数组
-    //   // this.$axios.get(url).then((response)=>{
-        
-          
-    //   // }).catch((error)=>{
-    //   // console.log(error);
-    //   // });
-    // },
-    // handleSelect(event) {
-    //   console.log(event,'event');
-    //   this.ruleForm.business_id = event.business_id;
-    //   //console.log(this.ruleForm.business_id,'this.ruleForm.business_id');
-    //   //debugger;
-    // },
-    // handleChange(event){
-    //   this.ruleForm.address_code = event[event.length-1];
-    //   console.log(this.ruleForm.address_code,'this.ruleForm.address_code')
-    // },
-    //  handleRemove(file, fileList) {
-    //    this.ruleForm.shop_environment.splice(file.url,1)
-    //     console.log(this.ruleForm.shop_environment,'shop_environment')
-    // },
-    // handlePictureCardPreview(file) {
-    //     this.dialogImageUrl = file.url;
-    //     this.dialogVisible = true;
-    // },
-    // resetForm(formName) {
-    //     this.$refs[formName].resetFields();
-    //   },
-    // shop_pic(res){
-    //   this.ruleForm.shop_pic = res.data.url
-    // },
-    // shop_licence_pic(res){
-    //     this.ruleForm.shop_licence_pic = res.data.url
-    //   },
-    //   shop_environment(res){
-    //     this.ruleForm.shop_environment.push(res.data.url)
-    //   },
-    //   shop_sfz_pic_z(res){
-    //     this.ruleForm.shop_sfz_pic_z = res.data.url
-    //   },
-    //   shop_sfz_pic_f(res){
-    //     this.ruleForm.shop_sfz_pic_f = res.data.url
-    //   },
-
-      // getBusinessList(){
-
-      //   this.$axios.get("/api/admin/select/businessList").then(res =>{
-      //     if(res.data.code ==0){
-      //       this.business_list = res.data.data;
-      //     }
-
-
-      //   })
-
-      // } ,
+    
       
       submit(){
         let params = this.$route.params;
@@ -640,7 +426,7 @@ export default {
                       if(res.data.code == 0){
 
                           this.$alert(res.data.msg)
-                          this.$router.push('/marketing/shake/list')
+                          this.$router.push('/marketing/invite/list')
                           
 
                       }else{
@@ -656,12 +442,12 @@ export default {
         }else{
                   console.log(this.ruleForm,'choiceLIst')
         // console.log(this.ruleForm,'this.ruleForm');
-            this.$axios.post("/api/admin/activity/addShake", this.ruleForm).then(res => {
+            this.$axios.post("/api/admin/activity/addOldUser", this.ruleForm).then(res => {
 
                       if(res.data.code == 0){
 
                           this.$alert(res.data.msg)
-                          this.$router.push('/marketing/shake/list')
+                          this.$router.push('/marketing/invite/list')
                           
 
                       }else{
@@ -735,6 +521,7 @@ export default {
 
 
   mounted() {
+    // if(this.ruleForm.rules.old_users.length-1==)
     //this.getBusinessList();
 
     //如果是从审核门店中过来
@@ -843,7 +630,7 @@ export default {
   flex:1;
   
 }
-.item-choice,.item-upload,.item-number,.item-text{
+ .invite-box .item-choice,.invite-box .item-upload,.invite-box .item-number,.invite-box .item-text{
   width:100%;
   height: 100px;
   border-left:1px solid #ccc;
@@ -853,10 +640,13 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.item-number,.item-upload{
+.invite-box .item-number,.item-upload{
   border-left:0px;
 }
-.choice-button,.number-input,.text-input{
+.invite-box .item-number{
+    border-left:1px solid #ccc;
+}
+.invite-box .choice-button,.invite-box .number-input,.invite-box .text-input{
   width:100px;
   height: 40px;
   border:1px solid #000;
@@ -865,14 +655,14 @@ export default {
   line-height: 40px;
   font-size: 12px; 
 }
-.choice-button{
+.invite-box .choice-button{
   cursor:pointer;
   font-size:14px;
 }
 
-.item-upload{
-  max-width:180px;
-  width:180px;
+.invite-box .item-upload{
+  max-width:240px;
+  width:240px;
   height: 100px;
   overflow: hidden;
   position: relative;
@@ -880,50 +670,52 @@ export default {
   top:0px;
 }
 
-  .item-upload .avatar-uploader{
-    width:180px;
+ .invite-box .item-upload .avatar-uploader{
+    width:240px;
     height: 100px;
     overflow: hidden;
   }
-.item-upload .avatar {
-    width: 178px;
+.invite-box .item-upload .avatar {
+    width: 238px;
     height: 100px;
     display: block;
   }
- .item-upload .el-upload,.item-upload .el-upload--text{
-    width:178px;
+.invite-box .item-upload .el-upload,.invite-box .item-upload .el-upload--text{
+    width:238px;
     height: 100px;
     overflow: hidden;
   }
- .item-upload .avatar-uploader .el-upload {
+.invite-box .item-upload .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    left: 0px;
+    top: 0px;
   }
-  .item-upload img{
+.invite-box  .item-upload img{
     position:absolute;
     left: 0px;
     top:0px;
   }
-  .upload-img-icon{
-    width: 178px;
+ .invite-box .upload-img-icon{
+    width: 238px;
     height: 100px;
     overflow: hidden;
-    position: relative;
-    left: 0px;
+    position: absolute;
+    left: 30px;
     top: 0px;
   }
-  .position-icon{
+.invite-box  .position-icon{
     position: absolute;
     left:62px;
     top:20px;
   }
-  .comfort-item{
+.invite-box  .comfort-item{
     flex: 1
   }
-  .comfort-item{
+.invite-box  .comfort-item{
     height: 100px;
     border-left:1px solid #ccc;
     border-bottom:1px solid #ccc;
@@ -932,7 +724,7 @@ export default {
     justify-content: center;
     align-items: center;
   }
-  .comfort-button{
+.invite-box  .comfort-button{
     width:140px;
     height: 40px;
     line-height: 40px;
@@ -941,7 +733,7 @@ export default {
     color:#000;
     text-align: center;
   }
-  .comfort-right{
+.invite-box  .comfort-right{
   max-width:360px;
   width:360px;
   height: 100px;
@@ -951,7 +743,7 @@ export default {
   top:0px;
 }
 
-  .comfort-right .avatar-uploader{
+.invite-box  .comfort-right .avatar-uploader{
     width:360px;
     height: 100px;
     overflow: hidden;

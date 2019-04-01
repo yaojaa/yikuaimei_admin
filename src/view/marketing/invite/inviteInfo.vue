@@ -21,7 +21,7 @@
                             {{ruleForm.activity_subject}}
                         </el-form-item>
                         <el-form-item label="封面图：" >
-                            <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar">
+                            <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar" width="200px" height="150px">
                         </el-form-item>
 
                         <el-form-item label="活动规则：">
@@ -49,10 +49,11 @@
                                     {{skuItem.users}}
                                 </div>
                                 <div class="person-item">
-                                    {{skuItem.gifts_title}}
+                                    奖励编号为{{skuItem.coupon_code}}的优惠券
                                 </div>
                                 <div class="person-item ">
-                                    {{skuItem.gifts_img}}
+                                  <img :src="skuItem.gifts_img" alt="" width="238px" height="100px">
+                                    
                                 </div>
                             
                             </div>
