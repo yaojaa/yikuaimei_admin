@@ -78,7 +78,7 @@
                             领取后
                         </el-col>
                         <el-col :span="6" style="margin-right:10px">
-                            <el-input v-model="days" ></el-input>
+                            <el-input v-model="ruleForm.rules.days" ></el-input>
                         </el-col>
                         <el-col :span="6" >
                             天内有效
@@ -112,8 +112,8 @@
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>
 
-                     <div class="table-body table-full clearfix"   v-for="(item,index) in ruleForm.rules" >
-                       <div class="full-item  clearfix" v-if="ruleForm.rules[index].bargain">
+                     <div class="table-body table-full clearfix"   v-for="item in ruleForm.rules.bargain" >
+                       <div class="full-item  clearfix" >
                          <div class="full-item-left">
                            <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="50px" height="50px">
                          </div>
@@ -122,24 +122,24 @@
                            <p v-if="item.price">¥{{item.price}}</p>
                          </div>
                        </div>
-                       <div class="full-item"  v-for="skuItem in item.bargain" >
-                            <input type="text" v-model="skuItem.max_price"  class="input-val">
+                       <div class="full-item"   >
+                            <input type="text" v-model="item.max_price"  class="input-val">
                        </div>
-                       <div class="full-item"  v-for="skuItem in item.bargain" >
-                            <input type="text" v-model="skuItem.reduce_solid_price"  class="input-val">
+                       <div class="full-item"  >
+                            <input type="text" v-model="item.reduce_solid_price"  class="input-val">
                        </div>
-                       <div class="full-item"  v-for="skuItem in item.bargain" >
-                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：</span><input type="text" v-model="skuItem.reduce_max_price"  class="max-input-val"></p>
-                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：</span><input type="text" v-model="skuItem.reduce_min_price"  class="max-input-val"></p>
+                       <div class="full-item"  >
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：</span><input type="text" v-model="item.reduce_max_price"  class="max-input-val"></p>
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：</span><input type="text" v-model="item.reduce_min_price"  class="max-input-val"></p>
                         
                        </div>
-                       <div class="full-item"  v-for="skuItem in item.bargain" >
-                            <input type="text" v-model="skuItem.first_solid_price"  class="input-val">
+                       <div class="full-item">
+                            <input type="text" v-model="item.first_solid_price"  class="input-val">
                        </div>
-                       <div class="full-item"  v-for="skuItem in item.bargain" >
-                          <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：</span><input type="text" v-model="skuItem.first_max_price"  class="max-input-val"></p>
+                       <div class="full-item" >
+                          <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：</span><input type="text" v-model="item.first_max_price"  class="max-input-val"></p>
                                
-                            <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：</span><input type="text" v-model="skuItem.first_min_price"  class="max-input-val"></p>   
+                            <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：</span><input type="text" v-model="item.first_min_price"  class="max-input-val"></p>   
  
                        </div>
                        
@@ -236,7 +236,7 @@ export default {
 
   data() {
     return {
-        days:"",
+       
       dataList:[],
       goodShow:false,
       index:"1",
@@ -321,7 +321,8 @@ export default {
         "activity_start_time": "", //活动开始时间
         "activity_end_time": "", //活动结束时间
         "rules" : {  // 帮砍规则
-           "bargain_type":1
+           "bargain_type":1,
+           "days":"",
         }
         
       },
@@ -360,26 +361,21 @@ export default {
      
 
       this.goodsVisible = false;
-      //debugger
       
-      for(var i = 0; i<this.goodsData.length; i++){
-       
-        this.goodsData[i].bargain = [
-                {
-                    "goods_id" : 1,  // 商品id
-                    "max_price" : "", // 最高优惠金额
-                    "reduce_solid_price" : "", // 新用户固定金额 -- 帮砍
-                    "reduce_min_price" : "", // 老用户随机最小金额
-                    "reduce_max_price" : "", // 老用户随机最大金额
-                    "first_solid_price" : "", // 新用户固定金额 -- 自己第一刀
-                    "first_min_price" : "", // 老用户随机最小金额
-                    "first_max_price" : "" // 老用户随机最大金额
-                }
-              ]
-       
+      
+      this.ruleForm.rules.bargain = this.goodsData
+      for(var i = 0; i<this.ruleForm.rules.bargain.length; i++){
+          this.ruleForm.rules.bargain[i].goods_id = this.goodsData[i].good_id;
+          this.ruleForm.rules.bargain[i].max_price = "";
+          this.ruleForm.rules.bargain[i].reduce_solid_price = "";
+          this.ruleForm.rules.bargain[i].reduce_min_price = "";
+          this.ruleForm.rules.bargain[i].reduce_max_price = "";
+          this.ruleForm.rules.bargain[i].first_solid_price = "";
+          this.ruleForm.rules.bargain[i].first_min_price = "";
+          this.ruleForm.rules.bargain[i].first_max_price = "";
+          
       }
-      
-      this.ruleForm.rules = this.goodsData
+
     //   this.ruleForm.rules.days = this.days
         debugger
      
@@ -417,11 +413,7 @@ export default {
       },
       submit(){
         let params = this.$route.params;
-        const obj = {
-            "days":this.days
-        }
-        this.ruleForm.rules.days = Object.assign({},obj)
-        
+
         if (Object.keys(params).length) {
             this.ruleForm.activity_code = params.activity_code
             this.$axios.post("/api/admin/activity/edit",this.ruleForm).then(res => {

@@ -70,6 +70,17 @@
                     </div>
                     <img src="/static/img/full_gift.png" width="100%">
                 </div>
+
+                 <div class="coupon-item-b" @click="payClick">
+                    <span class="type">你变美我买单</span>
+                    <div class="body">
+                        <p class="title">给门店引流</p>
+                        <p class="date f12 mt-xs">来一起变美</p>
+                    </div>
+                    <img src="/static/img/shake.png" width="100%">
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -102,6 +113,7 @@ export default {
         inviteClick(){
             this.$router.push('/marketing/invite/list')
         },
+
         //满赠活动
         fullClick(){
             this.$router.push('/marketing/full/list')
@@ -110,6 +122,11 @@ export default {
         helpClick(){
             this.$router.push('/marketing/helpCut/list')
         },
+
+        //你变美我买单
+        payClick(){
+            this.$router.push('/marketing/pay_bill/list')
+        }
     },
     mounted() {
 
