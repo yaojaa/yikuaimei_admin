@@ -480,7 +480,7 @@ export default new Router({
                         title: '营销应用'
                     }
                 },
-                
+
                 {
                     // 满减优惠劵列表
                     path: '/marketing/fullReducionCouponList',
@@ -524,7 +524,7 @@ export default new Router({
                         permission: true
                     }
                 },
-                
+
                 {
                     // 摇一摇列表
                     path: '/marketing/shake/list',
@@ -642,6 +642,7 @@ export default new Router({
                         permission: true
                     }
                 },
+
                 {
                     // 邀请好友添加
                     path: '/marketing/invite/inviteInfo/:activity_code',
@@ -651,7 +652,59 @@ export default new Router({
                         permission: true
                     }
                 },
-                
+
+                {
+                    // 你变美我买单
+                    path: '/marketing/pay_bill/list',
+                    component: resolve => require(['../view/marketing/pay_bill/list.vue'], resolve),
+                    meta: {
+                        title: '你变美我买单',
+                        permission: true
+                    }
+                },
+
+                {
+                    // 你变美我买单 add
+                    path: '/marketing/pay_bill/add',
+                    component: resolve => require(['../view/marketing/pay_bill/add.vue'], resolve),
+                    meta: {
+                        title: '你变美我买单',
+                        permission: true
+                    }
+                },
+                  {
+                    // 你变美我买单 参与用户
+                    path: '/marketing/pay_bill/users/:activity_code',
+                    component: resolve => require(['../view/marketing/pay_bill/users.vue'], resolve),
+                    meta: {
+                        title: '参与用户',
+                        permission: true
+                    }
+                },
+
+                          {
+                    // 你变美我买单 中奖名单
+                    path: '/marketing/pay_bill/name_list/:activity_code',
+                    component: resolve => require(['../view/marketing/pay_bill/name_list.vue'], resolve),
+                    meta: {
+                        title: '中奖名单',
+                        permission: true
+                    }
+                },
+
+                               {
+                    // 你变美我买单 中奖名单
+                    path: '/marketing/pay_bill/user_detail/:activity_code/:user_id',
+                    component: resolve => require(['../view/marketing/pay_bill/user_detail.vue'], resolve),
+                    meta: {
+                        title: '用户详情',
+                        permission: true
+                    }
+                },
+
+// 
+
+
                 {
                     // 平台验票
                     path: '/marketing/checkList',
