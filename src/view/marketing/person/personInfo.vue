@@ -175,16 +175,7 @@ export default {
 
     }
   },
-  methods:{
-
-  },
-      
-    
-    
-    
-
-  
-
+  methods:{},
   components: {
     BreadCrumb
     // formlist

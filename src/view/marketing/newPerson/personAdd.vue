@@ -35,7 +35,7 @@
                         :show-file-list="false"
                         :on-success="uploadActivityImg"
                         >
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
                   <div class="upload-title">
@@ -72,12 +72,12 @@
                      <div class="table-th">
                        <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                      </div>
-                     <div class="table-body" v-for="(skuItem,idx) in ruleForm.rules.new_users" :key="idx">
+                     <div class="table-body" v-for="skuItem in ruleForm.rules.new_users" :key="skuItem.idx">
                        <div class="body-gift-choice body-item">
                          <div class="item-choice" >
                           
                             <div class="choiced" v-if="skuItem.coupon_code">以选中优惠券编号为{{skuItem.coupon_code}}的优惠券</div>
-                            <div class="choice-button" v-else  @click="choiceClick(skuItem.index)">请选择</div>
+                            <div class="choice-button" v-else  @click="choiceClick(skuItem.idx)">请选择</div>
                          </div>
                        </div>
                        <div class="body-gift-img body-item">
@@ -129,23 +129,39 @@
                     <el-dialog title="选择指定商品" :visible.sync="goodsVisible">
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
-                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id">{{checkedGoods.good_name}}<img :src="checkedGoods.good_ico" width="30px" height="30px"></el-radio>
-                            </div>
-                            <el-col :span="12">
-                                <el-input v-model="goods_name" placeholder="搜索"></el-input>
-                            </el-col>
-                           
-                            <el-col :span="5">
-                                <el-button type="primary" @click="goodsSearch">查询</el-button>
-                            </el-col>
+                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.coupon_code">
+                                  <div class="goods-div clearfix">
+                                    <div class="goods-div-left">
+                                      <p class="margin-top10"><span class="price">¥{{checkedGoods.rules.reduce_price}}</span><span>{{checkedGoods.coupon_title}}</span></p>
+                                      <p class="margin-top10">满{{checkedGoods.rules.price}}元可用</p>
+                                    </div>
+                                    <div class="goods-div-right">
+                                     <img v-if="checkedGoods.coupon_img" :src="checkedGoods.coupon_img" width="70px" height="70px">
+                                     <p v-else class="no-img">暂无图片</p>
+                                    </div>
+                                  </div>
+                                </el-radio>
+                                </div>
                             </el-form-item>
                            
                             
                         
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
-                            <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <el-radio v-model="radioGoodsId" :label="item.good_id" :key="item.good_id" v-for="item in goodsList">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio>
+                            <el-tab-pane v-for="item in industryForm" :label="item.name"  :value="item.type" :key="`${item.type}type`">
+                                <el-radio v-model="radioGoodsId" :label="item.coupon_code" :key="item.coupon_code" v-for="item in goodsList">
+                                  <div class="goods-div clearfix">
+                                    <div class="goods-div-left">
+                                      <p class="margin-top10"><span class="price">¥{{item.rules.reduce_price}}</span><span>{{item.coupon_title}}</span></p>
+                                      <p class="margin-top10">满{{item.rules.price}}元可用</p>
+                                    </div>
+                                    <div class="goods-div-right">
+                                     <img v-if="item.coupon_img" :src="item.coupon_img" width="70px" height="70px">
+                                     <p v-else class="no-img">暂无图片</p>
+                                    </div>
+                                  </div>
+                                  
+                                  </el-radio>
                             </el-tab-pane>
                         </el-tabs>
                         
@@ -205,7 +221,29 @@ export default {
      
       limit_total_times:"",
       step: 1,
-      industryForm:[],
+      industryForm:[
+        {
+          name:"通用券",
+          type:1
+        },
+        {
+          name:"行业券",
+          type:2
+        },
+        {
+          name:"服务券",
+          type:3
+        },
+        {
+          name:"商品券",
+          type:4
+        },
+        {
+          name:"虚拟商品券",
+          type:5
+        }
+
+      ],
       
       itemLIst:[
         {
@@ -254,6 +292,7 @@ export default {
         "rules" : {  // 规则
           "new_users" : [
             {
+              "idx":0,
               "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
               "coupon_code" : "",  // 优惠券编号
               "gifts_name" : "",  // 奖品名称
@@ -261,6 +300,7 @@ export default {
               "gifts_desc" : ""     // 奖品描述
             },
             {
+              "idx":1,
               "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
               "coupon_code" : "",  // 优惠券编号
               "gifts_name" : "",  // 奖品名称
@@ -268,6 +308,7 @@ export default {
               "gifts_desc" : ""     // 奖品描述
             },
             {
+              "idx":2,
               "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
               "coupon_code" : "",  // 优惠券编号
               "gifts_name" : "",  // 奖品名称
@@ -275,6 +316,7 @@ export default {
               "gifts_desc" : ""     // 奖品描述
             },
             {
+              "idx":3,
               "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
               "coupon_code" : "",  // 优惠券编号
               "gifts_name" : "",  // 奖品名称
@@ -282,6 +324,7 @@ export default {
               "gifts_desc" : ""     // 奖品描述
             },
             {
+              "idx":4,
               "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
               "coupon_code" : "",  // 优惠券编号
               "gifts_name" : "",  // 奖品名称
@@ -289,6 +332,7 @@ export default {
               "gifts_desc" : ""     // 奖品描述
             },
             {
+              "idx":5,
               "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
               "coupon_code" : "",  // 优惠券编号
               "gifts_name" : "",  // 奖品名称
@@ -296,6 +340,7 @@ export default {
               "gifts_desc" : ""     // 奖品描述
             },
             {
+              "idx":6,
               "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
               "coupon_code" : "",  // 优惠券编号
               "gifts_name" : "",  // 奖品名称
@@ -303,6 +348,7 @@ export default {
               "gifts_desc" : ""     // 奖品描述
             },
             {
+              "idx":7,
               "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
               "coupon_code" : "",  // 优惠券编号
               "gifts_name" : "",  // 奖品名称
@@ -335,20 +381,20 @@ export default {
     };
   },
   methods:{
-   goodsSearch(){
-          console.log('商品搜索--------')
-        //商品搜索
-        var goodName = this.goods_name;
-        this.$axios.get("/api/admin/select/goodsList?good_type=1&good_name="+goodName).then(res =>{
-                if(res.data.code ==0){
-                    this.goodsList = res.data.data;
-                    this.goods_name = "" //查询完毕清空input
-                }else{
-                    this.$message({ message: res.data.msg, type: 'warning' });
-                }
-            })
+  //  goodsSearch(){
+  //         console.log('商品搜索--------')
+  //       //商品搜索
+  //       var goodName = this.goods_name;
+  //       this.$axios.get("/api/admin/select/goodsList?good_type=1&good_name="+goodName).then(res =>{
+  //               if(res.data.code ==0){
+  //                   this.goodsList = res.data.data;
+  //                   this.goods_name = "" //查询完毕清空input
+  //               }else{
+  //                   this.$message({ message: res.data.msg, type: 'warning' });
+  //               }
+  //           })
 
-      },
+  //     },
     goodsSure(){
       // debugger;
 
@@ -358,10 +404,10 @@ export default {
               this.$alert('必须选择商品')
           }else{
                 console.log(this.checkedGoodsId ,'this.checkedGoodsId')
-                debugger
+                //debugger
                 //console.log(this.ruleForm.rules.,'index')
-                //this.ruleForm.rules.new_users[this.index].coupon_code = this.checkedGoodsId 
-                //this.goodsVisible = false;
+                this.ruleForm.rules.new_users[this.index].coupon_code = this.checkedGoodsId 
+                this.goodsVisible = false;
              
           }
           
@@ -372,19 +418,18 @@ export default {
     choiceClick(_index){
       
       this.index = _index;
-      debugger
       this.goodsVisible = true
     },
     show_img(obj,res,f){
-       this.ruleForm.rules.new_users[obj.data.index].gifts_img = res.data.url
+     
+       this.ruleForm.rules.new_users[obj.data.idx].gifts_img = res.data.url
         
       },
       
     uploadActivityImg(res){
-      this.imageUrl = res.data.url
+      this.ruleForm.activity_img = res.data.url
       
     },
-   
 
     handleFaceUploadSuccess(){},
      goNextStep(n){
@@ -394,17 +439,8 @@ export default {
        this.step = n;
       
     },
-     getCategoryList(){
-          //获取行业列表
-        this.$axios.get("/api/admin/select/categoryList").then(res =>{
-          if(res.data.code ==0){
-            this.industryForm = res.data.data;
-            console.log(this.industryForm,'industryForm')
-          }
-
-        })
-          
-      },
+     
+     
     getGoodsList(){
           //获取通用券数据
         this.$axios.get("/api/admin/select/coupon?type=1").then(res =>{
@@ -427,7 +463,7 @@ export default {
                       if(res.data.code == 0){
 
                           this.$alert(res.data.msg)
-                          this.$router.push('/marketing/shake/list')
+                          this.$router.push('/marketing/newPerson/list')
                           
 
                       }else{
@@ -443,12 +479,12 @@ export default {
         }else{
                   console.log(this.ruleForm,'choiceLIst')
         // console.log(this.ruleForm,'this.ruleForm');
-            this.$axios.post("/api/admin/activity/addShake", this.ruleForm).then(res => {
+            this.$axios.post("/api/admin/activity/addNewUser", this.ruleForm).then(res => {
 
                       if(res.data.code == 0){
 
                           this.$alert(res.data.msg)
-                          this.$router.push('/marketing/shake/list')
+                          this.$router.push('/marketing/newPerson/list')
                           
 
                       }else{
@@ -487,18 +523,20 @@ export default {
     },
     watch:{
         "activeId":function(val){
+            val = Number(val)+1
            
-            console.log(this,'this')
+           
+            console.log(val,'val')
             // var parms ={
             //     "good_type":2,
             //     "category_id":this.industryForm[val].category_id
             // }
             // console.log(parms,'parms')
             //观察tab选项卡改变调用接口
-            this.$axios.get("/api/admin/select/goodsList?category_id="+this.industryForm[val].category_id+"&good_type"+this.selectRadioId).then(res =>{
+            this.$axios.get("/api/admin/select/coupon?type="+val).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
-                    console.log(this.goodsList,'goodsList')
+                    //console.log(this.goodsList,'goodsList')
                     
 
                 }
@@ -507,20 +545,20 @@ export default {
         radioGoodsId:function(event){
             //指定商品
             this.goodsList.forEach((item) => {
-                if (item.good_id == event) {
+                if (item.coupon_code == event) {
                     this.checkedGoods = item;
-                    this.checkedGoodsId = item.good_id
+                    this.checkedGoodsId = item.coupon_code
                     console.log(this.checkedGoods,'checkedGoods')
                     
                     this.goodShow = true
                 }
             })
         }
-},
+    },
 
 
   mounted() {
-    this.getCategoryList()
+    //this.getCategoryList()
     //this.getBusinessList();
 
     //如果是从审核门店中过来
@@ -542,7 +580,7 @@ export default {
     //如果是编辑
     if (Object.keys(params).length) {
        
-        this.params = params;
+       
         console.log(params,'params')
         this.$axios.post("/api/admin/activity/info",params).then(res => {
           if(res.data.code==0){

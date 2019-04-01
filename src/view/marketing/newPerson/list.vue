@@ -160,7 +160,7 @@ export default {
                                     onClick(tablePage, self, row) {
                                         console.log(self,'self')
                                          console.log(row,'row')
-                                        self.$router.push("/marketing/person/personAdd/" + row.activity_code)
+                                        self.$router.push("/marketing/newPerson/personAdd/" + row.activity_code)
                                     }
 									// onClick(tablePage, self, record) {
                                         
@@ -178,7 +178,7 @@ export default {
                                     "type": "detail",
                                     onClick(tablePage, self, row) {
                                         
-                                        self.$router.push("/marketing/person/personInfo/" + row.activity_code)
+                                        self.$router.push("/marketing/newPerson/personInfo/" + row.activity_code)
                                     }
 
                                 }

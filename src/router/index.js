@@ -580,6 +580,24 @@ export default new Router({
                     }
                 },
                 {
+                    // 新人红包编辑
+                    path: '/marketing/newPerson/personAdd/:activity_code',
+                    component: resolve => require(['../view/marketing/newPerson/personAdd.vue'], resolve),
+                    meta: {
+                        title: '编辑新人红包',
+                        permission: true
+                    }
+                },
+                {
+                    // 新人红包详情
+                    path: '/marketing/newPerson/personInfo/:activity_code',
+                    component: resolve => require(['../view/marketing/newPerson/personInfo.vue'], resolve),
+                    meta: {
+                        title: '新人红包详情',
+                        permission: true
+                    }
+                },
+                {
                     // 多人同行列表
                     path: '/marketing/person/list',
                     component: resolve => require(['../view/marketing/person/list.vue'], resolve),
@@ -644,11 +662,20 @@ export default new Router({
                 },
 
                 {
-                    // 邀请好友添加
+                    // 邀请好友编辑
+                    path: '/marketing/invite/inviteAdd/:activity_code',
+                    component: resolve => require(['../view/marketing/invite/inviteAdd.vue'], resolve),
+                    meta: {
+                        title: '编辑邀请好友',
+                        permission: true
+                    }
+                },
+                {
+                    // 邀请好友详情
                     path: '/marketing/invite/inviteInfo/:activity_code',
                     component: resolve => require(['../view/marketing/invite/inviteInfo.vue'], resolve),
                     meta: {
-                        title: '邀请好友添加',
+                        title: '邀请好友详情',
                         permission: true
                     }
                 },

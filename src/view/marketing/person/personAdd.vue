@@ -35,7 +35,7 @@
                         :show-file-list="false"
                         :on-success="uploadActivityImg"
                         >
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
                   <div class="upload-title">
@@ -393,7 +393,7 @@ export default {
     },
     
     uploadActivityImg(res){
-      this.imageUrl = res.data.url
+      this.ruleForm.activity_img = res.data.url
       
     },
    

@@ -1,0 +1,559 @@
+<template>
+    <div class="page">
+        <div class="page-header">
+            <div class="crumbs">
+                <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
+            </div>
+        </div>
+        <div class="page-content">
+
+            <div class="panel">
+
+                <div class="form-panel p-xl "  >
+                    <!--form start-->
+                    <el-form :model="ruleForm"  label-width="140px" class="demo-ruleForm" >
+
+                    <el-form-item label="活动名称：" >
+                        {{ruleForm.activity_title}}
+                    </el-form-item>
+
+                    <el-form-item label="活动卖点：" >
+                        {{ruleForm.activity_subject}}
+                    </el-form-item>
+
+                    <el-form-item label="封面图：" >
+                         <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar">
+                    </el-form-item>
+
+                    <el-form-item label="活动规则：" >
+                        {{ruleForm.activity_desc}}
+                       
+                    </el-form-item>
+                    
+                    </el-form>
+
+                </div>
+
+             
+
+                <div class="form-panel p-xl width720" >
+                  
+                 
+                  <div class="gift-table left0" >
+                     <div class="table-th">
+                       <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
+                     </div>
+                     <div class="table-body" v-for="skuItem in ruleForm.rules.new_users" :key="skuItem.idx">
+                       <div class="body-gift-choice body-item">
+                         <div class="item-choice" >
+                          
+                            <div class="choiced" v-if="skuItem.coupon_code">以选中优惠券编号为{{skuItem.coupon_code}}的优惠券</div>
+                            
+                         </div>
+                       </div>
+                       <div class="body-gift-img body-item">
+                         <div class="item-upload" >
+                           <img width="178px" v-if="skuItem.gifts_img" :src="skuItem.gifts_img" >
+                         </div>
+                       </div>
+                       <div class="body-gift-number body-item">
+                         <div class="item-number" >
+                             {{skuItem.gifts_name}}
+                          
+                         </div>
+                       </div>
+                       <div class="body-gift-text body-item">
+                         <div class="item-text" >
+                             {{skuItem.gifts_desc}}
+                           
+                         </div>
+                       </div>
+                     </div>
+                  </div>
+                 
+                  
+                  <el-form :model="ruleForm"  ref="ruleForm3" class="bottom-form">
+                      
+                    <el-form-item label="状态：">
+                      <el-radio-group v-model="ruleForm.activity_status">
+                        <el-radio  :label="1">下架</el-radio>
+                        <el-radio  :label="2">上架</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                 
+                  </el-form>
+                  
+                </div>
+              
+                
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+   
+</template>
+
+<script>
+import BreadCrumb from "@/components/common/BreadCrumb";
+// import formlist from "@/components/formlist";
+// import { CATEGORYOPTIONS } from "../../constans/createdGood";
+// import { pca, pcaa } from 'area-data'; // v5 or higher
+export default {
+  name: "tabletest",
+
+  data() {
+    return {
+        limitsStatus:"",
+
+      itemLIst:[
+        {
+          name:"奖品",
+          index:1
+        },
+        {
+          name:"奖品图",
+          index:2
+        },
+        {
+          name:"名称",
+          index:3
+        },
+        {
+          name:"备注",
+          index:4
+        }
+      ],
+   
+      breadcrumb: [
+        //面包屑
+        {
+          name: "营销管理/营销应用", //名字
+          url:'alliance'
+        },
+        {
+          name: "新人红包" //名字
+        }
+      ],
+      
+      
+
+      ruleForm:{
+        "activity_title" : "",//活动名称
+        "activity_subject" : "",//活动卖点
+        "activity_desc" : "", //活动规则
+        "activity_img" : "",//封面图
+        "activity_status":2, //状态  1 下架 2上架
+        "rules" : {  // 规则
+          "new_users" : [
+            {
+              "idx":0,
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
+            {
+              "idx":1,
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
+            {
+              "idx":2,
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
+            {
+              "idx":3,
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
+            {
+              "idx":4,
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
+            {
+              "idx":5,
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
+            {
+              "idx":6,
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
+            {
+              "idx":7,
+              "gifts_type" : 1,  // 礼品类型 1 优惠券 2 现金红包
+              "coupon_code" : "",  // 优惠券编号
+              "gifts_name" : "",  // 奖品名称
+              "gifts_img" : "",    // 奖品图片
+              "gifts_desc" : ""     // 奖品描述
+            },
+          ]
+      }
+        
+        
+
+        
+        
+      }
+
+        
+    };
+  },
+  methods:{},
+  
+
+
+  mounted() {
+    
+    //console.log(this.$route.params,'this.$route.params')
+    let params = this.$route.params;
+    //如果是编辑
+    if (Object.keys(params).length) {
+       
+       
+        //console.log(params,'params')
+        this.$axios.post("/api/admin/activity/info",params).then(res => {
+          if(res.data.code==0){
+              this.ruleForm = res.data.data;
+              if(res.data.data.limits.limit_total_times==0){
+                this.limitsStatus = 0
+              }else{
+                this.limitsStatus =1
+              }
+          }
+          
+        })
+    }
+
+  },
+  components: {
+    BreadCrumb
+    // formlist
+  },
+
+  created() {
+    
+  },
+  computed: {}
+};
+</script>
+
+<style scoped>
+/* .form-panel{
+  width:720px
+} */
+.width200px{
+  width:200px
+}
+.line-center{
+  text-align: center;
+}
+.activity-img{
+  font-size: 13px;
+  color:#585858;
+}
+.limit-title{
+  display: inline-block;
+  width:140px;
+}
+.limit-rules{
+  display: inline-block;
+  width:250px;
+}
+.limit-no{
+  position: relative;
+  left: 0px;
+  top: 10px;
+}
+.gift-title{
+  font-size: 18px;
+  color:#484848;
+  font-weight: bold;
+  margin-top:20px;
+  margin-bottom:20px;
+  text-align: center
+}
+.gift-table{
+  width:720px;
+  margin:0 auto;
+  position: relative;
+  left: -120px;
+  top: 10px;
+
+}
+.left0{
+  left:0px;
+}
+.background-blue{
+  background-color: blue
+}
+.table-th{
+  width:100%;
+  height: 50px;
+  color:#fff;
+  line-height: 50px;
+  background-color:#03a380;
+  display: flex;
+  
+  
+}
+.th-item{
+  flex: 1;
+  text-align: center
+}
+.table-body{
+  width:100%;
+  display: flex;
+}
+
+.body-item{
+  flex:1;
+  
+}
+.item-choice,.item-upload,.item-number,.item-text{
+  width:100%;
+  height: 100px;
+  border-left:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+  border-right:1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item-number,.item-upload{
+  border-left:0px;
+}
+.choice-button,.number-input,.text-input{
+  width:100px;
+  height: 40px;
+  border:1px solid #000;
+  color:#000;
+  text-align: center;
+  line-height: 40px;
+  font-size: 12px; 
+}
+.choice-button{
+  cursor:pointer;
+  font-size:14px;
+}
+
+.item-upload{
+  max-width:180px;
+  width:180px;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  left: 0px;
+  top:0px;
+}
+
+  .item-upload .avatar-uploader{
+    width:180px;
+    height: 100px;
+    overflow: hidden;
+  }
+.item-upload .avatar {
+    width: 178px;
+    height: 100px;
+    display: block;
+  }
+ .item-upload .el-upload,.item-upload .el-upload--text{
+    width:178px;
+    height: 100px;
+    overflow: hidden;
+  }
+ .item-upload .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .item-upload img{
+    position:absolute;
+    left: 0px;
+    top:0px;
+  }
+  .upload-img-icon{
+    width: 178px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    left: 0px;
+    top: 0px;
+  }
+  .position-icon{
+    position: absolute;
+    left:62px;
+    top:20px;
+  }
+  .comfort-item{
+    flex: 1
+  }
+  .comfort-item{
+    height: 100px;
+    border-left:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    border-right:1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .comfort-button{
+    width:140px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    border:1px solid #000;
+    color:#000;
+    text-align: center;
+  }
+  .comfort-right{
+  max-width:360px;
+  width:360px;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  left: 0px;
+  top:0px;
+}
+
+  .comfort-right .avatar-uploader{
+    width:360px;
+    height: 100px;
+    overflow: hidden;
+  }
+.comfort-right .avatar {
+    width: 358px;
+    height: 100px;
+    display: block;
+  }
+ .comfort-right .el-upload,.comfort-right .el-upload--text{
+    width:358px;
+    height: 100px;
+    overflow: hidden;
+  }
+ .comfort-right .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .comfort-right img{
+    position:absolute;
+    left: 0px;
+    top:0px;
+  }
+   .comfort-right .upload-img-icon{
+    width: 358px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    left: 0px;
+    top: 0px;
+  }
+  .comfort-right .position-icon{
+    position: absolute;
+    left: 160px;
+  }
+  .bottom-form{
+    margin-top:20px;
+  }
+  .finish{
+    width:170px;
+    height: 50px;
+    margin: auto;
+    margin-top:30px;
+  }
+  .goods-div{
+    width:211px;
+    height: 70px;
+    font-size: 12px;
+    color:#fff;
+    border-radius:6px;
+    background-color: #f73c3c
+  }
+.clearfix:after{
+  content:".";
+  display:block;
+  height:0;
+  clear:both;
+  visibility:hidden
+  }
+  .goods-div-left{
+    width:120px;
+    padding: 10px ;
+    height: 50px;
+    float: left;
+    
+  }
+  .goods-div-right{
+    width:70px;
+    height: 70px;
+    float: left;
+    border-left:1px solid #ccc;
+  }
+  .price{
+    font-size: 16px;
+    font-weight: bold;
+    color:#fff;
+    margin-right:6px;
+  }
+  .margin-top10{
+    margin-top:10px;
+  }
+  .no-img{
+    width:70px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 14px;
+    text-align: center;
+  }
+ 
+
+/* .tab-overflow .el-tabs{
+    overflow-y: scroll;
+} */
+.tab-overflow .el-tabs--border-card{
+  /* height: 200px; */
+  overflow-y: scroll;
+}
+.choiced{
+  font-size: 12px;
+  text-align: center;
+  color: #000;
+}
+.width720{
+  width:600px;
+}
+</style>
+
+
