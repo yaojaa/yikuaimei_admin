@@ -188,11 +188,14 @@ export default {
     color: #fff;
 }
 .item-left p{
-    width:100%;
+    width:240px;
     margin-left:15px;
     margin-top:10px;
     height:26px;
     line-height: 26px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
 }
 .item-right{
     width:100px;

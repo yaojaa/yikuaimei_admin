@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="page-content">
-            <div class="panel">
+            <div class="panel coupon-apnel">
                 <el-form :model="ruleForm" :rules="rules"  label-width="120px" class="demo-ruleForm">
 
                     <el-form-item label="优惠券标题:" prop="coupon_title">
@@ -150,14 +150,15 @@
                                 <el-input v-model="goods_name" placeholder="搜索"></el-input>
                             </el-col>
                            
-                            <el-col :span="5">
-                                <el-button type="primary" @click="goodsSearch">查询</el-button>
+                            <el-col :span="5" style="text-indent:8px">
+                                <el-button type="primary" @click="goodsSearch" >查询</el-button>
                             </el-col>
                         </el-form-item>
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <el-radio v-model="radioGoodsId" :label="item.good_id" :key="item.good_id" v-for="item in goodsList">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio>
+                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioGoodsId" :label="item.good_id">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio></p>
+                                
                             </el-tab-pane>
                         </el-tabs>
                         
@@ -177,14 +178,14 @@
                                 <el-input v-model="goods_name" placeholder="搜索"></el-input>
                             </el-col> 
                            
-                            <el-col :span="5">
+                            <el-col :span="5" style="text-indent:8px">
                                 <el-button type="primary" @click="serviceSearch">查询</el-button>
                             </el-col>
                         </el-form-item>
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <el-radio v-model="radioServiceId" :label="item.good_id" :key="item.good_id" v-for="item in goodsList">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio>
+                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioServiceId" :label="item.good_id">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio></p>
                             </el-tab-pane>
                         </el-tabs>
                         
@@ -205,14 +206,15 @@
                                 <el-input v-model="goods_name" placeholder="搜索"></el-input>
                             </el-col> 
                            
-                            <el-col :span="5">
+                            <el-col :span="5" style="text-indent:8px">
                                 <el-button type="primary" @click="virGoodsSearch">查询</el-button>
                             </el-col>
                         </el-form-item>
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <el-radio v-model="radioServiceId" :label="item.good_id" :key="item.good_id" v-for="item in goodsList">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio>
+                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioServiceId" :label="item.good_id">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio></p>
+                                
                             </el-tab-pane>
                         </el-tabs>
                         
@@ -263,7 +265,7 @@ export default {
             },
             "coupon_expire_type":"1",
             "coupon_in_shop":0,
-            "coupon_range_type":"0",
+            "coupon_range_type":"1",
             "date_expire_type":0,
             "coupon_expire" : {
                 "coupon_expire_day" : 10,  //固定天数时使用
@@ -623,6 +625,24 @@ export default {
     width: 100%;
 
 }
+.line-hidden{
+    display: inline-block;
+    width:180px;
+    overflow:hidden;
+    height: 30px;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}
+.line-hidden img{
+    margin-left:5px
+}
+.coupon-apnel .el-tabs__content,.coupon-apnel .el-tab-pane{
+    width:580px;
+    height: 180px;
+    overflow-y:scroll; 
+}
+
+
 </style>
 
 
