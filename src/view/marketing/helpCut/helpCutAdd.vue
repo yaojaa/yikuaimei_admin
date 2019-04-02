@@ -159,7 +159,7 @@
                   <el-form :model="ruleForm"  ref="ruleForm3" class="bottom-form">
                 <div class="tab-overflow">
                 <!-- 指定商品弹窗 -->
-                    <el-dialog title="选择指定商品" :visible.sync="goodsVisible">
+                    <el-dialog title="选择指定商品" :visible.sync="goodsVisible" class="person-box">
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
                                 
@@ -613,6 +613,7 @@ export default {
     color:#fff;
     border-radius:6px;
     border:1px solid #ccc;
+    margin-bottom:10px;
   }
 .clearfix:after{
   content:".";
@@ -714,6 +715,9 @@ export default {
     height: 24px;
     font-size: 13px;
     color: #444;
+}
+.person-box .el-checkbox:first-of-type{
+  margin-left: 30px;
 }
 </style>
 
