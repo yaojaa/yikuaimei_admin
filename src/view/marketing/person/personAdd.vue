@@ -150,7 +150,7 @@
                   <el-form :model="ruleForm"  ref="ruleForm3" class="bottom-form">
                 <div class="tab-overflow">
                 <!-- 指定商品弹窗 -->
-                    <el-dialog title="选择指定商品" :visible.sync="goodsVisible">
+                    <el-dialog title="选择指定商品" :visible.sync="goodsVisible" class="person-box">
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
                                 
@@ -172,7 +172,7 @@
                             </el-form-item>
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item  in industryForm" :label="item.category_name"  :value="item.category_name" :key="item.category_id">
-                                    <el-checkbox v-model="checkedList"    :label="item.sku" :key="item.sku" v-for="item in goodsList">
+                                    <el-checkbox v-model="checkedList" :label="item.sku" :key="item.sku" v-for="item in goodsList">
                                         <div class="goods-div clearfix" >
                                             <div class="goods-div-right">
                                             <img v-if="item.good_ico" :src="item.good_ico" width="70px" height="70px">
@@ -656,6 +656,7 @@ export default {
     color:#fff;
     border-radius:6px;
     border:1px solid #ccc;
+    margin-bottom:10px;
   }
 .clearfix:after{
   content:".";
@@ -745,6 +746,10 @@ export default {
   padding:0px 8px
 
 }
+.person-box .el-checkbox:first-of-type{
+  margin-left: 30px;
+}
+
 </style>
 
 
