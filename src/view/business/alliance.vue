@@ -180,7 +180,7 @@ export default {
                         "type": "handle",
                         "label": "查看",
                         "align": "center",
-                        "width": "50",
+                        "width": "",
                         "list": [
                             {
                                 "label": "修改",
