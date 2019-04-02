@@ -65,11 +65,11 @@
                     
                     <el-form-item label="活动时间：">
                         <el-col :span="11">
-                          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.activity_start_time" style="width: 100%;"></el-date-picker>
+                          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.activity_start_time" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
                         </el-col>
                         <el-col class="line-center" :span="2">至</el-col>
                         <el-col :span="11">
-                          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.activity_end_time" style="width: 100%;"></el-date-picker>
+                          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.activity_end_time" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
                         </el-col>
                     </el-form-item>
 
@@ -233,7 +233,7 @@ export default {
       goodsVisible:false,
       imageUrl:"",
       checkedList:[], //选中数据数组
-      limitsStatus:"",
+      limitsStatus:0,
       goodsData:[],
       activeId:"",
       goodsList:{},

@@ -87,9 +87,9 @@
     
                     <el-form-item label="使用有效期:">
                         <el-col :span="18">
-                            <el-radio-group v-model="ruleForm.date_expire_type" @change="dataChange">
+                            <el-radio-group v-model="ruleForm.coupon_expire_type" @change="dataChange">
                                 
-                                <el-radio v-model="ruleForm.coupon_expire_type" label="1">固定日期
+                                <el-radio  label="1">固定日期
                                     <el-date-picker
                                         v-model="dateArray"
                                         @change="dataArrChange"
@@ -101,7 +101,7 @@
                                     </el-date-picker>
                                 </el-radio>
                                 <div class="heigth20px"></div>
-                                <el-radio label="2" v-model="ruleForm.coupon_expire_type">领取当日开始
+                                <el-radio label="2" >领取当日开始
                                     <el-input v-model="ruleForm.coupon_expire.coupon_expire_day" @blur="dateDaysChange"></el-input>
                                     天内有效
                                 </el-radio>
@@ -110,7 +110,7 @@
                         </el-radio-group>
                     </el-col>
                     </el-form-item>
-                    <!-- coupon_in_shop -->
+                    
                     
                     <div>
                         <div v-if="ruleForm.coupon_range_type==2" class="pd-left">
@@ -251,8 +251,6 @@ export default {
                 "price" : "",  // 满多少
                 "reduce_price" : "100"  // 减多少
             },
-            
-            "coupon_in_shop" : "1",
 
             "limits" : { // 参与限制
                 "limit_cycle" : "1", // 限制周期  1 日 2周 3月
@@ -264,7 +262,7 @@ export default {
                 "goods_id" :  0
             },
             "coupon_expire_type":"1",
-            "coupon_in_shop":0,
+            "coupon_in_shop":"1",
             "coupon_range_type":"1",
             "date_expire_type":0,
             "coupon_expire" : {

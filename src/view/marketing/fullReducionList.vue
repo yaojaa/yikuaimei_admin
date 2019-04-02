@@ -122,20 +122,9 @@ export default {
                         "value": "",
                         "placeholder": "",
 
-                    },
+                    }
                     
-                    {
-                        "type": "input-singal-date", //输入日期
-                        "label": "开始时间",
-                        "name": "start_time",
-                        "value": "",
-                    },
-                    {
-                        "type": "input-singal-date", //输入日期
-                        "label": "结束时间",
-                        "name": "end_time",
-                        "value": "",
-                    },
+                   
                 ]
             },
             url: "/api/admin/coupon/index?coupon_rule_type=1",
@@ -205,22 +194,6 @@ export default {
                         "label": "创建人",
                         "prop": "admin_user_name",
                         "width":"120px"
-
-                    },
-                   
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "有效时间",
-                        "prop": "coupon_expire",
-                        "width": "",
-                        formatter(row) {
-                            if(row.coupon_expire){
-                                return `<p style='text-align: center'>
-                                ${row.coupon_expire.coupon_expire_start_time||""}<br/>至
-                                ${row.coupon_expire.coupon_expire_end_time||""}</p>`;
-                            }
-                        }
 
                     },
                     

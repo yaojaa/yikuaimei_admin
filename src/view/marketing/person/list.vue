@@ -125,7 +125,7 @@ export default {
                         "width": "",
                         formatter(row) {
                             return `<p style='text-align: center'>
-                            ${row.activity_start_time||""}<br/>至
+                            ${row.activity_start_time||""}<br/>至<br/>
                             ${row.activity_end_time||""}</p>`;
                            
                         }

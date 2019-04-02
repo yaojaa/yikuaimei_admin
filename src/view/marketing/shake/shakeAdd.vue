@@ -186,7 +186,7 @@
 
                 
                 <!-- 指定商品弹窗 -->
-                    <el-dialog title="选择指定商品" :visible.sync="goodsVisible">
+                    <el-dialog title="选择指定商品" :visible.sync="goodsVisible" class="shake-box">
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
                                 <el-radio v-model="checkedGoodsId" :label="checkedGoods.coupon_code">
@@ -242,7 +242,7 @@
                     </el-dialog>
 
                     <!-- 安慰奖设置 -->
-                    <el-dialog title="选择指定商品" :visible.sync="goodsDefaultVisible">
+                    <el-dialog title="选择指定商品" :visible.sync="goodsDefaultVisible" class="shake-box">
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
                                 <el-radio v-model="checkedGoodsId" :label="checkedGoods.coupon_code">
@@ -334,7 +334,7 @@ export default {
       goodsDefaultVisible:false,
       imageUrl:"",
       dialogImageUrl:"",
-      limitsStatus:"",
+      limitsStatus:0,
       radioGoodsId:"",
       date:"",
       activeId:"",
@@ -1104,6 +1104,12 @@ export default {
 }
 .width720{
   width:600px;
+}
+.shake-box .goods-div:first-of-type{
+  margin-left:30px;
+}
+.shake-box .el-radio__input{
+  margin-left: 30px;
 }
 </style>
 
