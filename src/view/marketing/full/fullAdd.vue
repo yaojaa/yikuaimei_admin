@@ -811,6 +811,9 @@ export default {
   }
   .margin-top10{
     margin-top:10px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
   }
   .no-img{
     width:70px;

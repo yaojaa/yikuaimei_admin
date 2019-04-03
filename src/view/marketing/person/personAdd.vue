@@ -154,7 +154,7 @@
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
                                 
-                                      <div class="goods-div clearfix" v-for="item in goodsData" :key="item.sku">
+                                      <div class="goods-div " v-for="item in goodsData" :key="item.sku">
                                           <div class="goods-div-right">
                                           <img v-if="item.good_ico" :src="item.good_ico" width="70px" height="70px">
                                           <p v-else class="no-img">暂无图片</p>
@@ -173,7 +173,7 @@
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item  in industryForm" :label="item.category_name"  :value="item.category_name" :key="item.category_id">
                                     <el-checkbox v-model="checkedList" :label="item.sku" :key="item.sku" v-for="item in goodsList">
-                                        <div class="goods-div clearfix" >
+                                        <div class="goods-div " >
                                             <div class="goods-div-right">
                                             <img v-if="item.good_ico" :src="item.good_ico" width="70px" height="70px">
                                             <p v-else class="no-img">暂无图片</p>
@@ -691,6 +691,9 @@ export default {
   }
   .margin-top10{
     margin-top:10px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
   }
   .no-img{
     width:70px;
