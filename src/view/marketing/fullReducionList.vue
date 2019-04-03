@@ -105,10 +105,12 @@ export default {
             status_filter: "",
             tagsListGroup: {
                 '优惠券类型:': [
+                    { title: '全部', key: 'coupon_rule_type', value: 0 },
                     { title: '满减', key: 'coupon_rule_type', value: 1 },
                     { title: '立减', key: 'coupon_rule_type', value: 2 }
                 ],
                  '活动专属:': [
+                    { title: '全部', key: 'coupon_in_shop', value: 0 },
                     { title: '是', key: 'coupon_in_shop', value: 2 },
                     { title: '否', key: 'coupon_in_shop', value: 1 }
                 ]
@@ -127,7 +129,7 @@ export default {
                    
                 ]
             },
-            url: "/api/admin/coupon/index?coupon_rule_type=1",
+            url: "/api/admin/coupon/index?coupon_rule_type=0",
 
             tableJson: {
                 "column": [ //行
