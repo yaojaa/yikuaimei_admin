@@ -2,7 +2,8 @@
     <div class="login-wrap">
         <div class="ms-login">
             <div class="ms-title">
-                <p class="ms-login-title">偷偷美&nbsp;管理平台登陆</p>
+                <p class="ms-login-title" v-if="flag">蕾蕾美颜&nbsp;管理平台登陆</p>
+                <p class="ms-login-title" v-else>偷偷美&nbsp;管理平台登陆</p>
                 <img src="/static/img/ms-title-icon.png" width="10" class="ms-title-icon">
             </div>
             <el-form :model="ruleForm" size="medium" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm login-input-custom">
@@ -17,7 +18,7 @@
                     </el-input>
                 </el-form-item>
                 <div class="login-btn">
-                    <el-button type="primary" @click="submitForm('ruleForm')">登陆</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
                 </div>
                 <!-- <p style="font-size:12px;line-height:30px;color:#999;">Tips : 用户名和密码随便填。</p> -->
             </el-form>
@@ -30,6 +31,7 @@
     export default {
         data: function(){
             return {
+                flag:true,
                 ruleForm: {
                     user_name: '',
                     user_pwd: ''
@@ -63,6 +65,11 @@
                         return false;
                     }
                 });
+            }
+        },
+        mounted() {
+            if(window.location.href.indexOf("leilei")){
+                this.flag = false
             }
         }
     }

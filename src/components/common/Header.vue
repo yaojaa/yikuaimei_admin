@@ -2,9 +2,14 @@
     <div class="header">
         <!-- 折叠按钮 -->
         <div class="collapse-btn" @click="collapseChage">
-            <img src="/static/img/logo.png" width="34">
+
+            <img src="/static/img/logo.png" width="34" v-if="flag">
+            <img src="/static/img/logo1.png" width="34" v-else>
+
         </div>
-        <div class="logo">偷偷美后台管理系统</div>
+        <div class="logo" v-if="flag">蕾蕾美颜后台管理系统</div>
+        <div class="logo" v-else >偷偷美后台管理系统</div>
+
 
 <!-- <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"> -->
   <!-- <el-menu-item index="1">首页</el-menu-item> -->
@@ -58,10 +63,12 @@
     export default {
         data() {
             return {
+                locationName:"",
                 collapse: false,
                 fullscreen: false,
                 name: 'linxin',
-                message: 2
+                message: 2,
+                flag:true
             }
         },
         computed:{
@@ -112,6 +119,9 @@
             }
         },
         mounted(){
+            if(window.location.href.indexOf("leilei")){
+                this.flag = false
+            }
             let state = this;
             console.log(state.$store, '数据')
             if(document.body.clientWidth < 1500){
