@@ -144,7 +144,7 @@
                     <el-dialog title="选择指定商品" :visible.sync="goodsVisible">
                         <el-form-item>
                             <div v-if="goodShow" class="good_show">
-                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id">{{checkedGoods.good_name}}<img :src="checkedGoods.good_ico" width="30px" height="30px"></el-radio>
+                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id"><img :src="checkedGoods.good_ico" width="30px" height="30px">{{checkedGoods.good_name}}</el-radio>
                             </div>
                             <el-col :span="12">
                                 <el-input v-model="goods_name" placeholder="搜索"></el-input>
@@ -157,7 +157,7 @@
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><img :src="item.good_ico" width="20px" height="20px"><el-radio v-model="radioGoodsId" :label="item.good_id">{{item.good_name}}</el-radio></p>
+                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioGoodsId" :label="item.good_id"><img :src="item.good_ico" width="20px" height="20px">{{item.good_name}}</el-radio></p>
                                 
                             </el-tab-pane>
                         </el-tabs>
@@ -172,7 +172,7 @@
                     <el-dialog title="选择指定服务" :visible.sync="serviceVisible">
                         <el-form-item>
                              <div v-if="goodShow" class="good_show">
-                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id">{{checkedGoods.good_name}}<img :src="checkedGoods.good_ico" width="30px" height="30px"></el-radio>
+                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id"><img :src="checkedGoods.good_ico" width="30px" height="30px">{{checkedGoods.good_name}}</el-radio>
                             </div>
                              <el-col :span="12">
                                 <el-input v-model="goods_name" placeholder="搜索"></el-input>
@@ -185,7 +185,7 @@
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioServiceId" :label="item.good_id">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio></p>
+                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioServiceId" :label="item.good_id"><img :src="item.good_ico" width="30px" height="30px">{{item.good_name}}</el-radio></p>
                             </el-tab-pane>
                         </el-tabs>
                         
@@ -200,7 +200,7 @@
                 <el-dialog title="选择虚拟商品" :visible.sync="inventedVisible">
                         <el-form-item>
                              <div v-if="goodShow" class="good_show">
-                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id">{{checkedGoods.good_name}}<img :src="checkedGoods.good_ico" width="30px" height="30px"></el-radio>
+                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id"><img :src="checkedGoods.good_ico" width="30px" height="30px">{{checkedGoods.good_name}}</el-radio>
                             </div>
                              <el-col :span="12">
                                 <el-input v-model="goods_name" placeholder="搜索"></el-input>
@@ -213,7 +213,7 @@
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioServiceId" :label="item.good_id">{{item.good_name}}<img :src="item.good_ico" width="30px" height="30px"></el-radio></p>
+                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><img :src="item.good_ico" width="30px" height="30px"><el-radio v-model="radioServiceId" :label="item.good_id">{{item.good_name}}</el-radio></p>
                                 
                             </el-tab-pane>
                         </el-tabs>
