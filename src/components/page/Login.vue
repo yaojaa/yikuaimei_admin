@@ -68,7 +68,7 @@
             }
         },
         mounted() {
-            if(window.location.href.indexOf("leilei")){
+            if(window.location.href.indexOf("leilei")!="-1"){
                 this.flag = false
             }
         }
