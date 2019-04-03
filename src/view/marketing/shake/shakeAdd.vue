@@ -122,7 +122,7 @@
                               :show-file-list="false"
                               :on-success="show_img.bind(null, {'data':item})" :data="item"
                               >
-                            <img width="178px" v-if="item.gifts_img" :src="item.gifts_img" >
+                            <img width="178px" max-width="178px" height="96px" max-height="96px" v-if="item.gifts_img" :src="item.gifts_img" >
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       
@@ -162,7 +162,7 @@
                               :show-file-list="false"
                               :on-success="show_default_img"
                               >
-                            <img  v-if="ruleForm.rules.shake_default.gifts_img" :src="ruleForm.rules.shake_default.gifts_img" width="176px"  height="96px" max-width="178px" max-height="96px">
+                            <img width="178px" max-width="178px" height="96px" max-height="96px" v-if="ruleForm.rules.shake_default.gifts_img" :src="ruleForm.rules.shake_default.gifts_img" >
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       
@@ -1084,7 +1084,7 @@ export default {
     margin-right:6px;
   }
   .margin-top10{
-    margin-top:10px;
+    margin-top:6px;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap
@@ -1095,6 +1095,11 @@ export default {
     line-height: 70px;
     font-size: 14px;
     text-align: center;
+  }
+  .shake-box .el-radio__input,.invite-box .el-radio__input{
+    position: absolute;
+    bottom:14px;
+    left: 1px
   }
  
 
