@@ -112,7 +112,7 @@
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>
 
-                     <div class="table-body table-full clearfix"   v-for="item in ruleForm.rules.bargain" >
+                     <div class="table-body table-full clearfix"   v-for="item in ruleForm.rules.bargain" :key="item.good_id">
                        <div class="full-item  clearfix" >
                          <div class="full-item-left">
                            <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="50px" height="50px">
@@ -205,7 +205,7 @@
                         
                         <div slot="footer" class="dialog-footer">
                             <el-button @click="goodsCancal">取 消</el-button>
-                            <el-button type="primary" @click="goodsSure">确 定</el-button>
+                            <el-button type="primary" @click="helpSure">确 定</el-button>
                         </div> 
                     </el-dialog>
                 </div>
@@ -362,7 +362,7 @@ export default {
             })
       },
     
-    goodsSure(){
+    helpSure(){
      
 
       this.goodsVisible = false;
