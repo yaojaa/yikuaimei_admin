@@ -71,7 +71,7 @@
                           <el-date-picker type="date" style="width:100%" placeholder="选择日期" v-model="ruleForm.activity_end_time"  value-format="yyyy-MM-dd"></el-date-picker>
                         </el-col>
                     </el-form-item>
-                    <p class="color-red">新客注册奖励： 详见新人红包</p>
+                    
 
                   </el-form>
                   <p class="gift-title"> ------------邀请人奖励设置------------</p>
@@ -102,7 +102,7 @@
                               :show-file-list="false"
                               :on-success="show_img.bind(null, {'index':index})" :data="skuItem"
                               >
-                            <img width="238px" v-if="skuItem.gifts_img" :src="skuItem.gifts_img" >
+                            <img max-width="238px" max-height="100px" width="238px" height="100px" v-if="skuItem.gifts_img" :src="skuItem.gifts_img" >
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       
@@ -140,7 +140,7 @@
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
                                 <el-radio v-model="checkedGoodsId" :label="checkedGoods.coupon_code">
-                                  <div class="goods-div clearfix">
+                                  <div class="goods-div ">
                                     <div class="goods-div-left">
                                       <p class="margin-top10"><span class="price">¥{{checkedGoods.rules.reduce_price}}</span><span>{{checkedGoods.coupon_title}}</span></p>
                                       <p class="margin-top10">满{{checkedGoods.rules.price}}元可用</p>

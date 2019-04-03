@@ -349,13 +349,14 @@ export default {
   methods:{
     
       choiceGoodsClick(){
+        
           this.goodsVisible = true
           this.goodsData = []
           this.checkedList = []
-          this.$axios.get("/api/admin/select/goodsList?type=1&category_id="+this.index+"&good_type="+this.ruleForm.rules.walking_type).then(res =>{
+          this.$axios.get("/api/admin/select/goodsList?type=1&category_id="+this.index+"&good_type="+this.ruleForm.rules.bargain_type).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
-                    console.log(this.goodsList,'goodsList')
+                    console.log(this.goodsList,'goodsList55555')
                    
                 }
             })
@@ -368,6 +369,7 @@ export default {
       
       
       this.ruleForm.rules.bargain = this.goodsData
+      debugger
       for(var i = 0; i<this.ruleForm.rules.bargain.length; i++){
           this.ruleForm.rules.bargain[i].goods_id = this.goodsData[i].good_id;
           this.ruleForm.rules.bargain[i].max_price = "";
@@ -461,7 +463,7 @@ export default {
             this.$axios.get("/api/admin/select/goodsList?type=1&good_type="+this.ruleForm.rules.bargain_type+"&category_id="+val).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
-                    //console.log(this.goodsList,'goodsList')
+                    console.log(this.goodsList,'goodsList111111')
                 }
             })
             
@@ -477,7 +479,7 @@ export default {
               }
             }
           } 
-          console.log(this.goodsData,'this.goodsData')
+          console.log(this.goodsData,'this.goodsData22222')
           this.goodShow = true
                 
         }
