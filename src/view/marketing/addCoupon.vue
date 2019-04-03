@@ -431,7 +431,7 @@ export default {
           console.log('商品搜索--------')
         //商品搜索
         var goodName = this.goods_name;
-        this.$axios.get("/api/admin/select/goodsList?good_type=1&good_name="+goodName).then(res =>{
+        this.$axios.get("/api/admin/select/goodsList?good_type=2&good_name="+goodName).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
                     this.goods_name = "" //查询完毕清空input
@@ -536,7 +536,7 @@ export default {
             // }
             // console.log(parms,'parms')
             //观察tab选项卡改变调用接口
-            this.$axios.get("/api/admin/select/goodsList?category_id="+this.industryForm[val].category_id+"&good_type"+this.selectRadioId).then(res =>{
+            this.$axios.get("/api/admin/select/goodsList?category_id="+this.industryForm[val].category_id+"&good_type="+this.selectRadioId).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
                     console.log(this.goodsList,'goodsList')
