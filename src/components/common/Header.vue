@@ -3,8 +3,8 @@
         <!-- 折叠按钮 -->
         <div class="collapse-btn" @click="collapseChage">
 
-            <img src="/static/img/logo.png" width="34" v-if="flag">
-            <img src="/static/img/logo1.png" width="34" v-else>
+            <img src="/static/img/logo1.png" width="34" v-if="flag">
+            <img src="/static/img/logo.png" width="34" v-else>
 
         </div>
         <div class="logo" v-if="flag">偷偷美后台管理系统</div>
@@ -121,6 +121,9 @@
         mounted(){
             if(window.location.href.indexOf("leilei")!="-1"){
                 this.flag = false
+                document.title = "蕾蕾美颜管理后台"
+            }else{
+                document.title = "偷偷美管理后台"
             }
             let state = this;
             console.log(state.$store, '数据')
