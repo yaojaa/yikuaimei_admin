@@ -112,8 +112,8 @@
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>
 
-                     <div class="table-body table-full clearfix"   v-for="item in ruleForm.rules.bargain" :key="item.good_id">
-                       <div class="full-item  clearfix" >
+                     <div class="table-body table-full "   v-for="item in ruleForm.rules.bargain" :key="item.good_id">
+                       <div class="full-item  " >
                          <div class="full-item-left">
                            <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="50px" height="50px">
                          </div>

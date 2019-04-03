@@ -89,7 +89,7 @@
                               :show-file-list="false"
                               :on-success="show_img.bind(null, {'data':skuItem})" :data="skuItem"
                               >
-                            <img width="178px" v-if="skuItem.gifts_img" :src="skuItem.gifts_img" >
+                            <img width="176px"  height="96px" max-width="178px" max-height="96px" v-if="skuItem.gifts_img" :src="skuItem.gifts_img" >
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       

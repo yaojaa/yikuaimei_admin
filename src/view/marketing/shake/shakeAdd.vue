@@ -162,7 +162,7 @@
                               :show-file-list="false"
                               :on-success="show_default_img"
                               >
-                            <img width="360px" v-if="ruleForm.rules.shake_default.gifts_img" :src="ruleForm.rules.shake_default.gifts_img" >
+                            <img  v-if="ruleForm.rules.shake_default.gifts_img" :src="ruleForm.rules.shake_default.gifts_img" width="176px"  height="96px" max-width="178px" max-height="96px">
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       
