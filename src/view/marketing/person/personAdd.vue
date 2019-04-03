@@ -757,7 +757,15 @@ export default {
 .person-box .el-checkbox:first-of-type{
   margin-left: 30px;
 }
-
+.person-item-right p{
+display: -webkit-box; 
+text-overflow: ellipsis; 
+overflow : hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+}
 </style>
 
 
