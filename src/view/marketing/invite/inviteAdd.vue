@@ -289,16 +289,20 @@ export default {
     // //   CATEGORYOPTIONS,
     //   params:{},
     //   edit:false,
-      breadcrumb: [
-        //面包屑
-        {
-          name: "营销管理/营销应用", //名字
-          url:'alliance'
-        },
-        {
-          name: "邀请好友" //名字
-        }
-      ],
+       breadcrumb: [
+                //面包屑
+                {
+                    name: "营销管理/营销应用", //名字
+                    url: '/marketing/markList'
+                },
+                {
+                    name: "邀请好友", //名字
+                    url: '/marketing/invite/list'
+                },
+                {
+                    name: "添加" //名字
+                }
+            ],
       
       
 

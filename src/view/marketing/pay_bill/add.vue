@@ -184,7 +184,7 @@ export default {
             breadcrumb: [
                 //面包屑
                 {
-                    name: "营销管理", //名字
+                    name: "营销管理/营销应用", //名字
                     url: '/marketing/markList'
                 },
                 {

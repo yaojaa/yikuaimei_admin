@@ -199,13 +199,13 @@ export default {
         //面包屑
         {
           name: "营销管理/营销应用", //名字
-          url:'alliance'
+          url:'/marketing/markList'
         },
         {
-          name: "多人同行" //名字
+          name: "帮砍" //名字
         }
       ],
-      
+     
       ruleForm:{
         "activity_title" : "",//活动名称
         "activity_subject" : "",//活动卖点

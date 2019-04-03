@@ -7,8 +7,8 @@
             <img src="/static/img/logo1.png" width="34" v-else>
 
         </div>
-        <div class="logo" v-if="flag">蕾蕾美颜后台管理系统</div>
-        <div class="logo" v-else >偷偷美后台管理系统</div>
+        <div class="logo" v-if="flag">偷偷美后台管理系统</div>
+        <div class="logo" v-else >蕾蕾美颜后台管理系统</div>
 
 
 <!-- <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"> -->

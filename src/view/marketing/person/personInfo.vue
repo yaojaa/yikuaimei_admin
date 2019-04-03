@@ -131,7 +131,7 @@ export default {
         //面包屑
         {
           name: "营销管理/营销应用", //名字
-          url:'alliance'
+          url:'/marketing/markList'
         },
         {
           name: "多人同行" //名字

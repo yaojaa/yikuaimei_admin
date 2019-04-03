@@ -394,16 +394,21 @@ export default {
     // //   CATEGORYOPTIONS,
     //   params:{},
     //   edit:false,
+      
       breadcrumb: [
-        //面包屑
-        {
-          name: "营销管理/营销应用", //名字
-          url:'alliance'
-        },
-        {
-          name: "摇一摇" //名字
-        }
-      ],
+                //面包屑
+                {
+                    name: "营销管理/营销应用", //名字
+                    url: '/marketing/markList'
+                },
+                {
+                    name: "摇一摇", //名字
+                    url: '/marketing/shake/list'
+                },
+                {
+                    name: "添加" //名字
+                }
+            ],
       
       
 

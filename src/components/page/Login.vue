@@ -2,8 +2,8 @@
     <div class="login-wrap">
         <div class="ms-login">
             <div class="ms-title">
-                <p class="ms-login-title" v-if="flag">蕾蕾美颜&nbsp;管理平台登陆</p>
-                <p class="ms-login-title" v-else>偷偷美&nbsp;管理平台登陆</p>
+                <p class="ms-login-title" v-if="flag">偷偷美&nbsp;管理平台登陆</p>
+                <p class="ms-login-title" v-else>蕾蕾美颜&nbsp;管理平台登陆</p>
                 <img src="/static/img/ms-title-icon.png" width="10" class="ms-title-icon">
             </div>
             <el-form :model="ruleForm" size="medium" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm login-input-custom">

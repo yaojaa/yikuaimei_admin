@@ -269,16 +269,21 @@ export default {
     // //   CATEGORYOPTIONS,
     //   params:{},
     //   edit:false,
-      breadcrumb: [
-        //面包屑
-        {
-          name: "营销管理/营销应用", //名字
-          url:'alliance'
-        },
-        {
-          name: "新人红包" //名字
-        }
-      ],
+      
+       breadcrumb: [
+                //面包屑
+                {
+                    name: "营销管理/营销应用", //名字
+                    url: '/marketing/markList'
+                },
+                {
+                    name: "新人红包", //名字
+                    url: '/marketing/newPerson/list'
+                },
+                {
+                    name: "添加" //名字
+                }
+            ],
       
       
 

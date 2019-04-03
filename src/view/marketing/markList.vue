@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mark-wrap">
         <div class="sub-heading">
             <h3 class="sub-title"><span class="sub-icon"><img src="/static/img/sub_icon.png"  width="100%"></span><span class="title">优惠劵管理</span></h3>
         </div>
@@ -137,6 +137,12 @@ export default {
 }
 </script>
 <style lang='less' scoped>
+.mark-wrap{
+    padding-left: 10px;
+}
+.sub-heading{
+    padding-left:20px
+}
 .coupon-box {
     overflow: hidden;
     margin-right: -60px;
@@ -192,5 +198,6 @@ export default {
         font-size: 13px;
         color: #fff;
     }
+    
 }
 </style>

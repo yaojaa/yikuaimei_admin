@@ -301,16 +301,20 @@ export default {
         }
       ],
       
-      breadcrumb: [
-        //面包屑
-        {
-          name: "营销管理/营销应用", //名字
-          url:'alliance'
-        },
-        {
-          name: "多人同行" //名字
-        }
-      ],
+       breadcrumb: [
+                //面包屑
+                {
+                    name: "营销管理/营销应用", //名字
+                    url: '/marketing/markList'
+                },
+                {
+                    name: "帮砍", //名字
+                    url: '/marketing/helpCut/list'
+                },
+                {
+                    name: "添加" //名字
+                }
+            ],
       
       ruleForm:{
         "activity_title" : "",//活动名称
