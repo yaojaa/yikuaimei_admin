@@ -132,7 +132,7 @@
                       <el-button size="large" type="primary" @click="goNextStep(1)" >上一步</el-button>
                       <el-button size="large" type="primary" @click="submit" >上架</el-button>
                     </div>
-                      <div class="tab-overflow">
+                      <div class="tab-overflow shake-box">
 
                 
                 <!-- 指定商品弹窗 -->
@@ -169,7 +169,7 @@
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.name"  :value="item.type" :key="`${item.type}type`">
                                 <el-radio v-model="radioGoodsId" :label="item.coupon_code" :key="item.coupon_code" v-for="item in goodsList">
-                                  <div class="goods-div clearfix">
+                                  <div class="goods-div ">
                                     <div class="goods-div-left">
                                       <p class="margin-top10"><span class="price">¥{{item.rules.reduce_price}}</span><span>{{item.coupon_title}}</span></p>
                                       <p class="margin-top10">满{{item.rules.price}}元可用</p>
@@ -859,6 +859,9 @@ export default {
 .color-red{
     color:#ff0000;
     text-indent:156px;
+}
+.shake-box .el-tabs__content .el-radio:first-of-type{
+  margin-left: 30px;
 }
 </style>
 

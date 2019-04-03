@@ -130,7 +130,7 @@
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
                                 <el-radio v-model="checkedGoodsId" :label="checkedGoods.coupon_code">
-                                  <div class="goods-div clearfix">
+                                  <div class="goods-div ">
                                     <div class="goods-div-left">
                                       <p class="margin-top10"><span class="price">¥{{checkedGoods.rules.reduce_price}}</span><span>{{checkedGoods.coupon_title}}</span></p>
                                       <p class="margin-top10">满{{checkedGoods.rules.price}}元可用</p>
