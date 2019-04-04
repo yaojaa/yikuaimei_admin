@@ -73,6 +73,11 @@
                             <el-radio label="5">指定虚拟商品</el-radio>
                         </el-radio-group>
                     </el-form-item>
+                    <el-form-item label="使用规则:">
+                        <el-col :span="12">
+                            <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm.coupon_desc"></el-input>
+                        </el-col>
+                    </el-form-item>
                     <el-form-item label="活动专属:">
                        <el-col :span="6">
                         <el-radio-group  v-model="ruleForm.coupon_in_shop">
@@ -244,6 +249,7 @@ export default {
   data() {
     return {
         ruleForm:{
+            "coupon_desc":"",//使用规则
             "coupon_code":"",
             "coupon_title" : "",//优惠券标题
             "rules" : {  // 规则
