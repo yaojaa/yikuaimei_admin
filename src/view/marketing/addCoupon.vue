@@ -477,8 +477,8 @@ export default {
       },
     submit(){
         let params = this.$route.params;
-        this.ruleForm.rules.reduce_price = this.ruleForm.rules.reduce_price*100;
-        this.ruleForm.rules.price = this.ruleForm.rules.price*100;
+        this.ruleForm.rules.reduce_price*100;
+        this.ruleForm.rules.price*100;
         if (Object.keys(params).length) {
             this.ruleForm.coupon_code = params.coupon_code
             this.$axios.post("/api/admin/coupon/edit",this.ruleForm).then(res => {

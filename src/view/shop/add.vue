@@ -156,10 +156,12 @@
           <el-upload
             action="/api/admin/fileupload/image"
             list-type="picture-card"
-            :on-success="shop_environment"
+            :on-success="shopEenvironment"
             :on-remove="handleRemove">
+            <img width="100%"  :src="item"  v-for="item in ruleForm.shop_environment" :key="item" >
+           
+            
             <i class="el-icon-plus" style="font-size: 48px"></i>
-            <!-- <i class="el-icon-plus" style="font-size: 48px"></i> -->
           </el-upload>
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
@@ -168,28 +170,6 @@
         <div v-if="edit">
             <img width="148px" height="148px" :src="item" alt="" v-for="item in ruleForm.shop_environment" :key="item">
         </div>
-        
-
-
-
-         <!-- <el-upload
-          action="/api/admin/fileupload/image"
-          :show-file-list="false"
-          list-type="picture-card"
-
-          
-          :on-remove="handleRemove"
-           >
-        
-          
-        <i class="el-icon-plus" style="font-size: 48px">
-          
-        </i>
-
-       </el-upload>
-       <el-dialog :visible.sync="dialogVisible">
-        <img width="100%" :src="dialogImageUrl" alt="">
-      </el-dialog> -->
 
   </el-form-item>
 
@@ -222,15 +202,15 @@
       </el-radio-group>
   </el-form-item>
 
-  <el-form-item label="行业" prop="category_id">
-    <el-select v-model="ruleForm.category_id" placeholder="请选择所属行业分类" >
+  <el-form-item label="行业">
+    <el-select v-model="ruleForm.category_name" placeholder="请选择所属行业分类" @change="categoryChange">
         <el-option v-for="item in CATEGORYOPTIONS" :label="item.category_name" :value="item.category_id" :key="`${item.category_id}category_id`" />
     </el-select>                   
   </el-form-item>
 
-    <el-form-item label="归属加盟商" prop="name" v-model="ruleForm.business_id">
+    <el-form-item label="归属加盟商" >
     <el-autocomplete
-      v-model="business_name"
+      v-model="ruleForm.business_name"
       :fetch-suggestions="querySearchAsync"
       placeholder="请输入内容"
       @select="handleSelect">
@@ -281,6 +261,7 @@ export default {
 
   data() {
     return {
+      shopFlag:true,
       pcaa,
       dialogImageUrl: '',
       dialogVisible: false,
@@ -319,10 +300,10 @@ export default {
         "address_code" : "",//地址编码
         "shop_longitude" : "",//门店经度
         "shop_latitude" : "",//门店纬度
-        "shop_environment" : [],//门店环境图片数组
+        shop_environment : [],//门店环境图片数组
         "business_id" : null,//加盟商审核信息的business_id
         // "shop_environment":[],
-        "address_code2":""
+        address_code2:[]
       },
 
         rules: {
@@ -373,6 +354,17 @@ export default {
     };
   },
   methods:{
+    //选择加盟商change事件
+    businessChange(e){
+      this.ruleForm.business_id = e.business_id;
+     
+    },
+    //选择行业change事件
+    categoryChange(e){
+      this.ruleForm.category_id = e;
+     
+      //行业区别
+    },
     handleFaceUploadSuccess(){},
      goNextStep(n){
        if(n==1){
@@ -437,7 +429,7 @@ export default {
     shop_licence_pic(res){
         this.ruleForm.shop_licence_pic = res.data.url
       },
-      shop_environment(res){
+      shopEenvironment(res){
         this.ruleForm.shop_environment.push(res.data.url)
       },
       shop_sfz_pic_z(res){
@@ -592,6 +584,9 @@ export default {
     //如果是从审核门店中过来
     if(this.$route.query.review){
       this.getReviewData(this.$route.query.review)
+    }
+    if(this.ruleForm.shop_environment.length!=0){
+      this.shopFlag = false;
     }
     
 

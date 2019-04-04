@@ -194,18 +194,11 @@
 
  <div class="form-panel p-xl" v-if="step==3">
 
-   <el-form :model="ruleForm" :rules="rules" ref="ruleForm3" label-width="100px" class="demo-ruleForm">
+   <el-form :model="ruleForm" :rules="rules" ref="ruleForm3" label-width="140px" class="demo-ruleForm">
 
     <el-form-item label="推荐人平台账号" v-model="ruleForm.fid">
 
-    <!-- <el-select v-model="ruleForm.fid" placeholder="请选择">
-    <el-option
-      v-for="item in business_list"
-      :key="item.business_id"
-      :label="item.business_name"
-      :value="item.business_id">
-    </el-option>
-  </el-select> -->
+    
   <el-autocomplete
       v-model="business_na_me"
       :fetch-suggestions="querySearchAsync"
@@ -480,6 +473,13 @@ export default {
         let params = this.$route.params;
         this.ruleForm.id = params.business_id
         if (Object.keys(params).length) {
+
+          
+        
+     
+
+        
+ 
             
             this.$axios.post("/api/admin/business/modify", this.ruleForm).then(res => {
 
@@ -533,10 +533,22 @@ export default {
         if (Object.keys(params).length) {
             
             this.$axios.get("/api/admin/business/getOneById?id="+params.business_id).then(res => {
-                this.ruleForm = res.data.data;
-                console.log(this.ruleForm,'this.ruleForm')
+              if(res.data.code==0){
+                  this.ruleForm = res.data.data;
+                        this.$axios.get("/api/admin/select/businessList?business_id=" + this.ruleForm.fid).then(res =>{
+                        if(res.data.code ==0){
+                          
+                          this.business_na_me = res.data.data[0].business_name
+                          
+                        }
+                      })
+              }
+                
+               
             
             })
+
+
         }
   },
   mounted(){
