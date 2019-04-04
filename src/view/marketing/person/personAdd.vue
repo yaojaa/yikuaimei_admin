@@ -124,7 +124,7 @@
                          </div>
                          <div class="person-item-right">
                            <p v-if="item.good_name">{{item.good_name}}</p>
-                           <p v-if="item.price">¥{{item.price}}</p>
+                           <p v-if="item.price">¥{{item.price/100}}</p>
                          </div>
                        </div>
                        <div class="person-item"  v-for="skuItem in item.details" :key="skuItem.users">
@@ -162,7 +162,7 @@
                                           <div class="goods-div-left">
                                           <p class="color-blue">{{item.good_name}}</p>
                                           
-                                              <p class="color-black">¥{{item.price}}</p>
+                                              <p class="color-black">¥{{item.price/100}}</p>
                                               <p  class="color-black">{{item.sku_str}}</p>
                                          
                                           </div>
@@ -181,7 +181,7 @@
                                             <div class="goods-div-left">
                                             <p class="color-blue">{{item.good_name}}</p>
                                             <div >
-                                                <p class=" color-black">¥{{item.price}}</p>
+                                                <p class=" color-black">¥{{item.price/100}}</p>
                                                 <p class=" color-black">{{item.sku_str}}</p>
                                             </div>
                                             </div>

@@ -146,7 +146,7 @@
                     </el-dialog>
 
                     <!-- 指定商品弹窗 -->
-                    <el-dialog title="选择指定商品" :visible.sync="goodsVisible">
+                    <el-dialog title="选择指定服务" :visible.sync="goodsVisible">
                         <el-form-item>
                             <div v-if="goodShow" class="good_show">
                                 <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id"><img :src="checkedGoods.good_ico" width="30px" height="30px">{{checkedGoods.good_name}}</el-radio>
@@ -174,7 +174,7 @@
                         </div> 
                     </el-dialog>
                     <!-- 指定服务弹窗列表  -->
-                    <el-dialog title="选择指定服务" :visible.sync="serviceVisible">
+                    <el-dialog title="选择指定商品" :visible.sync="serviceVisible">
                         <el-form-item>
                              <div v-if="goodShow" class="good_show">
                                 <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id"><img :src="checkedGoods.good_ico" width="30px" height="30px">{{checkedGoods.good_name}}</el-radio>

@@ -132,8 +132,8 @@
                                 <el-radio v-model="checkedGoodsId" :label="checkedGoods.coupon_code">
                                   <div class="goods-div ">
                                     <div class="goods-div-left">
-                                      <p class="margin-top10"><span class="price">¥{{checkedGoods.rules.reduce_price}}</span><span>{{checkedGoods.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{checkedGoods.rules.price}}元可用</p>
+                                      <p class="margin-top10"><span class="price">¥{{checkedGoods.rules.reduce_price/100}}</span><span>{{checkedGoods.coupon_title}}</span></p>
+                                      <p class="margin-top10">满{{checkedGoods.rules.price/100}}元可用</p>
                                     </div>
                                     <div class="goods-div-right">
                                      <img v-if="checkedGoods.coupon_img" :src="checkedGoods.coupon_img" width="70px" height="70px">
@@ -152,8 +152,8 @@
                                 <el-radio v-model="radioGoodsId" :label="item.coupon_code" :key="item.coupon_code" v-for="item in goodsList">
                                   <div class="goods-div">
                                     <div class="goods-div-left">
-                                      <p class="margin-top10"><span class="price">¥{{item.rules.reduce_price}}</span><span>{{item.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{item.rules.price}}元可用</p>
+                                      <p class="margin-top10"><span class="price">¥{{item.rules.reduce_price/100}}</span><span>{{item.coupon_title}}</span></p>
+                                      <p class="margin-top10">满{{item.rules.price/100}}元可用</p>
                                     </div>
                                     <div class="goods-div-right">
                                      <img v-if="item.coupon_img" :src="item.coupon_img" width="70px" height="70px">

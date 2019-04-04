@@ -171,7 +171,7 @@
                                           <div class="goods-div-left">
                                           <p class="color-blue">{{item.good_name}}</p>
                                           
-                                              <p class="color-black">¥{{item.price}}</p>
+                                              <p class="color-black">¥{{item.price/100}}</p>
                                               <p  class="color-black">{{item.sku_str}}</p>
                                          
                                           </div>
@@ -190,7 +190,7 @@
                                             <div class="goods-div-left">
                                             <p class="color-blue">{{item.good_name}}</p>
                                             <div >
-                                                <p class=" color-black">¥{{item.price}}</p>
+                                                <p class=" color-black">¥{{item.price/100}}</p>
                                                 <p class=" color-black">{{item.sku_str}}</p>
                                             </div>
                                             </div>
