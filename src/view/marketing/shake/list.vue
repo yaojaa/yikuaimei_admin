@@ -53,7 +53,7 @@ export default {
 
             tagsListGroup: {
                 '活动状态:': [
-                    { title: '可编辑', key: 'activity_status', value: 1 },
+                    { title: '下架', key: 'activity_status', value: 1 },
                     { title: '上架', key: 'activity_status', value: 2 }
                 ],
                  '活动分类:': [
