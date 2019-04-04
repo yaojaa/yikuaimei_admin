@@ -434,9 +434,15 @@ export default {
         })
       },
       submit(){
+        debugger
         let params = this.$route.params;
-        
+        for(var i =0; i<this.ruleForm.rules.walking.length; i++){
+            for(var j = 0; j<this.ruleForm.rules.walking[i].details.length; j++){
+                this.ruleForm.rules.walking[i].details[i].offer_price*100
+            }
+          }
         if (Object.keys(params).length) {
+          
             this.ruleForm.activity_code = params.activity_code
             this.$axios.post("/api/admin/activity/edit",this.ruleForm).then(res => {
                 if(res.data.code ==0){

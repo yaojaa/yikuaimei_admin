@@ -77,7 +77,8 @@
                                 </div>
                                 <div class="item">
                                     <div class="hd">使用有效期：</div>
-                                    <div class="bd">{{info.coupon_expire.coupon_expire_start_time+"--"+info.coupon_expire.coupon_expire_end_time}}</div>
+                                    <div class="bd" v-if="info.coupon_expire.coupon_expire_start_time">{{info.coupon_expire.coupon_expire_start_time+"--"+info.coupon_expire.coupon_expire_end_time}}</div>
+                                    <div class="bd" v-else>领取后{{info.coupon_expire.coupon_expire_day}}天内有效</div>
                                 </div>
                                 <!-- <div class="item">
                                     <div class="hd">联系电话：</div>
