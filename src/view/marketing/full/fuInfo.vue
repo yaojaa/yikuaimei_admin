@@ -47,7 +47,7 @@
                         <div v-if="ruleForm.rules.full_gifts">
                             <div class="table-body"   v-for="skuItem in ruleForm.rules.full_gifts" >
                                 <div class="person-item ">
-                                    满{{skuItem.price}}元
+                                    满{{skuItem.price/100}}元
                                 </div>
                                 <div class="person-item">
                                     编号为{{skuItem.coupon_code}}的优惠券

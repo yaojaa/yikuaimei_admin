@@ -74,27 +74,27 @@
                          </div>
                          <div class="full-item-right">
                            <p v-if="item.good_name">{{item.good_name}}</p>
-                           <p v-if="item.price">¥{{item.price}}</p>
+                           <p v-if="item.price">¥{{item.price/100}}</p>
                          </div>
                        </div>
                        <div class="full-item">
-                           {{item.max_price}}
+                           {{item.max_price/100}}
                        </div>
                        <div class="full-item">
-                           {{item.reduce_solid_price}}
+                           {{item.reduce_solid_price/100}}
                        </div>
                        <div class="full-item"  >
-                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：{{item.reduce_max_price}}</span></p>
-                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：{{item.reduce_min_price}}</span></p>
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：{{item.reduce_max_price/100}}</span></p>
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：{{item.reduce_min_price/100}}</span></p>
                         
                        </div>
                        <div class="full-item">
-                           {{item.first_solid_price}}
+                           {{item.first_solid_price/100}}
                        </div>
                        <div class="full-item" >
-                          <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：{{item.first_max_price}}</span> </p>
+                          <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：{{item.first_max_price/100}}</span> </p>
                                
-                            <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：{{item.first_min_price}}</span></p>   
+                            <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：{{item.first_min_price/100}}</span></p>   
  
                        </div>
                        

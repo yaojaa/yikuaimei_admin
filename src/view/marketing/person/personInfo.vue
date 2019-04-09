@@ -59,12 +59,12 @@
                          </div>
                          <div class="person-item-right">
                            <p v-if="item.goods_name">{{item.goods_name}}</p>
-                           <p v-if="item.goods_price">{{item.goods_price}}</p>
+                           <p v-if="item.goods_price">{{item.goods_price/100}}</p>
                          </div>
                        </div>
                        <div class="person-item"  v-for="skuItem in item.details">
                         
-                          {{skuItem.offer_price}}
+                          {{skuItem.offer_price/100}}
                        </div>
                        
                       

@@ -35,7 +35,7 @@
                         :show-file-list="false"
                         :on-success="uploadActivityImg"
                         >
-                        <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar">
+                        <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar invite-upload-img">
                        <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
                       <div class="upload-title">
@@ -107,7 +107,7 @@
                               :show-file-list="false"
                               :on-success="show_img.bind(null, {'index':index})" :data="skuItem"
                               >
-                            <img width="238px" v-if="skuItem.image" :src="skuItem.image" >
+                            <img width="238px" v-if="skuItem.image" :src="skuItem.image" class="invite-img">
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       
@@ -420,9 +420,17 @@ export default {
       submit(){
         let params = this.$route.params;
         this.ruleForm.activity_code = params.activity_code
+        var obj=JSON.parse(JSON.stringify(this.ruleForm));
+       
+        for(let i=0; i<obj.rules.full_gifts.length;i++){
+          obj.rules.full_gifts[i].price = obj.rules.full_gifts[i].price*100
+        }
+        debugger
+        
+        
         //如果是编辑
         if (Object.keys(params).length) {
-                      this.$axios.post("/api/admin/activity/edit", this.ruleForm).then(res => {
+                      this.$axios.post("/api/admin/activity/edit", obj).then(res => {
 
                       if(res.data.code == 0){
 
@@ -443,7 +451,7 @@ export default {
         }else{
                   console.log(this.ruleForm,'choiceLIst')
         // console.log(this.ruleForm,'this.ruleForm');
-            this.$axios.post("/api/admin/activity/addFullGifts", this.ruleForm).then(res => {
+            this.$axios.post("/api/admin/activity/addFullGifts", obj).then(res => {
 
                       if(res.data.code == 0){
 
@@ -533,6 +541,11 @@ export default {
           console.log(res.data.data,'data----data')
           //this.ruleForm.activity_status = res.data.data.activity_status
             this.ruleForm = res.data.data;
+            debugger
+            for(let i=0; i<this.ruleForm.rules.full_gifts.length;i++){
+              this.ruleForm.rules.full_gifts[i].price = this.ruleForm.rules.full_gifts[i].price/100
+            }
+
             
         })
     }
@@ -852,6 +865,18 @@ export default {
 }
 .shake-box .el-tabs__content .el-radio:first-of-type{
   margin-left: 30px;
+}
+.invite-img{
+  max-width: 238px;
+  max-height: 100px;
+  width: 238px;
+  height: 100px;
+}
+.invite-upload-img{
+  max-width: 360px;
+  width: 358px;
+  height: 176px;
+  max-height: 176px
 }
 </style>
 

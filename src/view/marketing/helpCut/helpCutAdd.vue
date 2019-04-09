@@ -35,7 +35,7 @@
                         :show-file-list="false"
                         :on-success="uploadActivityImg"
                         >
-                        <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar">
+                        <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar help-upload-img">
                         <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
                   <div class="upload-title">
@@ -418,11 +418,24 @@ export default {
         })
       },
       submit(){
+        
         let params = this.$route.params;
+        var obj=JSON.parse(JSON.stringify(this.ruleForm));
+        
+        for(let i=0; i<this.ruleForm.rules.bargain.length; i++){
+        obj.rules.bargain[i].max_price = this.ruleForm.rules.bargain[i].max_price*100
+        obj.rules.bargain[i].reduce_solid_price = this.ruleForm.rules.bargain[i].reduce_solid_price*100
+        obj.rules.bargain[i].reduce_min_price = this.ruleForm.rules.bargain[i].reduce_min_price*100
+        obj.rules.bargain[i].reduce_max_price = this.ruleForm.rules.bargain[i].reduce_max_price*100
+        obj.rules.bargain[i].first_solid_price = this.ruleForm.rules.bargain[i].first_solid_price*100
+        obj.rules.bargain[i].first_min_price = this.ruleForm.rules.bargain[i].first_min_price*100
+        obj.rules.bargain[i].first_max_price =  this.ruleForm.rules.bargain[i].first_max_price*100
 
+        }
         if (Object.keys(params).length) {
-            this.ruleForm.activity_code = params.activity_code
-            this.$axios.post("/api/admin/activity/edit",this.ruleForm).then(res => {
+            obj.activity_code = params.activity_code
+            
+            this.$axios.post("/api/admin/activity/edit",obj).then(res => {
                 if(res.data.code ==0){
                     this.$alert('编辑成功')
                     this.$router.push('/marketing/helpCut/list')
@@ -435,7 +448,7 @@ export default {
             //var parms = this.ruleForm;
             
             debugger
-            this.$axios.post("/api/admin/activity/addBargain", this.ruleForm).then(res => {
+            this.$axios.post("/api/admin/activity/addBargain", obj).then(res => {
                 if(res.data.code == 0){
                     this.$alert('添加成功！')
                     
@@ -504,8 +517,18 @@ export default {
         console.log(params,'params')
         this.$axios.post("/api/admin/activity/info",params).then(res => {
           console.log(res.data.data,'data----data')
-          //this.ruleForm.activity_status = res.data.data.activity_status
-            this.ruleForm = res.data.data;
+          
+
+
+            for(let i=0; i<this.ruleForm.rules.bargain.length;i++){
+              this.ruleForm.rules.bargain[i].max_price = this.ruleForm.rules.bargain[i].max_price/100
+               this.ruleForm.rules.bargain[i].reduce_solid_price = this.ruleForm.rules.bargain[i].reduce_solid_price/100
+                this.ruleForm.rules.bargain[i].reduce_min_price = this.ruleForm.rules.bargain[i].reduce_min_price/100
+                 this.ruleForm.rules.bargain[i].reduce_max_price = this.ruleForm.rules.bargain[i].reduce_max_price/100
+                  this.ruleForm.rules.bargain[i].first_solid_price = this.ruleForm.rules.bargain[i].first_solid_price/100
+                   this.ruleForm.rules.bargain[i].first_min_price = this.ruleForm.rules.bargain[i].first_min_price/100
+                    this.ruleForm.rules.bargain[i].first_max_price = this.ruleForm.rules.bargain[i].first_max_price/100
+            }
             //判断当前是限制还是不限制
             if(res.data.data.limits.limit_total_times==0){
               this.limitsStatus = 0
@@ -727,6 +750,12 @@ export default {
 }
 .person-box .el-checkbox:first-of-type{
   margin-left: 30px;
+}
+.help-upload-img{
+  max-width: 360px;
+  width: 358px;
+  height: 176px;
+  max-height: 176px
 }
 </style>
 

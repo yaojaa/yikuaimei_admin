@@ -35,7 +35,7 @@
                         :show-file-list="false"
                         :on-success="uploadActivityImg"
                         >
-                        <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar">
+                        <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar person-upload-img">
                         <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
                   <div class="upload-title">
@@ -434,17 +434,22 @@ export default {
         })
       },
       submit(){
-        debugger
+        
         let params = this.$route.params;
-        for(var i =0; i<this.ruleForm.rules.walking.length; i++){
-            for(var j = 0; j<this.ruleForm.rules.walking[i].details.length; j++){
-                this.ruleForm.rules.walking[i].details[i].offer_price*100
+         var obj=JSON.parse(JSON.stringify(this.ruleForm));
+         for(let i = 0; i<obj.rules.walking.length; i++){
+            for(let j=0; j<obj.rules.walking[i].details.length; j++){
+                obj.rules.walking[i].details[j].offer_price = obj.rules.walking[i].details[j].offer_price*100
             }
-          }
+         }
+         debugger
+        
+
+        
         if (Object.keys(params).length) {
           
-            this.ruleForm.activity_code = params.activity_code
-            this.$axios.post("/api/admin/activity/edit",this.ruleForm).then(res => {
+            obj.activity_code = params.activity_code
+            this.$axios.post("/api/admin/activity/edit",obj).then(res => {
                 if(res.data.code ==0){
                     this.$alert('编辑成功')
                     this.$router.push('/marketing/person/list')
@@ -455,7 +460,9 @@ export default {
             })
         }else{
             //var parms = this.ruleForm;
-            this.$axios.post("/api/admin/activity/addWalking", this.ruleForm).then(res => {
+            debugger
+            console.log(this.ruleForm,'this.ruleForm')
+            this.$axios.post("/api/admin/activity/addWalking", obj).then(res => {
                 if(res.data.code == 0){
                     this.$alert('添加成功！')
                     
@@ -471,28 +478,8 @@ export default {
         }
 
 
-      },
-      // submit(){
-       
-      //       this.$axios.post("/api/admin/activity/addWalking", this.ruleForm).then(res => {
-
-      //                 if(res.data.code == 0){
-
-      //                     this.$alert(res.data.msg)
-      //                     this.$router.push('/marketing/person/list')
-                          
-
-      //                 }else{
-      //                     this.$alert(res.data.msg)
-      //                 }
-
-
-      //             }).catch((e)=>{
-
-      //               this.$alert('操作失败'+e)
-
-      //             })
-      // },
+      }
+      
       
     },
     watch:{
@@ -546,6 +533,11 @@ export default {
           console.log(res.data.data,'data----data')
           //this.ruleForm.activity_status = res.data.data.activity_status
             this.ruleForm = res.data.data;
+            for(let i = 0; i<this.ruleForm.rules.walking.length; i++){
+              for(let j=0; j<this.ruleForm.rules.walking[i].details.length; j++){
+                  this.ruleForm.rules.walking[i].details[j].offer_price = this.ruleForm.rules.walking[i].details[j].offer_price/100
+              }
+            }
             //判断当前是限制还是不限制
             if(res.data.data.limits.limit_total_times==0){
               this.limitsStatus = 0
@@ -769,6 +761,12 @@ text-overflow: ellipsis;
 overflow : hidden;
 -webkit-line-clamp: 2;
 -webkit-box-orient: vertical;
+}
+.person-upload-img{
+   max-width: 360px;
+  width: 358px;
+  height: 176px;
+  max-height: 176px
 }
 </style>
 
