@@ -2,6 +2,10 @@
 import Vue from 'vue';
 import App from './App';
 import axios from 'axios';
+import VueQuillEditor from 'vue-quill-editor';
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 
 
 // if(process.env.NODE_ENV =='production'){
@@ -45,6 +49,7 @@ Vue.use(VueLodash, { name: 'lodash' })
 Vue.use(vali);
 Vue.use(ElementUI, { size: 'small' });
 Vue.use(BaiduMap, { ak: 'NqiLB3SI1yCO0hlXUnKBBlvqKDDZBCEV'})
+Vue.use(VueQuillEditor)
 Vue.prototype.$axios = axios;
 
 //使用钩子函数对路由进行权限跳转

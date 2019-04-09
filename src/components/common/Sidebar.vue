@@ -169,6 +169,7 @@
                                 index: '/user/beautifulList',
                                 title: '美丽档案'
                             }
+                            
                         ]
                     },
                     {
@@ -199,6 +200,10 @@
                                 index: '/admin/roleList',
                                 title: '角色管理'
                             },
+                            {
+                                index: '/admin/news/list',
+                                title: '消息推送'
+                            }
                             
                         ]
                     },

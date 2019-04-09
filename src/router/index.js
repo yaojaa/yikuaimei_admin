@@ -864,6 +864,27 @@ export default new Router({
                         title: '编辑成员'
                     }
                 },
+                {
+                    path: '/admin/news/list',
+                    component: resolve => require(['../view/admin/news/list.vue'], resolve),
+                    meta: {
+                        title: '消息推送'
+                    }
+                },
+                {
+                    path: '/admin/news/newsAdd',
+                    component: resolve => require(['../view/admin/news/newsAdd.vue'], resolve),
+                    meta: {
+                        title: '消息推送／添加'
+                    }
+                },
+                {
+                    path: '/admin/news/newsAdd/:id',
+                    component: resolve => require(['../view/admin/news/newsAdd.vue'], resolve),
+                    meta: {
+                        title: '消息推送／添加'
+                    }
+                },
 
                 {
                     // 测试表格
