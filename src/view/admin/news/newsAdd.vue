@@ -13,7 +13,7 @@
                     <!--form start-->
                     <el-form :model="ruleForm"  ref="ruleForm1" label-width="140px" class="demo-ruleForm" >
                     <el-form-item label="管理端是否接收：">
-                      <el-radio-group v-model="ruleForm.user_on" @change="radioChange">
+                      <el-radio-group v-model="ruleForm.business_on" @change="radioChange">
                         <el-radio  :label="1">是</el-radio>
                         <el-radio  :label="0">否</el-radio>
                       </el-radio-group>
@@ -119,8 +119,8 @@ export default {
         "pic" : "",//图片
         "content" : ``, // 内容
         "type" : 1,//
-        "user_on":1, //C端是否接收 1接收 0否
-        "pos_on": 1, //店POS是否接收 1接收 0否
+        "pos_on":1, //C端是否接收 1接收 0否
+        "business_on": 1, //店POS是否接收 1接收 0否
         "link_type":1, //是否可查看详情 0否 1可查看
         
       }
