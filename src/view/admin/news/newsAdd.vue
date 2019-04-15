@@ -13,13 +13,13 @@
                     <!--form start-->
                     <el-form :model="ruleForm"  ref="ruleForm1" label-width="140px" class="demo-ruleForm" >
                     <el-form-item label="管理端是否接收：">
-                      <el-radio-group v-model="ruleForm.user_on">
+                      <el-radio-group v-model="ruleForm.user_on" @change="radioChange">
                         <el-radio  :label="1">是</el-radio>
                         <el-radio  :label="0">否</el-radio>
                       </el-radio-group>
                     </el-form-item>
                     <el-form-item label="POS端是否接收：">
-                      <el-radio-group v-model="ruleForm.user_on">
+                      <el-radio-group v-model="ruleForm.pos_on" >
                         <el-radio  :label="1">是</el-radio>
                         <el-radio  :label="0">否</el-radio>
                       </el-radio-group>
@@ -141,6 +141,10 @@ export default {
     },
     cancal(){
 
+    },
+    radioChange(e){
+      this.ruleForm.pos_on = e
+      
     },
          
     submit(){
