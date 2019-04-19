@@ -2,10 +2,7 @@
     <div class="page">
         <div class="page-header">
             <div class="crumbs">
-                <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item>营销管理/满减立减优惠券</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-                </el-breadcrumb>
+                <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
             </div>
         </div>
         <div class="page-content">
@@ -24,12 +21,12 @@
                     </el-form-item>
 
                      <el-form-item label="可使用次数:">
-                         <el-col :span="6">
+                         <el-col :span="3">
                             <el-input v-model="ruleForm.limits.limit_total_times"></el-input>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="可使用频率:">
-                       <el-col :span="6">
+                       <el-col :span="5">
                         <!-- 如果选择不限制 那么 limit_times 就是0  -->
                         <el-radio-group  v-model="limitsStatus">
                             <el-radio :label="0">不限</el-radio> 
@@ -44,13 +41,14 @@
                                 <el-option label="月" value="3"></el-option>
                             </el-select>
                        </el-col>
-                       <el-col :span="6">
+                       <el-col :span="4">
                            <el-input v-model="ruleForm.limits.limit_times" style="width:100px"></el-input><span>次</span>
                        </el-col>
+                       
                     </el-form-item>
 
                     <el-form-item label="最低消费:">
-                       <el-col :span="6">
+                       <el-col :span="5">
                         <!-- 如果选择不限制 那么 limit_times 就是0  -->
                         <el-radio-group  v-model="ruleForm.rules.is_full">
                             <el-radio :label="0">无门槛</el-radio> 
@@ -58,7 +56,7 @@
                         </el-radio-group>
                        </el-col>
                        
-                       <el-col :span="6">
+                       <el-col :span="5">
                            <el-input v-model="ruleForm.rules.price" style="width:100px"></el-input><span>元可用</span>
                        </el-col>
                        
@@ -270,6 +268,20 @@ export default {
   name: "training",
   data() {
     return {
+        breadcrumb: [
+                //面包屑
+                {
+                    name: "营销管理", //名字
+                    url: '/marketing/markList'
+                },
+                {
+                    name: "满减/立减优惠券", //名字
+                    url: '/marketing/fullReducionCouponList'
+                },
+                {
+                    name: "添加" //名字
+                }
+            ],
         pickerOptions: {
           shortcuts: [{
             text: '今天',

@@ -81,7 +81,7 @@
 
                     <el-form-item label="参与次数限制：">
                         <el-radio-group v-model="limitsStatus"   @change="limitsChange">
-                            <el-col :span="8" >
+                            <el-col :span="5" >
                               <div class="limit-no">
                                 <el-radio :label="0">不限</el-radio>
                               </div>
@@ -118,9 +118,9 @@
                       </div>
 
                      <div class="table-body"  v-for="item in ruleForm.rules.walking" :key="item.sku">
-                       <div class="person-item person-width ">
+                       <div class="person-item person-width " style="width:162px">
                          <div class="person-item-left">
-                           <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="50px" height="50px">
+                           <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="80px" height="80px">
                          </div>
                          <div class="person-item-right">
                            <p v-if="item.good_name">{{item.good_name}}</p>
@@ -154,17 +154,15 @@
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
                                 
-                                      <div class="goods-div " v-for="item in goodsData" :key="item.sku">
+                                      <div class="goods-div" v-for="item in goodsData" :key="item.sku">
                                           <div class="goods-div-right">
-                                          <img v-if="item.good_ico" :src="item.good_ico" width="70px" height="70px">
-                                          <p v-else class="no-img">暂无图片</p>
+                                            <img v-if="item.good_ico" :src="item.good_ico" width="70px" height="70px">
+                                            <p v-else class="no-img">暂无图片</p>
                                           </div>
                                           <div class="goods-div-left">
-                                          <p class="color-blue">{{item.good_name}}</p>
-                                          
-                                              <p class="color-black">¥{{item.price/100}}</p>
-                                              <p  class="color-black">{{item.sku_str}}</p>
-                                         
+                                            <p class="color-black">{{item.good_name}}</p>
+                                            <p class=" money">¥{{item.price/100}}</p>
+                                            <p  class="color-black">{{item.sku_str}}</p>
                                           </div>
                                       </div>
                                 </div>
@@ -179,9 +177,9 @@
                                             <p v-else class="no-img">暂无图片</p>
                                             </div>
                                             <div class="goods-div-left">
-                                            <p class="color-blue">{{item.good_name}}</p>
+                                            <p class="color-black">{{item.good_name}}</p>
                                             <div >
-                                                <p class=" color-black">¥{{item.price/100}}</p>
+                                                <p class=" money">¥{{item.price/100}}</p>
                                                 <p class=" color-black">{{item.sku_str}}</p>
                                             </div>
                                             </div>
@@ -560,9 +558,7 @@ export default {
 .width200px{
   width:200px
 }
-.line-center{
-  text-align: center;
-}
+
 .activity-img{
   font-size: 13px;
   color:#585858;
@@ -601,10 +597,10 @@ export default {
 }
 .table-th{
   width:100%;
-  height: 50px;
-  color:#fff;
-  line-height: 50px;
-  background-color:#03a380;
+  height: 30px;
+  color:#15151C;
+  line-height: 30px;
+  background-color:#EEEFFF;
   display: flex;
 }
 .th-item{
@@ -621,11 +617,9 @@ export default {
   
 }
 .person-item{
-  width:100%;
+  width:162px;
   height: 100px;
-  border-left:1px solid #ccc;
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -640,8 +634,8 @@ export default {
 }
 .person-item-left{
   float: left;
-  width:50px;
-  height: 50px;
+  width:90px;
+  height: 90px;
   margin-left:8px;
 }
 .person-item-right{
@@ -652,12 +646,11 @@ export default {
 }
 
   .goods-div{
-    width:211px;
+    width:212px;
     height: 70px;
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    border:1px solid #ccc;
     margin-bottom:10px;
   }
 .clearfix:after{
@@ -678,7 +671,6 @@ export default {
     width:70px;
     height: 70px;
     float: left;
-    border-left:1px solid #ccc;
   }
   .price{
     font-size: 16px;
@@ -767,6 +759,60 @@ overflow : hidden;
   height: 176px;
   max-height: 176px
 }
+
+
+
+
+
+
+
+
+</style>
+<style >
+  .el-checkbox__input{
+  position: absolute ;
+  right:6px ;
+  top: 6px ;
+  
+}
+.el-dialog__body{
+  background-color: #fff;
+}
+.el-tabs__nav-wrap::after{
+  background-color: #f6f6f6
+}
+.el-tabs__item{
+  color:#666;
+}
+.goods-div-left p{
+  color:#333;
+}
+.goods-div-left p.money{
+  color:#E89925 100%
+}
+.goods-div{
+  border-radius:6px;
+  box-shadow: 0px 0px 18px 0px rgba(211, 211, 211, 0.5);
+  display: inline-block;
+  margin-left: 10px;
+  background-color:#fff;
+
+}
+p{
+  margin:0px;
+}
+.el-form-item--small .el-form-item__content, .el-form-item--small .el-form-item__label{
+  line-height:1.2em
+}
+
+.input-val{
+  width:40% !important;
+}
+.line-center{
+  text-align: center;
+  line-height:32px;
+}
+
 </style>
 
 
