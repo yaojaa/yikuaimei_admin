@@ -314,7 +314,6 @@ export default {
   display:block;
   height:0;
   clear:both;
-  visibility:hidden
   }
   .goods-div-left{
     width:120px;
