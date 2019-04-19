@@ -1,10 +1,9 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>满减立减优惠券</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+            <div class="crumbs">
+                <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
+            </div>
         </div>
         <div class="page-content">
       
@@ -125,13 +124,25 @@
     </div>
 </template>
 <script>
+import BreadCrumb from "@/components/common/BreadCrumb";
 export default {
     name: 'detail',
-
-    components: {},
-
     data() {
         return {
+            breadcrumb: [
+                //面包屑
+                {
+                    name: "营销管理", //名字
+                    url: '/marketing/markList'
+                },
+                {
+                    name: "满减/立减优惠券", //名字
+                    url: '/marketing/fullReducionCouponList'
+                },
+                {
+                    name: "详情" //名字
+                }
+            ],
             info:{
                 "rules" : {  // 规则
                     "is_full" : 0, // 是否满减  1满减 2立减
@@ -171,15 +182,9 @@ export default {
     computed: {
 
     },
-    mounted() {
-
-
-        
-
-
-
-
-
+    mounted() {},
+    components: {
+    BreadCrumb
     },
     methods: {
         formatPrice(price) {

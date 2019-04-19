@@ -809,6 +809,12 @@ p{
   text-align: center;
   line-height:32px;
 }
+.gift-table{
+  font-size: 14px;
+}
+.form-panel{
+  
+}
 
 </style>
 

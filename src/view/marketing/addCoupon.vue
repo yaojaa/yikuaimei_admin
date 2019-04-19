@@ -182,7 +182,7 @@
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioGoodsId" :label="item.good_id"><img :src="item.good_ico" width="20px" height="20px">{{item.good_name}}</el-radio></p>
+                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioGoodsId" :label="item.good_id"><img :src="item.good_ico" width="20px" height="20px"><span class="ml6">{{item.good_name}}</span></el-radio></p>
                                 
                             </el-tab-pane>
                         </el-tabs>
@@ -197,7 +197,7 @@
                     <el-dialog title="选择指定商品" :visible.sync="serviceVisible">
                         <el-form-item>
                              <div v-if="goodShow" class="good_show">
-                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id"><img :src="checkedGoods.good_ico" width="30px" height="30px">{{checkedGoods.good_name}}</el-radio>
+                                <el-radio v-model="checkedGoodsId" :label="checkedGoods.good_id"><img :src="checkedGoods.good_ico" width="30px" height="30px"><span class="ml6">{{checkedGoods.good_name}}</span></el-radio>
                             </div>
                              <el-col :span="12">
                                 <el-input v-model="goods_name" placeholder="搜索"></el-input>
@@ -210,7 +210,7 @@
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioServiceId" :label="item.good_id"><img :src="item.good_ico" width="30px" height="30px">{{item.good_name}}</el-radio></p>
+                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioServiceId" :label="item.good_id"><img :src="item.good_ico" width="30px" height="30px"><span class="ml6">{{item.good_name}}</span></el-radio></p>
                             </el-tab-pane>
                         </el-tabs>
                         
@@ -238,7 +238,7 @@
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
                             <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
-                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><img :src="item.good_ico" width="30px" height="30px"><el-radio v-model="radioServiceId" :label="item.good_id">{{item.good_name}}</el-radio></p>
+                                <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><img :src="item.good_ico" width="30px" height="30px"><el-radio v-model="radioServiceId" :label="item.good_id"><span class="ml6">{{item.good_name}}</span></el-radio></p>
                                 
                             </el-tab-pane>
                         </el-tabs>
@@ -696,41 +696,7 @@ export default {
 
 <style scoped>
 
-.page-content{
-    padding:30px 40px;
-    background-color: #fff;
-}
-.margin-auto{
-    margin-left: 25%;
-    margin-top: 25px;
-}
-.good_show{
-    margin-bottom:20px;
-}
-.pd-left{
-    padding-left:50px;
-}
-.heigth20px{
-    height:20px;
-    width: 100%;
 
-}
-.line-hidden{
-    display: inline-block;
-    width:180px;
-    overflow:hidden;
-    height: 30px;
-    text-overflow:ellipsis;
-    white-space:nowrap
-}
-.line-hidden img{
-    margin-left:5px
-}
-.coupon-apnel .el-tabs__content,.coupon-apnel .el-tab-pane{
-    width:580px;
-    height: 180px;
-    overflow-y:scroll; 
-}
 
 
 </style>

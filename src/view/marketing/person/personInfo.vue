@@ -55,7 +55,7 @@
                      <div class="table-body"  v-for="item in ruleForm.rules.walking" :key="item.sku">
                        <div class="person-item person-width ">
                          <div class="person-item-left">
-                           <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="50px" height="50px">
+                           <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="80px" height="80px">
                          </div>
                          <div class="person-item-right">
                            <p v-if="item.goods_name">{{item.goods_name}}</p>
@@ -134,7 +134,11 @@ export default {
           url:'/marketing/markList'
         },
         {
-          name: "多人同行" //名字
+          name: "营销管理/多人同行", //名字
+          url:'/marketing/person/list'
+        },
+        {
+          name: "详情" //名字
         }
       ],
       
@@ -244,6 +248,7 @@ export default {
   position: relative;
   left: -120px;
   top: 10px;
+  font-size: 14px;
 
 }
 .background-blue{
@@ -251,15 +256,16 @@ export default {
 }
 .table-th{
   width:100%;
-  height: 50px;
-  color:#fff;
-  line-height: 50px;
-  background-color:#03a380;
+  height: 30px;
+  color:#15151C;
+  line-height: 30px;
+  background-color:#EEEFFF;
   display: flex;
 }
 .th-item{
   flex: 1;
-  text-align: center
+  text-align: center;
+  font-size: 14px;
 }
 .table-body{
   width:100%;
@@ -273,9 +279,6 @@ export default {
 .person-item{
   width:100%;
   height: 100px;
-  border-left:1px solid #ccc;
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;

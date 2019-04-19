@@ -884,7 +884,6 @@ ol {
 
 .form-panel {
     width: 470px;
-    margin: 0 auto;
 }
 
 .form-panel .el-date-editor--datetimerange.el-input,
@@ -1218,4 +1217,45 @@ ol {
 }
 .item-list.six-text .hd{
     width: 7em;
+}
+
+
+/* 营销模块公用css */
+.page-content{
+    padding:30px 40px;
+    background-color: #fff;
+}
+.margin-auto{
+    margin-left: 25%;
+    margin-top: 25px;
+}
+.good_show{
+    margin-bottom:20px;
+}
+.pd-left{
+    padding-left:50px;
+}
+.heigth20px{
+    height:20px;
+    width: 100%;
+
+}
+.line-hidden{
+    display: inline-block;
+    width:180px;
+    overflow:hidden;
+    height: 30px;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}
+.line-hidden img{
+    margin-left:5px
+}
+.coupon-apnel .el-tabs__content,.coupon-apnel .el-tab-pane{
+    width:580px;
+    height: 180px;
+    overflow-y:scroll; 
+}
+.ml6{
+    margin-left: 6px;
 }
