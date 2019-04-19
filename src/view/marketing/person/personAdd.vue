@@ -801,9 +801,6 @@ overflow : hidden;
 p{
   margin:0px;
 }
-.el-form-item--small .el-form-item__content, .el-form-item--small .el-form-item__label{
-  line-height:1.2em
-}
 
 .input-val{
   width:40% !important;
