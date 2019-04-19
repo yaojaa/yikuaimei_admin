@@ -1436,3 +1436,6 @@ ol {
     height: 30px;
     border:1px solid #666;
   }
+  .goods-div-left p{
+      line-height: 1.2em;
+  }
