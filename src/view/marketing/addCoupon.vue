@@ -400,20 +400,20 @@ export default {
           
         switch (e)
         {
-            case "2": //行业  
+            case 2: //行业  
               this.industryVisible = true 
             break;
-            case "3": //商品
+            case 3: //商品
                 this.serviceVisible = true  //服务弹窗
                 this.serviceSearch()
             break;
-            case "4": //服务
+            case 4: //服务
                 
                 this.goodsVisible = true  //商品弹窗
                 this.goodsSearch()
 
             break;
-            case "5": //虚拟商品
+            case 5: //虚拟商品
                 this.inventedVisible = true
                 this.virGoodsSearch()
             break;
