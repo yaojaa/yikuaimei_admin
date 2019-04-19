@@ -181,7 +181,7 @@
                         </el-form-item>
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
-                            <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
+                            <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" >
                                 <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioGoodsId" :label="item.good_id"><img :src="item.good_ico" width="20px" height="20px"><span class="ml6">{{item.good_name}}</span></el-radio></p>
                                 
                             </el-tab-pane>
@@ -209,7 +209,7 @@
                         </el-form-item>
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
-                            <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
+                            <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" >
                                 <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><el-radio v-model="radioServiceId" :label="item.good_id"><img :src="item.good_ico" width="30px" height="30px"><span class="ml6">{{item.good_name}}</span></el-radio></p>
                             </el-tab-pane>
                         </el-tabs>
@@ -237,7 +237,7 @@
                         </el-form-item>
 
                         <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activeId">
-                            <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" :key="`${item.category_id}category_id`">
+                            <el-tab-pane v-for="item in industryForm" :label="item.category_name"  :value="item.category_id" >
                                 <p class="line-hidden" v-for="item in goodsList" :key="item.good_id"><img :src="item.good_ico" width="30px" height="30px"><el-radio v-model="radioServiceId" :label="item.good_id"><span class="ml6">{{item.good_name}}</span></el-radio></p>
                                 
                             </el-tab-pane>
@@ -697,6 +697,10 @@ export default {
 <style scoped>
 
 
+ .el-textarea__inner{
+    width: 100%;
+    max-width: 100%;
+}
 
 
 </style>

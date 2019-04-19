@@ -588,7 +588,7 @@ export default {
   width:720px;
   margin:0 auto;
   position: relative;
-  left: -120px;
+  left: 0px;
   top: 10px;
 
 }
