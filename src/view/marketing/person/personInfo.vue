@@ -286,8 +286,7 @@ export default {
   height: 100px;
 }
 .person-width p{
-  font-size: 13px;
-  margin-top: 10px;
+  font-size: 12px;
 }
 .person-item-left{
   float: left;
