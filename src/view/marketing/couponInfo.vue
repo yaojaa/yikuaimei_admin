@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="item">
                                     <div class="hd">面值：</div>
-                                    <div class="bd">{{info.rules.reduce_price}}</div>
+                                    <div class="bd">{{formatPrice(info.rules.reduce_price)}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">次数限制：</div>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="item">
                                     <div class="hd">最低消费：</div>
-                                    <div class="bd">{{info.rules.price}}</div>
+                                    <div class="bd">{{formatPrice(info.rules.price)}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">使用范围：</div>
@@ -182,6 +182,9 @@ export default {
 
     },
     methods: {
+        formatPrice(price) {
+            return (price/100);
+        },
         getCategoryList(){
             //获取行业列表
             this.$axios.get("/api/admin/select/categoryList").then(res =>{
@@ -241,10 +244,6 @@ export default {
             }).catch((error) => {
                 this.$alert('接口返回错误'+error)
             });
-        },
-
-        formatPrice(price) {
-            return (price / 100).toFixed(2);
         }
     }
 }

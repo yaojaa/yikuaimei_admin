@@ -32,8 +32,8 @@
                        <el-col :span="6">
                         <!-- 如果选择不限制 那么 limit_times 就是0  -->
                         <el-radio-group  v-model="limitsStatus">
-                            <el-radio label="0">不限</el-radio> 
-                            <el-radio label="1">限制</el-radio>
+                            <el-radio :label="0">不限</el-radio> 
+                            <el-radio :label="1">限制</el-radio>
                         </el-radio-group>
                        </el-col>
                        <el-col :span="4">
@@ -52,9 +52,9 @@
                     <el-form-item label="最低消费:">
                        <el-col :span="6">
                         <!-- 如果选择不限制 那么 limit_times 就是0  -->
-                        <el-radio-group @change="limitsChange" v-model="ruleForm.rules.is_full">
-                            <el-radio label="0">无门槛</el-radio> 
-                            <el-radio label="1">满</el-radio>
+                        <el-radio-group  v-model="ruleForm.rules.is_full">
+                            <el-radio :label="0">无门槛</el-radio> 
+                            <el-radio :label="1">满</el-radio>
                         </el-radio-group>
                        </el-col>
                        
@@ -66,23 +66,23 @@
 
                     <el-form-item label="使用范围:" >
                         <el-radio-group v-model="ruleForm.coupon_range_type" @change="handleChange">
-                            <el-radio label="1">通用</el-radio>
-                            <el-radio label="2">指定行业</el-radio>
-                            <el-radio label="3">指定商品</el-radio>
-                            <el-radio label="4">指定服务</el-radio>
-                            <el-radio label="5">指定虚拟商品</el-radio>
+                            <el-radio :label="1">通用</el-radio>
+                            <el-radio :label="2">指定行业</el-radio>
+                            <el-radio :label="3">指定商品</el-radio>
+                            <el-radio :label="4">指定服务</el-radio>
+                            <el-radio :label="5">指定虚拟商品</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="使用规则:">
                         <el-col :span="12">
-                            <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm.coupon_desc"></el-input>
+                            <el-input type="textarea" :rows="6" placeholder="请输入内容" v-model="ruleForm.coupon_desc"></el-input>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="活动专属:">
                        <el-col :span="6">
                         <el-radio-group  v-model="ruleForm.coupon_in_shop">
-                            <el-radio label="1">否</el-radio> 
-                            <el-radio label="2">是</el-radio>
+                            <el-radio :label="1">否</el-radio> 
+                            <el-radio :label="2">是</el-radio>
                         </el-radio-group>
                        </el-col>
                        
@@ -91,22 +91,44 @@
                     </el-form-item>
     
                     <el-form-item label="使用有效期:">
-                        <el-col :span="18">
+                        <el-col :span="24">
                             <el-radio-group v-model="ruleForm.coupon_expire_type" @change="dataChange">
                                 
-                                <el-radio  label="1">固定日期
-                                    <el-date-picker
+                                <el-radio  :label="1">固定日期
+                                    <!-- <el-date-picker
                                         v-model="dateArray"
+                                        default-time="dateArray"
                                         @change="dataArrChange"
                                         type="datetimerange"
                                         value-format="yyyy-MM-dd hh:mm:ss"
                                         range-separator="至"
                                         start-placeholder="开始日期"
                                         end-placeholder="结束日期">
+                                    </el-date-picker> -->
+                                    <el-date-picker
+                                        v-model="dataStart"
+                                        type="datetime"
+                                        placeholder="选择日期时间"
+                                        value-format="yyyy-MM-dd hh:mm:ss"
+                                        @change="dataStartChange"
+                                        align="right"
+                                        :picker-options="pickerOptions">
                                     </el-date-picker>
+                                    至
+                                    <el-date-picker
+                                        v-model="dataEnd"
+                                        type="datetime"
+                                        placeholder="选择日期时间"
+                                        value-format="yyyy-MM-dd hh:mm:ss"
+                                        @change="dataEndChange"
+                                        align="right"
+                                        :picker-options="pickerOptions">
+                                    </el-date-picker>
+
+                                    
                                 </el-radio>
                                 <div class="heigth20px"></div>
-                                <el-radio label="2" >领取当日开始
+                                <el-radio :label="2" >领取当日开始
                                     <el-input v-model="ruleForm.coupon_expire.coupon_expire_day" @blur="dateDaysChange"></el-input>
                                     天内有效
                                 </el-radio>
@@ -248,20 +270,42 @@ export default {
   name: "training",
   data() {
     return {
+        pickerOptions: {
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
         ruleForm:{
             "coupon_desc":"",//使用规则
             "coupon_code":"",
             "coupon_title" : "",//优惠券标题
             "rules" : {  // 规则
-                "is_full" : "1", // 是否满减  
+                "is_full" : 0, // 是否满减  
                 "price" : "",  // 满多少
-                "reduce_price" : "100"  // 减多少
+                "reduce_price" : ""  // 减多少
             },
 
             "limits" : { // 参与限制
                 "limit_cycle" : "1", // 限制周期  1 日 2周 3月
                 "limit_times" : "", // 周期内限制使用次数
-                "limit_total_times" : "0", // 次数限制 0 不限
+                "limit_total_times" : "", // 次数限制 0 不限
             },
             "coupon_range" : { //弹窗列表选择
                 "category_id" : 1,
@@ -272,7 +316,7 @@ export default {
             "coupon_range_type":"1",
             "date_expire_type":0,
             "coupon_expire" : {
-                "coupon_expire_day" : 10,  //固定天数时使用
+                "coupon_expire_day" : "",  //固定天数时使用
                 "coupon_expire_start_time" :  "",
                 "coupon_expire_end_time" :  ""
             }
@@ -305,9 +349,11 @@ export default {
         "goodShow":false, //选中商品是否显示
         "industry_name":"", //选中行业的名称
         "selectRadioId":"", //当前页面选中的radio的id
-        dateArray:[], // 时间选择器数组
         "dateDays":"", //领取时间（固定天数）
-        "limitsStatus":"0", //限制频率
+        "limitsStatus":null, //限制频率
+        "dataStart":"",
+        "dataEnd":""
+
         
         
         
@@ -318,18 +364,20 @@ export default {
   },
   methods:{
       //次数限制功能
-      limitsChange(e){
-          if(e==0){
-              this.ruleForm.limits.limit_cycle = 1
-              this.ruleForm.limits.limit_times = 0
+    //   limitsChange(e){
 
-          }
-          if(e==1){
-              //限制使用周期
-          }
+    //       if(e==0){
+    //         //   this.ruleForm.limits.limit_cycle = 1
+    //           this.ruleForm.limits.limit_times = 0
 
+    //       }else{
+    //           this.ruleForm.limits.limit_total_times = 0
+    //       }
           
-      },
+    //       this.ruleForm.rules.is_full = e
+        
+          
+    //   },
       handleChange(e){
         this.selectRadioId = e;
         console.log(e,'eeee')
@@ -366,10 +414,16 @@ export default {
           this.ruleForm.coupon_expire_type = e;
           
       },
-      dataArrChange(e){
+    //   dataArrChange(e){
          
-          this.ruleForm.coupon_expire.coupon_expire_start_time = this.dateArray[0];
-          this.ruleForm.coupon_expire.coupon_expire_end_time = this.dateArray[1];
+    //       this.ruleForm.coupon_expire.coupon_expire_start_time = this.dateArray[0];
+    //       this.ruleForm.coupon_expire.coupon_expire_end_time = this.dateArray[1];
+    //   },
+      dataStartChange(){
+          this.ruleForm.coupon_expire.coupon_expire_start_time = this.dataStart
+      },
+      dataEndChange(){
+          this.ruleForm.coupon_expire.coupon_expire_end_time = this.dataEnd
       },
       dateDaysChange(){
          
@@ -477,11 +531,13 @@ export default {
       },
     submit(){
         let params = this.$route.params;
-        this.ruleForm.rules.reduce_price*100;
-        this.ruleForm.rules.price*100;
+        var obj=JSON.parse(JSON.stringify(this.ruleForm));
+        obj.rules.reduce_price=this.formatPrice(obj.rules.reduce_price);
+        obj.rules.price = this.formatPrice(obj.rules.price);
+        debugger
         if (Object.keys(params).length) {
             this.ruleForm.coupon_code = params.coupon_code
-            this.$axios.post("/api/admin/coupon/edit",this.ruleForm).then(res => {
+            this.$axios.post("/api/admin/coupon/edit",obj).then(res => {
                 if(res.data.code ==0){
                     this.$alert('编辑成功')
                     this.$router.push('/marketing/fullReducionCouponList')
@@ -492,7 +548,7 @@ export default {
             })
         }else{
             //var parms = this.ruleForm;
-            this.$axios.post("/api/admin/coupon/addReduce", this.ruleForm).then(res => {
+            this.$axios.post("/api/admin/coupon/addReduce", obj).then(res => {
                 if(res.data.code == 0){
                     this.$alert('添加成功！')
                     
@@ -519,7 +575,13 @@ export default {
 
         })
           
-      }
+      },
+        formatPrice(price) {
+            return (price*100);
+        },
+        formatPrice1(price) {
+            return (price/100);
+        }
     //   getServiceLIst(){
     //       //获取服务列表
     //       this.$axios.get("/api/admin/select/goodsList?good_type=1").then(res =>{
@@ -592,9 +654,21 @@ export default {
         if (Object.keys(params).length) {
             this.$axios.get("/api/admin/coupon/info",{params:params}).then(res => {
                 if(res.data.code ==0){
-                    this.ruleForm = res.data.data;
-                    this.dateArray[0] = this.ruleForm.coupon_expire.coupon_expire_start_time 
-                    this.dateArray[1] = this.ruleForm.coupon_expire.coupon_expire_end_time 
+                    if(res.data.data.limits.limit_times==0){
+                        this.limitsStatus = 0
+                    }else{
+                        this.limitsStatus = 1
+                    }
+                    console.log(this.limitsStatus,'limitsStatus')
+
+                    const _obj = JSON.parse(JSON.stringify(res.data.data));
+                    _obj.rules.reduce_price = this.formatPrice1(_obj.rules.reduce_price)
+                    _obj.rules.price = this.formatPrice1(_obj.rules.price)
+                    this.dataStart = _obj.coupon_expire.coupon_expire_start_time 
+                    this.dataEnd = _obj.coupon_expire.coupon_expire_end_time 
+                    this.ruleForm = _obj
+                   
+
                 }else{
                     this.$alert('接口返回错误')
                 }

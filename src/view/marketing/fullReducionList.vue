@@ -184,8 +184,8 @@ export default {
                         formatter(row) {
                             if(row.rules){
                                 return `<p style='text-align: center'>
-                                满${row.rules.price/100}</br>
-                                减${row.rules.reduce_price/100}</p>`;
+                                满${(row.rules.price/100)}</br>
+                                减${(row.rules.reduce_price/100)}</p>`;
                             }
                         }
 
@@ -407,6 +407,9 @@ export default {
             this.$refs.table.getData({
                 [k]: v
             })
+        },
+         formatPrice1(price) {
+            return (price/100);
         }
 
 
