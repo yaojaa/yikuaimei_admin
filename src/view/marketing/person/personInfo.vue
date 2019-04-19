@@ -55,7 +55,7 @@
                      <div class="table-body"  v-for="item in ruleForm.rules.walking" :key="item.sku">
                        <div class="person-item person-width clearfix">
                          <div class="person-item-left">
-                           <img v-if="item.goods_img"  :src="item.goods_img" alt="" width="50px" height="50px">
+                           <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="50px" height="50px">
                          </div>
                          <div class="person-item-right">
                            <p v-if="item.goods_name">{{item.goods_name}}</p>
