@@ -363,6 +363,22 @@ export default new Router({
                     }
                 },
                 {
+                    // 门店提现
+                    path: '/storeWithdrawal/list',
+                    component: resolve => require(['../view/storeWithdrawal/list.vue'], resolve),
+                    meta: {
+                        title: '门店提现'
+                    }
+                },
+                {
+                    // 门店提现详情
+                    path: '/storeWithdrawal/detail/:shop_withdraw_id',
+                    component: resolve => require(['../view/storeWithdrawal/detail.vue'], resolve),
+                    meta: {
+                        title: '门店提现/详情'
+                    }
+                },
+                {
                     // 加盟商审核
                     path: '/audit/business',
                     component: resolve => require(['../view/audit_business/list.vue'], resolve),

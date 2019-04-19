@@ -10,6 +10,7 @@
             <el-tabs v-model="tab" @tab-click="handleTabsClick" class="primary-tab">
                 <el-tab-pane label="基本信息" name="info"></el-tab-pane>
                 <el-tab-pane label="拥有门店" name="shop"></el-tab-pane>
+                <el-tab-pane label="银行卡" name="bankCard"></el-tab-pane>
             </el-tabs>
 
             <div class="page-column"  v-if="tab=='shop'">
@@ -172,6 +173,62 @@
                 </div>
 
             </div>
+
+
+
+            <div class="page-column"  v-if="tab=='bankCard'">
+                <div class="page-main">
+
+                    <div class="panel clearfix">
+            
+                        <div class="panel-body width600 fl">
+                            <el-form :model="ruleForm"  label-width="100px" class="demo-ruleForm" >
+                                <el-form-item label="姓名：">
+                                    <el-input v-model="ruleForm.user"></el-input>
+                                </el-form-item>
+                                <el-form-item  label="所属银行：">
+                                    <el-select v-model="value" placeholder="请选择所属银行" @change="bankChange">
+                                        <el-option
+                                            v-for="item in bankLIst"
+                                            :key="item.code"
+                                            :label="item.name"
+                                            :value="item.code">
+                                        </el-option>
+                                    </el-select>                   
+                                </el-form-item>
+                                <el-form-item label="银行卡号：">
+                                    <el-input v-model="ruleForm.num"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="开户行" >
+                                    <el-input v-model="ruleForm.branch"></el-input>
+                                </el-form-item>
+                                <el-form-item class="margin-auto">
+                                    <el-button size="large" type="primary" @click="submit()" >提交</el-button>
+                                </el-form-item>
+
+                            
+
+                            
+                            </el-form>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        
+                        <div class="panel-body clearfix">
+                            <div class="bank-info-box" v-if="flag">
+                                <p>{{bankInfo.bank_name}}</p>
+                                <p>{{bankInfo.bind_card_nu}}</p>
+                                <p class="card-btn"  @click="unBindCard()">解除绑定</p>
+                            </div>
+                            
+                        </div>
+                         
+                    </div>
+                  
+                </div>
+
+            </div>
         </div>
     </div>
 </template>
@@ -185,8 +242,20 @@ export default {
         return {
             tab: 'info',
             info: {},
+            flag:false,
+            bankLIst:[],
+            bankInfo:{},
+            value:"",
             id:'',
-            shopList:{}
+            shopList:{},
+            ruleForm:{
+                id:"",
+                user:"",//银行卡持有姓名
+                num:"",//银行卡号
+                branch:"",//开户行
+                code:""//银行代码
+
+            }
         }
     },
 
@@ -207,6 +276,8 @@ export default {
         this.getData(this.$route.params)
 
         this.getShopList()
+        this.getBankList()//获取银行卡列表
+        this.getbankInfo()
 
 
 
@@ -229,6 +300,86 @@ export default {
                     this.info = res.data.data;
                     console.log(this.info,'info')
                     //debugger;
+                }else{
+                    this.$alert('接口返回错误')
+                }
+                
+            }).catch((error) => {
+                this.$alert('接口返回错误'+error)
+            });
+        },
+        submit(){
+            this.ruleForm.id = this.id
+            console.log(this.ruleForm,'ruleForm')
+            this.$axios.post("/api/admin/shop/bindCard",this.ruleForm).then(res => {
+                if(res.data.code ==0){
+                    this.flag = true
+                    this.$alert('绑定成功')
+                    this.getbankInfo()
+                }else{
+                    this.$alert('接口返回错误')
+                }
+                
+            })
+        },
+        unBindCard(){
+            this.$axios({
+                method: 'get',
+                url: '/api/admin/shop/unBindCard',
+                params:{
+                    id:this.id
+                }
+                
+            }).then((res) => {
+
+                if(res.data.code ==0){
+                    this.flag = false
+                    this.$alert('解绑成功')
+                }else{
+                    this.$alert('接口返回错误')
+                }
+                
+            }).catch((error) => {
+                this.$alert('接口返回错误'+error)
+            });
+        },
+        getBankList(){
+            this.$axios({
+                method: 'get',
+                url: '/api/admin/select/bankList'
+                
+            }).then((res) => {
+
+                if(res.data.code ==0){
+                    this.bankLIst = res.data.data
+                }else{
+                    this.$alert('接口返回错误')
+                }
+                
+            }).catch((error) => {
+                this.$alert('接口返回错误'+error)
+            });
+        },
+        bankChange(e){
+            console.log(e)
+            this.ruleForm.code = e;
+        },
+        //获取银行卡信息
+        getbankInfo(){
+            this.$axios({
+                method: 'get',
+                url: '/api/admin/shop/bindCardInfo',
+                params:{
+                    id:this.id
+                }
+                
+            }).then((res) => {
+
+                if(res.data.code ==0){
+                    this.bankInfo = res.data.data
+                    if(res.data.data.length!=0){
+                        this.flag = true
+                    }
                 }else{
                     this.$alert('接口返回错误')
                 }
@@ -270,5 +421,47 @@ export default {
 <style scoped>
   .item-list.four-text .hd{
     width: 6em
+  }
+  .width600{
+      width: 360px;
+      margin: 0 auto;
+  }
+  .bank-info-box{
+      width: 200px;
+      height: 100rpx;
+      padding:20px;
+      border-radius:4px;
+      border:1px solid #dedede;
+      background-color: #dedede;
+      float:left;
+      margin-right:10px;
+      margin-top: 10px;
+  }
+  .bank-info-box p{
+      height:30px;
+      line-height: 30px;
+      color:#333;
+  }
+  .card-btn{
+      padding:6px 10px;
+      border:none;
+      background: none;
+      background-color: #fff;
+      border:1px solid #dedede;
+      border-radius:10px;
+      color:#333;
+      margin-top: 6px;
+      width: 40%;
+      margin: 0 auto;
+      text-align: center;
+      height: 26px;
+      line-height: 26px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+  }
+  .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+  .fl{
+      float: left;
   }
 </style>

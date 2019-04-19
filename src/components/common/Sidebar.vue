@@ -138,10 +138,10 @@
                                 index: '/refundReview/list',
                                 title: '退款复审'
                             },
-                            // {
-                            //     index: '/physicalcoupon',
-                            //     title: '提现(门店)'
-                            // },
+                            {
+                                index: '/storeWithdrawal/list',
+                                title: '门店提现'
+                            },
                             // {
                             //     index: '/physicalcoupon',
                             //     title: '提现(人)'
