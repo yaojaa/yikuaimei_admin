@@ -210,7 +210,7 @@ export default {
 
         agree(){
             var agreePams = {
-                        "type":2,
+                        "type":1,
                         "shop_withdraw_id":this.id
 
                     }
