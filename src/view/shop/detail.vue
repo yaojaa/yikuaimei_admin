@@ -433,7 +433,6 @@ export default {
       border-radius:4px;
       border:1px solid #dedede;
       background-color: #dedede;
-      float:left;
       margin-right:10px;
       margin-top: 10px;
   }
