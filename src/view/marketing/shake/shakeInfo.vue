@@ -127,7 +127,7 @@ export default {
           url:'/marketing/markList'
         },
         {
-          name: "摇一摇" //名字
+          name: "摇一摇详情" //名字
         }
       ],
       

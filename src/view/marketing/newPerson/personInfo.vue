@@ -136,7 +136,7 @@ export default {
           url:'/marketing/markList'
         },
         {
-          name: "新人红包" //名字
+          name: "新人红包详情" //名字
         }
       ],
       

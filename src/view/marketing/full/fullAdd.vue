@@ -79,9 +79,9 @@
                       </el-radio-group>
                     </el-form-item>
                   </el-form>
-                  <p class="gift-title"> --------------优惠设置--------------</p>
+                  <p class="gift-title"> 优惠设置</p>
                   <el-button type="primary"  class="button-add" @click="buttonAdd()">增加</el-button>
-                  <div class="gift-table width960 " >
+                  <div class="gift-table width980 " >
                      <div class="table-th">
                        <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                      </div>
@@ -94,12 +94,23 @@
                        <div class="body-gift-choice body-item">
                          <div class="item-choice" >
                           
-                            <div class="choiced" v-if="skuItem.coupon_code">以选中优惠券编号为{{skuItem.coupon_code}}的优惠券</div>
+                            <div class="choiced" v-if="skuItem.coupon_code">
+                              <div class="goods-div ">
+                                    <div class="goods-div-left">
+                                      <p class="margin-top10"><span class="price">¥{{skuItem.reduce_price/100}}</span><span>{{skuItem.coupon_title}}</span></p>
+                                      <p class="margin-top10">满{{skuItem.price/100}}元可用</p>
+                                    </div>
+                                    <div class="goods-div-right">
+                                     <img v-if="skuItem.coupon_img" :src="skuItem.coupon_img" width="70px" height="70px">
+                                     <p v-else class="no-img">暂无图片</p>
+                                    </div>
+                              </div>
+                            </div>
                             <div class="choice-button" v-else  @click="choiceClick(index)">请选择</div>
                          </div>
                        </div>
                        <div class="body-gift-img body-item">
-                         <div class="item-upload" >
+                         <div class="item-upload marking-upload" >
                            
                             <el-upload
                               class="avatar-uploader"
@@ -326,7 +337,11 @@ export default {
                 {
                     "coupon_code" : "",
                     "price" : "",
-                    "image" : ""
+                    "image" : "",
+                    "coupon_title":"",
+                    "coupon_img":"",
+                    "price":"",
+                    "reduce_price":""
                 }
                 
         ]
@@ -371,6 +386,10 @@ export default {
               this.$alert('必须选择商品')
           }else{
                 this.ruleForm.rules.full_gifts[this.index].coupon_code = this.checkedGoodsId 
+                this.ruleForm.rules.full_gifts[this.index].coupon_title = this.checkedGoods.coupon_title  
+                this.ruleForm.rules.full_gifts[this.index].coupon_img = this.checkedGoods.coupon_img 
+                this.ruleForm.rules.full_gifts[this.index].price = this.checkedGoods.rules.price
+                this.ruleForm.rules.full_gifts[this.index].reduce_price = this.checkedGoods.rules.reduce_price 
                 this.goodsVisible = false;
              
           }
@@ -556,9 +575,6 @@ export default {
 </script>
 
 <style scoped>
-/* .form-panel{
-  width:720px
-} */
 .width200px{
   width:200px
 }
@@ -590,147 +606,102 @@ export default {
   margin-bottom:20px;
   text-align: center
 }
-.gift-table{
-  width:720px;
-  margin:0 auto;
-  position: relative;
-  left: -120px;
-  top: 10px;
 
-}
 .left0{
   left:0px;
 }
 .background-blue{
   background-color: blue
 }
-.table-th{
-  width:100%;
-  height: 50px;
-  color:#fff;
-  line-height: 50px;
-  background-color:#03a380;
-  display: flex;
-  
-  
-}
-.th-item{
-  flex: 1;
-  text-align: center
-}
-.table-body{
-  width:100%;
-  display: flex;
-}
 
-.body-item{
-  flex:1;
-  
-}
- .invite-box .item-choice,.invite-box .item-upload,.invite-box .item-number,.invite-box .item-text{
+.item-choice,.item-upload,.item-number,.item-text{
   width:100%;
   height: 100px;
-  border-left:1px solid #ccc;
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.invite-box .item-number,.item-upload{
+.item-number,.item-upload{
   border-left:0px;
 }
-.invite-box .item-number{
-    border-left:1px solid #ccc;
-}
-.invite-box .choice-button,.invite-box .number-input,.invite-box .text-input{
-  width:100px;
-  height: 40px;
-  border:1px solid #000;
-  color:#000;
+.choice-button,.number-input,.text-input{
+  width:80px;
+  height: 30px;
+  border:1px solid #ccc;
+  color:#333;
   text-align: center;
-  line-height: 40px;
-  font-size: 12px; 
+  line-height: 30px;
+  font-size: 12px;
+  border-radius:6px;
 }
-.invite-box .choice-button{
+.choice-button{
   cursor:pointer;
   font-size:14px;
 }
 
-.invite-box .item-upload{
-  max-width:240px;
-  width:240px;
-  height: 100px;
+.item-upload{
   overflow: hidden;
   position: relative;
   left: 0px;
   top:0px;
 }
 
- .invite-box .item-upload .avatar-uploader{
-    width:240px;
+  .item-upload .avatar-uploader{
+    width:180px;
     height: 100px;
     overflow: hidden;
   }
-.invite-box .item-upload .avatar {
-    width: 238px;
+.item-upload .avatar {
+    width: 178px;
     height: 100px;
     display: block;
   }
-.invite-box .item-upload .el-upload,.invite-box .item-upload .el-upload--text{
-    width:238px;
-    height: 100px;
-    overflow: hidden;
-  }
-.invite-box .item-upload .avatar-uploader .el-upload {
+
+ .item-upload .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    left: 0px;
-    top: 0px;
   }
-.invite-box  .item-upload img{
+  .item-upload img{
     position:absolute;
     left: 0px;
     top:0px;
   }
- .invite-box .upload-img-icon{
-    width: 238px;
+  .upload-img-icon{
+    width: 178px;
     height: 100px;
     overflow: hidden;
-    position: absolute;
-    left: 30px;
+    position: relative;
+    left: 0px;
     top: 0px;
   }
-.invite-box  .position-icon{
+  .position-icon{
     position: absolute;
     left:62px;
     top:20px;
   }
-.invite-box  .comfort-item{
+  .comfort-item{
     flex: 1
   }
-.invite-box  .comfort-item{
+  .comfort-item{
     height: 100px;
-    border-left:1px solid #ccc;
-    border-bottom:1px solid #ccc;
-    border-right:1px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-.invite-box  .comfort-button{
-    width:140px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 14px;
-    border:1px solid #000;
-    color:#000;
+  .comfort-button{
+    width:80px;
+    height: 30px;
+    border:1px solid #ccc;
+    color:#333;
     text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    border-radius:6px;
   }
-.invite-box  .comfort-right{
+  .comfort-right{
   max-width:360px;
   width:360px;
   height: 100px;
@@ -740,7 +711,7 @@ export default {
   top:0px;
 }
 
-.invite-box  .comfort-right .avatar-uploader{
+  .comfort-right .avatar-uploader{
     width:360px;
     height: 100px;
     overflow: hidden;
@@ -794,7 +765,7 @@ export default {
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    background-color: #f73c3c
+    background-color: #7224D8;
   }
 .clearfix:after{
   content:".";
@@ -823,7 +794,7 @@ export default {
     margin-right:6px;
   }
   .margin-top10{
-    margin-top:10px;
+    margin-top:6px;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap
@@ -834,6 +805,11 @@ export default {
     line-height: 70px;
     font-size: 14px;
     text-align: center;
+  }
+  .shake-box .el-radio__input,.invite-box .el-radio__input{
+    position: absolute;
+    bottom:14px;
+    left: 1px
   }
  
 
@@ -849,35 +825,24 @@ export default {
   text-align: center;
   color: #000;
 }
-.width960{
-  width:960px;
-}
-.color-red{
-    color:#ff0000;
-    text-indent:156px;
-}
-.button-add{
-    position: relative;
-    left: -120px;
-}
 .width720{
-    width:720px
+  width:720px;
 }
+
 .shake-box .el-tabs__content .el-radio:first-of-type{
   margin-left: 30px;
 }
-.invite-img{
-  max-width: 238px;
-  max-height: 100px;
-  width: 238px;
-  height: 100px;
+
+.mt10{
+  margin-top: 10px;
 }
-.invite-upload-img{
-  max-width: 360px;
-  width: 358px;
-  height: 176px;
-  max-height: 176px
+.mb10{
+  margin-bottom: 10px;
 }
+.width980{
+  width:980px;
+}
+
 </style>
 
 

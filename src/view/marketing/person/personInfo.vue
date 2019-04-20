@@ -138,7 +138,7 @@ export default {
           url:'/marketing/person/list'
         },
         {
-          name: "详情" //名字
+          name: "多人同行详情" //名字
         }
       ],
       

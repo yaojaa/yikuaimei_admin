@@ -37,8 +37,8 @@ export default {
                     name: "网站管理"
                 },
                 {
-                    name: "标签管理",
-                    url: "/manage/labelList"
+                    name: "标签管理/标签列表",
+                    url: "/manage/label"
                 }
             ],
             status_filter: '',

@@ -403,11 +403,16 @@ export default {
             breadcrumb: [
                 //面包屑
                 {
-                    name: "案例" //名字
+                    name: "网站管理" //名字
+                },
+                {
+                    name: "案例管理/案例列表", //名字
+                    url: "/manage/case"
                 },
 
                 {
-                    name: "添加案例" //名字
+                    name: "添加案例", //名字
+                    url: "/manage/case/add"
                 }
             ],
             accountList: ['张三','李四','王五'],
@@ -426,14 +431,14 @@ export default {
                     "shop_account_melevel": '' //职称级别id
                 },
                 "user_info": { //顾客信息
-                    "user_name": "顾客2", //姓名
-                    "user_phone": "18666666666", //手机
-                    "user_birth": "1995-06-09", //生日
-                    "user_height": 163, //身高单位CM
-                    "user_weight": 49, //体重单位KG
-                    "user_job": "术士", //工作
-                    "skin": "皮肤现状",
-                    "diagnosis": "临床诊断",
+                    "user_name": "", //姓名
+                    "user_phone": "", //手机
+                    "user_birth": "", //生日
+                    "user_height": null, //身高单位CM
+                    "user_weight": null, //体重单位KG
+                    "user_job": "", //工作
+                    "skin": "",
+                    "diagnosis": "",
                     "pic_before": "", //图片before
                     "pic_after": "" //图片after
                 },

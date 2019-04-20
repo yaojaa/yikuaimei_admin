@@ -202,7 +202,7 @@ export default {
           url:'/marketing/markList'
         },
         {
-          name: "帮砍" //名字
+          name: "帮砍详情" //名字
         }
       ],
      

@@ -1,11 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>订单管理</el-breadcrumb-item>
-                <el-breadcrumb-item>订单管理</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+            <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
         </div>
         <div class="page-content">
             <div class="panel">
@@ -138,6 +134,7 @@
     </div>
 </template>
 <script>
+import BreadCrumb from "@/components/common/BreadCrumb";
 //******* 1.扫描商品码 匹配商品到当前区域
 //3.再次扫描如果商品码一样 当前商品数量+1 如果不一样 进入代发货区域。
 // 4.手动控制数量
@@ -146,8 +143,24 @@
 
 
 export default {
+    components: {
+            BreadCrumb
+        },
     data() {
         return {
+            breadcrumb: [
+                    //面包屑
+                    {
+                        name: "订单管理", //名字 
+                    },
+                    {
+                        name: "商品订单", //名字
+                        url: "/order/list_goods"
+                    },
+                    {
+                        name: "发货"
+                    }
+                ],
 
             d: {},
             textarea: '', //条码区

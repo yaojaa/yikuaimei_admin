@@ -73,11 +73,15 @@
         breadcrumb: [
           //面包屑
           {
-            name: "标签管理", //名字
+            name: "网站管理" //名字
+          },
+          {
+            name: "标签管理/标签列表", //名字
             url: "/manage/label"
           },
           {
-            name: "添加标签" //名字
+            name: "添加标签", //名字
+            url:"/manage/label/add?id=0"
           }
         ],
   

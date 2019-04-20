@@ -1,10 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>角色管理</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+            <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
         </div>
         <div class="page-moment">
             <el-form ref="form" :model="form" label-width="80px" class="adminRole">
@@ -75,16 +72,33 @@
 </template>
 
 <script>
+import BreadCrumb from "@/components/common/BreadCrumb";
     import {
         mapState
     } from "Vuex";
     export default {
         name: "detail",
     
-        components: {},
+        components: {
+            BreadCrumb
+        },
     
         data() {
             return {
+                breadcrumb: [
+                //面包屑
+                {
+                    name: "平台管理"
+                },
+                {
+                    name: "角色管理",
+                    url: "/admin/roleList"
+                },
+                {
+                    name: "添加角色",
+                    url: ""
+                }
+            ],
                 form: {
                     role_name: "",
                     role_id: null, // id

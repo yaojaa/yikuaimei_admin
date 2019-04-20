@@ -115,7 +115,7 @@ export default {
           url:'/marketing/markList'
         },
         {
-          name: "邀请好友" //名字
+          name: "邀请好友详情" //名字
         }
       ],
       

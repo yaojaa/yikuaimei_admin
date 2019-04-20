@@ -1,10 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>门店</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+           <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
         </div>
         <div class="page-content">
             <div class="filter-tag-box">
@@ -38,10 +35,21 @@
 <script>
 import NomalTable from '@/components/common/NomalTable'
 import TableSearch from '@/components/common/TableSearch'
+import BreadCrumb from "@/components/common/BreadCrumb";
 
 export default {
     data() {
         return {
+            breadcrumb: [
+                //面包屑
+                {
+                    name: "审核管理"
+                },
+                {
+                    name: "门店列表",
+                    url: "/audit/shop"
+                }
+            ],
             user: JSON.parse(localStorage.user),
             dialog: false,
             business_id: '',
@@ -76,25 +84,7 @@ export default {
                         "value": "",
                         "placeholder": "",
                     },
-                    {
-                        "type": "input-text", //选择器
-                        "label": "城市",
-                        "name": "option",
-                        "value": "all",
-                        "options": [{
-                                "name": "全部",
-                                "value": "all",
-                            },
-                            {
-                                "name": "option2",
-                                "value": "option2",
-                            },
-                            {
-                                "name": "option3",
-                                "value": "option3",
-                            },
-                        ],
-                    },
+                    
                     {
                         "type": "input-singal-date", //输入日期
                         "label": "开始时间",
@@ -187,7 +177,8 @@ export default {
     },
     components: {
         NomalTable,
-        TableSearch
+        TableSearch,
+        BreadCrumb
     },
     beforeRouteUpdate(to, from, next) {
         console.log(to.query);

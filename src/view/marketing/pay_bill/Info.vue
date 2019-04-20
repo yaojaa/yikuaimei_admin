@@ -132,7 +132,7 @@ export default {
                     url: '/marketing/pay_bill/list'
                 },
                 {
-                    name: "添加" //名字
+                    name: "详情" //名字
                 }
             ],
 

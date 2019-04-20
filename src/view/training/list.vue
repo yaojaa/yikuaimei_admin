@@ -2,10 +2,7 @@
     <div class="page">
         <div class="page-header">
             <div class="crumbs">
-                <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item>培训</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-                </el-breadcrumb>
+                <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
             </div>
             <div class="page-header-actions">
                 <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/training/add' })">添加干货培训</el-button>
@@ -30,12 +27,22 @@
 <script>
 	import NomalTable from "@/components/common/NomalTable";
 	import BreadCrumb from "@/components/common/BreadCrumb";
-	import TableSearch from "@/components/common/TableSearch";
+    import TableSearch from "@/components/common/TableSearch";
 	import Config from "../goods/config";
 
 export default {
     data() {
         return {
+            breadcrumb: [
+                //面包屑
+                {
+                    name: "加盟商管理"
+                },
+                {
+                    name: "培训列表",
+                    url: "/training/list"
+                }
+            ],
             user: JSON.parse(localStorage.user),
             dialog: false,
             business_id: '',
@@ -221,7 +228,8 @@ export default {
     },
     components: {
         NomalTable,
-        TableSearch
+        TableSearch,
+        BreadCrumb
     },
     beforeRouteUpdate(to, from, next) {
         console.log(to.query);

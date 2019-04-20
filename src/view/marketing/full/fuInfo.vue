@@ -109,16 +109,20 @@ export default {
         
       ],
       
-      breadcrumb: [
-        //面包屑
-        {
-            name: "营销管理/营销应用", //名字
-            url: '/marketing/markList'
-        },
-        {
-          name: "满赠活动/详情" //名字
-        }
-      ],
+       breadcrumb: [
+                //面包屑
+                {
+                    name: "营销管理/营销应用", //名字
+                    url: '/marketing/markList'
+                },
+                {
+                    name: "满赠活动", //名字
+                    url: '/marketing/full/list'
+                },
+                {
+                    name: "满赠活动详情" //名字
+                }
+            ],
       
       ruleForm:{
           "rules":{

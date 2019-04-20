@@ -1,10 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>订单管理</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+            <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
         </div>
         <div class="page-content">
             <div class="panel">
@@ -62,14 +59,31 @@
 </template>
 <script>
 import Config from "./config";
+import BreadCrumb from "@/components/common/BreadCrumb";
 
 export default {
     name: 'orderPurchaseDetail',
 
-    components: {},
+    components: {
+        BreadCrumb
+    },
 
     data() {
         return {
+            breadcrumb: [
+                    //面包屑
+                    {
+                        name: "订单管理", //名字 
+                    },
+                    {
+                        name: "采购品项", //名字
+                        url: "/order/purchaseOrderList"
+                    },
+                    {
+                        name: "报货信息", //名字
+                        url: "/order/order_purchase_detail"
+                    }
+                ],
             purchaseId: this.$route.params.purchase_id,
             purchase: {},
             // order_status: { // 订单状态

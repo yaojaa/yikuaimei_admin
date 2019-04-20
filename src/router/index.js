@@ -217,7 +217,7 @@ export default new Router({
                 },
                 {
                     // 案例详情
-                    path: '/manage/case/:id',
+                    path: '/manage/case/case_detail/:id',
                     component: resolve => require(['../view/case/case_detail.vue'], resolve),
                     meta: {
                         title: '案例详情',
@@ -388,7 +388,7 @@ export default new Router({
                 },
                 {
                     // 加盟商审核
-                    path: '/audit/business/:id',
+                    path: '/audit/business/detail/:id',
                     component: resolve => require(['../view/audit_business/detail.vue'], resolve),
                     meta: {
                         title: '加盟商审核详情'

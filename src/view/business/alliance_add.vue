@@ -269,11 +269,16 @@ export default {
       breadcrumb: [
         //面包屑
         {
-          name: "加盟商管理", //名字
-          url:'alliance'
+          name: "加盟商管理" //名字
+         
         },
         {
-          name: "添加加盟商" //名字
+          name: "加盟商列表", //名字
+          url:"/business/alliance"
+        },
+        {
+          name: "添加加盟商", //名字
+          url:"/business/alliance_add"
         }
       ],
 

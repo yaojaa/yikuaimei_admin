@@ -2,10 +2,7 @@
     <div class="page">
         <div class="page-header">
             <div class="crumbs">
-                <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item>培训</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-                </el-breadcrumb>
+                <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
             </div>
         </div>
         <div class="page-content">
@@ -79,6 +76,20 @@ export default {
   name: "training",
   data() {
     return {
+        breadcrumb: [
+                //面包屑
+                {
+                    name: "加盟商管理"
+                },
+                {
+                    name: "培训列表",
+                    url: "/training/list"
+                },
+                {
+                    name: "添加培训",
+                    url: "/training/add"
+                }
+            ],
         ruleForm:{
             "id":"",
             "train_title" : "",//培训标题

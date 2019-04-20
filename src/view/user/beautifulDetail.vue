@@ -1,10 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>美丽档案</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+            <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
         </div>
         <div class="page-content">
            <div class="info">
@@ -35,13 +32,31 @@
     </div>
 </template>
 <script>
+import BreadCrumb from "@/components/common/BreadCrumb";
 export default {
     name: 'detail',
 
-    components: {},
+    components: {
+        BreadCrumb
+    },
 
     data() {
         return {
+            breadcrumb: [
+                //面包屑
+                {
+                    name: "用户管理"
+                },
+                {
+                    name: "美丽档案",
+                    url: "/user/beautifulList"
+                },
+                {
+                    name: "档案详情",
+                    url: "/user/beautifulDetail"
+                },
+
+            ],
             info: {},
             id:''
         }

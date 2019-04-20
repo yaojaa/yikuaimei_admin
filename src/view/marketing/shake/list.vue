@@ -2,10 +2,7 @@
     <div class="page">
         <div class="page-header">
             <div class="crumbs">
-                <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item>营销管理</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-                </el-breadcrumb>
+                <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
             </div>
             <div class="page-header-actions">
                 <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/marketing/shake/shakeAdd' })">添加</el-button>
@@ -39,12 +36,24 @@
 </template>
 <script>
 import NomalTable from '@/components/common/NomalTable'
+import BreadCrumb from "@/components/common/BreadCrumb";
 // import TableSearch from '@/components/common/TableSearch'
 
 
 export default {
     data() {
         return {
+            breadcrumb: [
+                //面包屑
+                {
+                    name: "营销管理/营销应用", //名字
+                    url: '/marketing/markList'
+                },
+                {
+                    name: "摇一摇", //名字
+                    url: '/marketing/shake/list'
+                }
+            ],
             dialog:false,
             status_filter: "",
             activity_status:null,
@@ -219,6 +228,7 @@ export default {
     },
     components: {
         NomalTable,
+        BreadCrumb
         // TableSearch
     },
     beforeRouteUpdate(to, from, next) {

@@ -160,15 +160,15 @@ export default {
                             if (row.goods_info.length) {
                                 good = row.goods_info[0];
                             }
-                            console.log(good);
+                            console.log(good,'good');
 
                             let str = "<div style='background-color#fff;padding:8px;'>";
                             if (row.goods_info.length) {
                                 str +=
                                     "<div style='float:left;width:80px;height:80px;margin-right:8px;'><img style='width:100%; height:100%;' src='" +
-                                    good.good_ico +
+                                    good.goods_img +
                                     "'></div>";
-                                str += "<p class='list-good-name'>" + good.good_name + "</p>";
+                                str += "<p class='list-good-name'>" + good.goods_name + "</p>";
                                 str += "</div>";
                             }
                             return str;

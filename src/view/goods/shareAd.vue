@@ -10,7 +10,7 @@
 
         <!-- tab 内容 -->
         <div class="page-content">
-          <el-form   label-width="100px" class="small-form">
+          <el-form   label-width="100px" class="small-form share-form">
               <el-form-item label="分享海报文字:">
                 <el-input v-model="shareGetInfo.share_model_content"></el-input>
               </el-form-item>
@@ -42,7 +42,7 @@
                 :show-file-list="false"
                 :on-change="(res,file)=>{return $_change(res,file, card)}"
                 :before-upload="$_beforeUpload">
-                <img v-if="card.img_url" :src="card.img_url" class="avatar">
+                <img v-if="card.img_url" :src="card.img_url" class="avatar" width="360px" height="180px">
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
                 <div slot="tip" class="el-upload__tip">支持上传1张图片，图片框高逼为3:1，支持JPG,PNG等格式图片，单张图片大小不超过5M</div>
               </el-upload>
@@ -234,7 +234,7 @@ export default {
 }
 
 .small-form .el-input__inner{
-  width:240px;
+  width:720px;
 }
 .bottom-form{
   margin-top:50px;

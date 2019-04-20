@@ -2,10 +2,7 @@
     <div class="page">
         <div class="page-header">
             <div class="crumbs">
-                <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item>案例</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-                </el-breadcrumb>
+                <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
             </div>
             <div class="page-header-actions">
                 <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/case/add' })">添加案例</el-button>
@@ -27,10 +24,21 @@
 </template>
 <script>
 import NomalTable from '@/components/common/NomalTable'
+import BreadCrumb from "@/components/common/BreadCrumb";
 
 export default {
     data() {
         return {
+            breadcrumb: [
+                //面包屑
+                {
+                    name: "网站管理"
+                },
+                {
+                    name: "案例管理/案例列表",
+                    url: "/manage/case"
+                }
+            ],
             status_filter: '',
             category: [],
             tagsListGroup: {
@@ -117,7 +125,7 @@ export default {
                                 "label": "详情",
                                 "type": "detail",
                                 onClick(tablePage, self, row) {
-                                    self.$router.push("/manage/case/" + row.cases_id)
+                                    self.$router.push("/manage/case/case_detail/" + row.cases_id)
                                 }
 
                             },
@@ -149,7 +157,8 @@ export default {
         }
     },
     components: {
-        NomalTable
+        NomalTable,
+        BreadCrumb
     },
     created() {
 

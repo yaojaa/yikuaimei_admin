@@ -1,10 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>门店</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+             <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
         </div>
         <div class="page-content">
             <el-tabs v-model="tab" @tab-click="handleTabsClick" class="primary-tab">
@@ -99,14 +96,32 @@
     </div>
 </template>
 <script>
+import BreadCrumb from "@/components/common/BreadCrumb";
 export default {
     name: 'detail',
 
-    components: {},
+    components: {
+        BreadCrumb
+    },
     inject:['reload'],
 
     data() {
         return {
+            breadcrumb: [
+                //面包屑
+                {
+                    name: "审核管理"
+                },
+                {
+                    name: "门店提现",
+                    url: "/storeWithdrawal/list"
+                },
+                {
+                    name: "详情",
+                    url: "/storeWithdrawal/detail"
+                }
+
+            ],
             tab: 'info',
             info: {
                 "shop_withdraw_amount":"1",

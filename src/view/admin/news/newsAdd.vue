@@ -105,12 +105,16 @@ export default {
        breadcrumb: [
                 //面包屑
                 {
-                    name: "平台管理/消息通知", //名字
+                    name: "平台管理" //名字
+                  
+                },
+                {
+                    name: "消息推送", //名字
                     url: '/admin/news/list'
                 },
                 
                 {
-                    name: "添加消息通知" //名字
+                    name: "添加消息" //名字
                 }
             ],
       

@@ -1,10 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>审核管理／退款复审</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+            <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
         </div>
         <div class="page-content">
             <RefundInfo :refundInfo="refundInfo" :backUrl="backurl" from="1"></RefundInfo>
@@ -14,15 +11,32 @@
 <script>
 import Config from "./config";
 import RefundInfo from "../order/components/refundReviewInfo";
+import BreadCrumb from "@/components/common/BreadCrumb";
 export default {
     name: 'RefundDetail',
 
     components: {
-        RefundInfo
+        RefundInfo,
+        BreadCrumb
+
     },
 
     data() {
         return {
+            breadcrumb: [
+                //面包屑
+                {
+                    name: "审核管理"
+                },
+                {
+                    name: "退款复审",
+                    url: "/refundReview/list"
+                },
+                {
+                    name: "复审详情",
+                    url: "/refundReview/refundReviewDetail"
+                }
+            ],
             refundId: this.$route.params.refund_id,
             refundInfo: {},
             backurl: location.pathname,

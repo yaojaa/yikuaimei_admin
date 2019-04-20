@@ -9,9 +9,9 @@
 
 <div class="panel">
 
-<div class="p-xl" style="width: 550px">
+<div class="p-xl" >
                    <!--form start-->
- <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm">
+ <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm ling-from">
 
 
   <el-form-item label="行业" prop="tag_name">
@@ -168,4 +168,7 @@ export default {
 
 <style scoped>
 
+  .ling-from .el-input,.ling-from .el-input--small,.ling-from .el-input__inner{
+     width:720px ;
+  }
 </style>

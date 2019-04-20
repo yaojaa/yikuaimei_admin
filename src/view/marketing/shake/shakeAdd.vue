@@ -99,9 +99,9 @@
                    
                    
                   </el-form>
-                  <p class="gift-title"> ---------------设置奖品---------------</p>
+                  <p class="gift-title">设置奖品</p>
                   <p class="gift-title">以下奖品必须全部选择，否则无法上架</p>
-                  <div class="gift-table left0" >
+                  <div class="gift-table left0 width980" >
                      <div class="table-th">
                        <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                      </div>
@@ -109,12 +109,23 @@
                        <div class="body-gift-choice body-item">
                          <div class="item-choice" >
                           
-                            <div class="choiced" v-if="item.coupon_code">以选中优惠券编号为{{item.coupon_code}}的优惠券</div>
+                            <div class="choiced" v-if="item.coupon_code">
+                              <div class="goods-div ">
+                                    <div class="goods-div-left">
+                                      <p class="margin-top10"><span class="price">¥{{item.reduce_price/100}}</span><span>{{item.coupon_title}}</span></p>
+                                      <p class="margin-top10">满{{item.price/100}}元可用</p>
+                                    </div>
+                                    <div class="goods-div-right">
+                                     <img v-if="item.coupon_img" :src="item.coupon_img" width="70px" height="70px">
+                                     <p v-else class="no-img">暂无图片</p>
+                                    </div>
+                              </div>
+                            </div>
                             <div class="choice-button" v-else  @click="choiceClick(item.index)">请选择</div>
                          </div>
                        </div>
                        <div class="body-gift-img body-item">
-                         <div class="item-upload" >
+                         <div class="item-upload marking-upload" >
                            
                             <el-upload
                               class="avatar-uploader"
@@ -141,9 +152,9 @@
                        </div>
                      </div>
                   </div>
-                  <p class="gift-title"> ---------------设置安慰奖---------------</p>
+                  <p class="gift-title"> 设置安慰奖</p>
                   <p class="gift-title">安慰奖必须选择，否则无法上架</p>
-                  <div class="gift-table left0" >
+                  <div class="gift-table left0 " >
                     <div class="table-th">
                        <div class="th-item">奖品</div>
                        <div class="th-item">奖品图</div>
@@ -151,7 +162,18 @@
                      </div>
                      <div class="table-body">
                           <div class="comfort-left comfort-item">
-                            <div class="choiced" v-if="ruleForm.rules.shake_default.coupon_code">以选中优惠券编号为{{ruleForm.rules.shake_default.coupon_code}}的优惠券</div>
+                            <div class="choiced" v-if="ruleForm.rules.shake_default.coupon_code">
+                                <div class="goods-div ">
+                                    <div class="goods-div-left">
+                                      <p class="margin-top10"><span class="price">¥{{ruleForm.rules.shake_default.reduce_price/100}}</span><span>{{ruleForm.rules.shake_default.coupon_title}}</span></p>
+                                      <p class="margin-top10">满{{ruleForm.rules.shake_default.price/100}}元可用</p>
+                                    </div>
+                                    <div class="goods-div-right">
+                                     <img v-if="ruleForm.rules.shake_default.coupon_img" :src="ruleForm.rules.shake_default.coupon_img" width="70px" height="70px">
+                                     <p v-else class="no-img">暂无图片</p>
+                                    </div>
+                              </div>
+                            </div>
                             
                             <div class="comfort-button" v-else @click="defaultChoice()">请选择</div>
                           </div>
@@ -162,7 +184,7 @@
                               :show-file-list="false"
                               :on-success="show_default_img"
                               >
-                            <img width="178px" max-width="178px" height="96px" max-height="96px" v-if="ruleForm.rules.shake_default.gifts_img" :src="ruleForm.rules.shake_default.gifts_img" >
+                            <img width="358px"  height="96px"  v-if="ruleForm.rules.shake_default.gifts_img" :src="ruleForm.rules.shake_default.gifts_img" >
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       
@@ -335,7 +357,6 @@ export default {
       imageUrl:"",
       dialogImageUrl:"",
       limitsStatus:0,
-      radioGoodsId:"",
       date:"",
       activeId:"",
       goodsList:{},
@@ -428,20 +449,33 @@ export default {
         },
         "rules":{
           "shake_default" : { // 安慰奖
-          "coupon_code" :"", // 优惠券编号
-          "gifts_img" : "" // 图片
+         
+              "coupon_code" : "", // 优惠券编号
+              "coupon_title":"",
+              "coupon_img":"",
+              "price":"",
+              "reduce_price":"",
+              "gifts_img" : "",  // 奖品图片
           },
           "shakes":[
             {
               "index":0,
               "coupon_code" : "", // 优惠券编号
+              "coupon_title":"",
+              "coupon_img":"",
+              "price":"",
+              "reduce_price":"",
               "gifts_img" : "",  // 奖品图片
               "gifts_num" : null, // 总数量
               "gifts_probability" : null  // 中奖几率
             },
             {
               index:1,
-              "coupon_code" : "", // 优惠券编号
+             "coupon_code" : "", // 优惠券编号
+              "coupon_title":"",
+              "coupon_img":"",
+              "price":"",
+              "reduce_price":"",
               "gifts_img" : "",  // 奖品图片
               "gifts_num" : null, // 总数量
               "gifts_probability" : null  // 中奖几率
@@ -449,6 +483,10 @@ export default {
           {
               index:2,
               "coupon_code" : "", // 优惠券编号
+              "coupon_title":"",
+              "coupon_img":"",
+              "price":"",
+              "reduce_price":"",
               "gifts_img" : "",  // 奖品图片
               "gifts_num" : null, // 总数量
               "gifts_probability" : null  // 中奖几率
@@ -456,6 +494,10 @@ export default {
             {
               index:3,
               "coupon_code" : "", // 优惠券编号
+              "coupon_title":"",
+              "coupon_img":"",
+              "price":"",
+              "reduce_price":"",
               "gifts_img" : "",  // 奖品图片
               "gifts_num" : null, // 总数量
               "gifts_probability" : null  // 中奖几率
@@ -463,20 +505,32 @@ export default {
             {
               index:4,
               "coupon_code" : "", // 优惠券编号
+              "coupon_title":"",
+              "coupon_img":"",
+              "price":"",
+              "reduce_price":"",
               "gifts_img" : "",  // 奖品图片
               "gifts_num" : null, // 总数量
               "gifts_probability" : null  // 中奖几率
             },
             {
               index:5,
-              "coupon_code" : "", // 优惠券编号
+             "coupon_code" : "", // 优惠券编号
+              "coupon_title":"",
+              "coupon_img":"",
+              "price":"",
+              "reduce_price":"",
               "gifts_img" : "",  // 奖品图片
               "gifts_num" : null, // 总数量
               "gifts_probability" : null  // 中奖几率
             },
             {
               index:6,
-              "coupon_code" : "", // 优惠券编号
+             "coupon_code" : "", // 优惠券编号
+              "coupon_title":"",
+              "coupon_img":"",
+              "price":"",
+              "reduce_price":"",
               "gifts_img" : "",  // 奖品图片
               "gifts_num" : null, // 总数量
               "gifts_probability" : null  // 中奖几率
@@ -484,6 +538,10 @@ export default {
             {
               index:7,
               "coupon_code" : "", // 优惠券编号
+              "coupon_title":"",
+              "coupon_img":"",
+              "price":"",
+              "reduce_price":"",
               "gifts_img" : "",  // 奖品图片
               "gifts_num" : null, // 总数量
               "gifts_probability" : null  // 中奖几率
@@ -526,6 +584,10 @@ export default {
               this.$alert('必须选择商品')
           }else{
                 this.ruleForm.rules.shake_default.coupon_code = this.checkedGoodsId
+                this.ruleForm.rules.shake_default.coupon_title = this.checkedGoods.coupon_title
+                 this.ruleForm.rules.shake_default.coupon_img = this.checkedGoods.coupon_img
+                  this.ruleForm.rules.shake_default.price = this.checkedGoods.price
+                   this.ruleForm.rules.shake_default.reduce_price = this.checkedGoods.reduce_price
                 this.goodsDefaultVisible = false;
              
           }
@@ -539,7 +601,12 @@ export default {
               console.log(this.checkedGoodsId,'checkedGoodsId')
               this.$alert('必须选择商品')
           }else{
-                this.ruleForm.rules.shakes[this.index].coupon_code = this.checkedGoodsId 
+                this.ruleForm.rules.shakes[this.index].coupon_code = this.checkedGoodsId
+                this.ruleForm.rules.shakes[this.index].coupon_title = this.checkedGoods.coupon_title
+                this.ruleForm.rules.shakes[this.index].coupon_img = this.checkedGoods.coupon_img
+                this.ruleForm.rules.shakes[this.index].price = this.checkedGoods.rules.price
+                this.ruleForm.rules.shakes[this.index].reduce_price = this.checkedGoods.rules.reduce_price
+                
                 this.goodsVisible = false;
              
           }
@@ -557,6 +624,7 @@ export default {
         // this.dialogImageUrl = res.data.url
       },
       show_default_img(res){
+        debugger
        this.ruleForm.rules.shake_default.gifts_img = res.data.url
 
       },
@@ -580,9 +648,7 @@ export default {
 
     handleFaceUploadSuccess(){},
      goNextStep(n){
-    //    if(n==1){
-    //      this.mapTX();
-    //    }
+  
        this.step = n;
       
     },
@@ -596,83 +662,7 @@ export default {
         })
           
       },
-    // querySearchAsync(queryString, callback) {
-    //   var list = [{}];
-    //   //调用的后台接口
-    //   if(queryString==undefined){
-    //     var url = "/api/admin/select/businessList" ;
-    //   }else{
-    //     var url = "/api/admin/select/businessList?business_id=" + queryString;
-    //   }
-
-    //   this.$axios.get(url).then(res =>{
-    //       if(res.data.code ==0){
-    //         //this.business_list = res.data.data;
-    //         //在这里为这个数组中每一个对象加一个value字段, 因为autocomplete只识别value字段并在下拉列中显示
-    //         for(let i of res.data.data){
-    //             i.value = i.business_name;  //将想要展示的数据作为value
-                
-    //         }
-    //         list = res.data.data;
-    //         callback(list);
-    //       }
-    //     })
-    //   // //从后台获取到对象数组
-    //   // this.$axios.get(url).then((response)=>{
-        
-          
-    //   // }).catch((error)=>{
-    //   // console.log(error);
-    //   // });
-    // },
-    // handleSelect(event) {
-    //   console.log(event,'event');
-    //   this.ruleForm.business_id = event.business_id;
-    //   //console.log(this.ruleForm.business_id,'this.ruleForm.business_id');
-    //   //debugger;
-    // },
-    // handleChange(event){
-    //   this.ruleForm.address_code = event[event.length-1];
-    //   console.log(this.ruleForm.address_code,'this.ruleForm.address_code')
-    // },
-    //  handleRemove(file, fileList) {
-    //    this.ruleForm.shop_environment.splice(file.url,1)
-    //     console.log(this.ruleForm.shop_environment,'shop_environment')
-    // },
-    // handlePictureCardPreview(file) {
-    //     this.dialogImageUrl = file.url;
-    //     this.dialogVisible = true;
-    // },
-    // resetForm(formName) {
-    //     this.$refs[formName].resetFields();
-    //   },
-    // shop_pic(res){
-    //   this.ruleForm.shop_pic = res.data.url
-    // },
-    // shop_licence_pic(res){
-    //     this.ruleForm.shop_licence_pic = res.data.url
-    //   },
-    //   shop_environment(res){
-    //     this.ruleForm.shop_environment.push(res.data.url)
-    //   },
-    //   shop_sfz_pic_z(res){
-    //     this.ruleForm.shop_sfz_pic_z = res.data.url
-    //   },
-    //   shop_sfz_pic_f(res){
-    //     this.ruleForm.shop_sfz_pic_f = res.data.url
-    //   },
-
-      // getBusinessList(){
-
-      //   this.$axios.get("/api/admin/select/businessList").then(res =>{
-      //     if(res.data.code ==0){
-      //       this.business_list = res.data.data;
-      //     }
-
-
-      //   })
-
-      // } ,
+    
       
       submit(){
         let params = this.$route.params;
@@ -823,9 +813,7 @@ export default {
 </script>
 
 <style scoped>
-/* .form-panel{
-  width:720px
-} */
+
 .width200px{
   width:200px
 }
@@ -891,9 +879,6 @@ export default {
 }
 
 .item-upload{
-  max-width:180px;
-  width:180px;
-  height: 100px;
   overflow: hidden;
   position: relative;
   left: 0px;
@@ -910,11 +895,7 @@ export default {
     height: 100px;
     display: block;
   }
- .item-upload .el-upload,.item-upload .el-upload--text{
-    width:178px;
-    height: 100px;
-    overflow: hidden;
-  }
+
  .item-upload .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -950,13 +931,14 @@ export default {
     align-items: center;
   }
   .comfort-button{
-    width:140px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 14px;
-    border:1px solid #000;
-    color:#000;
+    width:80px;
+    height: 30px;
+    border:1px solid #ccc;
+    color:#333;
     text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    border-radius:6px;
   }
   .comfort-right{
   max-width:360px;
@@ -1086,24 +1068,20 @@ export default {
   width:720px;
 }
 
-/* .shake-box .goods-div:first-of-type{
-  margin-left:30px;
-}
-.shake-box .el-radio__input{
-  margin-left: 30px;
-} */
 .shake-box .el-tabs__content .el-radio:first-of-type{
   margin-left: 30px;
 }
-.body-gift-img{
-  border-right: 1px dashed #ccc;
-}
+
 .mt10{
   margin-top: 10px;
 }
 .mb10{
   margin-bottom: 10px;
 }
+.width980{
+  width:980px;
+}
+
 
 </style>
 

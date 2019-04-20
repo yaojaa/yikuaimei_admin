@@ -1,10 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+            <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
         </div>
         <div class="page-content">
             <div class="filter-tag-box">
@@ -26,16 +23,28 @@
 <script>
     import NomalTable from '@/components/common/NomalTable'
     import TableSearch from '@/components/common/TableSearch'
+    import BreadCrumb from "@/components/common/BreadCrumb";
     import Config from "./config";
     
     export default {
         name: 'userList',
         components: {
             NomalTable,
-            TableSearch
+            TableSearch,
+            BreadCrumb
         },
         data() {
             return {
+                breadcrumb: [
+                //面包屑
+                {
+                    name: "用户管理"
+                },
+                {
+                    name: "用户列表",
+                    url: "/user/userList?is_black=0"
+                }
+            ],
                 status_filter: '',
                 tagsListGroup: {
                     '注册渠道:': [

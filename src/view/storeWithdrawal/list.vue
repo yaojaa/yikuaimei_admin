@@ -1,10 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>门店审核</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path: $route.path }">{{$route.meta.title}}</el-breadcrumb-item>
-            </el-breadcrumb>
+             <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
         </div>
         <div class="page-content">
             <div class="filter-tag-box">
@@ -25,6 +22,7 @@
 <script>
 import NomalTable from '@/components/common/NomalTable'
 import TableSearch from '@/components/common/TableSearch'
+import BreadCrumb from "@/components/common/BreadCrumb";
 
 export default {
     data() {
@@ -32,6 +30,16 @@ export default {
             user: JSON.parse(localStorage.user),
             dialog: false,
             business_id: '',
+            breadcrumb: [
+                //面包屑
+                {
+                    name: "审核管理"
+                },
+                {
+                    name: "门店提现",
+                    url: "/manage/label"
+                }
+            ],
             
             remark: '无',
             status_filter: "",
@@ -117,7 +125,8 @@ export default {
     },
     components: {
         NomalTable,
-        TableSearch
+        TableSearch,
+        BreadCrumb
     },
     beforeRouteUpdate(to, from, next) {
         console.log(to.query);

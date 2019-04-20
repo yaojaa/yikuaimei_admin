@@ -1444,3 +1444,23 @@ ol {
     left:4px;
     bottom:14px 
   }
+.marking-upload .el-upload--text{
+    width: 180px ;
+    height: 100px ;
+}
+.comfort-item .el-upload--text{
+    width: 360px !important;
+    height: 100px !important;
+}
+.share-form  .el-input__inner{
+    width: 100%;
+}
+.table-body{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.gift-title{
+    text-align: left;
+    color: #666;
+    font-size: 14px;
+}
