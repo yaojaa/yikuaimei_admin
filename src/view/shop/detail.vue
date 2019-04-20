@@ -179,9 +179,9 @@
             <div class="page-column"  v-if="tab=='bankCard'">
                 <div class="page-main">
 
-                    <div class="panel clearfix">
+                    <div class="panel ">
             
-                        <div class="panel-body width600 fl">
+                        <div class="panel-body width600 ">
                             <el-form :model="ruleForm"  label-width="100px" class="demo-ruleForm" >
                                 <el-form-item label="姓名：">
                                     <el-input v-model="ruleForm.user"></el-input>
@@ -215,7 +215,7 @@
                     </div>
                     <div class="panel">
                         
-                        <div class="panel-body clearfix">
+                        <div class="panel-body">
                             <div class="bank-info-box" v-if="flag">
                                 <p>{{bankInfo.bank_name}}</p>
                                 <p>{{bankInfo.bind_card_nu}}</p>

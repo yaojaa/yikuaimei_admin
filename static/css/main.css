@@ -1439,7 +1439,7 @@ ol {
   .goods-div-left p{
       line-height: 1.2em;
   }
-  .el-radio__input{
+  .tab-overflow  .el-radio__input{
     position: absolute;
     left:4px;
     bottom:14px 

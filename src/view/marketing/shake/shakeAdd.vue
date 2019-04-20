@@ -532,7 +532,7 @@ export default {
       
     },
     goodsSure(){
-      // debugger;
+      debugger;
 
           // //商品弹窗确定
           if(this.checkedGoodsId==""){
@@ -764,6 +764,7 @@ export default {
             })
         },
         radioGoodsId:function(event){
+          debugger
             //指定商品
             this.goodsList.forEach((item) => {
                 if (item.coupon_code == event) {
@@ -1084,6 +1085,7 @@ export default {
 .width720{
   width:720px;
 }
+
 /* .shake-box .goods-div:first-of-type{
   margin-left:30px;
 }
