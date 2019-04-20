@@ -130,7 +130,7 @@ export default {
         console.log(this.$route.params,'params')
 
 
-        this.id = this.$route.params.id
+        this.id = this.$route.params.shop_withdraw_id
 
         this.getData(this.$route.params)
 
@@ -164,26 +164,44 @@ export default {
         },
 
                 reject(){
+    
+                    var rejectPams = {
+                        "type":2,
+                        "shop_withdraw_id":this.id
 
-                this.$axios({
-                    method: 'post',
-                    url: '/api/admin/shop/reviewFail',
-                    params: {
-                        shop_withdraw_id:this.id,
-                        type:2
                     }
-                }).then((res) => {
+                    this.$axios.post("/api/admin/shop/withdrawReview",rejectPams).then(res => {
+                        if(res.data.code == 0){
+                             this.reload();
+                            
+                        }else{
+                            this.$alert(res.data.msg)
+                        }
+                    }).catch((e)=>{
 
-                    if(res.data.code ==0){
-                        this.reload();
-                        // this.shopList = res.data.data
-                    }else{
-                        this.$alert('接口返回错误')
-                    }
+                        this.$alert('操作失败'+e)
+
+                    })
+
+                // this.$axios({
+                //     method: 'post',
+                //     url: '/api/admin/shop/withdrawReview',
+                //     params: {
+                //         shop_withdraw_id:this.id,
+                //         type:2
+                //     }
+                // }).then((res) => {
+
+                //     if(res.data.code ==0){
+                //         this.reload();
+                //         // this.shopList = res.data.data
+                //     }else{
+                //         this.$alert('接口返回错误')
+                //     }
                     
-                }).catch((error) => {
-                    this.$alert('接口返回错误'+error)
-                });
+                // }).catch((error) => {
+                //     this.$alert('接口返回错误'+error)
+                // });
             },
 
 
@@ -191,26 +209,23 @@ export default {
        
 
         agree(){
+            var agreePams = {
+                        "type":2,
+                        "shop_withdraw_id":this.id
 
-          this.$axios({
-                    method: 'post',
-                    url: '/api/admin/shop/reviewFail',
-                    params: {
-                        shop_withdraw_id:this.id,
-                        type:1
                     }
-                }).then((res) => {
+                    this.$axios.post("/api/admin/shop/withdrawReview",agreePams).then(res => {
+                        if(res.data.code == 0){
+                             this.reload();
+                            
+                        }else{
+                            this.$alert(res.data.msg)
+                        }
+                    }).catch((e)=>{
 
-                    if(res.data.code ==0){
-                        this.reload();
-                        // this.shopList = res.data.data
-                    }else{
-                        this.$alert('接口返回错误')
-                    }
-                    
-                }).catch((error) => {
-                    this.$alert('接口返回错误'+error)
-                });
+                        this.$alert('操作失败'+e)
+
+                    })
 
         },
 

@@ -14,11 +14,11 @@
 
 
 
-            <div class="panel">
+            <div class="panel ">
 
                 <div class="form-panel p-xl "  v-if="step==1">
                     <!--form start-->
-                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm" >
+                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm width720" >
 
                     <el-form-item label="活动名称：" prop="activity_title">
                         <el-input v-model="ruleForm.activity_title"></el-input>
@@ -105,7 +105,7 @@
                      <div class="table-th">
                        <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                      </div>
-                     <div class="table-body" v-for="item in ruleForm.rules.shakes" :key="item.index">
+                     <div class="table-body mt10 mb10" v-for="item in ruleForm.rules.shakes" :key="item.index">
                        <div class="body-gift-choice body-item">
                          <div class="item-choice" >
                           
@@ -1095,6 +1095,12 @@ export default {
 }
 .body-gift-img{
   border-right: 1px dashed #ccc;
+}
+.mt10{
+  margin-top: 10px;
+}
+.mb10{
+  margin-bottom: 10px;
 }
 
 </style>
