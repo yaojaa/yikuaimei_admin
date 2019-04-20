@@ -128,9 +128,6 @@
                          </div>
                        </div>
                        <div class="person-item"  v-for="skuItem in item.details" :key="skuItem.users">
-                         <!-- {{skuItem.offer_price}} -->
-                        
-                           
                             <input type="text" v-model="skuItem.offer_price"  class="input-val">
                        </div>
                        
@@ -138,6 +135,9 @@
                        
                      </div>
                   </div>
+                  
+
+
                     <div class="finish">
                       <el-button size="large" type="primary" @click="goNextStep(1)" >上一步</el-button>
                       <el-button size="large" type="primary" @click="submit" >上架</el-button>

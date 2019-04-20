@@ -18,7 +18,7 @@
 
                   <div class="panel-status text-justify">
                 <div><span>状态：</span><span class="f18 bold">
-                    {{['','审核中','审核通过','审核不通过'][info.shop_withdraw_status]}}
+                    {{['审核不通过','待审核','审核通过',][info.shop_withdraw_status]}}
 
                 </span></div>
                 <div v-if="info.review_status == 1">

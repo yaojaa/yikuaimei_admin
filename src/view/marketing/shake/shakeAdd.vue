@@ -856,49 +856,17 @@ export default {
   margin-bottom:20px;
   text-align: center
 }
-.gift-table{
-  width:720px;
-  margin:0 auto;
-  position: relative;
-  left: -120px;
-  top: 10px;
 
-}
 .left0{
   left:0px;
 }
 .background-blue{
   background-color: blue
 }
-.table-th{
-  width:100%;
-  height: 50px;
-  color:#fff;
-  line-height: 50px;
-  background-color:#03a380;
-  display: flex;
-  
-  
-}
-.th-item{
-  flex: 1;
-  text-align: center
-}
-.table-body{
-  width:100%;
-  display: flex;
-}
 
-.body-item{
-  flex:1;
-  
-}
 .item-choice,.item-upload,.item-number,.item-text{
   width:100%;
   height: 100px;
-  border-left:1px solid #ccc;
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -975,9 +943,6 @@ export default {
   }
   .comfort-item{
     height: 100px;
-    border-left:1px solid #ccc;
-    border-bottom:1px solid #ccc;
-    border-right:1px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;

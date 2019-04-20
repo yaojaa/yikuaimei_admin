@@ -87,7 +87,7 @@ export default {
                         "width": "",
                         formatter(row) {
                             return `<div style="color:red">
-                                ${row.shop_withdraw_status==0?'拒绝':''}
+                                ${row.shop_withdraw_status==0?'审核不通过':''}
                                 ${row.shop_withdraw_status==1?'待审核':''}
                                 ${row.shop_withdraw_status==2?'审核通过':''}
                                 </div>`
