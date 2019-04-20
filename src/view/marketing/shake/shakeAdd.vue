@@ -84,13 +84,13 @@
 
                     <el-form-item label="活动期间一共可参与：">
                         <el-radio-group v-model="limitsStatus"   @change="limitsChange">
-                            <el-col :span="8" >
+                            <el-col :span="12" >
                               <div class="limit-no">
                                 <el-radio :label="0">不限</el-radio>
                               </div>
                             </el-col>
                          
-                            <el-col :span="8">
+                            <el-col :span="12">
                               <el-radio :label="1">限制<el-input v-model="ruleForm.limits.limit_total_times"></el-input>次</el-radio>
                             </el-col>
                            
@@ -875,13 +875,14 @@ export default {
   border-left:0px;
 }
 .choice-button,.number-input,.text-input{
-  width:100px;
-  height: 40px;
-  border:1px solid #000;
-  color:#000;
+  width:80px;
+  height: 30px;
+  border:1px solid #ccc;
+  color:#333;
   text-align: center;
-  line-height: 40px;
-  font-size: 12px; 
+  line-height: 30px;
+  font-size: 12px;
+  border-radius:6px;
 }
 .choice-button{
   cursor:pointer;
@@ -1020,7 +1021,7 @@ export default {
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    background-color: #f73c3c
+    background-color: #7224D8;
   }
 .clearfix:after{
   content:".";
@@ -1081,7 +1082,7 @@ export default {
   color: #000;
 }
 .width720{
-  width:600px;
+  width:720px;
 }
 /* .shake-box .goods-div:first-of-type{
   margin-left:30px;
@@ -1091,7 +1092,10 @@ export default {
 } */
 .shake-box .el-tabs__content .el-radio:first-of-type{
   margin-left: 30px;
-} 
+}
+.body-gift-img{
+  border-right: 1px dashed #ccc;
+}
 
 </style>
 

@@ -21,7 +21,7 @@
                     {{['审核不通过','待审核','审核通过',][info.shop_withdraw_status]}}
 
                 </span></div>
-                <div v-if="info.review_status == 1">
+                <div v-if="info.shop_withdraw_status == 1">
                    <el-button @click="reject" size="mini" plain >拒绝</el-button>
                     <el-button  @click="agree" size="mini" type="primary">同意</el-button>
                 </div>
