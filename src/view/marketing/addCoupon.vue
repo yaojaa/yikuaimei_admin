@@ -66,8 +66,8 @@
                         <el-radio-group v-model="ruleForm.coupon_range_type" @change="handleChange">
                             <el-radio :label="1">通用</el-radio>
                             <el-radio :label="2">指定行业</el-radio>
-                            <el-radio :label="3">指定商品</el-radio>
-                            <el-radio :label="4">指定服务</el-radio>
+                            <el-radio :label="3">指定服务</el-radio>
+                            <el-radio :label="4">指定商品</el-radio>
                             <el-radio :label="5">指定虚拟商品</el-radio>
                         </el-radio-group>
                     </el-form-item>
@@ -323,9 +323,9 @@ export default {
                 "category_id" : 1,
                 "goods_id" :  0
             },
-            "coupon_expire_type":"1",
-            "coupon_in_shop":"1",
-            "coupon_range_type":"1",
+            "coupon_expire_type":1,
+            "coupon_in_shop":1,
+            "coupon_range_type":1,
             "date_expire_type":0,
             "coupon_expire" : {
                 "coupon_expire_day" : "",  //固定天数时使用
@@ -362,7 +362,7 @@ export default {
         "industry_name":"", //选中行业的名称
         "selectRadioId":"", //当前页面选中的radio的id
         "dateDays":"", //领取时间（固定天数）
-        "limitsStatus":null, //限制频率
+        "limitsStatus":0, //限制频率
         "dataStart":"",
         "dataEnd":""
 
