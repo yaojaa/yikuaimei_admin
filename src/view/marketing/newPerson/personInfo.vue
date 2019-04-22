@@ -47,7 +47,18 @@
                        <div class="body-gift-choice body-item">
                          <div class="item-choice" >
                           
-                            <div class="choiced" v-if="skuItem.coupon_code">以选中优惠券编号为{{skuItem.coupon_code}}的优惠券</div>
+                            <div class="choiced" v-if="skuItem.coupon_code">
+                              <div class="goods-div ">
+                                    <div class="goods-div-left">
+                                      <p class="margin-top10"><span class="price">¥{{skuItem.reduce_price/100}}</span><span>{{skuItem.coupon_title}}</span></p>
+                                      <p class="margin-top10">满{{skuItem.price/100}}元可用</p>
+                                    </div>
+                                    <div class="goods-div-right">
+                                     <img v-if="skuItem.coupon_img" :src="skuItem.coupon_img" width="70px" height="70px">
+                                     <p v-else class="no-img">暂无图片</p>
+                                    </div>
+                              </div>
+                            </div>
                             
                          </div>
                        </div>
@@ -266,9 +277,6 @@ export default {
 </script>
 
 <style scoped>
-/* .form-panel{
-  width:720px
-} */
 .width200px{
   width:200px
 }
@@ -300,49 +308,17 @@ export default {
   margin-bottom:20px;
   text-align: center
 }
-.gift-table{
-  width:720px;
-  margin:0 auto;
-  position: relative;
-  left: -120px;
-  top: 10px;
 
-}
 .left0{
   left:0px;
 }
 .background-blue{
   background-color: blue
 }
-.table-th{
-  width:100%;
-  height: 50px;
-  color:#fff;
-  line-height: 50px;
-  background-color:#03a380;
-  display: flex;
-  
-  
-}
-.th-item{
-  flex: 1;
-  text-align: center
-}
-.table-body{
-  width:100%;
-  display: flex;
-}
 
-.body-item{
-  flex:1;
-  
-}
 .item-choice,.item-upload,.item-number,.item-text{
   width:100%;
   height: 100px;
-  border-left:1px solid #ccc;
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -351,13 +327,14 @@ export default {
   border-left:0px;
 }
 .choice-button,.number-input,.text-input{
-  width:100px;
-  height: 40px;
-  border:1px solid #000;
-  color:#000;
+  width:80px;
+  height: 30px;
+  border:1px solid #ccc;
+  color:#333;
   text-align: center;
-  line-height: 40px;
-  font-size: 12px; 
+  line-height: 30px;
+  font-size: 12px;
+  border-radius:6px;
 }
 .choice-button{
   cursor:pointer;
@@ -365,9 +342,6 @@ export default {
 }
 
 .item-upload{
-  max-width:180px;
-  width:180px;
-  height: 100px;
   overflow: hidden;
   position: relative;
   left: 0px;
@@ -384,11 +358,7 @@ export default {
     height: 100px;
     display: block;
   }
- .item-upload .el-upload,.item-upload .el-upload--text{
-    width:178px;
-    height: 100px;
-    overflow: hidden;
-  }
+
  .item-upload .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -419,21 +389,19 @@ export default {
   }
   .comfort-item{
     height: 100px;
-    border-left:1px solid #ccc;
-    border-bottom:1px solid #ccc;
-    border-right:1px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .comfort-button{
-    width:140px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 14px;
-    border:1px solid #000;
-    color:#000;
+    width:80px;
+    height: 30px;
+    border:1px solid #ccc;
+    color:#333;
     text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    border-radius:6px;
   }
   .comfort-right{
   max-width:360px;
@@ -499,7 +467,7 @@ export default {
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    background-color: #f73c3c
+    background-color: #7224D8;
   }
 .clearfix:after{
   content:".";
@@ -528,7 +496,10 @@ export default {
     margin-right:6px;
   }
   .margin-top10{
-    margin-top:10px;
+    margin-top:6px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
   }
   .no-img{
     width:70px;
@@ -536,6 +507,11 @@ export default {
     line-height: 70px;
     font-size: 14px;
     text-align: center;
+  }
+  .shake-box .el-radio__input,.invite-box .el-radio__input{
+    position: absolute;
+    bottom:14px;
+    left: 1px
   }
  
 
@@ -552,7 +528,21 @@ export default {
   color: #000;
 }
 .width720{
-  width:600px;
+  width:720px;
+}
+
+.shake-box .el-tabs__content .el-radio:first-of-type{
+  margin-left: 30px;
+}
+
+.mt10{
+  margin-top: 10px;
+}
+.mb10{
+  margin-bottom: 10px;
+}
+.width980{
+  width:980px;
 }
 </style>
 

@@ -49,7 +49,16 @@
                                     {{skuItem.users}}
                                 </div>
                                 <div class="person-item">
-                                    奖励编号为{{skuItem.coupon_code}}的优惠券
+                                    <div class="goods-div">
+                                      <div class="goods-div-left">
+                                        <p class="margin-top10"><span class="price">¥{{skuItem.reduce_price/100}}</span><span>{{skuItem.coupon_title}}</span></p>
+                                        <p class="margin-top10">满{{skuItem.price/100}}元可用</p>
+                                      </div>
+                                      <div class="goods-div-right">
+                                      <img v-if="skuItem.coupon_img" :src="skuItem.coupon_img" width="70px" height="70px">
+                                      <p v-else class="no-img">暂无图片</p>
+                                      </div>
+                                    </div>
                                 </div>
                                 <div class="person-item ">
                                   <img :src="skuItem.gifts_img" alt="" width="238px" height="100px">
@@ -188,9 +197,6 @@ export default {
 </script>
 
 <style scoped>
-/* .form-panel{
-  width:720px
-} */
 .width200px{
   width:200px
 }
@@ -222,76 +228,166 @@ export default {
   margin-bottom:20px;
   text-align: center
 }
-.gift-table{
-  width:720px;
-  margin:0 auto;
-  position: relative;
-  left: -120px;
-  top: 10px;
 
+.left0{
+  left:0px;
 }
 .background-blue{
   background-color: blue
 }
-.table-th{
-  width:100%;
-  height: 50px;
-  color:#fff;
-  line-height: 50px;
-  background-color:#03a380;
-  display: flex;
-}
-.th-item{
-  flex: 1;
-  text-align: center
-}
-.table-body{
-  width:100%;
-  display: flex;
-}
 
-.body-item{
-  flex:1;
-  
-}
-.person-item{
+.item-choice,.item-upload,.item-number,.item-text{
   width:100%;
   height: 100px;
-  border-left:1px solid #ccc;
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-.person-width{
-  width:140px;
-  height: 100px;
+.item-number,.item-upload{
+  border-left:0px;
 }
-.person-width p{
-  font-size: 13px;
-  margin-top: 10px;
-}
-.person-item-left{
-  float: left;
-  width:50px;
-  height: 50px;
-}
-.person-item-right{
-  float: left;
-  margin-left: 10px;
+.choice-button,.number-input,.text-input{
   width:80px;
-  height: 50px;
+  height: 30px;
+  border:1px solid #ccc;
+  color:#333;
+  text-align: center;
+  line-height: 30px;
+  font-size: 12px;
+  border-radius:6px;
+}
+.choice-button{
+  cursor:pointer;
+  font-size:14px;
 }
 
+.item-upload{
+  overflow: hidden;
+  position: relative;
+  left: 0px;
+  top:0px;
+}
+
+  .item-upload .avatar-uploader{
+    width:180px;
+    height: 100px;
+    overflow: hidden;
+  }
+.item-upload .avatar {
+    width: 178px;
+    height: 100px;
+    display: block;
+  }
+
+ .item-upload .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .item-upload img{
+    position:absolute;
+    left: 0px;
+    top:0px;
+  }
+  .upload-img-icon{
+    width: 178px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    left: 0px;
+    top: 0px;
+  }
+  .position-icon{
+    position: absolute;
+    left:62px;
+    top:20px;
+  }
+  .comfort-item{
+    flex: 1
+  }
+  .comfort-item{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .comfort-button{
+    width:80px;
+    height: 30px;
+    border:1px solid #ccc;
+    color:#333;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    border-radius:6px;
+  }
+  .comfort-right{
+  max-width:360px;
+  width:360px;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  left: 0px;
+  top:0px;
+}
+
+  .comfort-right .avatar-uploader{
+    width:360px;
+    height: 100px;
+    overflow: hidden;
+  }
+.comfort-right .avatar {
+    width: 358px;
+    height: 100px;
+    display: block;
+  }
+ .comfort-right .el-upload,.comfort-right .el-upload--text{
+    width:358px;
+    height: 100px;
+    overflow: hidden;
+  }
+ .comfort-right .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .comfort-right img{
+    position:absolute;
+    left: 0px;
+    top:0px;
+  }
+   .comfort-right .upload-img-icon{
+    width: 358px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    left: 0px;
+    top: 0px;
+  }
+  .comfort-right .position-icon{
+    position: absolute;
+    left: 160px;
+  }
+  .bottom-form{
+    margin-top:20px;
+  }
+  .finish{
+    width:170px;
+    height: 50px;
+    margin: auto;
+    margin-top:30px;
+  }
   .goods-div{
     width:211px;
     height: 70px;
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    border:1px solid #ccc;
+    background-color: #7224D8;
   }
 .clearfix:after{
   content:".";
@@ -320,7 +416,10 @@ export default {
     margin-right:6px;
   }
   .margin-top10{
-    margin-top:10px;
+    margin-top:6px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
   }
   .no-img{
     width:70px;
@@ -328,6 +427,11 @@ export default {
     line-height: 70px;
     font-size: 14px;
     text-align: center;
+  }
+  .shake-box .el-radio__input,.invite-box .el-radio__input{
+    position: absolute;
+    bottom:14px;
+    left: 1px
   }
  
 
@@ -343,30 +447,22 @@ export default {
   text-align: center;
   color: #000;
 }
-.tab-overflow .color-blue{
-    color:#d0eee8;
-     height: 20px;
-    line-height:20px;
-     overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap
+.width720{
+  width:720px;
 }
-.tab-overflow .color-black{
-    color:#333;
-    height: 20px;
-    line-height:20px;
-     overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap
+
+.shake-box .el-tabs__content .el-radio:first-of-type{
+  margin-left: 30px;
 }
-.gift-person{
-  top:0px;
-  margin-bottom:20px;
+
+.mt10{
+  margin-top: 10px;
 }
-.price-input{
-  width:80px;
-  height: 30px;
-  border:1px solid #666;
+.mb10{
+  margin-bottom: 10px;
+}
+.width980{
+  width:980px;
 }
 
 </style>

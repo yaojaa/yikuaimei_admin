@@ -292,25 +292,18 @@ export default {
   margin-bottom:20px;
   text-align: center
 }
-.gift-table{
-  width:740px;
-  margin:0 auto;
-  position: relative;
-  left: -120px;
-  top: 10px;
 
-}
 .background-blue{
   background-color: blue
 }
-.table-th{
-  width:100%;
-  height: 50px;
-  color:#fff;
-  line-height: 50px;
-  background-color:#03a380;
-  display: flex;
-}
+  .table-th{
+    width:100%;
+    height: 30px;
+    color:#15151C;
+    line-height: 30px;
+    background-color:#EEEFFF;
+    display: flex;
+  }
 .th-item{
   flex: 1;
   text-align: center

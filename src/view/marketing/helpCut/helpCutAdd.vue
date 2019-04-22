@@ -1009,14 +1009,7 @@ export default {
 .width980{
   width:980px;
 }
-.gift-table{
-  width:720px;
-  margin:0 auto;
-  position: relative;
-  left: 0px;
-  top: 10px;
 
-}
 </style>
 
 

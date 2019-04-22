@@ -84,8 +84,11 @@ export default {
                         "type": "text",
                         "align": "center",
                         "label": "提现金额",
-                        "prop": "shop_withdraw_amount",
-                        "width": "100"
+                        "width": "100",
+                        formatter(row) {
+                            return  row.shop_withdraw_amount/100
+                               
+                        }
                     },
                     
                     {
