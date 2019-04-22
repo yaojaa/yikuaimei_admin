@@ -75,7 +75,10 @@ export default {
       breadcrumb: [
         //面包屑
         {
-          name: "标签管理", //名字
+          name: "网站管理" //名字
+        },
+        {
+          name: "标签管理/标签列表", //名字
           url:"/manage/label"
         },
         {

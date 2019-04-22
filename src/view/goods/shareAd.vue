@@ -75,8 +75,8 @@ export default {
       },
       
       breadcrumb: [{
-            name: "商品管理", //名字
-            url:'./goodList'
+            name: "商品管理" //名字
+            
         },
         {
             name: "分享海报"

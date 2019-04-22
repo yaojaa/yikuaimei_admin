@@ -107,7 +107,7 @@
                         <el-button @click="choiceGoodsClick">请选择</el-button>
                     </el-form-item>
                      <!-- 表单 -->
-                     <div class="gift-table gift-person" >
+                     <div class="gift-table gift-person width980" >
                       <div class="table-th">
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>
@@ -129,17 +129,17 @@
                             <input type="text" v-model="item.reduce_solid_price"  class="input-val">
                        </div>
                        <div class="full-item"  >
-                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：</span><input type="text" v-model="item.reduce_max_price"  class="max-input-val"></p>
-                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：</span><input type="text" v-model="item.reduce_min_price"  class="max-input-val"></p>
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="margin-left:20px">最大值：</span><input type="text" v-model="item.reduce_max_price"  class="max-input-val"></p>
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="margin-left:20px">最小值：</span><input type="text" v-model="item.reduce_min_price"  class="max-input-val"></p>
                         
                        </div>
                        <div class="full-item">
                             <input type="text" v-model="item.first_solid_price"  class="input-val">
                        </div>
                        <div class="full-item" >
-                          <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：</span><input type="text" v-model="item.first_max_price"  class="max-input-val"></p>
+                          <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="margin-left:20px">最大值：</span><input type="text" v-model="item.first_max_price"  class="max-input-val"></p>
                                
-                            <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：</span><input type="text" v-model="item.first_min_price"  class="max-input-val"></p>   
+                            <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="margin-left:20px">最小值：</span><input type="text" v-model="item.first_min_price"  class="max-input-val"></p>   
  
                        </div>
                        
@@ -593,7 +593,7 @@ export default {
   
 }
 .table-full{
-   width:740px;
+   width:980px;
 }
 
 
@@ -669,10 +669,10 @@ export default {
     text-align: center;
   }
  .full-item{
-     width:120px;
+     width:100%;
      height: 120px;
      float: left;
-    border:1px solid #ccc;
+    
  }
 
 /* .tab-overflow .el-tabs{
@@ -1008,6 +1008,12 @@ export default {
 }
 .width980{
   width:980px;
+}
+  .el-checkbox__input{
+  position: absolute ;
+  right:6px ;
+  top: 6px ;
+  
 }
 
 </style>
