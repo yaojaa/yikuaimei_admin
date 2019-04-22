@@ -112,13 +112,13 @@
                         <el-button @click="choiceGoodsClick">请选择</el-button>
                     </el-form-item>
                      <!-- 表单 -->
-                     <div class="gift-table gift-person" >
+                     <div class="gift-table gift-person width980" >
                       <div class="table-th">
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>
 
                      <div class="table-body"  v-for="item in ruleForm.rules.walking" :key="item.sku">
-                       <div class="person-item person-width " style="width:162px">
+                       <div class="person-item person-width ">
                          <div class="person-item-left">
                            <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="80px" height="80px">
                          </div>
@@ -585,7 +585,6 @@ export default {
   text-align: center
 }
 .gift-table{
-  width:720px;
   margin:0 auto;
   position: relative;
   left: 0px;
@@ -617,7 +616,7 @@ export default {
   
 }
 .person-item{
-  width:162px;
+  width:100%;
   height: 100px;
   
   display: flex;
@@ -626,7 +625,7 @@ export default {
 }
 
 .person-width{
-  width:140px;
+  width:100%;
   height: 100px;
 }
 .person-width p{
@@ -762,7 +761,9 @@ overflow : hidden;
 .person-item-right{
   margin-top: -36px;
 }
-
+.width980{
+  width:980px
+}
 
 
 
@@ -818,6 +819,7 @@ p{
 .form-panel{
   
 }
+
 
 </style>
 

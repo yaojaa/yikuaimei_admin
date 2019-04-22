@@ -211,8 +211,20 @@ export default {
 /* .form-panel{
   width:720px
 } */
-
-
+.width980{
+  width:980px;
+}
+.person-item-left{
+  width: auto;
+  height: auto;
+}
+.person-item-right{
+  width: auto;
+  height: auto;
+}
+.person-width{
+  width: 100%;
+}
 </style>
 
 
