@@ -759,6 +759,9 @@ overflow : hidden;
   height: 176px;
   max-height: 176px
 }
+.person-item-right{
+  margin-top: -36px;
+}
 
 
 
