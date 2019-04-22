@@ -43,7 +43,7 @@
                             <p v-else >{{ruleForm.limits.limit_total_times}}</p>
                         </el-form-item>
                         <p class="gift-title">奖品</p>
-                        <div class="gift-table" >
+                        <div class="gift-table width980" >
                             <div class="table-th">
                             <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div></div>
                             <div class="table-body" v-for="item in ruleForm.rules.shakes" :key="item.index">
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <p class="gift-title"> 默认奖</p>
-                        <div class="gift-table" >
+                        <div class="gift-table width980" >
                             <div class="table-th">
                                 <div class="th-item">奖品</div>
                                 <div class="th-item">奖品图</div>

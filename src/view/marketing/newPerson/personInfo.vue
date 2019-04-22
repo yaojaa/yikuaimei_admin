@@ -36,10 +36,10 @@
 
              
 
-                <div class="form-panel p-xl width720" >
+                <div class="form-panel p-xl " >
                   
                  
-                  <div class="gift-table left0" >
+                  <div class="gift-table left0 width980" >
                      <div class="table-th">
                        <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                      </div>

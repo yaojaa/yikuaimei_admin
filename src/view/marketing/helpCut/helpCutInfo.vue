@@ -62,7 +62,7 @@
                     </el-form-item>
                     
                     </el-form>
-                    <div class="gift-table gift-person" >
+                    <div class="gift-table gift-person width980" >
                       <div class="table-th">
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>

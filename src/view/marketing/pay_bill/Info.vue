@@ -29,14 +29,14 @@
                     </el-form>
                 </div>
                 <!--步骤2-->
-                <div class="form-panel p-xl width720" >
+                <div class="form-panel p-xl " >
                     <el-form :model="ruleForm"  label-width="160px" class="demo-ruleForm">
                         <el-form-item label="开始时间：">
                           {{ruleForm.activity_start_time}}至{{ruleForm.activity_end_time}}
                         </el-form-item>
                     </el-form>
                    
-                    <div class="gift-table left0">
+                    <div class="gift-table left0 width980">
                         <div class="table-th">
                             <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                         </div>
