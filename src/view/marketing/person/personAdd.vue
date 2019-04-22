@@ -674,7 +674,7 @@ export default {
   .price{
     font-size: 16px;
     font-weight: bold;
-    color:#fff;
+    color:#333;
     margin-right:6px;
   }
   .margin-top10{

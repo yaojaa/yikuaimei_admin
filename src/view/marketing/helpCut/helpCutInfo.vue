@@ -372,7 +372,7 @@ export default {
   .price{
     font-size: 16px;
     font-weight: bold;
-    color:#fff;
+    color:#333;
     margin-right:6px;
   }
   .margin-top10{
@@ -430,8 +430,9 @@ export default {
   border:1px solid #666;
 }
 .full-item .input-val{
-  width:70%;
-  margin: 0 auto;
+  
+  
+  display: block;
   height: 30px;
   line-height: 30px;
   font-size: 13px;
@@ -440,8 +441,9 @@ export default {
   border:none;
   border:1px solid #ccc;
   padding:0px 8px;
+  margin: 0 auto;
   margin-top: 44px;
-  margin-left: 10px;
+  
 
 }
 .max-input-val{

@@ -1004,7 +1004,7 @@ export default {
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    background-color: #7224D8;
+    
   }
 .clearfix:after{
   content:".";
@@ -1029,7 +1029,7 @@ export default {
   .price{
     font-size: 16px;
     font-weight: bold;
-    color:#fff;
+    color:#333;
     margin-right:6px;
   }
   .margin-top10{

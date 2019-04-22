@@ -1464,3 +1464,8 @@ ol {
     color: #666;
     font-size: 14px;
 }
+.tab-overflow .el-radio__inner{
+    position: absolute;
+    right:-34px;
+    bottom:-10px
+}
