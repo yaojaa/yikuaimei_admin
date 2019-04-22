@@ -46,11 +46,11 @@
                                 </div>
                                 <div class="item">
                                     <div class="hd">门店名称：</div>
-                                    <div class="bd">{{info.shop_info.shop_name}}</div>
+                                    <div class="bd">{{info.shop_name}}</div>
                                 </div>
                                 <div class="item">
                                     <div class="hd">门店地址：</div>
-                                    <div class="bd">{{info.shop_info.shop_address}}</div>
+                                    <div class="bd">{{info.shop_address}}</div>
                                 </div>
 
                             </div>
