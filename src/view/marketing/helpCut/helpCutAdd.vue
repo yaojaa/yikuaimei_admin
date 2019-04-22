@@ -1015,6 +1015,49 @@ export default {
   top: 6px ;
   
 }
+.el-checkbox__input{
+  position: absolute ;
+  right:6px ;
+  top: 6px ;
+  
+}
+.el-dialog__body{
+  background-color: #fff;
+}
+.el-tabs__nav-wrap::after{
+  background-color: #f6f6f6
+}
+.el-tabs__item{
+  color:#666;
+}
+.goods-div-left p{
+  color:#333;
+}
+.goods-div-left p.money{
+  color:#E89925 100%
+}
+.goods-div{
+  border-radius:6px;
+  box-shadow: 0px 0px 18px 0px rgba(211, 211, 211, 0.5);
+  display: inline-block;
+  margin-left: 10px;
+  background-color:#fff;
+
+}
+p{
+  margin:0px;
+}
+
+.input-val{
+  width:40% !important;
+}
+.line-center{
+  text-align: center;
+  line-height:32px;
+}
+.gift-table{
+  font-size: 14px;
+}
 
 </style>
 
