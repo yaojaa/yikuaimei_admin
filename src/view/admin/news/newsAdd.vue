@@ -76,7 +76,7 @@
 
                     <el-form-item>
                         <el-button size="large" type="primary" @click="cancal" >取消</el-button>
-                        <el-button size="large" type="primary" @click="submit" >上架</el-button>
+                        <el-button size="large" type="primary" @click="submit" >确定</el-button>
                     </el-form-item>
                     
                     </el-form>
