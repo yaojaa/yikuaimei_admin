@@ -193,7 +193,7 @@ export default {
       this.videoFlag = false;
       this.videoUploadPercent = 0;
       console.log(res)
-      this.ruleForm.video = res.data[0];
+      this.ruleForm.video = res.data.url;
     },
     uploadActivityImg(res){
       this.ruleForm.pic.push(res.data.url)
