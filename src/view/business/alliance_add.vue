@@ -126,7 +126,7 @@
           :show-file-list="false"
           :on-success="business_licence_pic"
            >
-       <img width="100%" v-if="ruleForm.business_licence_pic" :src="ruleForm.business_licence_pic" >
+       <img  v-if="ruleForm.business_licence_pic" :src="ruleForm.business_licence_pic" width="360px" height="180px">
         
         <div  v-else style="padding-top: 10%">
           

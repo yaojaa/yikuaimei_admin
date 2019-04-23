@@ -110,7 +110,7 @@
           :show-file-list="false"
           :on-success="shop_licence_pic"
            >
-       <img width="100%" v-if="ruleForm.shop_licence_pic" :src="ruleForm.shop_licence_pic" >
+       <img width="360px" height="180px" v-if="ruleForm.shop_licence_pic" :src="ruleForm.shop_licence_pic" >
         
         <div  v-else style="padding-top: 10%">
           
@@ -135,7 +135,7 @@
           :show-file-list="false"
           :on-success="shop_pic"
            >
-       <img width="100%" v-if="ruleForm.shop_pic" :src="ruleForm.shop_pic" >
+       <img width="360px" height="180px" v-if="ruleForm.shop_pic" :src="ruleForm.shop_pic" >
         
         <div  v-else style="padding-top: 10%">
           
@@ -150,7 +150,7 @@
   </el-form-item>
 
      <el-form-item label="门店环境图">
-
+        
        <!-- <img width="120" v-for="(img,i) in ruleForm.shop_environment" :src="img"> -->
 
           <el-upload
@@ -158,18 +158,22 @@
             list-type="picture-card"
             :on-success="shopEenvironment"
             :on-remove="handleRemove">
-            <img width="100%"  :src="item"  v-for="item in ruleForm.shop_environment" :key="item" >
-           
             
-            <i class="el-icon-plus" style="font-size: 48px"></i>
+            <i class="el-icon-plus" ></i>
           </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
+          <template v-if="dialogVisible">
+            <img  :src="item" @click="handleRemove" v-for="item in ruleForm.shop_environment" :key="item" alt="" width="146px" height="146px" class="remove-img">
+          </template>
+          <div class="upload-title">
+              <p class="upload-title-red">支持上传多张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
+          </div>
+        <!-- <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
         
         <div v-if="edit">
             <img width="148px" height="148px" :src="item" alt="" v-for="item in ruleForm.shop_environment" :key="item">
-        </div>
+        </div> -->
 
   </el-form-item>
 
@@ -270,7 +274,6 @@ export default {
       business_name:null,
       CATEGORYOPTIONS,
       params:{},
-      edit:false,
       breadcrumb: [
         //面包屑
         {
@@ -422,10 +425,8 @@ export default {
        this.ruleForm.shop_environment.splice(file.url,1)
         console.log(this.ruleForm.shop_environment,'shop_environment')
     },
-    handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-    },
+
+
     resetForm(formName) {
         this.$refs[formName].resetFields();
       },
@@ -606,7 +607,8 @@ export default {
     let params = this.$route.params;
     //如果是编辑门店
     if (Object.keys(params).length) {
-        this.edit = true;
+        
+        this.dialogVisible = true;
         this.params = params;
         console.log(params,'params')
         this.$axios.get("/api/admin/shop/detail", { params: params }).then(res => {
@@ -654,6 +656,9 @@ export default {
 .shop-add-city-message{
   color:#606266;
   font-size:12px;
+}
+.remove-img{
+  cursor: pointer;
 }
 </style>
 <style>
