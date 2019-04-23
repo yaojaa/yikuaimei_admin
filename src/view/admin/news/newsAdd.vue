@@ -46,13 +46,18 @@
                           :on-success="handleVideoSuccess"                   
                           :on-progress="uploadVideoProcess"
                         >
-                          <video
-                            v-if="ruleForm.video !='' && videoFlag == false"
-                            :src="ruleForm.video"
-                            width="350"
-                            height="180"
-                            controls="controls"
-                          >您的浏览器不支持视频播放</video>   
+                          <block v-if="ruleForm.video!=''&& videoFlag == false">
+
+                          </block>
+                          <block v-else>
+                            <video
+                              :src="ruleForm.video"
+                              width="350"
+                              height="180"
+                              controls="controls"
+                            >您的浏览器不支持视频播放</video>  
+                          </block>
+                           
                                    
                         <el-progress
                           v-if="videoFlag == true"
@@ -76,9 +81,14 @@
                         :on-success="uploadActivityImg"
                         :on-remove="handleRemove"
                         >
+                        <block v-if="showImg">
+                          <img  :src="item"  v-for="item in ruleForm.pic" :key="item" class="avatar invite-upload-img">
+                        </block>
+                        <block v-else>
+                          <i  class="el-icon-plus avatar-uploader-icon" style="font-size:48px;"></i>
+                        </block>
+                        
                        
-                       <img   :src="item"  v-for="item in ruleForm.pic" :key="item" class="avatar invite-upload-img">
-                       <i  class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
                       <div class="upload-title">
                           <p class="upload-title-red">支持上传多张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
@@ -130,6 +140,7 @@ export default {
 
   data() {
     return {
+      showImg:false,
       videoUploadPercent:"0%",
       videoFlag:false,
         // editorOption:{
@@ -285,6 +296,7 @@ export default {
           console.log(res.data.data,'data----data')
           //this.ruleForm.activity_status = res.data.data.activity_status
             this.ruleForm = res.data.data;
+            this.showImg = true;
             debugger
   
         })
