@@ -37,32 +37,64 @@
                     <el-form-item label="标题：" >
                         <el-input v-model="ruleForm.title"></el-input>
                     </el-form-item>
+                    <el-form-item label="视频：" >
+                        <el-upload 
+                          accept='.mp4,.qlv,.qsv,.ogg,.flv,.avi,.wmv,.rmvb'
+                          action="/api/admin/fileupload/image"
+                          :show-file-list=false 
+                          :before-upload="beforeUploadVideo"               
+                          :on-success="handleVideoSuccess"                   
+                          :on-progress="uploadVideoProcess"
+                        >
+                          <video
+                            v-if="ruleForm.video !='' && videoFlag == false"
+                            :src="ruleForm.video"
+                            width="350"
+                            height="180"
+                            controls="controls"
+                          >您的浏览器不支持视频播放</video>   
+                                   
+                        <el-progress
+                          v-if="videoFlag == true"
+                          type="circle"
+                          :percentage="videoUploadPercent"
+                          style="margin-top:30px"
+                        ></el-progress>
+                        <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i> 
+                         
+                        </el-upload>
+                        
+                    </el-form-item>
+                    
 
                     <el-form-item label="图片：" >
 
                       <el-upload
                         class="avatar-uploader"
                         action="/api/admin/fileupload/image"
-                        :show-file-list="false"
+                        list-type="picture-card"
                         :on-success="uploadActivityImg"
+                        :on-remove="handleRemove"
                         >
-                        <img v-if="ruleForm.pic" :src="ruleForm.pic" class="avatar invite-upload-img">
-                       <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
+                       
+                       <img   :src="item"  v-for="item in ruleForm.pic" :key="item" class="avatar invite-upload-img">
+                       <i  class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
                       </el-upload>
                       <div class="upload-title">
-                          <p class="upload-title-red">支持上传一张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
+                          <p class="upload-title-red">支持上传多张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
                       </div>
 
                     </el-form-item>
 
                     <el-form-item label="活动规则：" >
-                        <quill-editor 
+                        <!-- <quill-editor 
                             v-model="ruleForm.content"
                             ref="myQuillEditor"
                             :options="editorOption"
                             @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
                             @change="onEditorChange($event)">
-                        </quill-editor>
+                        </quill-editor> -->
+                         <el-input type="textarea" v-model="ruleForm.content"></el-input>
                     </el-form-item>
 
                     <el-form-item label="是否查看详情页：">
@@ -98,9 +130,11 @@ export default {
 
   data() {
     return {
-        editorOption:{
+      videoUploadPercent:"0%",
+      videoFlag:false,
+        // editorOption:{
 
-        },
+        // },
      
        breadcrumb: [
                 //面包屑
@@ -120,9 +154,10 @@ export default {
       
       ruleForm:{
         "title" : "",//标题
-        "pic" : "",//图片
-        "content" : ``, // 内容
+        "pic" : [],//图片
+        "content" : "", // 内容
         "type" : 1,//
+        "video":"",
         "pos_on":1, //C端是否接收 1接收 0否
         "business_on": 1, //店POS是否接收 1接收 0否
         "link_type":1, //是否可查看详情 0否 1可查看
@@ -134,14 +169,38 @@ export default {
   methods:{
       onEditorReady(editor) { // 准备编辑器
   },
-  onEditorBlur(){}, // 失去焦点事件
-  onEditorFocus(){}, // 获得焦点事件
-  onEditorChange(){}, // 内容改变事件
+  // onEditorBlur(){}, // 失去焦点事件
+  // onEditorFocus(){}, // 获得焦点事件
+  // onEditorChange(){}, // 内容改变事件
  
-
+  handleUploadSuccess_data_contrast(res){
+    this.ruleForm.video=res.data.url
+  },
+  beforeUploadVideo(file) {          //视频上传之前判断他的大小
+      const isLt10M = file.size / 1024 / 1024  < 50;
+      if (!isLt10M) {
+        this.$message.error('上传视频大小不能超过50MB哦!');
+        return false;
+      }
+    },
+    uploadVideoProcess(event, file, fileList){    //视频上传的时候获取上传进度传给进度条
+      this.videoFlag = true;
+      this.videoUploadPercent = parseInt(file.percentage);
+      console.log(this.videoUploadPercent)
+    },
+    handleVideoSuccess(res, file) {           //视频上传成功之后返回视频地址
+      debugger
+      this.videoFlag = false;
+      this.videoUploadPercent = 0;
+      console.log(res)
+      this.ruleForm.video = res.data[0];
+    },
     uploadActivityImg(res){
-      this.ruleForm.pic = res.data.url
-      
+      this.ruleForm.pic.push(res.data.url)
+    },
+    handleRemove(file, fileList) {
+       this.ruleForm.pic.splice(file.url,1)
+        console.log(this.ruleForm.pic,'pic')
     },
     cancal(){
 
