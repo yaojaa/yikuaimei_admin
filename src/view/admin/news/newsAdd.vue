@@ -79,11 +79,11 @@
                         :on-remove="handleRemove"
                         >
                         <block v-if="showImg">
-                          <img  :src="item"  v-for="item in ruleForm.pic" :key="item" class="avatar invite-upload-img">
+                          <img  :src="item"  v-for="item in ruleForm.pic" :key="item" class="avatar invite-upload-img" width="146px" height="146px">
                         </block>
-                        <block v-else>
+                       
                           <i  class="el-icon-plus avatar-uploader-icon" style="font-size:48px;"></i>
-                        </block>
+                      
                         
                        
                       </el-upload>
