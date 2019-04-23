@@ -39,7 +39,7 @@
                     </el-form-item>
                     <el-form-item label="视频：" >
                         <el-upload 
-                          accept='.mp4'
+                          accept="video/mp4,image/*"
                           action="/api/admin/fileupload/image"
                           :show-file-list=false 
                           :before-upload="beforeUploadVideo"               
