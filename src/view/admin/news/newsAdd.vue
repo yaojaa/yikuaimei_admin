@@ -11,7 +11,7 @@
 
                 <div class="form-panel p-xl  width620">
                     <!--form start-->
-                    <el-form :model="ruleForm"  ref="ruleForm1" label-width="140px" class="demo-ruleForm" >
+                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="140px" class="demo-ruleForm" >
                     <el-form-item label="管理端是否接收：">
                       <el-radio-group v-model="ruleForm.business_on" @change="radioChange">
                         <el-radio  :label="1">是</el-radio>
@@ -34,7 +34,7 @@
                       </el-radio-group>
                     </el-form-item>
 
-                    <el-form-item label="标题：" >
+                    <el-form-item label="标题：" prop="title">
                         <el-input v-model="ruleForm.title"></el-input>
                     </el-form-item>
                     <el-form-item label="视频：" >
@@ -67,13 +67,36 @@
                         </el-upload>
                         
                     </el-form-item>
-                    
+                    <el-form-item label="视频封面：">
 
+
+                      <el-upload
+                        class="avatar-uploader"
+                        action="/api/admin/fileupload/image"
+                        :show-file-list="false"
+                        :before-upload="beforeAvatarUpload"
+                        :on-success="uploadVideoImg"
+                        >
+                    <img width="360px" height="180px" v-if="ruleForm.video_pic" :src="ruleForm.video_pic" >
+                      
+                      <div  v-else style="padding-top: 10%">
+                        
+                      <i class="el-icon-plus" style="font-size: 48px">
+                        
+                      </i>
+                      <p>上传视频封面</p>
+                      </div>
+
+                    </el-upload>
+
+                  </el-form-item>
+                    
                     <el-form-item label="图片：" >
 
                       <el-upload
                           action="/api/admin/fileupload/image"
                           list-type="picture-card"
+                          
                           :on-success="uploadActivityImg"
                           :on-remove="handleRemove">
                           <!-- <img width="100%"  :src="item"  v-for="item in ruleForm.pic" :key="item" > -->
@@ -84,14 +107,14 @@
                         <img  :src="item" @click="handleRemove" v-for="item in ruleForm.pic" :key="item" alt="" width="146px" height="146px" class="remove-img">
                       </template>
                       <div class="upload-title">
-                          <p class="upload-title-red">支持上传多张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
+                          <p class="upload-title-red">支持上传多张图片，支持JPEG、PNG 等大部分图片格式</p>
                       </div>
         
                       
 
                     </el-form-item>
 
-                    <el-form-item label="活动规则：" >
+                    <el-form-item label="活动规则：" prop="content">
                         <!-- <quill-editor 
                             v-model="ruleForm.content"
                             ref="myQuillEditor"
@@ -165,11 +188,20 @@ export default {
         "content" : "", // 内容
         "type" : 1,//
         "video":"",
+        "video_pic":"",
         "pos_on":1, //C端是否接收 1接收 0否
         "business_on": 1, //店POS是否接收 1接收 0否
         "link_type":1, //是否可查看详情 0否 1可查看
         
-      }
+      },
+      rules: {
+          title: [
+            { required: true, message: '请输入活动标题', trigger: 'blur' },
+          ],
+          content: [
+            { required: true, message: '请输入活动规则', trigger: 'blur' }
+          ]
+        }
 
     };
   },
@@ -178,7 +210,7 @@ export default {
   // onEditorBlur(){}, // 失去焦点事件
   // onEditorFocus(){}, // 获得焦点事件
   // onEditorChange(){}, // 内容改变事件
-     $_beforeUpload_img(file){
+     beforeAvatarUpload(file){
         const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
         const isLt2M = file.size / 1024 / 1024 < 5;
 
@@ -193,11 +225,7 @@ export default {
   handleUploadSuccess_data_contrast(res){
     this.ruleForm.video=res.data.url
   },
-    // $_onPreview(file){
-    //     console.log(file,'111111')
-    //     this.imgUrl = file.url;
-    //     this.imgVisible = true;
-    // },
+    
 
   beforeUploadVideo(file) {          //视频上传之前判断他的大小
       const isLt10M = file.size / 1024 / 1024  < 12;
@@ -221,8 +249,12 @@ export default {
     uploadActivityImg(res){
       this.ruleForm.pic.push(res.data.url)
       
+    },
+    uploadVideoImg(res){
+      this.ruleForm.video_pic=res.data.url
       
     },
+    
     handleRemove(file, fileList) {
         this.ruleForm.pic.splice(file.url,1)
         console.log(this.ruleForm.pic,'pic')
