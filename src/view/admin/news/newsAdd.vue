@@ -46,18 +46,15 @@
                           :on-success="handleVideoSuccess"                   
                           :on-progress="uploadVideoProcess"
                         >
-                          <block v-if="ruleForm.video!=''&& videoFlag == false">
-
-                          </block>
-                          <block v-else>
+                          <block v-if="ruleForm.video">
                             <video
+                              v-if="ruleForm.video !='' && videoFlag == false"
                               :src="ruleForm.video"
                               width="350"
                               height="180"
                               controls="controls"
                             >您的浏览器不支持视频播放</video>  
-                          </block>
-                           
+                          </block> 
                                    
                         <el-progress
                           v-if="videoFlag == true"
@@ -140,6 +137,7 @@ export default {
 
   data() {
     return {
+     
       showImg:false,
       videoUploadPercent:"0%",
       videoFlag:false,
@@ -297,6 +295,7 @@ export default {
           //this.ruleForm.activity_status = res.data.data.activity_status
             this.ruleForm = res.data.data;
             this.showImg = true;
+            // this.videoShow = true;
             debugger
   
         })
