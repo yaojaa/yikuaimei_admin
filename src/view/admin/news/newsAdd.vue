@@ -46,7 +46,7 @@
                           :on-success="handleVideoSuccess"                   
                           :on-progress="uploadVideoProcess"
                         >
-                          <block v-if="ruleForm.video">
+                          <template v-if="ruleForm.video">
                             <video
                               v-if="ruleForm.video !='' && videoFlag == false"
                               :src="ruleForm.video"
@@ -54,7 +54,7 @@
                               height="180"
                               controls="controls"
                             >您的浏览器不支持视频播放</video>  
-                          </block> 
+                          </template> 
                                    
                         <el-progress
                           v-if="videoFlag == true"
@@ -72,24 +72,22 @@
                     <el-form-item label="图片：" >
 
                       <el-upload
-                        class="avatar-uploader"
-                        action="/api/admin/fileupload/image"
-                        list-type="picture-card"
-                        :on-success="uploadActivityImg"
-                        :on-remove="handleRemove"
-                        >
-                        <block v-if="showImg">
-                          <img  :src="item"  v-for="item in ruleForm.pic" :key="item" class="avatar invite-upload-img" width="146px" height="146px">
-                        </block>
-                       
-                          <i  class="el-icon-plus avatar-uploader-icon" style="font-size:48px;"></i>
-                      
-                        
-                       
+                          action="/api/admin/fileupload/image"
+                          list-type="picture-card"
+                          :on-success="uploadActivityImg"
+                          :on-remove="handleRemove">
+                          <!-- <img width="100%"  :src="item"  v-for="item in ruleForm.pic" :key="item" > -->
+           
+                          <i class="el-icon-plus upload-placeholder" ></i>
                       </el-upload>
+                      <template v-if="dialogVisible">
+                        <img  :src="item" @click="handleRemove" v-for="item in ruleForm.pic" :key="item" alt="" width="146px" height="146px" class="remove-img">
+                      </template>
                       <div class="upload-title">
                           <p class="upload-title-red">支持上传多张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
                       </div>
+        
+                      
 
                     </el-form-item>
 
@@ -137,8 +135,8 @@ export default {
 
   data() {
     return {
-     
-      showImg:false,
+      
+      dialogVisible:false,
       videoUploadPercent:"0%",
       videoFlag:false,
         // editorOption:{
@@ -176,15 +174,31 @@ export default {
     };
   },
   methods:{
-      onEditorReady(editor) { // 准备编辑器
-  },
+      
   // onEditorBlur(){}, // 失去焦点事件
   // onEditorFocus(){}, // 获得焦点事件
   // onEditorChange(){}, // 内容改变事件
- 
+     $_beforeUpload_img(file){
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+        const isLt2M = file.size / 1024 / 1024 < 5;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 5MB!');
+        }
+        return isJPG && isLt2M;
+    },
   handleUploadSuccess_data_contrast(res){
     this.ruleForm.video=res.data.url
   },
+    // $_onPreview(file){
+    //     console.log(file,'111111')
+    //     this.imgUrl = file.url;
+    //     this.imgVisible = true;
+    // },
+
   beforeUploadVideo(file) {          //视频上传之前判断他的大小
       const isLt10M = file.size / 1024 / 1024  < 12;
       if (!isLt10M) {
@@ -206,9 +220,11 @@ export default {
     },
     uploadActivityImg(res){
       this.ruleForm.pic.push(res.data.url)
+      
+      
     },
     handleRemove(file, fileList) {
-       this.ruleForm.pic.splice(file.url,1)
+        this.ruleForm.pic.splice(file.url,1)
         console.log(this.ruleForm.pic,'pic')
     },
     cancal(){
@@ -289,23 +305,21 @@ export default {
    
     //如果是编辑
     if (Object.keys(params).length) {
-       
+        this.dialogVisible=true
         this.$axios.post("/api/admin/news/detail",params).then(res => {
           console.log(res.data.data,'data----data')
           //this.ruleForm.activity_status = res.data.data.activity_status
             this.ruleForm = res.data.data;
-            this.showImg = true;
-            // this.videoShow = true;
-            debugger
   
         })
+        
     }
      
   },
   computed: {
-    editor() {
-        return this.$refs.myQuillEditor.quill;
-    }
+    // editor() {
+    //     return this.$refs.myQuillEditor.quill;
+    // }
   }
 };
 </script>
@@ -319,6 +333,9 @@ export default {
   width: 358px;
   height: 176px;
   max-height: 176px
+}
+.remove-img{
+  cursor: pointer;
 }
 </style>
 
