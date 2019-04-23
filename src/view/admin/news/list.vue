@@ -40,8 +40,8 @@ export default {
             status_filter: "",
             tagsListGroup: {
                 '管理端是否接收:': [
-                    { title: '是', key: 'user_on', value: 1 },
-                    { title: '否', key: 'user_on', value: 0 }
+                    { title: '是', key: 'business_on', value: 1 },
+                    { title: '否', key: 'business_on', value: 0 }
                 ],
 
                 'POS端是否接收:': [
