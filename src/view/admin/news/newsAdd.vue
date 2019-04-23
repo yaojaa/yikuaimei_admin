@@ -39,7 +39,7 @@
                     </el-form-item>
                     <el-form-item label="视频：" >
                         <el-upload 
-                          accept='.mp4,.qlv,.qsv,.ogg,.flv,.avi,.wmv,.rmvb'
+                          accept='.mp4'
                           action="/api/admin/fileupload/image"
                           :show-file-list=false 
                           :before-upload="beforeUploadVideo"               
@@ -94,7 +94,7 @@
                             @blur="onEditorBlur($event)" @focus="onEditorFocus($event)"
                             @change="onEditorChange($event)">
                         </quill-editor> -->
-                         <el-input type="textarea" v-model="ruleForm.content"></el-input>
+                         <el-input type="textarea" v-model="ruleForm.content" :rows="5"></el-input>
                     </el-form-item>
 
                     <el-form-item label="是否查看详情页：">
@@ -177,9 +177,9 @@ export default {
     this.ruleForm.video=res.data.url
   },
   beforeUploadVideo(file) {          //视频上传之前判断他的大小
-      const isLt10M = file.size / 1024 / 1024  < 50;
+      const isLt10M = file.size / 1024 / 1024  < 12;
       if (!isLt10M) {
-        this.$message.error('上传视频大小不能超过50MB哦!');
+        this.$message.error('上传视频大小不能超过12MB哦!');
         return false;
       }
     },
