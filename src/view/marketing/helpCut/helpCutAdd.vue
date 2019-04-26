@@ -65,11 +65,11 @@
                     
                     <el-form-item label="活动时间：">
                         <el-col :span="11">
-                          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.activity_start_time" style="width: 100%;"></el-date-picker>
+                          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.activity_start_time" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
                         </el-col>
                         <el-col class="line-center" :span="2">至</el-col>
                         <el-col :span="11">
-                          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.activity_end_time" style="width: 100%;"></el-date-picker>
+                          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.activity_end_time" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
                         </el-col>
                     </el-form-item>
 
@@ -327,6 +327,7 @@ export default {
         "rules" : {  // 帮砍规则
            "bargain_type":1,
            "days":"",
+           "bargain":[]
         }
         
       },
@@ -517,17 +518,17 @@ export default {
         console.log(params,'params')
         this.$axios.post("/api/admin/activity/info",params).then(res => {
           console.log(res.data.data,'data----data')
-          
+          this.ruleForm = res.data.data
 
 
-            for(let i=0; i<this.ruleForm.rules.bargain.length;i++){
-              this.ruleForm.rules.bargain[i].max_price = this.ruleForm.rules.bargain[i].max_price/100
-               this.ruleForm.rules.bargain[i].reduce_solid_price = this.ruleForm.rules.bargain[i].reduce_solid_price/100
-                this.ruleForm.rules.bargain[i].reduce_min_price = this.ruleForm.rules.bargain[i].reduce_min_price/100
-                 this.ruleForm.rules.bargain[i].reduce_max_price = this.ruleForm.rules.bargain[i].reduce_max_price/100
-                  this.ruleForm.rules.bargain[i].first_solid_price = this.ruleForm.rules.bargain[i].first_solid_price/100
-                   this.ruleForm.rules.bargain[i].first_min_price = this.ruleForm.rules.bargain[i].first_min_price/100
-                    this.ruleForm.rules.bargain[i].first_max_price = this.ruleForm.rules.bargain[i].first_max_price/100
+            for(let i=0; i<res.data.data.rules.bargain.length;i++){
+              this.ruleForm.rules.bargain[i].max_price = res.data.data.rules.bargain[i].max_price/100
+               this.ruleForm.rules.bargain[i].reduce_solid_price = res.data.data.rules.bargain[i].reduce_solid_price/100
+                this.ruleForm.rules.bargain[i].reduce_min_price = res.data.data.rules.bargain[i].reduce_min_price/100
+                 this.ruleForm.rules.bargain[i].reduce_max_price = res.data.data.rules.bargain[i].reduce_max_price/100
+                  this.ruleForm.rules.bargain[i].first_solid_price = res.data.data.rules.bargain[i].first_solid_price/100
+                   this.ruleForm.rules.bargain[i].first_min_price = res.data.data.rules.bargain[i].first_min_price/100
+                    this.ruleForm.rules.bargain[i].first_max_price = res.data.data.rules.bargain[i].first_max_price/100
             }
             //判断当前是限制还是不限制
             if(res.data.data.limits.limit_total_times==0){

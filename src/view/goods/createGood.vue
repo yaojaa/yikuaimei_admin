@@ -406,4 +406,7 @@ export default {
   clear: both;
   height: 0;
 }
+.el-checkbox__input{
+  right:0px !important;
+}
 </style>

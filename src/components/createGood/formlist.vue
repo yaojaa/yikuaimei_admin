@@ -257,6 +257,7 @@
                 </el-form-item>
                 <el-form-item label="" prop="good_video"  class="good_video">
                     <el-upload
+                        accept="video/mp4,image/*"
                         action="/api/admin/fileupload/image"
                         :show-file-list="false"
                         class="avatar-uploader"
