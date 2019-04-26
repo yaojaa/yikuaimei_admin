@@ -261,16 +261,16 @@
                         action="/api/admin/fileupload/image"
                         :show-file-list="false"
                         class="avatar-uploader"
-                        :on-preview="$_onPreview"
-                        :on-change="(res,file)=>{return $_change(res,file,'good_video', 1)}"
-                        :on-remove="(res,file)=>{return $_change(res,file,'good_video', 1)}"
+                       
+                        :on-success="videoSuccess"
+
                         :on-error="$_error"
-                        :on-exceed="(files, fileList)=>{return $_exceed(files, fileList, good_img_arr.limit)}"
+                        
                         :before-upload="$_beforeUpload_viedo"
                         >
                         <ul class="el-upload-list el-upload-list--picture-card el-upload--picture-card"  v-if="good_video" >
                             <li tabindex="0" class="el-upload-list__item is-success">
-                                <video :src="good_video" class="avatar" controls="controls" height="100%">您的浏览器不支持视频播放</video>
+                                <video :src="createdData.good_video" class="avatar" controls="controls" height="100%">您的浏览器不支持视频播放</video>
                                 <a class="el-upload-list__item-name" >
                                     <i class="el-icon-document" />
                                     "Wiedergeburt 2019-01-01 03.09.22.mp4"
@@ -620,6 +620,8 @@ export default {
         this.$_transformImgAry('poster_img',1)
         this.good_video = good_video
 
+        debugger
+
         // 单规格，多规格处理 sku_type_arr 规格数组 多规格
         if(createdData.sku_type_arr && createdData.sku_type_arr.length ){
             this.singleButton = "添加规格"
@@ -759,6 +761,10 @@ export default {
   },
 
   methods: {
+      videoSuccess(res){
+          this.createdData.good_video = res.data.url
+          
+      },
       renderLabel(){
           var _this = this;
           setTimeout(() => {

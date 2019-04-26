@@ -408,5 +408,6 @@ export default {
 }
 .el-checkbox__input{
   right:0px !important;
+  top:0px !important;
 }
 </style>
