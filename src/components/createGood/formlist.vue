@@ -398,10 +398,10 @@
                         :file-list="show_img_arr.url"
                         :limit="show_img_arr.limit"
                         :multiple="true"
-                        :class="{canAdd:show_img_arr.over === 0}"
+                        
                         >
                         <i class="el-icon-plus upload-placeholder">
-                            <p>添加图片</p><span>还可以添加{{show_img_arr.over}}张</span>
+                            <p>添加图片</p></span>
                         </i>
                     </el-upload>
                 </el-form-item>
@@ -556,7 +556,7 @@ export default {
             over: 4
         },
         show_img_arr: {
-            limit: 6,
+            limit: 999,
             url : [],
             over: 6
         },
