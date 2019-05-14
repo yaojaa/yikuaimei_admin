@@ -398,10 +398,9 @@
                         :file-list="show_img_arr.url"
                         :limit="show_img_arr.limit"
                         :multiple="true"
-                        
                         >
                         <i class="el-icon-plus upload-placeholder">
-                            <p>添加图片</p></span>
+                            <p>添加图片</p>
                         </i>
                     </el-upload>
                 </el-form-item>
