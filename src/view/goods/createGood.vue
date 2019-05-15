@@ -543,7 +543,7 @@ export default {
   top: 0px;
 }
 #createGood .color-666{
-  color:#666;
+  color:#999;
   font-size: 12px;
 }
 #createGood .lh_1em{
