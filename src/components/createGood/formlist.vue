@@ -257,7 +257,7 @@
                     </el-upload>
                 </el-form-item>
                 
-                <el-form-item label="">
+                <el-form-item label="上传视频：">
                     <div class="upload-title color-666 lh_1em">
                         视频<span class="color-72">支持上传1个视频</span>，高宽1:1，最好是大于等于<span class="color-72">800*800</span>，大小不超过20M，支持MP4格式视频格式 
                     </div>
@@ -299,7 +299,7 @@
                         </i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="" prop="good_ico"  class="good_video">
+                <el-form-item label="" prop="good_video_pic"  class="good_video">
                     <el-upload
                         action="/api/admin/fileupload/image"
                         list-type="picture-card"
@@ -743,11 +743,11 @@ export default {
         //     message: `请添加视频`,
         //     trigger: "change"
         // }],
-        // good_ico: [{
-        //     required: true,
-        //     message: `请添加}视频首图图`,
-        //     trigger: "change"
-        // }],
+        good_ico: [{
+            required: true,
+            message: `请添加商品展示图`,
+            trigger: "change"
+        }],
         show_img_arr: [{
             required: true,
             message: `请选择${this.type}展示图`,

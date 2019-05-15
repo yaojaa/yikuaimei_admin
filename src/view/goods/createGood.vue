@@ -580,7 +580,7 @@ export default {
 
 .num_6{
   position: absolute;
-  left: -116px;
+  left: -128px;
   top: 7px;
 }
 </style>

@@ -102,7 +102,7 @@ export default {
                     name: "商品管理"
                 },
                 {
-                    name: "虚拟卡券",
+                    name: "虚拟卡券管理",
                     url: "/serviceList"
                 }
             ],
