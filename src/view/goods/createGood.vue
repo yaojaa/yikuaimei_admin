@@ -427,7 +427,7 @@ export default {
 .fixed-box{
   position: absolute;
   right:60px;
-  top: 60px;
+  top: 90px;
 }
 .fixed-title{
   color: #7130d5;
@@ -544,6 +544,7 @@ export default {
 }
 #createGood .color-666{
   color:#666;
+  font-size: 12px;
 }
 #createGood .lh_1em{
   line-height: 1.5em;
