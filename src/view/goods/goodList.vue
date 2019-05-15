@@ -343,7 +343,7 @@
 	}
 	.list-good-name{
 		line-height: 1.5em;
-		height: 52px;
+		max-height: 52px;
 		overflow: hidden;
 	}
 </style>
