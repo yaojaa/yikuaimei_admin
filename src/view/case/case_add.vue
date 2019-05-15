@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="page" id="addCase">
         <div class="page-header">
             <div class="crumbs">
                 <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
@@ -75,23 +75,26 @@
                         <el-form-item label="上传图片">
                             
                             <el-upload class="avatar-uploader" action="/api/admin/fileupload/image" :show-file-list="false" :on-success="handleFaceUploadSuccess">
-                                before
                                 <img width="100%" v-if="form1.user_info.pic_before" :src="form1.user_info.pic_before" class="avatar">
-                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                <i v-else class="el-icon-plus avatar-uploader-icon">
+                                    <p>添加图片</p><span>before</span>
+                                </i>
                             </el-upload>
                             <div class="upload-title">
-                                <p class="upload-title-red">图片格式：png、jpg，尺寸1242*1242像素</p>
+                                <p class="upload-title-theme">图片格式：png、jpg，尺寸1242*1242像素</p>
                             </div>
                         </el-form-item>
                         <el-form-item label="上传图片" prop="pic_after">
                              
                             <el-upload class="avatar-uploader" action="/api/admin/fileupload/image" :show-file-list="false" :on-success="handleFaceUploadSuccessAfter">
-                                after
+                                
                                 <img width="100%" v-if="form1.user_info.pic_after" :src="form1.user_info.pic_after" class="avatar">
-                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                <i v-else class="el-icon-plus avatar-uploader-icon">
+                                    <p>添加图片</p><span>after</span>
+                                </i>
                             </el-upload>
                             <div class="upload-title">
-                                <p class="upload-title-red">图片格式：png、jpg，尺寸1242*1242像素</p>
+                                <p class="upload-title-theme">图片格式：png、jpg，尺寸1242*1242像素</p>
                             </div>
                         </el-form-item>
                         <el-form-item>
@@ -107,8 +110,8 @@
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                         <el-form-item label="上传检测报告">
                             <el-upload accept="image/jpg" class="upload-demo" action="/api/admin/fileupload/image" :on-remove="handleRemove" :show-file-list=false list-type="picture" :on-success="handleReportUploadSuccess" multiple>
-                                <el-button size="small" type="primary">+点击上传</el-button>
-                                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                                <el-button size="small" type="primary">点击上传</el-button>
+                                <div slot="tip" class="el-upload__tip upload-title-theme">只能上传jpg/png文件，且不超过500kb</div>
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.report.length">
                                 <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.report" :key="index">
@@ -152,8 +155,8 @@
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload> -->
                             <el-upload action="/api/admin/fileupload/image" multiple :on-success="handleUploadSuccess_expert_suggest" :on-remove="handleRemove_expert_suggest" :show-file-list=false list-type="picture">
-                                <el-button size="small" type="primary">+点击上传</el-button>
-                                <div slot="tip" class="el-upload__tip">图片或者视频</div>
+                                <el-button size="small" type="primary">点击上传图片或者视频</el-button>
+                                <!-- <div slot="tip" class="el-upload__tip upload-title-theme">图片或者视频</div> -->
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.expert_suggest.pic_list.length">
                                 <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.expert_suggest.pic_list" :key="index">
@@ -177,8 +180,8 @@
                         </el-form-item>
                         <div class="up_area">
                             <el-upload multiple action="/api/admin/fileupload/image" :on-success="handleUploadSuccess_product_introduce" :on-remove="handleRemove_product_introduce" :show-file-list=false list-type="picture">
-                                <el-button size="small" type="primary">+点击上传</el-button>
-                                <div slot="tip" class="el-upload__tip">图片或者视频</div>
+                                <el-button size="small" type="primary">点击上传图片或者视频</el-button>
+                                <!-- <div slot="tip" class="el-upload__tip upload-title-theme">图片或者视频</div> -->
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.product_introduce.pic_list.length">
                                 <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.product_introduce.pic_list" :key="index">
@@ -202,8 +205,8 @@
                         </el-form-item>
                         <div class="up_area">
                             <el-upload multiple action="/api/admin/fileupload/image" :show-file-list=false :on-success="handleUploadSuccess_operate_process" :on-remove="handleRemove_operate_process" list-type="picture">
-                                <el-button size="small" type="primary">+点击上传</el-button>
-                                <div slot="tip" class="el-upload__tip">图片或者视频</div>
+                                <el-button size="small" type="primary">点击上传图片或者视频</el-button>
+                                <!-- <div slot="tip" class="el-upload__tip upload-title-theme">图片或者视频</div> -->
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.operate_process.pic_list.length">
                                 <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.operate_process.pic_list" :key="index">
@@ -227,8 +230,8 @@
                         </el-form-item>
                         <div class="up_area">
                             <el-upload class="uploader_small" multiple action="/api/admin/fileupload/image" list-type="picture" :show-file-list=false :on-success="handleUploadSuccess_operate_record" :on-remove="handleRemove_operate_record">
-                                <el-button size="small" type="primary">+点击上传</el-button>
-                                <div slot="tip" class="el-upload__tip">图片或者视频</div>
+                                <el-button size="small" type="primary">点击上传图片或者视频</el-button>
+                                <!-- <div slot="tip" class="el-upload__tip upload-title-theme">图片或者视频</div> -->
                             </el-upload>
                             <!---->
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.operate_record.pic_list.length">
@@ -253,8 +256,8 @@
                         </el-form-item>
                         <div class="up_area">
                             <el-upload accept="video/mp4,image/*" multiple action="/api/admin/fileupload/image" :on-success="handleUploadSuccess_data_contrast" list-type="picture" :show-file-list=false :on-remove="handleRemove_data_contrast">
-                                <el-button size="small" type="primary">+点击上传</el-button>
-                                <div slot="tip" class="el-upload__tip">图片或者视频</div>
+                                <el-button size="small" type="primary">点击上传图片或者视频</el-button>
+                                <!-- <div slot="tip" class="el-upload__tip upload-title-theme">图片或者视频</div> -->
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.data_contrast.pic_list.length">
                                 <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.data_contrast.pic_list" :key="index">
@@ -278,8 +281,8 @@
                         </el-form-item>
                         <div class="up_area">
                             <el-upload accept="video/mp4,image/*" multiple action="/api/admin/fileupload/image" list-type="picture" :show-file-list=false :on-success="handleUploadSuccess_expert_analysis" :on-remove="handleRemove_expert_analysis">
-                                <el-button size="small" type="primary">+点击上传</el-button>
-                                <div slot="tip" class="el-upload__tip">图片或者视频</div>
+                                <el-button size="small" type="primary">点击上传图片或者视频</el-button>
+                                <!-- <div slot="tip" class="el-upload__tip upload-title-theme">图片或者视频</div> -->
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.expert_analysis.pic_list.length">
                                 <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.expert_analysis.pic_list" :key="index">
@@ -303,8 +306,8 @@
                         </el-form-item>
                         <div class="up_area">
                             <el-upload accept="video/mp4,image/*" multiple action="/api/admin/fileupload/image" list-type="picture" :show-file-list=false :on-success="handleUploadSuccess_expert_review" :on-remove="handleRemove_expert_review">
-                                <el-button size="small" type="primary">+点击上传</el-button>
-                                <div slot="tip" class="el-upload__tip">图片或者视频</div>
+                                <el-button size="small" type="primary">点击上传图片或者视频</el-button>
+                                <!-- <div slot="tip" class="el-upload__tip upload-title-theme">图片或者视频</div> -->
                             </el-upload>
                             <ul class="el-upload-list el-upload-list--picture-card" v-if="form1.expert_review.pic_list.length">
                                 <li tabindex="0" class="el-upload-list__item is-success" v-for="(img,index) in form1.expert_review.pic_list" :key="index">
@@ -779,9 +782,36 @@ h3.form_title_label {
     white-space:nowrap;
 
 }
-.upload-title-red{
+.upload-title-theme{
     font-size: 12px;
-    color: red;
+    color:#7224D8;
+}
+#addCase .el-upload--text {
+  position: relative;
+}
+
+#addCase .avatar-uploader-icon {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size:40px
+}
+
+#addCase .avatar-uploader-icon p {
+  color: rgba(102, 102, 102, 1);
+  font-size: 15px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+#addCase  .avatar-uploader-icon span {
+  color: rgba(153, 153, 153, 1);
+  font-size: 15px;
+  left: 804px;
 }
 
 

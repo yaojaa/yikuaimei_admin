@@ -95,5 +95,9 @@
 </script>
 
 <style scoped>
-	
+	.option{
+		padding:20px;
+		margin-left: 100px;
+		margin-top:10px
+	}
 </style>

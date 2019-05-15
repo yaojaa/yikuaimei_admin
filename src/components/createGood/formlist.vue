@@ -397,7 +397,7 @@
 
             <!--详情 -->
             <template v-if="goodType !== GOODTYPE['serviceList'] && currentActive === 1 || currentActive === 2">
-                <el-form-item :label="`⑥${type}展示图：`" prop="show_img_arr">
+                <el-form-item :label="`${type}展示图：`" prop="show_img_arr">
                     <div class="upload-title color-666 lh_1em">
                         展示{{type}}的图片详情中的图片，<span class="color-72">至少上传1张</span>，拖拽图片调整图片顺序，双击可预览大图，图片<span class="color-72">1242*1242</span>，单张图片不要超过5M，支持JPG、PNG等常见图片格式。
                     </div>
