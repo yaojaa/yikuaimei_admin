@@ -341,4 +341,7 @@
 	.goodlist-table-custem p{
 		font-size: 12px;
 	}
+	.list-good-name{
+		line-height: 1.5em;
+	}
 </style>
