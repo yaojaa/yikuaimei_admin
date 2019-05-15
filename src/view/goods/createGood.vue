@@ -583,5 +583,4 @@ export default {
   left: -116px;
   top: 7px;
 }
-
 </style>
