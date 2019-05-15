@@ -427,7 +427,7 @@ export default {
 .fixed-box{
   position: absolute;
   right:60px;
-  top: 90px;
+  top: 110px;
 }
 .fixed-title{
   color: #7130d5;
