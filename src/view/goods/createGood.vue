@@ -536,36 +536,51 @@ export default {
   color: #fff;
   
 }
+
+#createGood .el-form-item{
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
+#createGood .color-666{
+  color:#666;
+}
+#createGood .lh_1em{
+  line-height: 1.5em;
+}
+#createGood .color-72{
+ color: #7224D8;
+}
 .num_1{
   position: absolute;
-  left: 30px;
-  top: 84px;
+  left: -88px;
+  top: 6px;
 }
 .num_2{
   position: absolute;
-  left: 8px;
-  top: 134px;
+  left: -116px;
+  top: 6px;
 }
 .num_3{
   position: absolute;
-  left: 54px;
-  top: 608px;
+  left: -66px;
+  top: 7px;
 }
 .num_4{
   position: absolute;
-  left: 32px;
-  top: 708px;
+  left: -88px;
+  top: 7px;
 }
 .num_5{
   position: absolute;
-  left: 4px;
-  top: 1108px;
+  left: -116px;
+  top: 7px;
 }
 
 .num_6{
   position: absolute;
-  left: 4px;
-  top: 1660px;
+  left: -116px;
+  top: 7px;
 }
 
 </style>

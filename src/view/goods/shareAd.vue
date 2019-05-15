@@ -11,7 +11,7 @@
         <!-- tab 内容 -->
         <div class="page-content">
           <el-form   label-width="100px" class="small-form share-form">
-              <el-form-item label="分享海报文字:">
+              <el-form-item label="分享海报描述:">
                 <el-input v-model="shareGetInfo.share_model_content"></el-input>
               </el-form-item>
               <el-form-item label="分享海报标题:">
@@ -35,7 +35,8 @@
               </el-upload>
             </el-col> -->
             <el-col :span="8">
-              <el-button type="change">{{card.type_name}}</el-button>
+              <!-- <el-button type="change">{{card.type_name}}</el-button> -->
+              <div class="share-card">上传{{card.type_name}}图</div>
               <el-upload
                 class="avatar-uploader"
                 action="/api/admin/fileupload/image"
@@ -44,7 +45,7 @@
                 :before-upload="$_beforeUpload">
                 <img v-if="card.img_url" :src="card.img_url" class="avatar" width="360px" height="180px">
                 <i v-else class="el-icon-plus avatar-uploader-icon" />
-                <div slot="tip" class="el-upload__tip">支持上传1张图片，图片框高逼为3:1，支持JPG,PNG等格式图片，单张图片大小不超过5M</div>
+                <div slot="tip" class="el-upload__tip">支持上传1张图片，图片框宽高为500×400，支持JPG,PNG等格式图片，单张图片大小不超过5M</div>
               </el-upload>
             </el-col>
           </el-row>
@@ -244,4 +245,17 @@ export default {
   margin-left:20px;
   
 } */
+#createGood .page-content{
+  padding:20px
+}
+.avatar-uploader .avatar-uploader-icon{
+  font-size: 48px;
+  margin-top: 60px;
+}
+.share-card{
+  margin-bottom:10px;
+  color: #44465A;
+  font-size: 14px;
+}
+
 </style>
