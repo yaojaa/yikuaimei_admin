@@ -3,9 +3,12 @@
         <!-- 表单list -->
         <el-form ref="createdData" :model="createdData" :rules="rules" label-width="120px" class="form-width-small">
             <template v-if="currentActive === 0">
+                <div class="num_1">1</div>
                 <el-form-item label="名称：" prop="good_name">
+                    
                     <el-input  v-model="createdData.good_name" placeholder="名称为2-30个字" />                                                    
                 </el-form-item>
+                <div class="num_2">2</div>
                 <el-form-item :label="`${type}卖点：`" prop="good_explain">
                     <el-input type="textarea" v-model="createdData.good_explain" placeholder="长度为2-50个字" suffix-icon="el-icon-arrow-right" /> 
                 </el-form-item>
@@ -103,6 +106,7 @@
                         <el-option v-for="item in COUNTRY" :label="item" :value="item" :key="`${item}country`" />
                     </el-select>                                                                      
                 </el-form-item>
+                <div class="num_3">3</div>
                 <el-form-item label="规格" props="format" v-if="goodType !== GOODTYPE['serviceList']">
                     <el-radio-group v-model="singleButton" @change="this.$_showFormat">
                         <el-radio-button label="无规格" /><el-radio-button label="添加规格" />
@@ -114,6 +118,7 @@
                         <el-form-item :label="`${type}编码：`" prop="sku_code">
                             <el-input  v-model="createdData.good_sku[0].sku_code" placeholder="支持14以内的数字+英文组合"  />                                                                              
                         </el-form-item>
+                        <div class="num_4">4</div>
                         <el-form-item label="售价：" prop="price_sale">
                             <el-input  v-model="createdData.good_sku[0].price_sale" placeholder="请输入售价" />                                                                                                        
                             <span class="outText">元</span>
@@ -224,7 +229,7 @@
                         </i>
                     </el-upload>
                 </el-form-item>
-               
+               <div class="num_5">5</div>
                 <el-form-item :label="`${type}图片：`" prop="good_img_arr">
                     <div class="upload-title">
                         支持上传1-6张图片，你可以拖拽图片调整图片的现实顺序，图片宽高比为1125*1125，支持JPG、PNG等格式图片，单张图片大小不超过5M
@@ -306,6 +311,7 @@
                     </el-upload>
                 </el-form-item>
                 <p  class="clearfix"></p>
+                <div class="num_6">6</div>
                 <el-form-item :label="`${type}展示图：`" prop="good_ico" >
                     <div class="upload-title">
                         <p>支持上传1张图片，图片宽高比为400*400，支持JPG、PNG等格式图片，单张图片大小不超过5M</p>
@@ -382,7 +388,7 @@
 
             <!--详情 -->
             <template v-if="goodType !== GOODTYPE['serviceList'] && currentActive === 1 || currentActive === 2">
-                <el-form-item :label="`${type}展示图：`" prop="show_img_arr">
+                <el-form-item :label="`⑥${type}展示图：`" prop="show_img_arr">
                     <div class="upload-title">
                         展示{{type}}的图片详情中的图片，至少上传1张，拖拽图片调整图片顺序，双击可预览大图，图片1242*1242px，单张图片不要超过5M，支持JPG、PNG等常见图片格式。
                     </div>

@@ -10,11 +10,22 @@
 
         <!-- tab 内容 -->
         <div class="page-content">
+          
           <el-steps :active="active" finish-status="success" simple>
             <el-step title="编辑基本信息" />
             <el-step title="添加耗材" v-if="good_type === GOODTYPE['serviceList']" />
             <el-step title="编辑商品详情" v-if="good_type !== GOODTYPE['fictitiousList']"/>
           </el-steps>
+          <div class="fixed-box">
+            <div class="fixed-title">预览示例</div>
+            <div class="number_5 number_number">5</div>
+            <div class="number_1 number_number">1</div>
+            <div class="number_2 number_number">2</div>
+            <div class="number_4 number_number">4</div>
+            <div class="number_3 number_number">3</div>
+            <div class="number_6 number_number">6</div>
+            <div class="fixed-img "></div>
+          </div>
           <FormlistItem 
             @changeTab="$_changeTab"
             :goodType='good_type'
@@ -88,7 +99,10 @@ export default {
   background: #fff;
   padding:0;
   padding-bottom: 20px;
-  margin: 20px
+  margin: 20px;
+  position: relative;
+  left: 0px;
+  top: 0px;
 }
 
 #createGood .el-step__title{
@@ -410,4 +424,148 @@ export default {
   right:0px !important;
   top:0px !important;
 }
+.fixed-box{
+  position: absolute;
+  right:60px;
+  top: 60px;
+}
+.fixed-title{
+  color: #7130d5;
+  text-align: center;
+  margin-bottom:10px;
+}
+.fixed-img{
+  width:200px;
+  background-image: url('/static/img/fixed_img.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 1000px;
+}
+.number_5{
+  width: 12px;
+  height: 12px;
+  border-radius:50%;
+  background-color: #7130d5;
+  color: #fff;
+  text-align: center;
+  line-height: 12px;
+  font-size: 12px;
+  position: absolute;
+  top: 140px;
+  left: 60px;
+}
+.number_1{
+  width: 12px;
+  height: 12px;
+  border-radius:50%;
+  background-color: #7130d5;
+  color: #fff;
+  text-align: center;
+  line-height: 12px;
+  font-size: 12px;
+  position: absolute;
+  top: 206px;
+  left: -10px;
+}
+.number_2{
+  width: 12px;
+  height: 12px;
+  border-radius:50%;
+  background-color: #7130d5;
+  color: #fff;
+  text-align: center;
+  line-height: 12px;
+  font-size: 12px;
+  position: absolute;
+  top: 214px;
+  right: 44px;
+}
+.number_4{
+  width: 12px;
+  height: 12px;
+  border-radius:50%;
+  background-color: #7130d5;
+  color: #fff;
+  text-align: center;
+  line-height: 12px;
+  font-size: 12px;
+  position: absolute;
+  top: 230px;
+  left: -10px;
+}
+.number_3{
+  width: 12px;
+  height: 12px;
+  border-radius:50%;
+  background-color: #7130d5;
+  color: #fff;
+  text-align: center;
+  line-height: 12px;
+  font-size: 12px;
+  position: absolute;
+  top: 270px;
+  left: -10px;
+}
+.number_6{
+  width: 12px;
+  height: 12px;
+  border-radius:50%;
+  background-color: #7130d5;
+  color: #fff;
+  text-align: center;
+  line-height: 12px;
+  font-size: 12px;
+  position: absolute;
+  top: 600px;
+  left: 60px;
+}
+.number_number{
+  font-size: 10px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+}
+.num_1,.num_2,.num_3,.num_4,.num_5,.num_6{
+  font-size: 10px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  border-radius:50%;
+  background-color: #7130d5;
+  text-align: center;
+  color: #fff;
+  
+}
+.num_1{
+  position: absolute;
+  left: 30px;
+  top: 84px;
+}
+.num_2{
+  position: absolute;
+  left: 8px;
+  top: 134px;
+}
+.num_3{
+  position: absolute;
+  left: 54px;
+  top: 608px;
+}
+.num_4{
+  position: absolute;
+  left: 32px;
+  top: 708px;
+}
+.num_5{
+  position: absolute;
+  left: 4px;
+  top: 1108px;
+}
+
+.num_6{
+  position: absolute;
+  left: 4px;
+  top: 1660px;
+}
+
 </style>
