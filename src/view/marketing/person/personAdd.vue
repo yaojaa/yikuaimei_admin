@@ -14,7 +14,7 @@
 
 
 
-            <div class="panel">
+            <div class="panel" id="person_add">
 
                 <div class="form-panel p-xl"  v-if="step==1">
                     <!--form start-->
@@ -773,28 +773,28 @@ overflow : hidden;
 
 </style>
 <style >
-  .el-checkbox__input{
+#person_add  .el-checkbox__input{
   position: absolute ;
   right:6px ;
   top: 6px ;
   
 }
-.el-dialog__body{
+#person_add .el-dialog__body{
   background-color: #fff;
 }
-.el-tabs__nav-wrap::after{
+#person_add .el-tabs__nav-wrap::after{
   background-color: #f6f6f6
 }
-.el-tabs__item{
+#person_add .el-tabs__item{
   color:#666;
 }
-.goods-div-left p{
+#person_add .goods-div-left p{
   color:#333;
 }
-.goods-div-left p.money{
+#person_add .goods-div-left p.money{
   color:#E89925 100%
 }
-.goods-div{
+#person_add .goods-div{
   border-radius:6px;
   box-shadow: 0px 0px 18px 0px rgba(211, 211, 211, 0.5);
   display: inline-block;
@@ -816,9 +816,7 @@ p{
 .gift-table{
   font-size: 14px;
 }
-.form-panel{
-  
-}
+
 
 
 </style>

@@ -14,7 +14,7 @@
 
 
 
-            <div class="panel">
+            <div class="panel" id="help_cut">
 
                 <div class="form-panel p-xl"  v-if="step==1">
                     <!--form start-->
@@ -1009,34 +1009,34 @@ export default {
 .width980{
   width:980px;
 }
-  .el-checkbox__input{
+#help_cut  .el-checkbox__input{
   position: absolute ;
   right:6px ;
   top: 6px ;
   
 }
-.el-checkbox__input{
+#help_cut .el-checkbox__input{
   position: absolute ;
   right:6px ;
   top: 6px ;
   
 }
-.el-dialog__body{
+#help_cut .el-dialog__body{
   background-color: #fff;
 }
-.el-tabs__nav-wrap::after{
+#help_cut .el-tabs__nav-wrap::after{
   background-color: #f6f6f6
 }
-.el-tabs__item{
+#help_cut .el-tabs__item{
   color:#666;
 }
-.goods-div-left p{
+#help_cut .goods-div-left p{
   color:#333;
 }
-.goods-div-left p.money{
+#help_cut .goods-div-left p.money{
   color:#E89925 100%
 }
-.goods-div{
+#help_cut .goods-div{
   border-radius:6px;
   box-shadow: 0px 0px 18px 0px rgba(211, 211, 211, 0.5);
   display: inline-block;

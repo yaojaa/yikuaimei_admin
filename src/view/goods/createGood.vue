@@ -420,7 +420,7 @@ export default {
   clear: both;
   height: 0;
 }
-.el-checkbox__input{
+#createGood .el-checkbox__input{
   right:0px !important;
   top:0px !important;
 }

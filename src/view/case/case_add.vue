@@ -334,7 +334,7 @@
                 <div class="form-panel p-xl form_panel_4" v-if="step==4">
                     <!--form start-->
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                        <h3>商品服务：（选择案例包含的商品或服务）</h3>
+                        <h3 class="shop_h3">商品服务：（选择案例包含的商品或服务）</h3>
                         <el-tabs type="border-card" v-model="activeName" :tabPosition="'left'" @tab-click="handleTabClick">
                             <el-tab-pane label="商品" name="1">
                                 <el-checkbox-group v-model="form1.goods_id_list" :min="1" :max="15">
@@ -818,6 +818,12 @@ h3.form_title_label {
 }
 #addCase .el-checkbox__input{
     position: relative;
+}
+.shop_h3{
+    margin-bottom:20px;
+}
+.form_panel_4 button{
+    margin-top: 20px
 }
 
 /*.uploader_small {
