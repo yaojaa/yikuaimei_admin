@@ -105,7 +105,7 @@
                 </div>
                 <!--step end-->
                 <!--step2 start-->
-                <div class="form-panel p-xl" v-if="step==2">
+                <div class="form-panel p-xl " v-if="step==2">
                     <!--form start-->
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                         <el-form-item label="上传检测报告">
@@ -331,7 +331,7 @@
                 </div>
                 <!--step end-->
                 <!--step4 start-->
-                <div class="form-panel p-xl" v-if="step==4">
+                <div class="form-panel p-xl form_panel_4" v-if="step==4">
                     <!--form start-->
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                         <h3>商品服务：（选择案例包含的商品或服务）</h3>
@@ -813,7 +813,12 @@ h3.form_title_label {
   font-size: 15px;
   left: 804px;
 }
-
+.form_panel_4{
+    width: 860px
+}
+#addCase .el-checkbox__input{
+    position: relative;
+}
 
 /*.uploader_small {
     border: 1px dashed #d9d9d9;
