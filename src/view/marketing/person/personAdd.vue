@@ -764,6 +764,15 @@ overflow : hidden;
 .width980{
   width:980px
 }
+
+
+
+
+
+
+
+</style>
+<style >
 #person_add  .el-checkbox__input{
   position: absolute ;
   right:6px ;
@@ -793,15 +802,6 @@ overflow : hidden;
   background-color:#fff;
 
 }
-
-
-
-
-
-
-</style>
-<style >
-
 p{
   margin:0px;
 }
