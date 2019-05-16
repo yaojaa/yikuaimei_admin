@@ -1009,7 +1009,7 @@ export default {
 .width980{
   width:980px;
 }
-#help_cut  .el-checkbox__input{
+#help_cut .el-checkbox__input{
   position: absolute ;
   right:6px ;
   top: 6px ;
