@@ -6,11 +6,7 @@
         <div style="width: 100%;overflow: hidden; margin-left:10px">
             <div class="coupon-box">
                 <div class="coupon-item-a" @click="couponClick">
-                    <span class="type">满减</span>
-                    <div class="body">
-                        <p class="title">满10000减1000</p>
-                        <!-- <p class="date f12 mt-xs">2018.05.27-2018.05.30</p> -->
-                    </div>
+                     <p class="title ld_title">满减|立减优惠券</p>
                     <img src="/static/img/full_reduction.png" width="100%">
                 </div>
             </div>
@@ -63,11 +59,8 @@
                 </div>
 
                 <div class="coupon-item-b" @click="fullClick">
-                    <span class="type">满赠活动</span>
-                    <div class="body">
-                        <p class="title">即刻下单</p>
-                        <p class="date f12 mt-xs">领取优美礼品一份</p>
-                    </div>
+                    <p class="title ld_title">会员赠送（满赠）</p>
+                    
                     <img src="/static/img/full_gift.png" width="100%">
                 </div>
 
@@ -199,5 +192,12 @@ export default {
         color: #fff;
     }
     
+}
+.ld_title{
+    position: absolute;
+    left: 0px;
+    top: 40%;
+    width: 100%;
+    color: #fff;
 }
 </style>

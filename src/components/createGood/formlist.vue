@@ -40,7 +40,7 @@
                         :value="item.tag_id">
                         </el-option>
                     </el-select>
-                    <span class="input__tabs color-666">可设置多个标签</span>
+                    <span class="input__tabs color-666">显示快买栏目下的一级分类</span>
                 </el-form-item>
 
                 <el-form-item label="快买分类：" >
@@ -52,7 +52,7 @@
                         :value="item.tag_id">
                         </el-option>
                     </el-select>
-                    <span class="input__tabs color-666">可设置多个标签</span>
+                    <span class="input__tabs color-666">显示快买栏目下的二级分类</span>
                 </el-form-item>
 
                 <el-form-item label="详情页标签：" >
@@ -64,7 +64,7 @@
                         :value="item.tag_id">
                         </el-option>
                     </el-select>
-                    <span class="input__tabs color-666">可设置多个标签</span>
+                    <span class="input__tabs color-666">用户可以看到详情页促销活动</span>
                 </el-form-item>
 
                 <el-form-item label="列表标签：" >
@@ -76,7 +76,7 @@
                         :value="item.tag_id">
                         </el-option>
                     </el-select>
-                    <span class="input__tabs color-666">可设置多个标签</span>
+                    <span class="input__tabs color-666">用户可快速搜索该类标签下的商品</span>
                 </el-form-item>
 
                 <el-form-item label="愿望组：" >
@@ -88,7 +88,7 @@
                         :value="item.tag_id">
                         </el-option>
                     </el-select>
-                    <span class="input__tabs color-666">可设置多个标签</span>
+                    <span class="input__tabs color-666">用于用户量肤定制可搜索到该商品</span>
                 </el-form-item>
                 
                 <!-- 一期不做 -->
