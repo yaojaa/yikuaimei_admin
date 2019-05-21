@@ -784,11 +784,12 @@ export default {
           setTimeout(() => {
                 _this.renderList = _this.createdData.tag_id_arr;//这个是数组
                 //_this.quickBuyColumnList //这个是对象
+                console.log(_this.createdData,'_this.createdData')
                 //快买栏目
                 for(var i =0; i<_this.renderList.length; i++){
                     for(var j =0; j<_this.quickBuyColumnList.length; j++){
                         if(_this.quickBuyColumnList[j].tag_id==_this.renderList[i]){
-                            _this.quickList.push(_this.quickBuyColumnList[j].tag_name)
+                            _this.quickList.push(_this.quickBuyColumnList[j].tag_id)
                         }
                     }
                 }
@@ -796,7 +797,7 @@ export default {
                 for(var i =0; i<_this.renderList.length; i++){
                     for(var j =0; j<_this.quickBuysortList.length; j++){
                         if(_this.quickBuysortList[j].tag_id==_this.renderList[i]){
-                            _this.sortList.push(_this.quickBuysortList[j].tag_name)
+                            _this.sortList.push(_this.quickBuysortList[j].tag_id)
                         }
                     }
                 }
@@ -805,7 +806,7 @@ export default {
                 for(var i =0; i<_this.renderList.length; i++){
                     for(var j =0; j<_this.detailInfoList.length; j++){
                         if(_this.detailInfoList[j].tag_id==_this.renderList[i]){
-                            _this.detailList.push(_this.detailInfoList[j].tag_name)
+                            _this.detailList.push(_this.detailInfoList[j].tag_id)
                         }
                     }
                 }
@@ -814,7 +815,7 @@ export default {
                 for(var i =0; i<_this.renderList.length; i++){
                     for(var j =0; j<_this.listInfoList.length; j++){
                         if(_this.listInfoList[j].tag_id==_this.renderList[i]){
-                            _this.listList.push(_this.listInfoList[j].tag_name)
+                            _this.listList.push(_this.listInfoList[j].tag_id)
                         }
                     }
                 }
@@ -822,7 +823,7 @@ export default {
                 for(var i =0; i<_this.renderList.length; i++){
                     for(var j =0; j<_this.wishInfoList.length; j++){
                         if(_this.wishInfoList[j].tag_id==_this.renderList[i]){
-                            _this.wishList.push(_this.wishInfoList[j].tag_name)
+                            _this.wishList.push(_this.wishInfoList[j].tag_id)
                         }
                     }
                 }
@@ -849,22 +850,62 @@ export default {
           
       },
       quickChange(e){
+          console.log(e);
           this.quickSelectedList = e;
+          for(var i=0; i<this.quickSelectedList.length; i++){
+              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+                  if(this.quickSelectedList[i]==this.createdData.tag_id_arr[j]){
+                      this.createdData.tag_id_arr.splice(this.quickSelectedList[i],1)
+                  }
+              }
+          }
       },
       sortChange(e){
+          console.log(e);
           this.sortSelectedList = e;
+          for(var i=0; i<this.sortSelectedList.length; i++){
+              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+                  if(this.sortSelectedList[i]==this.createdData.tag_id_arr[j]){
+                      this.createdData.tag_id_arr.splice(this.sortSelectedList[i],1)
+                  }
+              }
+          }
       },
       detailChange(e){
+          console.log(e);
           this.detailSelectedList = e;
+          for(var i=0; i<this.detailSelectedList.length; i++){
+              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+                  if(this.detailSelectedList[i]==this.createdData.tag_id_arr[j]){
+                      this.createdData.tag_id_arr.splice(this.detailSelectedList[i],1)
+                  }
+              }
+          }
       },
       listChange(e){
           console.log(e);
+          
+          
          
           this.listSelectedList = e;
+          for(var i=0; i<this.listSelectedList.length; i++){
+              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+                  if(this.listSelectedList[i]==this.createdData.tag_id_arr[j]){
+                      this.createdData.tag_id_arr.splice(this.listSelectedList[i],1)
+                  }
+              }
+          }
            console.log(this.listSelectedList,'listSelectedList')
       },
       wishChange(e){
           this.wishSelectedList = e;
+          for(var i=0; i<this.wishSelectedList.length; i++){
+              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+                  if(this.wishSelectedList[i]==this.createdData.tag_id_arr[j]){
+                      this.createdData.tag_id_arr.splice(this.wishSelectedList[i],1)
+                  }
+              }
+          }
       },
      
       
