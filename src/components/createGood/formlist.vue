@@ -790,6 +790,7 @@ export default {
                     for(var j =0; j<_this.quickBuyColumnList.length; j++){
                         if(_this.quickBuyColumnList[j].tag_id==_this.renderList[i]){
                             _this.quickList.push(_this.quickBuyColumnList[j].tag_id)
+                            _this.quickSelectedList.push(_this.quickBuyColumnList[j].tag_id)
                         }
                     }
                 }
@@ -798,6 +799,7 @@ export default {
                     for(var j =0; j<_this.quickBuysortList.length; j++){
                         if(_this.quickBuysortList[j].tag_id==_this.renderList[i]){
                             _this.sortList.push(_this.quickBuysortList[j].tag_id)
+                            _this.sortSelectedList.push(_this.quickBuysortList[j].tag_id)
                         }
                     }
                 }
@@ -807,6 +809,7 @@ export default {
                     for(var j =0; j<_this.detailInfoList.length; j++){
                         if(_this.detailInfoList[j].tag_id==_this.renderList[i]){
                             _this.detailList.push(_this.detailInfoList[j].tag_id)
+                            _this.detailSelectedList.push(_this.detailInfoList[j].tag_id)
                         }
                     }
                 }
@@ -816,6 +819,7 @@ export default {
                     for(var j =0; j<_this.listInfoList.length; j++){
                         if(_this.listInfoList[j].tag_id==_this.renderList[i]){
                             _this.listList.push(_this.listInfoList[j].tag_id)
+                            _this.listSelectedList.push(_this.listInfoList[j].tag_id)
                         }
                     }
                 }
@@ -824,6 +828,7 @@ export default {
                     for(var j =0; j<_this.wishInfoList.length; j++){
                         if(_this.wishInfoList[j].tag_id==_this.renderList[i]){
                             _this.wishList.push(_this.wishInfoList[j].tag_id)
+                            _this.wishSelectedList.push(_this.wishInfoList[j].tag_id)
                         }
                     }
                 }
@@ -850,62 +855,74 @@ export default {
           
       },
       quickChange(e){
-          console.log(e);
-          this.quickSelectedList = e;
-          for(var i=0; i<this.quickSelectedList.length; i++){
-              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
-                  if(this.quickSelectedList[i]==this.createdData.tag_id_arr[j]){
-                      this.createdData.tag_id_arr.splice(this.quickSelectedList[i],1)
-                  }
-              }
-          }
+          this.quickList = e;
+          this.quickSelectedList = this.quickList
+        //   console.log(e);
+        //   this.quickSelectedList = e;
+        //   for(var i=0; i<this.quickSelectedList.length; i++){
+        //       for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+        //           if(this.quickSelectedList[i]==this.createdData.tag_id_arr[j]){
+        //               this.createdData.tag_id_arr.splice(this.quickSelectedList[i],1)
+        //           }
+        //       }
+        //   }
       },
       sortChange(e){
-          console.log(e);
-          this.sortSelectedList = e;
-          for(var i=0; i<this.sortSelectedList.length; i++){
-              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
-                  if(this.sortSelectedList[i]==this.createdData.tag_id_arr[j]){
-                      this.createdData.tag_id_arr.splice(this.sortSelectedList[i],1)
-                  }
-              }
-          }
+          this.sortList = e;
+          this.sortSelectedList = this.sortList
+        //   console.log(e);
+        //   this.sortSelectedList = e;
+        //   for(var i=0; i<this.sortSelectedList.length; i++){
+        //       for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+        //           if(this.sortSelectedList[i]==this.createdData.tag_id_arr[j]){
+        //               this.createdData.tag_id_arr.splice(this.sortSelectedList[i],1)
+        //           }
+        //       }
+        //   }
       },
       detailChange(e){
-          console.log(e);
-          this.detailSelectedList = e;
-          for(var i=0; i<this.detailSelectedList.length; i++){
-              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
-                  if(this.detailSelectedList[i]==this.createdData.tag_id_arr[j]){
-                      this.createdData.tag_id_arr.splice(this.detailSelectedList[i],1)
-                  }
-              }
-          }
+         this.detailList =e;
+         this.detailSelectedList = this.detailList
+        //   console.log(e);
+        //   this.detailSelectedList = e;
+        //   for(var i=0; i<this.detailSelectedList.length; i++){
+        //       for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+        //           if(this.detailSelectedList[i]==this.createdData.tag_id_arr[j]){
+        //               this.createdData.tag_id_arr.splice(this.detailSelectedList[i],1)
+        //           }
+        //       }
+        //   }
       },
       listChange(e){
-          console.log(e);
-          
-          
          
-          this.listSelectedList = e;
-          for(var i=0; i<this.listSelectedList.length; i++){
-              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
-                  if(this.listSelectedList[i]==this.createdData.tag_id_arr[j]){
-                      this.createdData.tag_id_arr.splice(this.listSelectedList[i],1)
-                  }
-              }
-          }
-           console.log(this.listSelectedList,'listSelectedList')
+         this.listList =e;
+         this.listSelectedList = this.listList
+
+        console.log( this.listSelectedList,' this.listSelectedList')
+        //   this.listSelectedList = e;
+        //   console.log(this.listSelectedList,'this.listSelectedList')
+        //   for(var i=0; i<this.listSelectedList.length; i++){
+        //       for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+        //           if(this.createdData.tag_id_arr.includes(this.listSelectedList[i])){
+                  
+        //             arr=this.createdData.tag_id_arr.splice(this.listSelectedList[i],1)
+                  
+        //       }
+        //   }
+        //    console.log(arr,'arr222222')
+        // }
       },
       wishChange(e){
-          this.wishSelectedList = e;
-          for(var i=0; i<this.wishSelectedList.length; i++){
-              for(var j=0; j<this.createdData.tag_id_arr.length;j++){
-                  if(this.wishSelectedList[i]==this.createdData.tag_id_arr[j]){
-                      this.createdData.tag_id_arr.splice(this.wishSelectedList[i],1)
-                  }
-              }
-          }
+          this.wishList = e;
+
+          this.wishSelectedList = this.wishList;
+        //   for(var i=0; i<this.wishSelectedList.length; i++){
+        //       for(var j=0; j<this.createdData.tag_id_arr.length;j++){
+        //           if(this.wishSelectedList[i]==this.createdData.tag_id_arr[j]){
+        //               this.createdData.tag_id_arr.splice(this.wishSelectedList[i],1)
+        //           }
+        //       }
+        //   }
       },
      
       
@@ -1254,13 +1271,15 @@ export default {
                 obj.sku_id = friendItem.sku_id
                 return obj
             })
-            params.tag_id_arr = params.tag_id_arr.concat(
-                this.listSelectedList,
-                this.wishSelectedList,
-                this.detailSelectedList,
-                this.sortSelectedList,
-                this.quickSelectedList
+            
+                that.listSelectedList = that.listSelectedList.concat(
+                that.wishSelectedList,
+                that.detailSelectedList,
+                that.sortSelectedList,
+                that.quickSelectedList
                 ) // 选中标签数组
+                params.tag_id_arr = that.listSelectedList;
+                debugger
             console.log(params,'params')
             let str = that.goodId === 0 ? 'createdGoode/fetchFormInfoCreate' : 'createdGoode/fetchFormInfoModify'
             that.$store.dispatch(str,params).then((res)=>{
