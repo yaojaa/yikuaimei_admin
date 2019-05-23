@@ -14,7 +14,7 @@
 
 
 
-            <div class="panel" id="person_add">
+            <div class="panel" id="help_add">
 
                 <div class="form-panel p-xl"  v-if="step==1">
                     <!--form start-->
@@ -1024,9 +1024,10 @@ p{
 .gift-table{
   font-size: 14px;
 }
-/* #person_add .goods-div{
+#help_add .goods-div{
   background-color: #7224D8
-} */
+}
+
 
 </style>
 
