@@ -14,7 +14,7 @@
 
 
 
-            <div class="panel">
+            <div class="panel" id="new_person">
 
                 <div class="form-panel p-xl "  v-if="step==1">
                     <!--form start-->
@@ -816,13 +816,13 @@ export default {
     margin: auto;
     margin-top:30px;
   }
-  .goods-div{
+  #new_person .goods-div{
     width:211px;
     height: 70px;
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    background-color: #fff;
+    background-color: #7224D8;
   }
 .clearfix:after{
   content:".";

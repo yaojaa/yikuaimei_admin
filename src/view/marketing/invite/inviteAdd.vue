@@ -14,7 +14,7 @@
 
 
 
-            <div class="panel invite-box">
+            <div class="panel invite-box" id="invite_ld">
 
                 <div class="form-panel p-xl "  v-if="step==1">
                     <!--form start-->
@@ -768,13 +768,13 @@ export default {
     margin: auto;
     margin-top:30px;
   }
-  .goods-div{
+#invite_ld .goods-div{
     width:211px;
     height: 70px;
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    background-color: #fff;
+    background-color: #7224D8;
   }
 .clearfix:after{
   content:".";

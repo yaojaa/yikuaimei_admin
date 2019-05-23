@@ -1024,6 +1024,9 @@ p{
 .gift-table{
   font-size: 14px;
 }
+/* #person_add .goods-div{
+  background-color: #7224D8
+} */
 
 </style>
 

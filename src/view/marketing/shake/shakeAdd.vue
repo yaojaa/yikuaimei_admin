@@ -14,7 +14,7 @@
 
 
 
-            <div class="panel ">
+            <div class="panel " id="shake">
 
                 <div class="form-panel p-xl "  v-if="step==1">
                     <!--form start-->
@@ -998,12 +998,13 @@ export default {
     margin: auto;
     margin-top:30px;
   }
-  .goods-div{
+  #shake .goods-div{
     width:211px;
     height: 70px;
     font-size: 12px;
     color:#fff;
     border-radius:6px;
+    background-color: #7224D8;
     
   }
 .clearfix:after{

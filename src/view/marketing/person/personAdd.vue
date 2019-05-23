@@ -799,7 +799,7 @@ overflow : hidden;
   box-shadow: 0px 0px 18px 0px rgba(211, 211, 211, 0.5);
   display: inline-block;
   margin-left: 10px;
-  background-color:#fff;
+  background-color: #7224D8;
 
 }
 p{
