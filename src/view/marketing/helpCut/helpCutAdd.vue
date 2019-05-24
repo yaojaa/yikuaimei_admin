@@ -36,7 +36,7 @@
                         :on-success="uploadActivityImg"
                         >
                         <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar help-upload-img">
-                        <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px;margin-top:15%"></i>
+                        <i v-else class="el-icon-plus avatar-uploader-icon" style="font-size:48px"></i>
                       </el-upload>
                   <div class="upload-title">
                       <p class="upload-title-red">支持上传一张图片，图片宽高比为1242*1242，支持JPEG、PNG 等大部分图片格式</p>
