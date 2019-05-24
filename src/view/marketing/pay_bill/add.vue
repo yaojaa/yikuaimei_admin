@@ -71,7 +71,7 @@
                             <div class="body-gift-img body-item">
                                 <div class="item-upload marking-upload">
                                     <el-upload class="avatar-uploader" action="/api/admin/fileupload/image" :show-file-list="false" :on-success="show_img.bind(null, {'data':item})" :data="item">
-                                        <img width="178px" v-if="item.gifts_img" :src="item.gifts_img" >
+                                        <img width="180px" max-width="180px" height="100px" v-if="item.gifts_img" :src="item.gifts_img" >
                                         <div v-else class="upload-img-icon">
                                             <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                                         </div>

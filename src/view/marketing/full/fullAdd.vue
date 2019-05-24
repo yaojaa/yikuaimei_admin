@@ -118,7 +118,7 @@
                               :show-file-list="false"
                               :on-success="show_img.bind(null, {'index':index})" :data="skuItem"
                               >
-                            <img width="238px" v-if="skuItem.image" :src="skuItem.image" class="invite-img">
+                            <img width="138px" max-width="138px" height="100px" v-if="skuItem.image" :src="skuItem.image" class="invite-img">
                               <div v-else  class="upload-img-icon"> 
                                 <i class="el-icon-plus position-icon" style="font-size:48px"></i>
                               </div>       
