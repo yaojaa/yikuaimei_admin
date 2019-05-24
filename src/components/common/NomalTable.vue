@@ -383,19 +383,21 @@
 
             // 分页导航
             handleCurrentChange(val) {
+                console.log(this.$route.query,'query')
+                const params = this.$route.query
 
                 this.page.page = val;
 
-                console.log(this.page.page)
+                console.log(this.page.page,'this.page')
 
                 this.getPageData({
                     page: this.page.page
                 })
 
-                this.getData({
+                this.getData(Object.assign(params,{
                     page: this.page.page,
                     page_size: this.page.page_size
-                });
+                }));
 
             },
             handleSizeChange(val) {
