@@ -6,7 +6,9 @@
         <div style="width: 100%;overflow: hidden; margin-left:10px">
             <div class="coupon-box">
                 <div class="coupon-item-a" @click="couponClick">
-                     <p class="title ld_title">满减|立减优惠券</p>
+                     <span class="type">满减&nbsp;|&nbsp;立减优惠券</span>
+                     <p class="title ld_title">全场满10000减1000</p>
+                     <p class="title-right">满减</p>
                     <img src="/static/img/full_reduction.png" width="100%">
                 </div>
             </div>
@@ -70,7 +72,7 @@
                         <p class="title">给门店引流</p>
                         <p class="date f12 mt-xs">来一起变美</p>
                     </div>
-                    <img src="/static/img/shake.png" width="100%">
+                    <img src="/static/img/beautifl.png" width="100%">
                 </div>
 
 
@@ -151,10 +153,10 @@ export default {
     cursor: pointer;
     .type {
         position: absolute;
-        width: 45px;
-        top: 17px;
-        left: 19px;
-        font-size: 13px;
+        // width: 45px;
+        top: 10px;
+        left: 14px;
+        font-size: 16px;
         color:#fff;
     }
     .body {
@@ -177,10 +179,10 @@ export default {
     margin-right: 60px;
     .type {
         position: absolute;
-        width: 60px;
+        // width: 60px;
         top: 10px;
-        left: 19px;
-        font-size: 13px;
+        left: 14px;
+        font-size: 16px;
         color: #fff;
     }
     .body {
@@ -196,8 +198,18 @@ export default {
 .ld_title{
     position: absolute;
     left: 0px;
-    top: 40%;
+    top: 42%;
+    text-align: left;
+    text-indent:15px;
     width: 100%;
     color: #fff;
+    font-size:12px ;
+}
+.title-right{
+    position: absolute;
+    right: 14px;
+    top: 36%;
+    color: #fff;
+    font-size: 20px;
 }
 </style>

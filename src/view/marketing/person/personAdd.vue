@@ -331,10 +331,10 @@ export default {
             { required: true, message: '请输入活动名称', trigger: 'blur' },
           ],
           activity_subject: [
-            { required: true, message: '请输入活动描述', trigger: 'blur' },
+            { required: true, message: '请输入活动卖点', trigger: 'blur' },
           ],
           activity_desc: [
-            { required: true, message: '请输入活动卖点', trigger: 'blur' },
+            { required: true, message: '请输入活动规则', trigger: 'blur' },
           ]
 
         }

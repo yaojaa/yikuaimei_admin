@@ -61,11 +61,7 @@
                 <!--步骤2-->
 
                 <div class="form-panel p-xl width720" v-if="step==2">
-                  <el-form :model="ruleForm" :rules="rules" ref="ruleForm2" label-width="160px" class="demo-ruleForm" >
-                    
-                   
-                   
-                  </el-form>
+                  
                   <p class="gift-title"> 设置奖品</p>
                   <p class="gift-title">以下奖品必须全部选择，否则无法上架</p>
                   <div class="gift-table left0 width980" >
@@ -80,7 +76,7 @@
                               <div class="goods-div " @click="choiceClick(skuItem.idx)">
                                     <div class="goods-div-left">
                                       <p class="margin-top10"><span class="price">¥{{skuItem.reduce_price/100}}</span><span>{{skuItem.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{skuItem.price/100}}元可用</p>
+                                      <p class="margin-top10">满{{skuItem.full_price/100}}元可用</p>
                                     </div>
                                     <div class="goods-div-right">
                                      <img v-if="skuItem.coupon_img" :src="skuItem.coupon_img" width="70px" height="70px">

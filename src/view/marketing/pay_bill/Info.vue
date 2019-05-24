@@ -411,7 +411,7 @@ export default {
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    background-color: #fff;
+     background-color: #7224d8;
   }
 .clearfix:after{
   content:".";

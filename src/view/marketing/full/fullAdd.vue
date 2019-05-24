@@ -88,7 +88,7 @@
                      <div class="table-body" v-for="(skuItem,index) in ruleForm.rules.full_gifts">
                        <div class="body-gift-number body-item">
                          <div class="item-number" >
-                           <input type="text" v-model="skuItem.price" class="number-input"/>
+                           <input type="text" v-model="skuItem.full_price" class="number-input"/>
                          </div>
                        </div>
                        <div class="body-gift-choice body-item">
@@ -98,7 +98,7 @@
                               <div class="goods-div " @click="choiceClick(index)">
                                     <div class="goods-div-left">
                                       <p class="margin-top10"><span class="price">¥{{skuItem.reduce_price/100}}</span><span>{{skuItem.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{skuItem.price/100}}元可用</p>
+                                      <p class="margin-top10">满{{skuItem.full_price/100}}元可用</p>
                                     </div>
                                     <div class="goods-div-right">
                                      <img v-if="skuItem.coupon_img" :src="skuItem.coupon_img" width="70px" height="70px">

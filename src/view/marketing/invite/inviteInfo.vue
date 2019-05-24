@@ -21,7 +21,7 @@
                             {{ruleForm.activity_subject}}
                         </el-form-item>
                         <el-form-item label="封面图：" >
-                            <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar" width="200px" height="150px">
+                            <img v-if="ruleForm.activity_img" :src="ruleForm.activity_img" class="avatar" >
                         </el-form-item>
 
                         <el-form-item label="活动规则：">
@@ -52,7 +52,7 @@
                                     <div class="goods-div">
                                       <div class="goods-div-left">
                                         <p class="margin-top10"><span class="price">¥{{skuItem.reduce_price/100}}</span><span>{{skuItem.coupon_title}}</span></p>
-                                        <p class="margin-top10">满{{skuItem.price/100}}元可用</p>
+                                        <p class="margin-top10">满{{skuItem.full_price/100}}元可用</p>
                                       </div>
                                       <div class="goods-div-right">
                                       <img v-if="skuItem.coupon_img" :src="skuItem.coupon_img" width="70px" height="70px">
@@ -387,7 +387,7 @@ export default {
     font-size: 12px;
     color:#fff;
     border-radius:6px;
-    background-color: #fff;
+     background-color: #7224d8;
   }
 .clearfix:after{
   content:".";
@@ -464,7 +464,12 @@ export default {
 .width980{
   width:980px;
 }
-
+.avatar{
+   max-width: 360px;
+  width: 358px;
+  height: 176px;
+  max-height: 176px
+}
 </style>
 
 

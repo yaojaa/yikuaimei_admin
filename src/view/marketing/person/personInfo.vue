@@ -225,6 +225,13 @@ export default {
 .person-width{
   width: 100%;
 }
+.avatar{
+   max-width: 360px;
+  width: 358px;
+  height: 176px;
+  max-height: 176px
+}
+  
 </style>
 
 

@@ -541,6 +541,12 @@ export default {
 .width980{
   width:980px;
 }
+.avatar{
+   max-width: 360px;
+  width: 358px;
+  height: 176px;
+  max-height: 176px
+}
 </style>
 
 

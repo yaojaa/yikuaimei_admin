@@ -452,6 +452,12 @@ export default {
     font-size: 13px;
     color: #444;
 }
+.avatar{
+   max-width: 360px;
+  width: 358px;
+  height: 176px;
+  max-height: 176px
+}
 </style>
 
 

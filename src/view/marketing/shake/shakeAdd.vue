@@ -18,7 +18,7 @@
 
                 <div class="form-panel p-xl "  v-if="step==1">
                     <!--form start-->
-                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm width720" >
+                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm " >
 
                     <el-form-item label="活动名称：" prop="activity_title">
                         <el-input v-model="ruleForm.activity_title"></el-input>
