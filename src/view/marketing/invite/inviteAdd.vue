@@ -851,6 +851,11 @@ export default {
 .width980{
   width:980px;
 }
+
+#invite_ld .el-input--small,#invite_ld .el-textarea__inner{
+  max-width: 370px;
+}
+
 </style>
 
 

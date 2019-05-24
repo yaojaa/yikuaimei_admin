@@ -842,6 +842,10 @@ export default {
 .width980{
   width:980px;
 }
+#full_ld .el-input--small,#full_ld .el-textarea__inner{
+  max-width: 370px;
+}
+
 
 </style>
 

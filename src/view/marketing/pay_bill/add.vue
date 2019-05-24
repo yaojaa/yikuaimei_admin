@@ -10,7 +10,7 @@
                 <el-step @click.native="goNextStep(1)" title="编辑基本信息" icon="el-icon-edit"></el-step>
                 <el-step @click.native="goNextStep(2)" title="编辑详情信息" icon="el-icon-edit"></el-step>
             </el-steps>
-            <div class="panel">
+            <div class="panel" id="beautifl">
                 <div class="form-panel p-xl " v-if="step==1">
                     <!--form start-->
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm1" label-width="100px" class="demo-ruleForm">
@@ -636,5 +636,9 @@ export default {
 .color-red {
     color: #ff0000;
     text-indent: 156px;
+}
+
+#beautifl .el-input--small,#beautifl .el-textarea__inner{
+  max-width: 370px;
 }
 </style>

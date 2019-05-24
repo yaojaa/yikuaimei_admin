@@ -895,6 +895,9 @@ export default {
 .width980{
   width:980px;
 }
+#new_person .el-input--small,#new_person .el-textarea__inner{
+  max-width: 370px;
+}
 
 </style>
 

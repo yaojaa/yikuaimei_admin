@@ -816,6 +816,9 @@ p{
 .gift-table{
   font-size: 14px;
 }
+#person_add .el-input--small,#person_add .el-textarea__inner{
+  max-width: 370px;
+}
 
 
 
