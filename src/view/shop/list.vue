@@ -36,6 +36,30 @@
                     <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
                 </span>
             </el-dialog>
+            <el-dialog
+                title="配送方式设置"
+                :visible.sync="centerDialogVisible"
+                width="30%"
+                center>
+                <el-form ref="form"  label-width="140px">
+                    <el-form-item label="是否可门店自提">
+                        <el-radio-group v-model="can_take">
+                            <el-radio :label="0">不可以</el-radio>
+                            <el-radio :label="1">可以</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="是否可门店自提">
+                        <el-radio-group v-model="can_post">
+                            <el-radio :label="0">不可以</el-radio>
+                            <el-radio :label="1">可以</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="centerDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="centerDialogVisibleSure">确 定</el-button>
+                </span>
+                </el-dialog>
         </div>
     </div>
 </template>
@@ -47,6 +71,9 @@ import BreadCrumb from "@/components/common/BreadCrumb";
 export default {
     data() {
         return {
+            id:"",
+            can_take:"",
+            can_post:"",
             breadcrumb: [
                 //面包屑
                 {
@@ -59,6 +86,7 @@ export default {
             ],
             user: JSON.parse(localStorage.user),
             dialog: false,
+            centerDialogVisible:false,
             business_id: '',
             is_use: '',
             remark: '无',
@@ -222,6 +250,16 @@ export default {
                                 self.$router.push("/shop/detail/" + row.shop_id)
                             }
 
+                        },{
+                            "label": "配送方式设置",
+                            "type": "set",
+                            onClick(tablePage, self, row) {
+                                console.log(row,'row')
+                                tablePage.$parent.getShopCan(row.shop_id)
+                                //console.log(tablePage,'tablePage')
+                                // self.$router.push("/shop/detail/" + row.shop_id)
+                            }
+
                         }]
                     }
 
@@ -254,6 +292,58 @@ export default {
 
     },
     methods: {
+        //设置同城闪送
+        centerDialogVisibleSure(){
+            const params = {
+                id:this.id,
+                can_take:this.can_take,
+                can_post:this.can_post
+            }
+            this.$axios.post("/api/admin/shop/setShopCan", params).then(res => {
+                console.log(res)
+
+                if (res.data.code == 0) {
+
+                    this.$alert('设置成功' )
+                    this.centerDialogVisible = false;
+
+                    
+                } else {
+                    this.$alert('设置失败')
+
+                }
+
+
+            }).catch((e) => {
+
+                this.$alert('操作失败' + e)
+
+            })
+        },
+        //获取同城闪送配置
+        getShopCan(shop_id){
+            this.$axios.get("/api/admin/shop/getShopCan?id="+shop_id).then(res => {
+                this.centerDialogVisible = true;
+                console.log(res.data.data,'res.data')
+
+                if (res.data.code == 0) {
+                    this.can_take = res.data.data.can_take
+                    this.can_post = res.data.data.can_post
+                    this.id = res.data.data.shop_id
+
+                    
+                } else {
+                    this.$alert('操作失败' + res.data.msg)
+
+                }
+
+
+            }).catch((e) => {
+
+                this.$alert('操作失败' + e)
+
+            })
+        },
         //调用子组件的gatData方法
         //
         listenSwitchChange(data) {

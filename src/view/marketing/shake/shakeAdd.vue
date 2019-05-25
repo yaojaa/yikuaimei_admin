@@ -1084,6 +1084,10 @@ export default {
 }
 
 
+#shake .el-input--small,#shake .el-textarea__inner{
+  max-width: 370px;
+}
+
 </style>
 
 

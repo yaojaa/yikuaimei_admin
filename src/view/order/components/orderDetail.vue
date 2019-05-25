@@ -20,7 +20,22 @@
             <div class="panel-body">
     
                 <div class="info_p">
-                    用户昵称：{{order.order_user_name}}<br/> 支付方式：{{ '微信支付 银联支付 现金支付 '.split(' ')[order.pay_type]}}<br/> 收货地址：{{order.order_user_address}}
+                    用户昵称：{{order.order_user_name}}<br/> 支付方式：{{ '微信支付 银联支付 现金支付 '.split(' ')[order.pay_type]}}
+                </div>
+    
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">配送信息</h3>
+            </div>
+            <div class="panel-body">
+    
+                <div class="info_p">
+                    配送方式：{{['','物流配送','门店自提','同城闪送'][order.order_type]}}
+                </div>
+                <div class="info_p" v-if="order.order_type!=2">
+                    收货地址：{{order.order_user_address}}
                 </div>
     
             </div>

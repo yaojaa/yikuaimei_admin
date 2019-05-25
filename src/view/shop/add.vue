@@ -12,6 +12,7 @@
 <el-steps :active="step" simple>
   <el-step  @click.native="goNextStep(1)" title="基本信息" icon="el-icon-edit"></el-step>
   <el-step  @click.native="goNextStep(2)" title="加盟商信息" icon="el-icon-edit"></el-step>
+  <el-step  @click.native="goNextStep(3)" title="配送方式" icon="el-icon-edit"></el-step>
 </el-steps>
 
 
@@ -220,20 +221,37 @@
       @select="handleSelect">
 
     </el-autocomplete>
-    <!-- <el-select v-model="ruleForm.business_id" placeholder="请选择">
-    <el-option
-      v-for="item in business_list"
-      list-type="picture-card"
-      :on-preview="handlePictureCardPreview"
-      :key="item.business_id"
-      :label="item.business_name"
-      :value="item.business_id">
-    </el-option>
-  </el-select> -->
+    
 
   </el-form-item>
+  <el-form-item>
+    <el-button size="large" type="primary" @click="goNextStep(3)" >下一步</el-button>
+  </el-form-item>
+
+</el-form>
 
 
+ </div>
+
+<div class="form-panel p-xl" v-if="step==3">
+
+   <el-form :model="ruleForm" :rules="rules" ref="ruleForm3" label-width="140px" class="demo-ruleForm">
+
+
+  <el-form-item label="是否可门店自提">
+      <el-radio-group v-model="ruleForm.can_take">
+        <el-radio :label="0">不可以</el-radio>
+        <el-radio :label="1">可以</el-radio>
+      </el-radio-group>
+  </el-form-item>
+  <el-form-item label="是否可门店自提">
+      <el-radio-group v-model="ruleForm.can_post">
+        <el-radio :label="0">不可以</el-radio>
+        <el-radio :label="1">可以</el-radio>
+      </el-radio-group>
+  </el-form-item>
+
+  
 
 
   <el-form-item>
@@ -243,7 +261,6 @@
 
 
  </div>
-
 
 
 

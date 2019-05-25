@@ -19,7 +19,7 @@
                 </div>
             </div>
             <nomal-table v-on:listenSwitchChange="listenSwitchChange" ref="table" :table-json="tableJson" :url="url">
-                <!-- <table-search :searchs="searchs"></table-search> -->
+                <table-search :searchs="searchs"></table-search>
             </nomal-table>
             
             <el-dialog :title="activity_status==2?'上线':'下线'" :visible.sync="dialog" width="30%">
@@ -37,7 +37,7 @@
 <script>
 import NomalTable from '@/components/common/NomalTable'
 import BreadCrumb from "@/components/common/BreadCrumb"
-// import TableSearch from '@/components/common/TableSearch'
+import TableSearch from '@/components/common/TableSearch'
 
 
 export default {
@@ -70,27 +70,38 @@ export default {
                     { title: '服务', key: 'activity_goods_type', value: 2 }
                 ]
             },
+            searchs: {
+                "list": [
+                    {
+                        "type": "input-text", //输入文本
+                        "label": "标题",
+                        "name": "activity_title",
+                        "value": "",
+                        "placeholder": "标题",
+                    },
+                    
+                    
+                    {
+                        "type": "input-singal-date", //输入日期
+                        "label": "开始时间",
+                        "name": "start_time",
+                        "value": "",
+                    },
+                    {
+                        "type": "input-singal-date", //输入日期
+                        "label": "结束时间",
+                        "name": "end_time",
+                        "value": "",
+                    },
+                ]
+            },
 
-            url: "/api/admin/activity/index?activity_rule_type=13",
+            url: "/api/admin/activity/index?activity_rule_type=15",
 
             tableJson: {
                 "column": [ //行
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "活动ID",
-                        "prop": "activity_code",
-                        "width": "120px",
-                       
-                    },
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "创建时间",
-                        "prop": "activity_ctime",
-                        "width": "200px",
-
-                    },
+                    
+                    
                     
                     {
                         "type": "text",
@@ -105,31 +116,64 @@ export default {
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "创建人",
-                        "prop": "admin_user_name",
-                        "width":"120px"
+                        "label": "最高返现",
+                        "prop": "max_price",
+                        "width": "",
+                         formatter(row) {
+                            console.log(row,'row');
+                            return`<p>¥${(row.rules.bargain[0].max_price/100).toFixed(2)}</p>` 
+                        }
 
                     },
-                   
                     {
                         "type": "text",
                         "align": "center",
-                        "label": "活动时间",
-                        "prop": "coupon_expire",
+                        "label": "可返现",
+                        "prop": "users",
                         "width": "",
+                         formatter(row) {
+                            console.log(row,'row');
+                            return`<p>${row.rules.bargain[0].users}人</p>` 
+                        }
+
+                    },
+                    {
+                        "type": "text",
+                        "align": "center",
+                        "label": "新用户砍价",
+                        "prop": "new_user_price",
+                        "width": "",
+                         formatter(row) {
+                            console.log(row,'row');
+                            return`<p>¥${(row.rules.bargain[0].new_user_price/100).toFixed(2)}</p>` 
+                        }
+
+                    },
+                    {
+                        "type": "text",
+                        "align": "center",
+                        "label": "老用户砍价",
+                        "prop": "reduce_solid_price",
+                        "width": "",
+                         
                         formatter(row) {
-                            return `<p style='text-align: center'>
-                            ${row.activity_start_time||""}<br/>至<br/>
-                            ${row.activity_end_time||""}</p>`;
+                            
+                            return `<p>
+                                    最大值:${(row.rules.bargain[0].old_user_max_price/100).toFixed(2)||""}<br/>
+                                    最小值:${(row.rules.bargain[0].old_user_min_price/100).toFixed(2)||""}
+                            </p>`;
                            
                         }
 
                     },
                     
+                    
+                    
                     {
                         "type": "text",
                         "label": "状态",
                         "align": "center",
+                        
                         "width": "",
                         "prop": "activity_status",
                         formatter(row) {
@@ -206,8 +250,8 @@ export default {
     },
     components: {
         NomalTable,
-        BreadCrumb
-        // TableSearch
+        BreadCrumb,
+        TableSearch
     },
     beforeRouteUpdate(to, from, next) {
 			console.log(to.query);
@@ -291,6 +335,9 @@ export default {
             this.$refs.table.getData({
                 [k]: v
             })
+        },
+        formatPrice1(price) {
+            return (price/100).toFixed(2);
         }
 
 

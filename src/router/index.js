@@ -733,6 +733,15 @@ export default new Router({
                     }
                 },
                 {
+                    // 折扣券
+                    path: '/marketing/discount/list',
+                    component: resolve => require(['../view/marketing/discount/list.vue'], resolve),
+                    meta: {
+                        title: '折扣券',
+                        permission: true
+                    }
+                },
+                {
                     // 帮砍
                     path: '/marketing/helpCut/list',
                     component: resolve => require(['../view/marketing/helpCut/list.vue'], resolve),

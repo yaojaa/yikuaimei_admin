@@ -7,7 +7,7 @@
         </div>
         <div class="page-content">
 
-            <div class="panel">
+            <div class="panel" id="help_info">
 
                 <div class="form-panel p-xl" style="width:720px">
                     <!--form start-->
@@ -67,36 +67,50 @@
                         <div class="th-item" v-for="item in itemLIst" :key="item.index">{{item.name}}</div>
                       </div>
 
-                     <div class="table-body table-full clearfix"   v-for="item in ruleForm.rules.bargain" >
-                       <div class="full-item  clearfix" >
+                     <div class="table-body table-full "   v-for="(item,index) in ruleForm.rules.bargain" :key="index">
+                       <div class="full-item  " >
                          <div class="full-item-left">
                            <img v-if="item.good_ico"  :src="item.good_ico" alt="" width="50px" height="50px">
                          </div>
                          <div class="full-item-right">
                            <p v-if="item.good_name">{{item.good_name}}</p>
-                           <p v-if="item.price">¥{{item.price/100}}</p>
+                           <p v-if="item.price">¥{{(item.price/100).toFixed(2)}}</p>
                          </div>
                        </div>
-                       <div class="full-item">
-                           {{item.max_price/100}}
-                       </div>
-                       <div class="full-item">
-                           {{item.reduce_solid_price/100}}
+                       <div class="full-item "   >
+                         <p class="p_ld">¥{{(item.max_price/100).toFixed(2)}}</p>
+                            <!-- <input type="text" v-model="item.max_price"  class="input-val"> -->
                        </div>
                        <div class="full-item"  >
-                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：{{item.reduce_max_price/100}}</span></p>
-                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：{{item.reduce_min_price/100}}</span></p>
+                            <p class="p_ld">{{item.users}}<span class="person">人</span></p>
+                       </div>
+                       <div class="full-item"  >
+                         <p class="p_ld">¥{{(item.new_user_price/100).toFixed(2)}}</p>
+                            
+                       </div>
+                       <div class="full-item"  >
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="margin-left:20px">最大值：</span>¥{{(item.old_user_max_price.toFixed(2))}}</p>
+                           <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="margin-left:20px">最小值：</span>¥{{(item.old_user_min_price.toFixed(2))}}</p>
                         
                        </div>
-                       <div class="full-item">
-                           {{item.first_solid_price/100}}
+                       <div class="full-item ">
+                         
+                            <div class="choiced" >
+                              <div class="coupon-div relative" v-for="(skuItem,idx) in item.coupon_list" :key="idx">
+                                    <div class=" coupon-div-left">
+                                      <p class="margin-top10"><span class="price">¥{{skuItem.rules.reduce_price/100}}</span><span>{{skuItem.coupon_title}}</span></p>
+                                      <p class="margin-top10">满{{skuItem.rules.price/100}}元可用</p>
+                                    </div>
+                                    <div class=" coupon-div-right">
+                                     <img v-if="item.coupon_img" :src="skuItem.coupon_img" width="70px" height="70px">
+                                     <p v-else class="coupon-div-img">暂无图片</p>
+                                    </div>
+                                   
+                              </div>
+                            </div>
+                            
                        </div>
-                       <div class="full-item" >
-                          <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最大值：{{item.first_max_price/100}}</span> </p>
-                               
-                            <p style="display:flex;margin-top:20px; margin-bottom:10px;"><span style="flex:1">最小值：{{item.first_min_price/100}}</span></p>   
- 
-                       </div>
+                       
                        
                       
                        
@@ -174,23 +188,23 @@ export default {
           index:1
         },
         {
-          name:"最高优惠",
+          name:"最高返现",
           index:2
         },
         {
-          name:"新用户砍价",
+          name:"可返现",
           index:3
         },
         {
-          name:"老用户砍价",
+          name:"新用户砍价",
           index:4
         },
         {
-          name:"新用户奖励",
+          name:"老用户砍价",
           index:5
         },
         {
-          name:"老用户奖励",
+          name:"选择优惠券",
           index:6
         }
       ],
@@ -457,6 +471,56 @@ export default {
   width: 358px;
   height: 176px;
   max-height: 176px
+}
+#help_info .coupon-div{
+  width: 160px;
+  height: 70px;
+  font-size: 12px;
+  color:#fff;
+  border-radius:6px;
+  border:1px solid #ccc;
+  margin-bottom:10px;
+  background-color: #7224D8;
+}
+#help_info .coupon-div-left{
+  float: left;
+  width:100px;
+  height: 70px;
+}
+#help_info .coupon-div-right{
+  float: left;
+  width: 60px;
+  height: 70px;
+  line-height: 70px;
+}
+#help_info .coupon-div-img{
+  width: 60px;
+  height: 70px;
+}
+#help_info .relative{
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
+
+
+#help_info .price{
+  color: #fff;
+}
+#help_info .gift-table{
+  width: 980px;
+}
+#help_info .full-item{
+  width: 162px;
+  border:none;
+  text-align: center;
+  
+}
+#help_info .table-full{
+  width:980px;
+}
+#help_info .p_ld{
+  margin-top: 40px;
 }
 </style>
 
