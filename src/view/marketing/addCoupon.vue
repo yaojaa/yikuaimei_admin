@@ -72,7 +72,7 @@
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="使用规则:">
-                        <el-col :span="18">
+                        <el-col :span="12">
                             <el-input type="textarea" :rows="6" placeholder="请输入内容" v-model="ruleForm.coupon_desc"></el-input>
                         </el-col>
                     </el-form-item>
@@ -700,6 +700,9 @@ export default {
  .el-textarea__inner{
     width: 100%;
     max-width: 100%;
+}
+.el-radio{
+    font-weight: normal !important
 }
 
 

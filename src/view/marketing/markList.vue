@@ -29,8 +29,8 @@
                 <div class="coupon-item-b" @click="personClick">
                     <span class="type">多人同行</span>
                     <div class="body">
-                        <p class="title">拉闺蜜一起参加活动</p>
-                        <p class="date f12 mt-xs">和闺蜜一起“偷偷美”</p>
+                        <p class="title">引导客户邀请好友一起购买，为你带来源源不断的订单和客户</p>
+                        <!-- <p class="date f12 mt-xs">和闺蜜一起“偷偷美”</p> -->
                     </div>
                     <img src="/static/img/muilt_person.png" width="100%">
                 </div>
@@ -53,16 +53,16 @@
                 <div class="coupon-item-b" @click="newPersonClick">
                     <span class="type">新人红包</span>
                     <div class="body">
-                        <p class="title">注册有礼</p>
-                        <p class="date f12 mt-xs">领取优美礼品一份</p>
+                        <p class="title">投放新人专享红包，吸粉转化两不误</p>
+                        <!-- <p class="date f12 mt-xs">领取优美礼品一份</p> -->
                     </div>
                     <img src="/static/img/newcomer.png" width="100%">
                 </div>
                 <div class="coupon-item-b" @click="inviteClick">
-                    <span class="type">邀请好友</span>
+                    <span class="type">邀请好友得返现</span>
                     <div class="body">
-                        <p class="title">即刻下单</p>
-                        <p class="date f12 mt-xs">领取优美礼品一份</p>
+                        <p class="title">激励客户分享，吸引客户传播，带来更多新客</p>
+                        <!-- <p class="date f12 mt-xs">领取优美礼品一份</p> -->
                     </div>
                     <img src="/static/img/invite_friend.png" width="100%">
                 </div>

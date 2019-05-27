@@ -1251,7 +1251,7 @@ ol {
 .line-hidden img{
     margin-left:5px
 }
-.coupon-apnel .el-tabs__content,.coupon-apnel .el-tab-pane{
+.coupon-apnel .el-tabs__content{
     height: 180px;
     overflow-y:scroll; 
 }
