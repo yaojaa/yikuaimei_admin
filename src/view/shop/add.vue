@@ -608,7 +608,7 @@ export default {
     //如果是从审核门店中过来
     if(this.$route.query.review){
       this.getReviewData(this.$route.query.review)
-      this.mapTX(this.ruleForm.position.latitude,this.ruleForm.position.longitude)
+      this.mapTX(this.ruleForm.shop_latitude,this.ruleForm.shop_longitude)
     }
     if(this.ruleForm.shop_environment.length!=0){
       this.shopFlag = false;
