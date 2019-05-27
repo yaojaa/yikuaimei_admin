@@ -608,6 +608,7 @@ export default {
     //如果是从审核门店中过来
     if(this.$route.query.review){
       this.getReviewData(this.$route.query.review)
+      this.mapTX(this.ruleForm.position.latitude,this.ruleForm.position.longitude)
     }
     if(this.ruleForm.shop_environment.length!=0){
       this.shopFlag = false;
@@ -623,6 +624,7 @@ export default {
   created() {
     let params = this.$route.params;
     //如果是编辑门店
+
     if (Object.keys(params).length) {
         
         this.dialogVisible = true;
