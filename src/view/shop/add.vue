@@ -31,8 +31,9 @@
   <el-form-item label="地图" >
      <div id="atlas"></div>
      <p style="margin:5px">
-      <input style="width:200px;padding:3px 4px;" type="text" id="place" /> <span class='shop-add-city-message'>输入地址，回车确认</span>
+      <input style="width:200px;padding:3px 4px;" type="text" id="place" /> <span class='shop-add-city-message'>请输入地址，回车确认</span>
     </p>
+    <p style="font-size:13px; color:#7224D8;">请您在地图上选择一个地理位置(点)</p>
   </el-form-item>
   
   <el-form-item label="城市" class="shop-add-city">
