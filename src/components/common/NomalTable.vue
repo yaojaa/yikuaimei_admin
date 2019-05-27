@@ -47,7 +47,7 @@
                         :align="column.align || 'left'"
                         :header-align="column.headerAlign">
                         <template slot-scope="scope">
-                            <p v-if="column.type == 'text'" v-html="formatter(scope.row,column,columnIndex,scope.$index)"></p>
+                            <p v-if="column.type == 'text'" v-html="formatter(scope.row,column,columnIndex,scope.$index)" ></p>
                             <!-- <p v-if="column.type == 'text'" v-html="formatter(scope.row[column.prop])"></p> -->
 
                             <el-popover
@@ -330,6 +330,9 @@
                     handle.callback && handle.callback(this, this.$parent, scope.row);
                 }
             },
+            // handleClickText(column){
+            //     column.callback && column.callback(this, this.$parent);
+            // },
 
             handleDelete(handle, row) { //删除
 

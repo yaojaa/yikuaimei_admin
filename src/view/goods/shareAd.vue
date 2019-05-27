@@ -226,7 +226,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scope>
 .error_deleted{
   color: #F00;
     POSITION: ABSOLUTE;
