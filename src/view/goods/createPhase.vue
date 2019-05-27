@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 #createGood .panel {
   padding: 20px 0;
 }
