@@ -276,7 +276,7 @@ import BreadCrumb from "@/components/common/BreadCrumb";
 import formlist from "@/components/formlist";
 import { CATEGORYOPTIONS } from "../../constans/createdGood";
 import { pca, pcaa } from 'area-data'; // v5 or higher
-import {TMap} from "../../../static/js/TMap"
+// import {TMap} from "../../../static/js/TMap"
 export default {
   name: "tabletest",
 
@@ -521,11 +521,16 @@ export default {
         
       },
       mapTX(lat,lng) {
+        debugger
         var that = this;
-        TMap().then(qq => {
-          var map = new qq.maps.Map(document.getElementById("atlas"),{
-            center: new qq.maps.LatLng(lat||39.916527,lng||116.397128),
-            zoom: 10
+         let centerL = new qq.maps.LatLng(this.ruleForm.shop_latitude||39.916527, this.ruleForm.shop_longitude||116.397128)
+        // debugger
+        // const TMap = window.qq()
+        // TMap().then(qq => {
+          var map = new qq.maps.Map(document.getElementById("atlas"),
+          {
+            center: centerL,
+            zoom: 13
           });
             qq.maps.event.addListener(map, 'click', function(event) {
               var marker=new qq.maps.Marker({
@@ -578,7 +583,7 @@ export default {
                 keyword = res.value;
                 searchService.search(keyword);
             });
-          })
+          // })
         },
        getReviewData(id) {
 
@@ -603,25 +608,8 @@ export default {
 
 
   mounted() {
-    //this.getBusinessList();
 
-    //如果是从审核门店中过来
-    if(this.$route.query.review){
-      this.getReviewData(this.$route.query.review)
-      this.mapTX(this.ruleForm.shop_latitude,this.ruleForm.shop_longitude)
-    }
-    if(this.ruleForm.shop_environment.length!=0){
-      this.shopFlag = false;
-    }
-    
 
-  },
-  components: {
-    BreadCrumb,
-    formlist
-  },
-
-  created() {
     let params = this.$route.params;
     //如果是编辑门店
 
@@ -641,8 +629,31 @@ export default {
 
         })
     }else{
-      this.mapTX()
+      this.mapTX(this.ruleForm.shop_latitude,this.ruleForm.shop_longitude)
     }
+
+
+    
+
+    //如果是从审核门店中过来
+    if(this.$route.query.review){
+      this.getReviewData(this.$route.query.review)
+      this.mapTX(this.ruleForm.shop_latitude,this.ruleForm.shop_longitude)
+    }
+    if(this.ruleForm.shop_environment.length!=0){
+      this.shopFlag = false;
+    }
+    
+
+  },
+  components: {
+    BreadCrumb,
+    formlist
+  },
+
+  created() {
+    // this.mapTX(this.ruleForm.shop_latitude,this.ruleForm.shop_longitude)
+
 
       
   },
