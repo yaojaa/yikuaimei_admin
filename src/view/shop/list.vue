@@ -260,6 +260,17 @@ export default {
                                 // self.$router.push("/shop/detail/" + row.shop_id)
                             }
 
+                        },
+                        {
+                            "label": "设置为默认发货门店",
+                            "type": "set",
+                            onClick(tablePage, self, row) {
+                                console.log(row,'row')
+                                tablePage.$parent.setShop(row.shop_id)
+                                //console.log(tablePage,'tablePage')
+                                // self.$router.push("/shop/detail/" + row.shop_id)
+                            }
+
                         }]
                     }
 
@@ -292,6 +303,28 @@ export default {
 
     },
     methods: {
+        setShop(shop_id){
+            this.$axios.post("/api/admin/shop/setPlateDeliveryShop", {id:shop_id}).then(res => {
+                console.log(res)
+
+                if (res.data.code == 0) {
+
+                    this.$alert('设置成功' )
+                    //this.centerDialogVisible = false;
+
+                    
+                } else {
+                    this.$alert('设置失败')
+
+                }
+
+
+            }).catch((e) => {
+
+                this.$alert('操作失败' + e)
+
+            })
+        },
         //设置同城闪送
         centerDialogVisibleSure(){
             const params = {
