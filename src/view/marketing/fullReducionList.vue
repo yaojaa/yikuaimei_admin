@@ -133,6 +133,26 @@ export default {
                         "value": "",
                         "placeholder": "",
 
+                    },
+                    {
+                        "type": "input-text", //输入文本
+                        "label": "标题",
+                        "name": "coupon_title",
+                        "value": "",
+                        "placeholder": "",
+
+                    },
+                    {
+                        "type": "input-singal-date", //输入日期
+                        "label": "开始时间",
+                        "name": "start_time",
+                        "value": "",
+                    },
+                    {
+                        "type": "input-singal-date", //输入日期
+                        "label": "结束时间",
+                        "name": "end_time",
+                        "value": "",
                     }
                     
                    

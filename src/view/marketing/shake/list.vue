@@ -19,7 +19,7 @@
                 </div>
             </div>
             <nomal-table v-on:listenSwitchChange="listenSwitchChange" ref="table" :table-json="tableJson" :url="url">
-                <!-- <table-search :searchs="searchs"></table-search> -->
+                <table-search :searchs="searchs"></table-search>
             </nomal-table>
             
             <el-dialog :title="activity_status==2?'上线':'下线'" :visible.sync="dialog" width="30%">
@@ -37,7 +37,7 @@
 <script>
 import NomalTable from '@/components/common/NomalTable'
 import BreadCrumb from "@/components/common/BreadCrumb";
-// import TableSearch from '@/components/common/TableSearch'
+import TableSearch from '@/components/common/TableSearch'
 
 
 export default {
@@ -68,6 +68,40 @@ export default {
                  '活动分类:': [
                     { title: '商品', key: 'activity_goods_type', value: 1 },
                     { title: '服务', key: 'activity_goods_type', value: 2 }
+                ]
+            },
+            searchs: {
+                "list": [
+                    {
+                        "type": "input-text", //输入文本
+                        "label": "活动ID",
+                        "name": "activity_code",
+                        "value": "",
+                        "placeholder": "",
+
+                    },
+                    {
+                        "type": "input-text", //输入文本
+                        "label": "标题",
+                        "name": "activity_title",
+                        "value": "",
+                        "placeholder": "",
+
+                    },
+                    {
+                        "type": "input-singal-date", //输入日期
+                        "label": "开始时间",
+                        "name": "start_time",
+                        "value": "",
+                    },
+                    {
+                        "type": "input-singal-date", //输入日期
+                        "label": "结束时间",
+                        "name": "end_time",
+                        "value": "",
+                    }
+                    
+                   
                 ]
             },
 
@@ -228,8 +262,8 @@ export default {
     },
     components: {
         NomalTable,
-        BreadCrumb
-        // TableSearch
+        BreadCrumb,
+        TableSearch
     },
     beforeRouteUpdate(to, from, next) {
 			console.log(to.query);

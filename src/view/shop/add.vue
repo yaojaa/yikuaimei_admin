@@ -244,7 +244,7 @@
         <el-radio :label="1">可以</el-radio>
       </el-radio-group>
   </el-form-item>
-  <el-form-item label="是否可门店自提">
+  <el-form-item label="是否可门店发快递">
       <el-radio-group v-model="ruleForm.can_post">
         <el-radio :label="0">不可以</el-radio>
         <el-radio :label="1">可以</el-radio>
