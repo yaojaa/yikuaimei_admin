@@ -1231,7 +1231,10 @@ p{
 #help_add .goods-div{
   background-color: #7224D8
 }
-#help_add .el-input--small,#help_add .el-textarea__inner{
+#help_add .el-input--small{
+  max-width: 370px;
+}
+#help_add .el-textarea__inner{
   max-width: 370px;
 }
 #help_add .person{
