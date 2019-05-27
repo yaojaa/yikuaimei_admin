@@ -11,12 +11,12 @@
                      <!-- <p class="title-right">满减</p> -->
                     <img src="/static/img/full_reduction.png" width="100%">
                 </div>
-                <div class="coupon-item-a" @click="discountClick">
+                <!-- <div class="coupon-item-a" @click="discountClick">
                      <span class="type">折扣券</span>
                      <p class="title ld_title">大家一起来抢折扣</p>
-                     <!-- <p class="title-right">满减</p> -->
+                    
                     <img src="/static/img/full_reduction.png" width="100%">
-                </div>
+                </div> -->
             </div>
             
         </div>
@@ -100,10 +100,10 @@ export default {
         }
     },
     methods: {
-        //跳转折扣券
-        discountClick(){
-            this.$router.push('/marketing/discount/list')
-        },
+        // //跳转折扣券
+        // discountClick(){
+        //     this.$router.push('/marketing/discount/list')
+        // },
         //跳转满减优惠券
         couponClick(){
             this.$router.push('/marketing/fullReducionCouponList')
