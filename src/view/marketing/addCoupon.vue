@@ -10,39 +10,39 @@
                 <el-form :model="ruleForm" :rules="rules"  label-width="120px" class="demo-ruleForm">
 
                     <el-form-item label="优惠券标题:" prop="coupon_title">
-                        <el-col :span="12">
+                        <el-col :span="6">
                             <el-input v-model="ruleForm.coupon_title"></el-input>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="面值:">
-                        <el-col :span="12">
+                        <el-col :span="2">
                             <el-input v-model="ruleForm.rules.reduce_price"></el-input>
                         </el-col>
                     </el-form-item>
 
                      <el-form-item label="可使用次数:">
-                         <el-col :span="3">
+                         <el-col :span="2">
                             <el-input v-model="ruleForm.limits.limit_total_times"></el-input>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="可使用频率:">
-                       <el-col :span="5">
+                       <el-col :span="4">
                         <!-- 如果选择不限制 那么 limit_times 就是0  -->
                         <el-radio-group  v-model="limitsStatus">
                             <el-radio :label="0">不限</el-radio> 
                             <el-radio :label="1">限制</el-radio>
                         </el-radio-group>
                        </el-col>
-                       <el-col :span="4">
+                       <el-col :span="4" style="margin-left:-20px">
                            <span>每</span>
-                            <el-select v-model="ruleForm.limits.limit_cycle" placeholder="请选择" style="width:100px">
+                            <el-select v-model="ruleForm.limits.limit_cycle" placeholder="请选择" style="width:60px">
                                 <el-option label="日" value="1"></el-option>
                                 <el-option label="周" value="2"></el-option>
                                 <el-option label="月" value="3"></el-option>
                             </el-select>
                        </el-col>
-                       <el-col :span="4">
-                           <el-input v-model="ruleForm.limits.limit_times" style="width:100px"></el-input><span>次</span>
+                       <el-col :span="4" style="margin-left:-80px">
+                           <el-input v-model="ruleForm.limits.limit_times" style="width:60px"></el-input><span>次</span>
                        </el-col>
                        
                     </el-form-item>
@@ -56,8 +56,8 @@
                         </el-radio-group>
                        </el-col>
                        
-                       <el-col :span="5">
-                           <el-input v-model="ruleForm.rules.price" style="width:100px"></el-input><span>元可用</span>
+                       <el-col :span="5" style="margin-left:-60px">
+                           <el-input v-model="ruleForm.rules.price" style="width:60px"></el-input><span>元可用</span>
                        </el-col>
                        
                     </el-form-item>
@@ -72,7 +72,7 @@
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="使用规则:">
-                        <el-col :span="12">
+                        <el-col :span="6">
                             <el-input type="textarea" :rows="6" placeholder="请输入内容" v-model="ruleForm.coupon_desc"></el-input>
                         </el-col>
                     </el-form-item>
