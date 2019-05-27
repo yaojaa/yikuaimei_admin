@@ -67,7 +67,7 @@
                         <el-col :span="10">
                           <el-date-picker type="date" style="width:100%" placeholder="选择日期" v-model="ruleForm.activity_start_time" value-format="yyyy-MM-dd"></el-date-picker>
                         </el-col>
-                        <el-col class="line-center" :span="4">至</el-col>
+                        <el-col class="line-center" :span="2">至</el-col>
                         <el-col :span="10">
                           <el-date-picker type="date" style="width:100%" placeholder="选择日期" v-model="ruleForm.activity_end_time"  value-format="yyyy-MM-dd"></el-date-picker>
                         </el-col>
@@ -77,7 +77,7 @@
                       <el-col :span="12">
                         <el-input v-model="ruleForm.limits.limit_times" placeholder="请输入"></el-input><span></span>
                       </el-col>
-                      <el-col :span="4" class="line-center">
+                      <el-col :span="4" class="line-center" style="margin-left:-38px">
                         <span>次</span>
                       </el-col>
                     </el-form-item>
@@ -90,7 +90,7 @@
                               </div>
                             </el-col>
                          
-                            <el-col :span="12">
+                            <el-col :span="12" style="margin-left:-56px">
                               <el-radio :label="1">限制<el-input v-model="ruleForm.limits.limit_total_times"></el-input>次</el-radio>
                             </el-col>
                            
