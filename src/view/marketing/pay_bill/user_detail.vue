@@ -13,32 +13,35 @@
                         <el-form-item label="参与者：">
                             {{info.nickname}}
                         </el-form-item>
-                        <el-form-item label="上传对比照：">
-                            <div class="inlineimg">
+                        <el-form-item label="上传美照：">
+                            <img class="inlineimg"  width="200" :src="info.after_img" />
+                            <!-- <div class="inlineimg">
                                 <img  width="200" :src="info.before_img" />
                                 <br>
                                 之前
-                            </div>
-                            <div class="inlineimg">
-                                <img class="inlineimg"  width="200" :src="info.after_img" />
-                                <br>
-                                之后
-                            </div>
+                            </div> -->
+                            <!-- <div class="inlineimg">
+                                
+                            </div> -->
                         </el-form-item>
                         <el-form-item label="活动规则：">
                         </el-form-item>
-                        <el-form-item label="好友打分">
+                        <el-form-item label="好友点赞">
                             <el-table :data="help_list" border style="width: 100%">
                                 <el-table-column prop="date" label="序列" type="index" width="180">
                                 </el-table-column>
-                                <el-table-column prop="nickname" label="姓名" width="180">
+                                <el-table-column prop="nickname" label="好友名称" width="180">
                                 </el-table-column>
-                                <el-table-column prop="rank" label="分数">
+                                <el-table-column prop="create_time" label="点赞时间">
                                 </el-table-column>
-                                <el-table-column prop="join_time" label="打分时间">
-                                </el-table-column>
+                                <!-- <el-table-column prop="join_time" label="打分时间">
+                                </el-table-column> -->
                             </el-table>
                         </el-form-item>
+                        <el-form-item label="点赞总数：">
+                            {{info.help_count}}
+                        </el-form-item>
+                        
                     </el-form>
                 </div>
                 <!--form end-->
