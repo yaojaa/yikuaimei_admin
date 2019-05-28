@@ -396,7 +396,7 @@ export default {
           
     //   },
       handleChange(e){
-        this.selectRadioId = e;
+       
         console.log(e,'eeee')
         //   var _this = this;
         //   console.log(this,'this')
@@ -408,19 +408,22 @@ export default {
             case 2: //行业  
               this.industryVisible = true 
             break;
-            case 3: //商品
+            case 3: //服务
                 this.serviceVisible = true  //服务弹窗
+                this.selectRadioId = 1;
                 this.serviceSearch()
             break;
-            case 4: //服务
+            case 4: //商品
                 
                 this.goodsVisible = true  //商品弹窗
                 this.goodsSearch()
+                this.selectRadioId = 2;
 
             break;
             case 5: //虚拟商品
                 this.inventedVisible = true
                 this.virGoodsSearch()
+                this.selectRadioId = 4;
             break;
             
                 //虚拟商品弹窗
@@ -473,6 +476,7 @@ export default {
       },
       goodsSure(){
           //商品弹窗确定
+          this.ruleForm.coupon_range = {}
           debugger
           if(this.checkedGoodsId==""){
               console.log(this.checkedGoodsId,'checkedGoodsId')
@@ -484,6 +488,7 @@ export default {
           }
       },
       inventedSure(){
+          this.ruleForm.coupon_range = {}
           debugger
           console.log(this.checkedGoodsId,'222222222222')
           //虚拟商品确定
@@ -497,6 +502,7 @@ export default {
           }
       },
       serviceSure(){
+          this.ruleForm.coupon_range = {}
           debugger
           if(this.checkedGoodsId==""){
               console.log(this.checkedGoodsId,'checkedGoodsId')
@@ -508,6 +514,7 @@ export default {
           }
       },
       goodsSearch(){
+          this.ruleForm.coupon_range = {}
           console.log('商品搜索--------')
         //商品搜索
         var goodName = this.goods_name;
