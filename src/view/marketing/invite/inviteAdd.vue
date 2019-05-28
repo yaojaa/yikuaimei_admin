@@ -93,7 +93,7 @@
                               <div class="goods-div " @click="choiceClick(index)">
                                     <div class="goods-div-left">
                                       <p class="margin-top10"><span class="price">¥{{skuItem.reduce_price/100}}</span><span>{{skuItem.coupon_title}}</span></p>
-                                      <p class="margin-top10">满{{skuItem.full_price/100}}元可用</p>
+                                      <p class="margin-top10">满{{skuItem.price/100}}元可用</p>
                                     </div>
                                     <div class="goods-div-right">
                                      <img v-if="skuItem.coupon_img" :src="skuItem.coupon_img" width="70px" height="70px">
