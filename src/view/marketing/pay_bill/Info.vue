@@ -44,30 +44,33 @@
                             <div class="body-gift-number body-item">
                                 <div class="item-number">
                                   {{item.type_title}}
-                      
                                 </div>
                             </div>
                             <div class="body-gift-number body-item">
                                 <div class="item-number">
-                                  {{item.gifts}}
-                                   
+                                  <div class="choiced" >
+                                    <div class="goods-div ">
+                                          <div class="goods-div-left">
+                                            <p class="margin-top10"><span class="price">¥{{item.reduce_price/100}}</span><span>{{item.coupon_title}}</span></p>
+                                            <p class="margin-top10">满{{item.price/100}}元可用</p>
+                                          </div>
+                                          <div class="goods-div-right">
+                                          <img v-if="item.coupon_img" :src="item.coupon_img" width="70px" height="70px">
+                                          <p v-else class="no-img">暂无图片</p>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="body-gift-number body-item">
+                                <div class="item-number">
+                                    {{item.gifts}}
                                 </div>
                             </div>
                             
-                            <div class="body-gift-img body-item">
-                                <div class="item-upload">
-                                    
-                                        <img width="178px" v-if="item.gifts_img" :src="item.gifts_img" >
-                                        
-                                    
-                                </div>
-                            </div>
-                            <div class="body-gift-number body-item">
-                                <div class="item-number">
-                                  {{item.gifts_num}}
-                                   
-                                </div>
-                            </div>
+                            
+                            
                             
                         </div>
                     </div>
@@ -103,17 +106,14 @@ export default {
                     index: 1
                 },
                 {
-                    name: "奖品",
+                    name: "奖品名称",
                     index: 2
                 },
                 {
-                    name: "奖品图",
+                    name: "奖品",
                     index: 3
-                },
-                 {
-                    name: "奖品数量",
-                    index: 4
                 }
+                 
             ],
 
             //   url: "",
