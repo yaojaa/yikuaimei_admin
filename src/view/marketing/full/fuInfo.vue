@@ -47,13 +47,13 @@
                         <div v-if="ruleForm.rules.full_gifts">
                             <div class="table-body"   v-for="skuItem in ruleForm.rules.full_gifts" >
                                 <div class="person-item ">
-                                    满{{skuItem.full_price/100}}元
+                                    满{{skuItem.price/100}}元
                                 </div>
-                                <div class="person-item">
+                                <div class="person-item" v-if="skuItem.coupon_type==1">
                                     <div class="goods-div ">
                                       <div class="goods-div-left">
                                         <p class="margin-top10"><span class="price">¥{{skuItem.reduce_price/100}}</span><span>{{skuItem.coupon_title}}</span></p>
-                                        <p class="margin-top10">满{{skuItem.full_price/100}}元可用</p>
+                                        <p class="margin-top10">满{{skuItem.price/100}}元可用</p>
                                       </div>
                                       <div class="goods-div-right">
                                       <img v-if="skuItem.coupon_img" :src="skuItem.coupon_img" width="70px" height="70px">
@@ -61,10 +61,16 @@
                                       </div>
                                     </div>
                                 </div>
-                                <div class="person-item ">
+                                <div v-else class="person-item ">
+                                  <el-row>
+                                    <el-col :span="14">返{{skuItem.percentage}}%卡金</el-col>
+                                  </el-row>
+
+                                </div>
+                                <!-- <div >
                                   <img :src="skuItem.image" alt="" width="238px" height="100px">
                                     
-                                </div>
+                                </div> -->
                             
                             </div>
                         </div>
@@ -110,11 +116,11 @@ export default {
         {
           name:"赠送商品",
           index:2
-        },
-        {
-          name:"赠送商品图",
-          index:3
         }
+        // {
+        //   name:"赠送商品图",
+        //   index:3
+        // }
         
       ],
       

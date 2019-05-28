@@ -308,26 +308,26 @@ export default {
             "coupon_desc":"",//使用规则
             "coupon_code":"",
             "coupon_title" : "",//优惠券标题
-            "rules" : {  // 规则
+            rules: {  // 规则
                 "is_full" : 0, // 是否满减  
                 "price" : "",  // 满多少
                 "reduce_price" : ""  // 减多少
             },
 
-            "limits" : { // 参与限制
+            limits : { // 参与限制
                 "limit_cycle" : "1", // 限制周期  1 日 2周 3月
                 "limit_times" : "", // 周期内限制使用次数
                 "limit_total_times" : "", // 次数限制 0 不限
             },
-            "coupon_range" : { //弹窗列表选择
-                "category_id" : 1,
-                "goods_id" :  0
+            coupon_range:{
+                category_id:1,
+                goods_id:0
             },
             "coupon_expire_type":1,
             "coupon_in_shop":1,
             "coupon_range_type":1,
             "date_expire_type":0,
-            "coupon_expire" : {
+            coupon_expire : {
                 "coupon_expire_day" : "",  //固定天数时使用
                 "coupon_expire_start_time" :  "",
                 "coupon_expire_end_time" :  ""
@@ -375,6 +375,11 @@ export default {
     };
   },
   methods:{
+    cloneObj(obj) {
+        return JSON.parse(JSON.stringify(obj))
+    },
+
+    
       //次数限制功能
     //   limitsChange(e){
 
@@ -468,6 +473,7 @@ export default {
       },
       goodsSure(){
           //商品弹窗确定
+          debugger
           if(this.checkedGoodsId==""){
               console.log(this.checkedGoodsId,'checkedGoodsId')
               this.$alert('必须选择商品')
@@ -478,6 +484,7 @@ export default {
           }
       },
       inventedSure(){
+          debugger
           console.log(this.checkedGoodsId,'222222222222')
           //虚拟商品确定
           if(this.checkedGoodsId==""){
@@ -490,6 +497,7 @@ export default {
           }
       },
       serviceSure(){
+          debugger
           if(this.checkedGoodsId==""){
               console.log(this.checkedGoodsId,'checkedGoodsId')
               this.$alert('必须选择服务')
@@ -542,10 +550,18 @@ export default {
 
       },
     submit(){
+        
         let params = this.$route.params;
-        var obj=JSON.parse(JSON.stringify(this.ruleForm));
+        const obj = this.cloneObj(this.ruleForm)
+        obj.coupon_range = this.ruleForm.coupon_range
+        // clone
+        // const obj = $.extend(true,{},this.ruleForm)
+        // const obj=JSON.parse(JSON.stringify(this.ruleForm))
+        // this.deepCopyLd(obj);
+        // debugger
         obj.rules.reduce_price=this.formatPrice(obj.rules.reduce_price);
-        obj.rules.price = this.formatPrice(obj.rules.price);
+        obj.rules.price = this.formatPrice(obj.rules.price)
+        // obj = JSON.parse(obj)
         debugger
         if (Object.keys(params).length) {
             this.ruleForm.coupon_code = params.coupon_code
@@ -672,13 +688,22 @@ export default {
                         this.limitsStatus = 1
                     }
                     console.log(this.limitsStatus,'limitsStatus')
+                    const list = {} 
+                    
 
                     const _obj = JSON.parse(JSON.stringify(res.data.data));
+                    for(var key in res.data.data.coupon_range){
+                        list[key] = res.data.data.coupon_range[key]
+                    }
+                    
                     _obj.rules.reduce_price = this.formatPrice1(_obj.rules.reduce_price)
                     _obj.rules.price = this.formatPrice1(_obj.rules.price)
                     this.dataStart = _obj.coupon_expire.coupon_expire_start_time 
                     this.dataEnd = _obj.coupon_expire.coupon_expire_end_time 
                     this.ruleForm = _obj
+                    this.ruleForm.coupon_range = list
+                    console.log(this.ruleForm,'ruleForm')
+
                    
 
                 }else{
