@@ -1466,3 +1466,19 @@ ol {
     right:-34px;
     bottom:-10px
 } */
+
+/* #full_radio .el-radio+.el-radio{
+    margin-left:0px;
+  }
+  #full_input .el-input{
+      display: inline-block;
+      width:50px;
+      margin-left:4px;
+      margin-right:4px;
+  } */
+  #full_radio,#full_radio .el-radio-group{
+      width:100%;
+  }
+  #full_input span{
+      display: inline-block;
+  }

@@ -88,11 +88,11 @@
                      <div class="table-body" v-for="(skuItem,index) in ruleForm.rules.full_gifts">
                        <div class="body-gift-number body-item">
                          <div class="item-number" >
-                           <input type="text" v-model="skuItem.full_price" class="number-input"/>
+                           <input type="text" v-model="skuItem.price" class="number-input"/>
                          </div>
                        </div>
                        <div class="body-gift-choice body-item">
-                         <div class="item-choice" >
+                         <div class="item-choice relative" >
                           
                             <div class="choiced" v-if="skuItem.coupon_code">
                               <div class="goods-div " @click="choiceClick(index)">
@@ -106,10 +106,30 @@
                                     </div>
                               </div>
                             </div>
-                            <div class="choice-button" v-else  @click="choiceClick(index)">请选择</div>
+                            <div v-else  id="full_radio" >
+                                <el-radio-group v-model="skuItem.coupon_type">
+                                  <el-row>
+                                    <el-col :span="14"><el-radio :label="1">选择优惠券</el-radio></el-col>
+                                    <el-col :span="10"><div class="choice-button"   @click="choiceClick(index)">请选择</div></el-col>
+                                  </el-row> 
+                                  <el-row>
+                                    <el-col :span="14"><el-radio :label="2">返<el-input v-model="skuItem.percentage" placeholder=""></el-input><span>%卡金</span></el-radio></el-col>
+                                  </el-row> 
+                                </el-radio-group>
+                                <p style="text-indent:20px;color:#686868">注：满足条件商品售价的总和</p>
+                            </div>
+                            
+                            <!-- <div>
+                              <el-input v-model="skuItem.percentage" placeholder=""></el-input>
+                                  
+                            </div> -->
+                            
+                            
+                             
+
                          </div>
                        </div>
-                       <div class="body-gift-img body-item">
+                       <!-- <div class="body-gift-img body-item">
                          <div class="item-upload marking-upload" >
                            
                             <el-upload
@@ -124,7 +144,7 @@
                               </div>       
                             </el-upload>
                          </div>
-                       </div>
+                       </div> -->
                        <div class="body-gift-choice body-item">
                          <div class="item-choice">
                             <el-button type="primary" @click="deletedClick(index)">删除</el-button>
@@ -290,13 +310,13 @@ export default {
           name:"商品",
           index:2
         },
-        {
-          name:"商品图",
-          index:3
-        },
+        // {
+        //   name:"商品图",
+        //   index:3
+        // },
         {
           name:"操作",
-          index:4
+          index:3
         }
       ],
       
@@ -336,12 +356,13 @@ export default {
        "full_gifts" : [
                 {
                     "coupon_code" : "",
-                    "price" : "",
-                    "image" : "",
+                    // "image" : "",
                     "coupon_title":"",
                     "coupon_img":"",
                     "price":"",
-                    "reduce_price":""
+                    "reduce_price":"",
+                    "coupon_type":1,
+                    "percentage":null
                 }
                 
         ]
@@ -356,7 +377,11 @@ export default {
       this.ruleForm.rules.full_gifts.push({
         "coupon_code" : "",
         "price" : "",
-        "image" : ""
+        // "image" : "",
+        "coupon_type":null,
+        "percentage":null
+
+
       })
       
       console.log(this.ruleForm.rules.full_gifts,'~~~~~~')
@@ -402,12 +427,12 @@ export default {
       this.index = _index;
       this.goodsVisible = true
     },
-    show_img(obj,res,f){
+    // show_img(obj,res,f){
     
-      debugger
-       this.ruleForm.rules.full_gifts[obj.index].image = res.data.url
-        // this.dialogImageUrl = res.data.url
-      },
+    //   debugger
+    //    this.ruleForm.rules.full_gifts[obj.index].image = res.data.url
+    //     // this.dialogImageUrl = res.data.url
+    //   },
      
     uploadActivityImg(res){
       this.ruleForm.activity_img = res.data.url
@@ -453,7 +478,7 @@ export default {
 
                       if(res.data.code == 0){
 
-                          this.$alert(res.data.msg)
+                          this.$alert('操作成功')
                          this.$router.push('/marketing/full/list')
                           
 
@@ -635,8 +660,14 @@ export default {
   border-radius:6px;
 }
 .choice-button{
+  width: 60px;
   cursor:pointer;
   font-size:14px;
+  position: relative;
+  top: -8px;
+  /* position: absolute;
+  left: -60px;
+  top:-20px; */
 }
 
 .item-upload{
@@ -845,6 +876,12 @@ export default {
 #full_ld .el-input--small,#full_ld .el-textarea__inner{
   max-width: 370px;
 }
+.relative{
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
+
 
 
 </style>
