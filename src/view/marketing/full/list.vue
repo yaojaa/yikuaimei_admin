@@ -138,14 +138,14 @@ export default {
                     
                     
                     
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "创建人",
-                        "prop": "admin_user_name",
-                        "width":"120px"
+                    // {
+                    //     "type": "text",
+                    //     "align": "center",
+                    //     "label": "创建人",
+                    //     "prop": "admin_user_name",
+                    //     "width":"120px"
 
-                    },
+                    // },
                    
                     {
                         "type": "text",

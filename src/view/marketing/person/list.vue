@@ -134,31 +134,7 @@ export default {
                         "width": "",
 
                     },
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "次数限制",
-                        "prop": "",
-                        "width": "",
-                        formatter(row) {
-                            if(row.limits.limit_total_times==0){
-                                return `<p style='text-align: center'>不限</p>`
-                            }else{
-                                 return `<p style='text-align: center'>每人${row.limits.limit_times}次</p>`;
-                            }
-                            
-                        }
-
-                    },
                     
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "创建人",
-                        "prop": "admin_user_name",
-                        "width":"120px"
-
-                    },
                    
                     {
                         "type": "text",

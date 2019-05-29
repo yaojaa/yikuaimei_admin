@@ -139,7 +139,7 @@ export default {
                         "align": "center",
                         "label": "每人每天可参与",
                         "prop": "",
-                        "width": "",
+                        "width": "200px",
                         formatter(row) {
                             return row.limits.limit_times
                         }
@@ -158,29 +158,22 @@ export default {
 
                     },
                     
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "创建人",
-                        "prop": "admin_user_name",
-                        "width":"120px"
-
-                    },
+                    
                    
-                    {
-                        "type": "text",
-                        "align": "center",
-                        "label": "活动时间",
-                        "prop": "coupon_expire",
-                        "width": "",
-                        formatter(row) {
-                            return `<p style='text-align: center'>
-                            ${row.activity_start_time||""}<br/>至<br/>
-                            ${row.activity_end_time||""}</p>`;
+                    // {
+                    //     "type": "text",
+                    //     "align": "center",
+                    //     "label": "活动时间",
+                    //     "prop": "coupon_expire",
+                    //     "width": "",
+                    //     formatter(row) {
+                    //         return `<p style='text-align: center'>
+                    //         ${row.activity_start_time||""}<br/>至<br/>
+                    //         ${row.activity_end_time||""}</p>`;
                            
-                        }
+                    //     }
 
-                    },
+                    // },
                     
                     {
                         "type": "text",
