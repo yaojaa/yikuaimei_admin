@@ -541,12 +541,12 @@ export default {
       for(var i = 0; i<this.ruleForm.rules.bargain.length; i++){
           this.ruleForm.rules.bargain[i].goods_id = this.goodsData[i].good_id;
           this.ruleForm.rules.bargain[i].max_price = "";
-          this.ruleForm.rules.bargain[i].reduce_solid_price = "";
-          this.ruleForm.rules.bargain[i].reduce_min_price = "";
-          this.ruleForm.rules.bargain[i].reduce_max_price = "";
-          this.ruleForm.rules.bargain[i].first_solid_price = "";
-          this.ruleForm.rules.bargain[i].first_min_price = "";
-          this.ruleForm.rules.bargain[i].first_max_price = "";
+          this.ruleForm.rules.bargain[i].new_user_price = "";
+          this.ruleForm.rules.bargain[i].old_user_max_price = "";
+          this.ruleForm.rules.bargain[i].old_user_min_price = "";
+          // this.ruleForm.rules.bargain[i].first_solid_price = "";
+          // this.ruleForm.rules.bargain[i].first_min_price = "";
+          // this.ruleForm.rules.bargain[i].first_max_price = "";
           
       }
 
@@ -592,12 +592,12 @@ export default {
         
         for(let i=0; i<this.ruleForm.rules.bargain.length; i++){
         obj.rules.bargain[i].max_price = this.ruleForm.rules.bargain[i].max_price*100
-        obj.rules.bargain[i].reduce_solid_price = this.ruleForm.rules.bargain[i].reduce_solid_price*100
-        obj.rules.bargain[i].reduce_min_price = this.ruleForm.rules.bargain[i].reduce_min_price*100
-        obj.rules.bargain[i].reduce_max_price = this.ruleForm.rules.bargain[i].reduce_max_price*100
-        obj.rules.bargain[i].first_solid_price = this.ruleForm.rules.bargain[i].first_solid_price*100
-        obj.rules.bargain[i].first_min_price = this.ruleForm.rules.bargain[i].first_min_price*100
-        obj.rules.bargain[i].first_max_price =  this.ruleForm.rules.bargain[i].first_max_price*100
+        obj.rules.bargain[i].new_user_price = this.ruleForm.rules.bargain[i].new_user_price*100
+        obj.rules.bargain[i].old_user_max_price = this.ruleForm.rules.bargain[i].old_user_max_price*100
+        obj.rules.bargain[i].old_user_min_price = this.ruleForm.rules.bargain[i].old_user_min_price*100
+        // obj.rules.bargain[i].first_solid_price = this.ruleForm.rules.bargain[i].first_solid_price*100
+        // obj.rules.bargain[i].first_min_price = this.ruleForm.rules.bargain[i].first_min_price*100
+        // obj.rules.bargain[i].first_max_price =  this.ruleForm.rules.bargain[i].first_max_price*100
 
         }
         if (Object.keys(params).length) {
@@ -726,12 +726,17 @@ export default {
 
             for(let i=0; i<res.data.data.rules.bargain.length;i++){
               this.ruleForm.rules.bargain[i].max_price = res.data.data.rules.bargain[i].max_price/100
-               this.ruleForm.rules.bargain[i].reduce_solid_price = res.data.data.rules.bargain[i].reduce_solid_price/100
-                this.ruleForm.rules.bargain[i].reduce_min_price = res.data.data.rules.bargain[i].reduce_min_price/100
-                 this.ruleForm.rules.bargain[i].reduce_max_price = res.data.data.rules.bargain[i].reduce_max_price/100
-                  this.ruleForm.rules.bargain[i].first_solid_price = res.data.data.rules.bargain[i].first_solid_price/100
-                   this.ruleForm.rules.bargain[i].first_min_price = res.data.data.rules.bargain[i].first_min_price/100
-                    this.ruleForm.rules.bargain[i].first_max_price = res.data.data.rules.bargain[i].first_max_price/100
+               this.ruleForm.rules.bargain[i].new_user_price = res.data.data.rules.bargain[i].new_user_price/100
+                this.ruleForm.rules.bargain[i].old_user_max_price = res.data.data.rules.bargain[i].old_user_max_price/100
+                 this.ruleForm.rules.bargain[i].old_user_min_price = res.data.data.rules.bargain[i].old_user_min_price/100
+                  // this.ruleForm.rules.bargain[i].first_solid_price = res.data.data.rules.bargain[i].first_solid_price/100
+                  //  this.ruleForm.rules.bargain[i].first_min_price = res.data.data.rules.bargain[i].first_min_price/100
+                  //   this.ruleForm.rules.bargain[i].first_max_price = res.data.data.rules.bargain[i].first_max_price/100
+
+        // obj.rules.bargain[i].max_price = this.ruleForm.rules.bargain[i].max_price*100
+        // obj.rules.bargain[i].new_user_price = this.ruleForm.rules.bargain[i].new_user_price*100
+        // obj.rules.bargain[i].old_user_max_price = this.ruleForm.rules.bargain[i].old_user_max_price*100
+        // obj.rules.bargain[i].old_user_min_price = this.ruleForm.rules.bargain[i].old_user_min_price*100
             }
             //判断当前是限制还是不限制
             if(res.data.data.limits.limit_total_times==0){
