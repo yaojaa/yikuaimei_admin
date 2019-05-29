@@ -28,11 +28,11 @@
                         </el-form-item>
                         <el-form-item label="好友点赞">
                             <el-table :data="help_list" border style="width: 100%">
-                                <el-table-column prop="date" label="序列" type="index" width="180">
+                                <el-table-column prop="date" label="序列" type="index" width="294">
                                 </el-table-column>
-                                <el-table-column prop="nickname" label="好友名称" width="180">
+                                <el-table-column prop="nickname" label="好友名称" width="294">
                                 </el-table-column>
-                                <el-table-column prop="create_time" label="点赞时间">
+                                <el-table-column prop="create_time" label="点赞时间" width="294">
                                 </el-table-column>
                                 <!-- <el-table-column prop="join_time" label="打分时间">
                                 </el-table-column> -->
