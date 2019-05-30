@@ -106,6 +106,10 @@
                     <el-form-item>
                         <el-button @click="choiceGoodsClick">请选择</el-button>
                     </el-form-item>
+                    <el-form-item>
+                      <p style="font-size:12px; color:#999;line-height:1.8em">帮砍总额不得超过消费总额的30%；单人最高不得超过5%；新用户比老用户的帮砍金额贡献值更大，但不得超过单人上限的5%。
+例：原价100元，最高不超过30元，单人砍价不超过5元</p>
+                    </el-form-item>
                      <!-- 表单 -->
                      <div class="gift-table gift-person width980" >
                       <div class="table-th">
