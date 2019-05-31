@@ -1306,12 +1306,13 @@ p{
   width: 140px;
   height: 70px;
   font-size: 12px;
-  color:#fff;
+  color:#333;
+  font-weight: normal;
   border-radius:6px;
   border:1px solid #ccc;
   margin-bottom:10px;
   border-radius:6px;
-  box-shadow: 0px 0px 18px 0px rgba(211, 211, 211, 0.5);
+ 
   display: inline-block;
   margin-left: 10px;
   background-color: #fff;
