@@ -1361,12 +1361,7 @@ p{
   top: 6px;
 
 }
-#help_add .tab-overflow .color-blue{
-  color: #fff;
-}
-#help_add .tab-overflow .color-black{
-  color:#fff;
-}
+
 </style>
 
 
