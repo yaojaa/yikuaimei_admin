@@ -1503,3 +1503,9 @@ ol {
   #beautifl .avatar-uploader .avatar-uploader-icon{
     margin-top: 0px;
   }
+  .finish {
+    width: 170px;
+    height: 50px;
+    margin: auto;
+    margin-top: 30px;
+  }
