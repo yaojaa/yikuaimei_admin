@@ -1349,9 +1349,7 @@ p{
   
 }
 
-#help_add .price{
-  color: #fff;
-}
+
 #help_add .avatar-uploader .avatar-uploader-icon{
   margin-top: 0px;
 }
