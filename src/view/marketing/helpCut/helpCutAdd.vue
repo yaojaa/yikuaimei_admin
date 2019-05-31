@@ -1237,7 +1237,9 @@ p{
 .gift-table{
   font-size: 14px;
 }
-#help_add .goods-div{
+</style>
+<style lang="">
+  #help_add .goods-div{
   background-color: #7224D8
 }
 #help_add .el-input--small{
@@ -1317,7 +1319,10 @@ p{
 #help_add .tab-overflow .color-black{
   color:#fff;
 }
-
 </style>
+
+
+
+
 
 
