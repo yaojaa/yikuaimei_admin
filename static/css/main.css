@@ -1484,3 +1484,22 @@ ol {
   #full_input span{
       display: inline-block;
   }
+
+  #person_add .avatar-uploader .avatar-uploader-icon{
+    margin-top: 0px;
+  }
+  #shake .avatar-uploader .avatar-uploader-icon{
+    margin-top: 0px;
+  }
+  #new_person .avatar-uploader .avatar-uploader-icon{
+    margin-top: 0px;
+  }
+  #invite_ld .avatar-uploader .avatar-uploader-icon{
+    margin-top: 0px;
+  }
+  #full_ld .avatar-uploader .avatar-uploader-icon{
+    margin-top: 0px;
+  }
+  #beautifl .avatar-uploader .avatar-uploader-icon{
+    margin-top: 0px;
+  }
