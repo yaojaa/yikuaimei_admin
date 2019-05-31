@@ -1361,6 +1361,7 @@ ol {
       color:#fff;
       border-radius:6px;
       border:1px solid #ccc;
+      font-weight: normal;
     }
   .clearfix:after{
     content:".";
