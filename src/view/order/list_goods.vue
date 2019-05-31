@@ -237,9 +237,9 @@
                             "width": "200",
                             formatter: function(row) {
                                 var str = '<div style="text-align:right">'
-                                if (row.order_status_all == 2) {
-                                    str += '<a href="/order/send_goods/' + row.order_code + '" class="el-button reset el-button--default el-button--small" >去发货</a>'
-                                }
+                                // if (row.order_status_all == 2) {
+                                //     str += '<a href="/order/send_goods/' + row.order_code + '" class="el-button reset el-button--default el-button--small" >去发货</a>'
+                                // }
                                 str += '<a href="/order/order_detail/' + row.order_code + '" class="el-button reset el-button--default el-button--small is-plain" >详情</a>'
                                 str += '</div>'
                                 return str

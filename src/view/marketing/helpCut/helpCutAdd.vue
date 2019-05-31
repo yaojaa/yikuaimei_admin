@@ -1302,7 +1302,21 @@ p{
 #help_add .price{
   color: #fff;
 }
+#help_add .avatar-uploader .avatar-uploader-icon{
+  margin-top: 0px;
+}
+#help_add .el-checkbox__input{
+  position: absolute;
+  right: 6px;
+  top: 6px;
 
+}
+#help_add .tab-overflow .color-blue{
+  color: #fff;
+}
+#help_add .tab-overflow .color-black{
+  color:#fff;
+}
 
 </style>
 
