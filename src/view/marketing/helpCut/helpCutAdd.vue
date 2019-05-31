@@ -1239,15 +1239,59 @@ p{
 }
 </style>
 <style lang="">
-  #help_add .goods-div{
-  background-color: #7224D8
+
+
+#help_add  .el-checkbox__input{
+  position: absolute ;
+  right:6px ;
+  top: 6px ;
+  
 }
-#help_add .el-input--small{
+#help_add .el-dialog__body{
+  background-color: #fff;
+}
+#help_add .el-tabs__nav-wrap::after{
+  background-color: #f6f6f6
+}
+#help_add .el-tabs__item{
+  color:#666;
+}
+#help_add .goods-div-left p{
+  color:#333;
+}
+#help_add .goods-div-left p.money{
+  color:#E89925 100%
+}
+#help_add .goods-div{
+  border-radius:6px;
+  box-shadow: 0px 0px 18px 0px rgba(211, 211, 211, 0.5);
+  display: inline-block;
+  margin-left: 10px;
+  background-color: #fff;
+
+}
+p{
+  margin:0px;
+}
+
+.input-val{
+  width:40% !important;
+}
+.line-center{
+  text-align: center;
+  line-height:32px;
+}
+.gift-table{
+  font-size: 14px;
+}
+#help_add .el-input--small,#help_add .el-textarea__inner{
   max-width: 370px;
 }
-#help_add .el-textarea__inner{
-  max-width: 370px;
-}
+
+
+
+
+
 #help_add .person{
   position: relative;
   left: -22px;
@@ -1266,7 +1310,11 @@ p{
   border-radius:6px;
   border:1px solid #ccc;
   margin-bottom:10px;
-  background-color: #7224D8;
+  border-radius:6px;
+  box-shadow: 0px 0px 18px 0px rgba(211, 211, 211, 0.5);
+  display: inline-block;
+  margin-left: 10px;
+  background-color: #fff;
 }
 #help_add .coupon-div-left{
   float: left;
