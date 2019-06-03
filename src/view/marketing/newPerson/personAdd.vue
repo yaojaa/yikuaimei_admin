@@ -898,6 +898,9 @@ export default {
 #new_person .el-input--small,#new_person .el-textarea__inner{
   max-width: 370px;
 }
+#new_person .el-checkbox:first-of-type{
+  margin-left: 30px;
+}
 
 </style>
 
