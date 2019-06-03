@@ -664,7 +664,7 @@ export default {
             val = Number(val)+1
             this.idx= val 
 
-            this.$axios.get("/api/admin/select/goodsList?type=1&good_type="+this.ruleForm.rules.walking_type+"&category_id="+val).then(res =>{
+            this.$axios.get("/api/admin/select/goodsList?type=1&good_type="+this.ruleForm.rules.full_gifts_type+"&category_id="+val).then(res =>{
                 if(res.data.code ==0){
                     this.goodsList = res.data.data;
                     //console.log(this.goodsList,'goodsList')
@@ -754,6 +754,9 @@ export default {
             debugger
             for(let i=0; i<this.ruleForm.rules.full_gifts.length;i++){
               this.ruleForm.rules.full_gifts[i].price = this.ruleForm.rules.full_gifts[i].price/100
+            }
+            if(res.data.data.rules.full_gifts_range==1){
+              this.boxShow = true
             }
 
             
