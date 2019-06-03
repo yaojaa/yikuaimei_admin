@@ -78,7 +78,34 @@
                         <el-radio  :label="3">虚拟商品</el-radio>
                       </el-radio-group>
                     </el-form-item>
+                    <el-form-item label="范围：">
+                      <el-radio-group v-model="ruleForm.rules.full_gifts_range">
+                        <el-radio  :label="0">全场</el-radio>
+                        <el-radio  :label="1">指定商品</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                    <el-form-item v-if="ruleForm.rules.full_gifts_range==1">
+                       <el-button @click="choiceGoodsClick">请选择</el-button>
+                    </el-form-item>
+                    <el-form-item v-if="boxShow">
+                       <p>已选商品：</p>
+                    </el-form-item>
+                    <div class="good-box" v-if="boxShow">
+                        <div class="com-div" v-for="item in ruleForm.rules.goods_list" :key="item.goods_id">
+                                        <div class="com-div-left">
+                                            <p class="color-black">{{item.good_name}}</p>
+                                            <p class=" money">¥{{item.price/100}}</p>
+                                            <p  class="color-black">{{item.sku_str}}</p>
+                                          </div>
+                                          <div class="com-div-right">
+                                            <img v-if="item.good_ico" :src="item.good_ico" width="70px" height="70px">
+                                            <p v-else class="no-img">暂无图片</p>
+                                          </div>
+                                          
+                          </div>
+                  </div>
                   </el-form>
+                  
                   <p class="gift-title"> 优惠设置</p>
                   <el-button type="primary"  class="button-add" @click="buttonAdd()">增加</el-button>
                   <div class="gift-table width980 " >
@@ -170,8 +197,59 @@
                     </div>
                       <div class="tab-overflow shake-box">
 
-                
+                <div class="tab-overflow">
                 <!-- 指定商品弹窗 -->
+                    <el-dialog title="选择指定商品" :visible.sync="comVisible" class="person-box">
+                       <el-form-item>
+                            <div v-if="comShow" class="good_show">
+                                
+                                      <div class="com-div" v-for="item in goodsData" :key="item.sku">
+                                        <div class="com-div-left">
+                                            <p class="color-black">{{item.good_name}}</p>
+                                            <p class=" money">¥{{item.price/100}}</p>
+                                            <p  class="color-black">{{item.sku_str}}</p>
+                                          </div>
+                                          <div class="com-div-right">
+                                            <img v-if="item.good_ico" :src="item.good_ico" width="70px" height="70px">
+                                            <p v-else class="no-img">暂无图片</p>
+                                          </div>
+                                          
+                                      </div>
+                                </div>
+                       
+                            </el-form-item>
+                        <el-tabs type="border-card" :tab-position="tabPosition" style="height: 200px;"  v-model="activedId">
+                            <el-tab-pane v-for="item  in industryList" :label="item.category_name"  :value="item.category_name" :key="item.category_id">
+                                    <el-checkbox v-model="checkedList" :label="item.sku" :key="item.sku" v-for="item in comList">
+                                        <div class="com-div " >
+                                            
+                                            <div class="com-div-left">
+                                            <p class="color-black">{{item.good_name}}</p>
+                                            <div >
+                                                <p class=" money">¥{{item.price/100}}</p>
+                                                <p class=" color-black">{{item.sku_str}}</p>
+                                            </div>
+                                            </div>
+                                            <div class="com-div-right">
+                                              <img v-if="item.good_ico" :src="item.good_ico" width="70px" height="70px">
+                                              <p v-else class="no-img">暂无图片</p>
+                                            </div>
+                                        </div>
+                                  
+                                  </el-checkbox>
+                               
+                                
+                            </el-tab-pane>
+                        </el-tabs>
+                        
+                        
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="comCancal">取 消</el-button>
+                            <el-button type="primary" @click="comSure">确 定</el-button>
+                        </div> 
+                    </el-dialog>
+                </div>
+                <!-- 指定优惠券弹窗 -->
                     <el-dialog title="选择指定商品" :visible.sync="goodsVisible">
                        <el-form-item>
                             <div v-if="goodShow" class="good_show">
@@ -256,15 +334,23 @@ export default {
 
   data() {
     return {
+      boxShow:false,
+      comList:{},
+      activedId:"",
       buttonIndex:"1",
       // goods_name:"", //商品名字
       index:'',
+      idx:'1',
+      goodsData:[],
+      comShow:false,
       gitfNumber:"",
       radioGoodsId:"",
       goodShow:false,
       goodsVisible:false,
       goodsDefaultVisible:false,
       imageUrl:"",
+      checkedList:[],
+      comVisible:false,
       dialogImageUrl:"",
       radioGoodsId:"",
       date:"",
@@ -277,6 +363,7 @@ export default {
      
       limit_total_times:"",
       step: 1,
+      industryList:[],
       industryForm:[
         {
           name:"通用券",
@@ -353,6 +440,7 @@ export default {
         "activity_end_time": "", //活动结束时间
         "rules" : {  // 规则
         "full_gifts_type" : 2, // 类型 1 服务 2商品 3虚拟商品
+        "full_gifts_range":0, //全场 1 指定商品
        "full_gifts" : [
                 {
                     "coupon_code" : "",
@@ -365,6 +453,9 @@ export default {
                     "percentage":null
                 }
                 
+        ],
+        "goods_list" : [
+          
         ]
       }
       }
@@ -372,6 +463,49 @@ export default {
     };
   },
   methods:{
+    comCancal(){
+      this.checkedList = []
+      this.comVisible = false
+       this.goodsData = []
+    },
+    comSure(){
+      debugger
+      if(this.goodsData.length==0){
+        this.$alert('必须选择商品')
+      }else{
+        for(var i=0; i<this.goodsData.length;i++){
+          this.goodsData[i].goods_id = this.goodsData[i].good_id
+        }
+        this.ruleForm.rules.goods_list = this.goodsData
+
+        this.comVisible = false
+        this.boxShow = true
+      }
+      
+    },
+    getCategoryList(){
+          //获取行业列表
+        this.$axios.get("/api/admin/select/categoryList").then(res =>{
+          if(res.data.code ==0){
+            this.industryList = res.data.data
+            console.log(this.industryList,'industryList')
+          }
+
+        })
+      },
+    //选择商品弹窗
+    choiceGoodsClick(){
+        this.comVisible = true
+        this.checkedList = []
+        this.goodsData = []
+        this.$axios.get("/api/admin/select/goodsList?type=1&category_id="+this.idx+"&good_type="+this.ruleForm.rules.full_gifts_type).then(res =>{
+                if(res.data.code ==0){
+                    this.comList = res.data.data;
+                    console.log(this.comList,'goodsList')
+                   
+                }
+            })
+    },
     buttonAdd(){
       
       this.ruleForm.rules.full_gifts.push({
@@ -408,7 +542,7 @@ export default {
           // //商品弹窗确定
           if(this.checkedGoodsId==""){
               console.log(this.checkedGoodsId,'checkedGoodsId')
-              this.$alert('必须选择商品')
+              this.$alert('必须选择优惠券')
           }else{
                 this.ruleForm.rules.full_gifts[this.index].coupon_code = this.checkedGoodsId 
                 this.ruleForm.rules.full_gifts[this.index].coupon_title = this.checkedGoods.coupon_title  
@@ -499,7 +633,7 @@ export default {
 
                       if(res.data.code == 0){
 
-                          this.$alert(res.data.msg)
+                          this.$alert('操作成功')
                           this.$router.push('/marketing/full/list')
                           
 
@@ -521,6 +655,33 @@ export default {
       
     },
     watch:{
+      "activedId":function(val){
+            val = Number(val)+1
+            this.idx= val 
+
+            this.$axios.get("/api/admin/select/goodsList?type=1&good_type="+this.ruleForm.rules.walking_type+"&category_id="+val).then(res =>{
+                if(res.data.code ==0){
+                    this.goodsList = res.data.data;
+                    //console.log(this.goodsList,'goodsList')
+                }
+            })
+            
+        },
+        "checkedList":function(e){
+          console.log(e,'eee');
+          this.goodsData = []
+          for(var i = 0; i<this.comList.length; i++){
+            for(var j = 0; j<e.length; j++){
+              if(this.comList[i].sku==e[j]){
+                this.comList[i].sku_code = e[j]
+                this.goodsData.push(this.comList[i])
+              }
+            }
+          } 
+          console.log(this.goodsData,'this.goodsData')
+           this.comShow = true
+                
+        },
         "activeId":function(val){
             val = Number(val)+1
            
@@ -594,12 +755,21 @@ export default {
         })
     }
      this.getGoodsList(); //获取优惠券列表  
+     this.getCategoryList()
   },
   computed: {}
 };
 </script>
 
 <style scoped>
+#full_ld .good-box{
+  width: 720px;
+  height: 80px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding:10px;
+  margin-left: 140px;
+}
 .width200px{
   width:200px
 }
@@ -881,9 +1051,75 @@ export default {
   left: 0px;
   top: 0px;
 }
+/* #full_ld  .el-checkbox:first-of-type{
+  margin-left: 30px;
+} */
+</style>
+<style lang="">
+  #full_ld .el-checkbox__input{
+    position: absolute;
+    right: 6px;
+    top: 6px;
+  }
 
+  
+  #full_ld .el-dialog__body{
+    background-color: #fff;
+  }
+  #full_ld .el-tabs__nav-wrap::after{
+    background-color: #f6f6f6
+  }
+  #full_ld .el-tabs__item{
+    color:#666;
+  }
+  #full_ld .com-div-left p{
+    color:#333;
+  }
+  #full_ld .com-div-left p.money{
+    color:#E89925 100%
+  }
+  #full_ld .com-div{
+    width:211px;
+    height: 70px;
+    font-size: 12px;
+    border-radius:6px;
+    box-shadow: 0px 0px 18px 0px rgba(211, 211, 211, 0.5);
+    display: inline-block;
+    margin-left: 10px;
+    background-color: #fff;
+    margin-bottom:10px;
+  
+  }
+  #full_ld .com-div-left{
+     width:120px;
+    padding: 10px ;
+    height: 50px;
+    float: left;
+  }
+  #full_ld .com-div-right{
+     width:70px;
+    height: 70px;
+    float: left;
+    border-left:1px solid #ccc;
+  }
+  p{
+    margin:0px;
+  }
 
-
+  #full_ld .el-checkbox:first-of-type{
+  margin-left: 30px;
+}
+ #full_ld .com-div-left{
+   line-height: 1.6em;
+ }
+ #full_ld .color-black{
+   overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+ }
+  
+  
+  
 </style>
 
 
