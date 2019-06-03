@@ -79,7 +79,7 @@
                       </el-radio-group>
                     </el-form-item>
                     <el-form-item label="范围：">
-                      <el-radio-group v-model="ruleForm.rules.full_gifts_range">
+                      <el-radio-group v-model="ruleForm.rules.full_gifts_range" @change="rangeChange">
                         <el-radio  :label="0">全场</el-radio>
                         <el-radio  :label="1">指定商品</el-radio>
                       </el-radio-group>
@@ -463,6 +463,11 @@ export default {
     };
   },
   methods:{
+    rangeChange(e){
+      if(e==0){
+        this.boxShow = false
+      }
+    },
     comCancal(){
       this.checkedList = []
       this.comVisible = false
