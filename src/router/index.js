@@ -217,7 +217,7 @@ export default new Router({
                 },
                 {
                     // 案例详情
-                    path: '/manage/case/case_detail/:id',
+                    path: '/manage/case/case_detail/:cases_id',
                     component: resolve => require(['../view/case/case_detail.vue'], resolve),
                     meta: {
                         title: '案例详情',

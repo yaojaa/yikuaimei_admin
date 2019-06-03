@@ -256,6 +256,7 @@ export default {
             ],
             loading: false,
             info: {},
+            id:"",
             reply_content: '',
             flag:true,
             reply_content_show: -1,
@@ -263,8 +264,10 @@ export default {
         }
     },
     created() {
-        this.getDetailInfo(this.$route.params)
-        this.id = this.$route.params.id
+        console.log(this.$route.params,'this.$route.params')
+        this.id = this.$route.params.cases_id
+        this.getDetailInfo(this.id)
+        this.id = this.$route.params.cases_id
         this.getCommentList(this.$route.params)
     },
     components: {
@@ -360,15 +363,16 @@ export default {
         //     }
         // },
         getDetailInfo(id) {
-            this.$axios.get('/api/admin/cases/detail', { params: id })
+            debugger
+            this.$axios.get('/api/admin/cases/detail?id='+id)
                 .then(res => {
                     this.info = res.data.data;
                 })
                 
         },
         //获取案例评论
-        getCommentList(id) {
-            this.$axios.get('/api/admin/casescomment/index', { params: id })
+        getCommentList(cases_id) {
+            this.$axios.get('/api/admin/casescomment/index', { params: cases_id })
                 .then(res => {
                     this.commentList = res.data.data;
                     console.log(this.commentList,'this.commentList')

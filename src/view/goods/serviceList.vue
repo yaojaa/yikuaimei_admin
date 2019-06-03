@@ -31,6 +31,7 @@
 		            <el-button type="primary" @click="doUpdateIsUse">确 定</el-button>
 		        </span>
 			</el-dialog>
+            
         </div>
     </div>
 </template>
@@ -241,6 +242,24 @@
                                     }
                                 },
                                 {
+                                    "label": "分配给所有门店",
+                                    "type": "edit",
+                                    // "url": "", //优先执行url
+                                    onClick(tablePage, self, record) {
+                                        
+                                        self.sureFen(record.good_id)
+                                    }
+                                },
+                                {
+                                    "label": "取消分配",
+                                    "type": "edit",
+                                    // "url": "", //优先执行url
+                                    onClick(tablePage, self, record) {
+                                        // console.log(record);
+                                        self.cancelFen(record.good_id)
+                                    }
+                                },
+                                {
                                     "label": "编辑",
                                     "type": "edit",
                                     onClick(tablePage, self, record) {
@@ -272,6 +291,42 @@
                 }
                 return column;
             },
+            sureFen(good_id){
+                this.$axios.post("/api/admin/shopgoods/goodsToAllShops", {
+                    id:good_id,
+                    type:"add"
+                }).then(res => {
+                    if(res.data.code==0){
+                        this.$alert('分配成功')
+                    }else{
+                          this.$alert(res.data.msg)
+                      }
+                    
+                }).catch((e)=>{
+
+                    this.$alert('操作失败'+e)
+
+                  });
+                
+            },
+            cancelFen(good_id){
+                this.$axios.post("/api/admin/shopgoods/goodsToAllShops", {
+                    id:good_id,
+                    type:"del"
+                }).then(res => {
+                    if(res.data.code==0){
+                        this.$alert('取消分配成功')
+                    }else{
+                          this.$alert(res.data.msg)
+                      }
+                    
+                }).catch((e)=>{
+
+                    this.$alert('操作失败'+e)
+
+                  });
+            },
+
     
             //调用子组件的getData方法
             getData(k, v) {
@@ -279,6 +334,7 @@
                     [k]: v
                 })
             },
+            //给所有门店分配
     
             // 打开上下架弹窗
             openModal(record) {
