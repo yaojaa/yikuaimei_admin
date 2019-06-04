@@ -257,5 +257,8 @@ export default {
   color: #44465A;
   font-size: 14px;
 }
+#createGood .avatar-uploader .avatar-uploader-icon{
+  margin-top: 0px;
+}
 
 </style>
