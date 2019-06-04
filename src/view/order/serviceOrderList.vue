@@ -118,7 +118,7 @@ export default {
                                         '<img width="30" height="30" src="' + item.goods_img + '"/></div>' +
                                         '<div class="flex_item">' + item.goods_name + '</div>' +
                                         '<div class="flex_item">' +
-                                        '¥' + item.goods_price + '✖️ ' + item.goods_num +
+                                        '¥' + item.goods_price/100 + '✖️ ' + item.goods_num +
                                         '</div></div>'
                                 })
 
