@@ -172,7 +172,7 @@
           // this.ruleForm.tag_remark = tagInfo.tag_remark;
           // this.ruleForm.tag_fid = tagInfo.tag_fid;
           // this.ruleForm.tag_group_id = tagInfo.tag_group_id;
-          // this.ruleForm.tag_friends = tagInfo.tag_friends_name.split(',');
+          this.ruleForm.tag_friends = res.data.data.tag_friends_name.split(',');
         }).catch((error) => {});
       },
       getGroupList() {
