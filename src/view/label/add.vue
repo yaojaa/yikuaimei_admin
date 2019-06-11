@@ -166,12 +166,13 @@
           url: '/api/admin/tag/tagDetail',
           params: {id: id}
         }).then((res) => {
-          const tagInfo = res.data.data;
-          this.ruleForm.tag_name = tagInfo.tag_name;
-          this.ruleForm.tag_remark = tagInfo.tag_remark;
-          this.ruleForm.tag_fid = tagInfo.tag_fid;
-          this.ruleForm.tag_group_id = tagInfo.tag_group_id;
-          this.ruleForm.tag_friends = tagInfo.tag_friends_name.split(',');
+          this.ruleForm = res.data.data;
+          // const tagInfo = res.data.data;
+          // this.ruleForm.tag_name = tagInfo.tag_name;
+          // this.ruleForm.tag_remark = tagInfo.tag_remark;
+          // this.ruleForm.tag_fid = tagInfo.tag_fid;
+          // this.ruleForm.tag_group_id = tagInfo.tag_group_id;
+          // this.ruleForm.tag_friends = tagInfo.tag_friends_name.split(',');
         }).catch((error) => {});
       },
       getGroupList() {
