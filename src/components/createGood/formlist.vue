@@ -401,7 +401,9 @@
                     <div class="upload-title color-666 lh_1em">
                         展示{{type}}的图片详情中的图片，<span class="color-72">至少上传1张</span>，拖拽图片调整图片顺序，双击可预览大图，图片<span class="color-72">1242*1242</span>，单张图片不要超过5M，支持JPG、PNG等常见图片格式。
                     </div>
+                    
                     <el-upload
+                        
                         action="/api/admin/fileupload/image"
                         list-type="picture-card"
                         :on-preview="$_onPreview"
@@ -418,6 +420,8 @@
                             <p>添加图片</p>
                         </i>
                     </el-upload>
+                    <draggable v-model="show_img_arr.url" v-bind="removeHandle()" :options="dragOptions">
+                    </draggable>
                 </el-form-item>
                 <el-form-item label="购买须知：" prop="good_notes">
                     <el-input type="textarea" v-model="createdData.good_notes" placeholder="请填写购买须知" rows="3" class="good_notes" />
@@ -459,6 +463,7 @@
     import Formate from "./dialog_formate";
     import GoodFriend from "./dialog_goodFriend";
     import ProductCard from "./product_card";
+    import draggable from 'vuedraggable'
 
 export default {
   name: "createGood-formlist",
@@ -467,7 +472,8 @@ export default {
     'dialog-formate' : Formate,   // 添加规格弹框
     // 'dialog-lable' : Lable,     // 添加标签弹框
     'dialog-goodFriend' : GoodFriend, // 添加服务弹框
-    'product-card' : ProductCard  // 卡片组件
+    'product-card' : ProductCard,  // 卡片组件
+    draggable
   },
 
   props:{
@@ -497,6 +503,12 @@ export default {
 
   data() {
     return {
+        dragOptions:{
+                    animation: 120,
+                    scroll: true,
+                    group: 'sortlist',
+                    ghostClass: 'ghost-style'
+                },
         renderList:[],
         industryForm:{}, // 所属行业分类
         quickBuyColumnList:[],//快买栏目后台数据
@@ -775,6 +787,10 @@ export default {
   },
 
   methods: {
+      removeHandle(event) {
+            console.log(event);
+        },
+      
       videoSuccess(res){
           this.createdData.good_video = res.data.url
           
