@@ -7,7 +7,7 @@
     </div>
     <div class="page-content">
   
-      <div class="panel">
+      <div class="panel" id="labelAdd">
   
         <div class="form-panel p-xl">
           <!--form start-->
@@ -221,5 +221,8 @@
 </script>
 
 <style scoped>
-  
+  #labelAdd .avatar-uploader{
+    width: 30px;
+    height: 30px;
+  }
 </style>

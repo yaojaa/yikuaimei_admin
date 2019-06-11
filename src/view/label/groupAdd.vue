@@ -7,7 +7,7 @@
         </div>
 <div class="page-content">
 
-<div class="panel">
+<div class="panel" id="labelGroup">
 
 <div class="p-xl" >
                    <!--form start-->
@@ -246,5 +246,9 @@ export default {
 
   .ling-from .el-input,.ling-from .el-input--small,.ling-from .el-input__inner{
      width:720px ;
+  }
+  #labelGroup .avatar-uploader{
+	  width: 30px;
+	  height: 30px;
   }
 </style>
