@@ -247,8 +247,12 @@ export default {
   .ling-from .el-input,.ling-from .el-input--small,.ling-from .el-input__inner{
      width:720px ;
   }
-  #labelGroup .avatar-uploader{
+  /* #labelGroup .avatar-uploader{
 	  width: 30px;
 	  height: 30px;
   }
+  #labelGroup .el-upload,#labelGroup .el-upload--text{
+	  width: 30px;
+	  height: 30px;
+  } */
 </style>

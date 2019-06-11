@@ -221,8 +221,12 @@
 </script>
 
 <style scoped>
-  #labelAdd .avatar-uploader{
+  /* #labelAdd .avatar-uploader{
     width: 30px;
     height: 30px;
   }
+  #labelAdd .el-upload,#labelAdd .el-upload--text{
+	  width: 30px;
+	  height: 30px;
+  } */
 </style>
