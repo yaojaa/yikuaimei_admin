@@ -109,6 +109,7 @@
         tagList: [],
   
         ruleForm: {
+          id:"",
           tag_name: "", //标签名字
           tag_remark: "", //备注信息
           tag_fid: "", //父级标签id 只能有一个
@@ -146,6 +147,7 @@
           params: {id: id}
         }).then((res) => {
           this.ruleForm = res.data.data;
+          this.ruleForm.id = res.data.data.tag_id
           // const tagInfo = res.data.data;
           // this.ruleForm.tag_name = tagInfo.tag_name;
           // this.ruleForm.tag_remark = tagInfo.tag_remark;

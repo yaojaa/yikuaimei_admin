@@ -114,6 +114,7 @@ export default {
 
       ruleForm:
             {
+				"id":"",
             "category_id" : '',//行业id
             "tag_group_type" : '',//标签组类型：1商品 2服务 3虚拟券 4评价 5用户
             "tag_group_name" : "",//标签组名字
@@ -141,7 +142,8 @@ export default {
           url: '/api/admin/tag/groupDetail',
           params: {id: id}
         }).then((res) => {
-          this.ruleForm = res.data.data;
+		  this.ruleForm = res.data.data;
+		  this.ruleForm.id = res.data.data.tag_id
           // const tagInfo = res.data.data;
           // this.ruleForm.tag_name = tagInfo.tag_name;
           // this.ruleForm.tag_remark = tagInfo.tag_remark;
