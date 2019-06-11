@@ -5,7 +5,7 @@
                 <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
             </div>
             <div class="page-header-actions">
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label/add?id=0' })">添加标签</el-button>
+                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label/add' })">添加标签</el-button>
             </div>
         </div>
         <div class="page-content">

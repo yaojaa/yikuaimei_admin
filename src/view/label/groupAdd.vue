@@ -171,31 +171,57 @@ export default {
 
     },
     submit(){
+      if(this.$route.query.id){
+		  this.$axios.post('/api/admin/tag/modifyGroup',this.ruleForm)
+			.then(res=>{
+
+				if(res.data.code == 0 ){
 
 
-        this.$axios.post('/api/admin/tag/createGroup',this.ruleForm)
-      .then(res=>{
+				this.$message({
+				message: '恭喜你，添加成功！',
+				type: 'success'
+				})
 
-        if(res.data.code == 0 ){
-
-
-          this.$message({
-          message: '恭喜你，添加成功！',
-          type: 'success'
-        })
-
-          this.$router.push('/manage/labelGroup')
+				this.$router.push('/manage/labelGroup')
 
 
-        }else{
+				}else{
 
-        this.$message({
-          message: res.data.msg,
-          type: 'error'
-        });
-        }
-        
-      })
+				this.$message({
+				message: res.data.msg,
+				type: 'error'
+				});
+				}
+				
+			})
+      }else{
+		  this.$axios.post('/api/admin/tag/createGroup',this.ruleForm)
+			.then(res=>{
+
+				if(res.data.code == 0 ){
+
+
+				this.$message({
+				message: '恭喜你，添加成功！',
+				type: 'success'
+				})
+
+				this.$router.push('/manage/labelGroup')
+
+
+				}else{
+
+				this.$message({
+				message: res.data.msg,
+				type: 'error'
+				});
+				}
+				
+			})
+      }
+
+    
 
 
     }
