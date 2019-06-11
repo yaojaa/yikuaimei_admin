@@ -38,7 +38,7 @@
                 :show-file-list="false"
                 :on-success="shop_pic"
                 >
-                  <img width="30px" height="30px" v-if="ruleForm.tag_ico" :src="ruleForm.tag_ico" >
+                  <img width="30px" height="30px" class="uploader-img" v-if="ruleForm.tag_ico" :src="ruleForm.tag_ico" >
             
                   <div  v-else style="padding-top: 10%">
                     
@@ -229,4 +229,7 @@
 	  width: 30px;
 	  height: 30px;
   } */
+  #labelAdd .uploader-img{
+    margin-top: 20%;
+  }
 </style>
