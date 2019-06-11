@@ -37,6 +37,28 @@
   <el-form-item label="名称" prop="tag_group_name">
     <el-input v-model="ruleForm.tag_group_name"></el-input>
   </el-form-item>
+  <el-form-item label="标签组图片" >
+              <el-upload
+                class="avatar-uploader"
+                action="/api/admin/fileupload/image"
+                :show-file-list="false"
+                :on-success="shop_pic1"
+                >
+                  <img width="360px" height="180px" v-if="ruleForm.tag_group_ico" :src="ruleForm.tag_group_ico" >
+            
+                  <div  v-else style="padding-top: 10%">
+                    
+                  <i class="el-icon-plus" style="font-size: 48px">
+                    
+                  </i>
+                  <p> 标签组图片 尺寸30*30像素</p>
+                  </div>
+
+            </el-upload>
+
+  
+            </el-form-item>
+  
 
     <el-form-item label="上级组" prop="tag_group_fid">
      <el-select  v-model="ruleForm.tag_group_fid" placeholder="请选择活动区域">
@@ -95,6 +117,7 @@ export default {
             "tag_group_type" : '',//标签组类型：1商品 2服务 3虚拟券 4评价 5用户
             "tag_group_name" : "",//标签组名字
             "tag_group_remark" : "",//备注信息
+            "tag_group_ico":"",//标签组图片
             "tag_group_fid" : ''//父级标签组id 只能有一个
             },
 
@@ -111,6 +134,9 @@ export default {
     };
   },
   methods:{
+    shop_pic1(res){
+        this.ruleForm.tag_group_ico = res.data.url
+      },
     getGroupList(){
         this.$axios.get('/api/admin/tag/groupList')
       .then(res=>{

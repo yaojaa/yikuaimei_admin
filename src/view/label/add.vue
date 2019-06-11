@@ -24,28 +24,7 @@
               </el-select>
   
             </el-form-item>
-            <el-form-item label="标签组图片" >
-              <el-upload
-                class="avatar-uploader"
-                action="/api/admin/fileupload/image"
-                :show-file-list="false"
-                :on-success="shop_pic1"
-                >
-                  <img width="360px" height="180px" v-if="ruleForm.tag_group_ico" :src="ruleForm.tag_group_ico" >
             
-                  <div  v-else style="padding-top: 10%">
-                    
-                  <i class="el-icon-plus" style="font-size: 48px">
-                    
-                  </i>
-                  <p> 标签组图片 尺寸30*30像素</p>
-                  </div>
-
-            </el-upload>
-
-  
-            </el-form-item>
-  
             <el-form-item label="上级标签" prop="tag_fid">
               <el-select v-model="ruleForm.tag_fid" placeholder="请选择关联标签">
                 <el-option v-for="(item, i) in tagList" :key="item.tag_id" :label="item.tag_name" :value="item.tag_id"></el-option>
@@ -135,8 +114,8 @@
           tag_fid: "", //父级标签id 只能有一个
           tag_group_id: "", //标签组id 只能有一个
           tag_friends: [], //关联标签id数组 可以有多个
-          tag_ico:"",//标签图片
-          tag_group_ico:"",//标签组图片
+          tag_ico:""//标签图片
+         
         },
   
         rules: {
@@ -154,9 +133,9 @@
       };
     },
     methods: {
-      shop_pic1(res){
-        this.ruleForm.tag_group_ico = res.data.url
-      },
+      // shop_pic1(res){
+      //   this.ruleForm.tag_group_ico = res.data.url
+      // },
       shop_pic(res){
       this.ruleForm.tag_ico = res.data.url
     },
