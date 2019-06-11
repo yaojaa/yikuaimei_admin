@@ -16,7 +16,7 @@
 
   <el-form-item label="行业" prop="tag_name">
     <el-radio-group v-model="ruleForm.category_id">
-    <el-radio v-for="(c,i) in CATEGORYOPTIONS " :label="c.category_id" :key="index">{{c.category_name}} </el-radio>
+    <el-radio v-for="(c,i) in CATEGORYOPTIONS " :label="c.category_id" :key="i">{{c.category_name}} </el-radio>
   </el-radio-group>
 </el-form-item>
 
@@ -62,7 +62,7 @@
 
     <el-form-item label="上级组" prop="tag_group_fid">
      <el-select  v-model="ruleForm.tag_group_fid" placeholder="请选择活动区域">
-      <el-option v-for="(item, i) in groupList" :key="item.tag_group_id" :label="item.tag_group_name" :value="item.tag_group_id"></el-option>
+      <el-option v-for="(item, i) in groupList" :key="i" :label="item.tag_group_name" :value="item.tag_group_id"></el-option>
      </el-select>
    </el-form-item>
 
@@ -94,14 +94,15 @@ export default {
     return {
       CATEGORYOPTIONS,
       url: "",
+      tag_group_id:"",
       breadcrumb: [
         //面包屑
         {
           name: "网站管理" //名字
         },
         {
-          name: "标签管理/标签列表", //名字
-          url:"/manage/label"
+          name: "标签组管理/标签列表", //名字
+          url:"/manage/labelGroup"
         },
         {
           name: "添加标签组" //名字
@@ -134,6 +135,22 @@ export default {
     };
   },
   methods:{
+    getDetailInfo(id) {
+        this.$axios({
+          method: 'get',
+          url: '/api/admin/tag/groupDetail',
+          params: {id: id}
+        }).then((res) => {
+          this.ruleForm = res.data.data;
+          // const tagInfo = res.data.data;
+          // this.ruleForm.tag_name = tagInfo.tag_name;
+          // this.ruleForm.tag_remark = tagInfo.tag_remark;
+          // this.ruleForm.tag_fid = tagInfo.tag_fid;
+          // this.ruleForm.tag_group_id = tagInfo.tag_group_id;
+          this.ruleForm.tag_group_type = res.data.data.tag_group_type[0];
+          console.log(this.ruleForm,'ruleforem')
+        }).catch((error) => {});
+      },
     shop_pic1(res){
         this.ruleForm.tag_group_ico = res.data.url
       },
@@ -167,7 +184,7 @@ export default {
           type: 'success'
         })
 
-          this.$router.push('/manage/label')
+          this.$router.push('/manage/labelGroup')
 
 
         }else{
@@ -190,6 +207,10 @@ export default {
   created() {
     this.getGroupList()
     this.getTagList()
+    this.tag_group_id = Number(this.$route.query.id);
+      if (this.tag_group_id) {
+        this.getDetailInfo(this.tag_group_id)
+      }
   },
   computed: {}
 };

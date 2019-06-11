@@ -20,14 +20,14 @@
   
             <el-form-item label="所在组" prop="tag_group_id">
               <el-select v-model="ruleForm.tag_group_id" placeholder="请选择活动区域">
-                <el-option v-for="(item, i) in groupList" :key="item.tag_group_id" :label="item.tag_group_name" :value="item.tag_group_id"></el-option>
+                <el-option v-for="(item, i) in groupList" :key="i" :label="item.tag_group_name" :value="item.tag_group_id"></el-option>
               </el-select>
   
             </el-form-item>
             
             <el-form-item label="上级标签" prop="tag_fid">
               <el-select v-model="ruleForm.tag_fid" placeholder="请选择关联标签">
-                <el-option v-for="(item, i) in tagList" :key="item.tag_id" :label="item.tag_name" :value="item.tag_id"></el-option>
+                <el-option v-for="(item, i) in tagList" :key="i" :label="item.tag_name" :value="item.tag_id"></el-option>
               </el-select>
   
             </el-form-item>

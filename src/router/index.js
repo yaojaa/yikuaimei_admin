@@ -224,6 +224,24 @@ export default new Router({
                         permission: true
                     }
                 },
+                
+                {
+                    // 标签组管理
+                    path: '/manage/labelGroup',
+                    component: resolve => require(['../view/label/labelGroupList.vue'], resolve),
+                    meta: {
+                        title: '标签组管理'
+                    }
+                },
+                {
+                    // 标签组管理
+                    path: '/manage/labelGroup/add',
+                    component: resolve => require(['../view/label/groupAdd.vue'], resolve),
+                    meta: {
+                        title: '标签组管理'
+                    }
+                },
+                
                 {
                     // 标签管理
                     path: '/manage/label',

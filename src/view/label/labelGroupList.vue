@@ -5,7 +5,7 @@
                 <bread-crumb :bread-crumb="breadcrumb"></bread-crumb>
             </div>
             <div class="page-header-actions">
-                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label/add?id=0' })">添加标签</el-button>
+                <el-button icon="el-icon-plus" size="mini" type="primary" @click="$router.push({ path: '/manage/label/groupAdd' })">添加标签组</el-button>
             </div>
         </div>
         <div class="page-content">
@@ -29,15 +29,15 @@ export default {
     },
     data() {
         return {
-            url: "/api/admin/tag/tagList",
+            url: "/api/admin/tag/groupList",
             breadcrumb: [
                 //面包屑
                 {
                     name: "网站管理"
                 },
                 {
-                    name: "标签管理/标签列表",
-                    url: "/manage/label"
+                    name: "标签组管理/标签列表",
+                    url: "/manage/labelGroup"
                 }
             ],
             status_filter: '',
@@ -75,13 +75,7 @@ export default {
                 ]
             },
             searchs: {
-                list: [{
-                        type: "input-text", //标签名称筛选
-                        label: "标签名称",
-                        name: "tag_name",
-                        value: "",
-                        placeholder: "请输入名称"
-                    },
+                list: [
                     {
                         type: "input-text", //标签组名称筛选
                         label: "标签组名称",
@@ -91,29 +85,18 @@ export default {
                     },
                     {
                         type: "input-text", //上级标签筛选
-                        label: "上级标签",
-                        name: "tag_fname",
+                        label: "上级标签组",
+                        name: "tag_group_fname",
                         value: "",
-                        placeholder: "请输入上级标签名称"
-                    },
-                    {
-                        type: "input-text", //添加人员筛选
-                        label: "添加人员",
-                        name: "tag_create_name",
-                        value: "",
-                        placeholder: "请输入添加人员"
+                        placeholder: "请输入上级标签组名称"
                     }
+                    
                 ]
             },
             tableJson: {
                 column: [
                     //行
-                    {
-                        type: "text",
-                        label: "标签名称",
-                        prop: "tag_name",
-                        align: "center"
-                    },
+                    
                     {
                         type: "text",
                         label: "标签组名称",
@@ -122,8 +105,8 @@ export default {
                     },
                     {
                         type: "text",
-                        label: "上级标签",
-                        prop: "tag_fname",
+                        label: "上级标签组",
+                        prop: "tag_group_fname",
                         align: "center"
                     },
                     {
@@ -135,33 +118,32 @@ export default {
                     {
                         type: "text",
                         label: "添加时间",
-                        prop: "tag_ctime",
+                        prop: "tag_group_ctime",
                         align: "center"
                     },
-                    {
-                        type: "text",
-                        label: "添加人员",
-                        prop: "tag_create_name",
-                        align: "center"
-                    },
+                    
                     {
                         "type": "text",
-                        "label": "关联标签",
-                        "prop": "tag_friends_name",
+                        "label": "标签组类型",
+                        "prop": "tag_group_type",
                         "align": "center",
                         formatter(row) {
-                            let tag_name_arr = '';
-                            const tag_arr = row.tag_friends_name.split(',');
-                            if (tag_arr.length > 2) {
-                                tag_name_arr = tag_arr[0] + ',' + tag_arr[1] + '...';
-                            } else if (tag_arr.length === 2) {
-                                tag_name_arr = tag_arr[0] + ',' + tag_arr[1];
-                            } else if (tag_arr.length === 1) {
-                                tag_name_arr = tag_arr[0];
-                            } else {
-                                tag_name_arr = '--';
+                            if(row.tag_group_type==1){
+                                return "商品"
                             }
-                            return `<p style='text-align: center'>${tag_name_arr}</p>`;
+                            if(row.tag_group_type==2){
+                                return "服务"
+                            }
+                            if(row.tag_group_type==3){
+                                return "虚拟券"
+                            }
+                            if(row.tag_group_type==4){
+                                return "评价"
+                            }
+                            if(row.tag_group_type==5){
+                                return "用户"
+                            }
+                            
                         }
                     },
                     {
@@ -175,9 +157,9 @@ export default {
                                 url: "", //优先执行url
                                 params: {
                                     name: "id",
-                                    data: "tag_id"
+                                    data: "tag_group_id"
                                 },
-                                axiosUrl: "/api/admin/tag/removeTag",
+                                axiosUrl: "/api/admin/tag/removeGroup",
                                 axiosType: "post",
                                 callback(tablePage, self, row) {
                                     console.log(row,'!!!!!!');
@@ -192,9 +174,9 @@ export default {
                                 url: "", //优先执行url
                                 onClick(tablePage, self, row) {
                                     self.$router.push({
-                                        path: '/manage/label/add',
+                                        path: '/manage/labelGroup/add/',
                                         query: {
-                                            id: row.tag_id
+                                            id: row.tag_group_id
                                         }
                                     });
                                 }

@@ -96,6 +96,10 @@
                             {
                                 index: '/manage/label',
                                 title: '标签管理'
+                            },
+                            {
+                                index: '/manage/labelGroup',
+                                title: '标签组管理'
                             }
                         ]
                     },
