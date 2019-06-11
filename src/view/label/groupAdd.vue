@@ -44,7 +44,7 @@
                 :show-file-list="false"
                 :on-success="shop_pic1"
                 >
-                  <img width="360px" height="180px" v-if="ruleForm.tag_group_ico" :src="ruleForm.tag_group_ico" >
+                  <img width="30px" height="30px" v-if="ruleForm.tag_group_ico" :src="ruleForm.tag_group_ico" >
             
                   <div  v-else style="padding-top: 10%">
                     

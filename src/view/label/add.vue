@@ -27,7 +27,7 @@
             
             <el-form-item label="上级标签" prop="tag_fid">
               <el-select v-model="ruleForm.tag_fid" placeholder="请选择关联标签">
-                <el-option v-for="(item, i) in tagList" :key="i" :label="item.tag_name" :value="item.tag_id"></el-option>
+                <el-option v-for="(item, i) in tagList" :key="i" :label="item.tag_name" :value="item.tag_fid"></el-option>
               </el-select>
   
             </el-form-item>
@@ -38,7 +38,7 @@
                 :show-file-list="false"
                 :on-success="shop_pic"
                 >
-                  <img width="360px" height="180px" v-if="ruleForm.tag_ico" :src="ruleForm.tag_ico" >
+                  <img width="30px" height="30px" v-if="ruleForm.tag_ico" :src="ruleForm.tag_ico" >
             
                   <div  v-else style="padding-top: 10%">
                     
