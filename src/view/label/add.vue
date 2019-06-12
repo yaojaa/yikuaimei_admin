@@ -20,14 +20,14 @@
   
             <el-form-item label="所在组" prop="tag_group_id">
               <el-select v-model="ruleForm.tag_group_id" placeholder="请选择活动区域">
-                <el-option v-for="(item, i) in groupList" :key="i" :label="item.tag_group_name" :value="item.tag_group_id"></el-option>
+                <el-option v-for="item in groupList" :key="item.tag_group_id" :label="item.tag_group_name" :value="item.tag_group_id"></el-option>
               </el-select>
   
             </el-form-item>
             
             <el-form-item label="上级标签" prop="tag_fid">
               <el-select v-model="ruleForm.tag_fid" placeholder="请选择关联标签">
-                <el-option v-for="(item, i) in tagList" :key="i" :label="item.tag_name" :value="item.tag_fid"></el-option>
+                <el-option v-for="item in tagList" :key="item.tag_id" :label="item.tag_name" :value="item.tag_id"></el-option>
               </el-select>
   
             </el-form-item>
@@ -57,7 +57,7 @@
   
   
               <el-select v-model="ruleForm.tag_friends" multiple placeholder="请选择关联标签">
-                <el-option v-for="(item, i) in tagList" :key="i" :label="item.tag_name" :value="item.tag_id"></el-option>
+                <el-option v-for="item in tagList" :key="item.tag_id" :label="item.tag_name" :value="item.tag_id"></el-option>
               </el-select>
   
             </el-form-item>
@@ -115,7 +115,9 @@
           tag_fid: "", //父级标签id 只能有一个
           tag_group_id: "", //标签组id 只能有一个
           tag_friends: [], //关联标签id数组 可以有多个
-          tag_ico:""//标签图片
+          tag_ico:"",//标签图片
+         
+          // tag_friends_l:[]
          
         },
   
@@ -141,6 +143,7 @@
       this.ruleForm.tag_ico = res.data.url
     },
       getDetailInfo(id) {
+        var _this = this;
         this.$axios({
           method: 'get',
           url: '/api/admin/tag/tagDetail',
@@ -148,12 +151,12 @@
         }).then((res) => {
           this.ruleForm = res.data.data;
           this.ruleForm.id = res.data.data.tag_id
-          // const tagInfo = res.data.data;
-          // this.ruleForm.tag_name = tagInfo.tag_name;
-          // this.ruleForm.tag_remark = tagInfo.tag_remark;
-          // this.ruleForm.tag_fid = tagInfo.tag_fid;
-          // this.ruleForm.tag_group_id = tagInfo.tag_group_id;
-          this.ruleForm.tag_friends = res.data.data.tag_friends_name.split(',');
+          
+         
+          this.ruleForm.tag_friends = res.data.data.tag_friends.split(',');
+          
+          
+          
         }).catch((error) => {});
       },
       getGroupList() {
@@ -171,6 +174,7 @@
       submit() {
         console.log(this.$route.query.id,'this.$route.query.length')
         if(this.$route.query.id){
+
           this.$axios.post("/api/admin/tag/modifyTag", this.ruleForm).then(res => {
             if (res.data.code == 0) {
               this.$message({
@@ -215,6 +219,7 @@
       this.getTagList();
       this.tag_id = Number(this.$route.query.id);
       if (this.tag_id) {
+        
         this.getDetailInfo(this.tag_id)
       }
     },

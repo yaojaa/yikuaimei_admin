@@ -151,17 +151,17 @@ export default {
                         "align": "center",
                         formatter(row) {
                             let tag_name_arr = '';
-                            const tag_arr = row.tag_friends_name.split(',');
-                            if (tag_arr.length > 2) {
-                                tag_name_arr = tag_arr[0] + ',' + tag_arr[1] + '...';
-                            } else if (tag_arr.length === 2) {
-                                tag_name_arr = tag_arr[0] + ',' + tag_arr[1];
-                            } else if (tag_arr.length === 1) {
-                                tag_name_arr = tag_arr[0];
-                            } else {
-                                tag_name_arr = '--';
-                            }
-                            return `<p style='text-align: center'>${tag_name_arr}</p>`;
+                            const tag_arr = row.tag_friends_name.split(",");
+                            // if (tag_arr.length > 2) {
+                            //     tag_name_arr = tag_arr[0] + ',' + tag_arr[1] + '...';
+                            // } else if (tag_arr.length === 2) {
+                            //     tag_name_arr = tag_arr[0] + ',' + tag_arr[1];
+                            // } else if (tag_arr.length === 1) {
+                            //     tag_name_arr = tag_arr[0];
+                            // } else {
+                            //     tag_name_arr = '--';
+                            // }
+                            return `<p style='text-align: center'>${tag_arr}</p>`;
                         }
                     },
                     {
