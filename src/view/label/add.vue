@@ -57,7 +57,7 @@
   
   
               <el-select v-model="ruleForm.tag_friends" multiple placeholder="请选择关联标签">
-                <el-option v-for="(item, i) in tagList" :key="item.tag_id" :label="item.tag_name" :value="item.tag_id"></el-option>
+                <el-option v-for="(item, i) in tagList" :key="i" :label="item.tag_name" :value="item.tag_friends"></el-option>
               </el-select>
   
             </el-form-item>
