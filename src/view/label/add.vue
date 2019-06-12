@@ -56,7 +56,7 @@
             <el-form-item label="关联标签" prop="name">
   
   
-              <el-select v-model="ruleForm.tag_friends" multiple placeholder="请选择关联标签">
+              <el-select v-model="tag_selected" multiple placeholder="请选择关联标签" @change="tagChange">
                 <el-option v-for="item in tagList" :key="item.tag_id" :label="item.tag_name" :value="item.tag_id"></el-option>
               </el-select>
   
@@ -90,6 +90,8 @@
       return {
         url: "",
         tag_id: 0,
+        selected:[],
+        tag_selected:[],
         breadcrumb: [
           //面包屑
           {
@@ -136,6 +138,10 @@
       };
     },
     methods: {
+      tagChange(e){
+        this.selected = e
+        
+      },
       // shop_pic1(res){
       //   this.ruleForm.tag_group_ico = res.data.url
       // },
@@ -153,7 +159,7 @@
           this.ruleForm.id = res.data.data.tag_id
           
          
-          this.ruleForm.tag_friends = res.data.data.tag_friends.split(',');
+          this.tag_selected = res.data.data.tag_friends_name.split(',');
           
           
           
@@ -173,9 +179,11 @@
       },
       submit() {
         console.log(this.$route.query.id,'this.$route.query.length')
+        var obj=JSON.parse(JSON.stringify(this.ruleForm));
+        obj.tag_friends = this.selected
         if(this.$route.query.id){
 
-          this.$axios.post("/api/admin/tag/modifyTag", this.ruleForm).then(res => {
+          this.$axios.post("/api/admin/tag/modifyTag", obj).then(res => {
             if (res.data.code == 0) {
               this.$message({
                 message: "恭喜你，编辑成功！",
@@ -192,7 +200,7 @@
           });
              
         }else{
-            this.$axios.post("/api/admin/tag/createTag", this.ruleForm).then(res => {
+            this.$axios.post("/api/admin/tag/createTag", obj).then(res => {
             if (res.data.code == 0) {
               this.$message({
                 message: "恭喜你，添加成功！",
